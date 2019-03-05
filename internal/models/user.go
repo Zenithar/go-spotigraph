@@ -2,6 +2,9 @@ package models
 
 import (
 	"go.zenithar.org/spotimap/internal/helpers"
+
+	"github.com/go-ozzo/ozzo-validation"
+	"github.com/go-ozzo/ozzo-validation/is"
 )
 
 // User describes user attributes holder
@@ -17,3 +20,10 @@ func NewUser(principal string) *User {
 }
 
 // ------------------------------------------------------------------
+
+// Validate entity contraints
+func (u *User) Validate() error {
+	return validation.ValidateStruct(&u,
+		validation.Field(u.ID, validation.Required, is.Alphanumeric),
+	)
+}

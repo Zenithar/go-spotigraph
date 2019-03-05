@@ -3,11 +3,13 @@ package rethinkdb
 import (
 	"context"
 
-	db "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/spotimap/internal/models"
 	"go.zenithar.org/spotimap/internal/repositories"
 
+	"go.zenithar.org/pkg/log"
+	db "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
+	"go.uber.org/zap"
 )
 
 type rdbUserRepository struct {
@@ -24,6 +26,11 @@ func NewUserRepository(cfg *db.Configuration, session *rdb.Session) repositories
 // ------------------------------------------------------------
 
 func (r *rdbUserRepository) Create(ctx context.Context, entity *models.User) error {
+	// Validate entity first
+	if err := entity.Validate(); err != nil {
+		return err
+	}
+
 	return r.adapter.Insert(ctx, entity)
 }
 
@@ -33,6 +40,7 @@ func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, e
 	// Do the query
 	err := r.adapter.FindOneBy(ctx, "id", id, &entity)
 	if err != nil {
+		log.For(ctx).Error("Unable to query database", zap.Error(err))
 		return nil, err
 	}
 
@@ -41,6 +49,11 @@ func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, e
 }
 
 func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) error {
+	// Validate entity first
+	if err := entity.Validate(); err != nil {
+		return err
+	}
+
 	return r.adapter.UpdateID(ctx, entity.ID, entity)
 }
 
