@@ -4,7 +4,7 @@ import (
 	"github.com/dchest/uniuri"
 )
 
-// IDGeneratorFunc retuns a randomly generated string useable as identifier
+// IDGeneratorFunc returns a randomly generated string useable as identifier
 var IDGeneratorFunc = func() string {
 	return uniuri.NewLen(64)
 }

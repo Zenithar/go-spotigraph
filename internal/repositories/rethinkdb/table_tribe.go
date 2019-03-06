@@ -12,20 +12,20 @@ import (
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
 )
 
-type rdbUserRepository struct {
+type rdbTribeRepository struct {
 	adapter *db.Default
 }
 
-// NewUserRepository returns an initialized RethinkDB repository for users
-func NewUserRepository(cfg *db.Configuration, session *rdb.Session) repositories.User {
-	return &rdbUserRepository{
-		adapter: db.NewCRUDTable(session, cfg.Database, UserTableName),
+// NewTribeRepository returns an initialized RethinkDB repository for tribes
+func NewTribeRepository(cfg *db.Configuration, session *rdb.Session) repositories.Tribe {
+	return &rdbTribeRepository{
+		adapter: db.NewCRUDTable(session, cfg.Database, TribeTableName),
 	}
 }
 
 // ------------------------------------------------------------
 
-func (r *rdbUserRepository) Create(ctx context.Context, entity *models.User) error {
+func (r *rdbTribeRepository) Create(ctx context.Context, entity *models.Tribe) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -34,8 +34,8 @@ func (r *rdbUserRepository) Create(ctx context.Context, entity *models.User) err
 	return r.adapter.Insert(ctx, entity)
 }
 
-func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, error) {
-	var entity models.User
+func (r *rdbTribeRepository) Get(ctx context.Context, id string) (*models.Tribe, error) {
+	var entity models.Tribe
 
 	// Do the query
 	err := r.adapter.FindOneBy(ctx, "id", id, &entity)
@@ -48,7 +48,7 @@ func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, e
 	return &entity, nil
 }
 
-func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) error {
+func (r *rdbTribeRepository) Update(ctx context.Context, entity *models.Tribe) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -57,6 +57,6 @@ func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) err
 	return r.adapter.UpdateID(ctx, entity.ID, entity)
 }
 
-func (r *rdbUserRepository) Delete(ctx context.Context, id string) error {
+func (r *rdbTribeRepository) Delete(ctx context.Context, id string) error {
 	return r.adapter.Delete(ctx, id)
 }

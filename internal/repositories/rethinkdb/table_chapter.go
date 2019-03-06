@@ -12,20 +12,20 @@ import (
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
 )
 
-type rdbUserRepository struct {
+type rdbChapterRepository struct {
 	adapter *db.Default
 }
 
-// NewUserRepository returns an initialized RethinkDB repository for users
-func NewUserRepository(cfg *db.Configuration, session *rdb.Session) repositories.User {
-	return &rdbUserRepository{
-		adapter: db.NewCRUDTable(session, cfg.Database, UserTableName),
+// NewChapterRepository returns an initialized RethinkDB repository for chapters
+func NewChapterRepository(cfg *db.Configuration, session *rdb.Session) repositories.Chapter {
+	return &rdbChapterRepository{
+		adapter: db.NewCRUDTable(session, cfg.Database, ChapterTableName),
 	}
 }
 
 // ------------------------------------------------------------
 
-func (r *rdbUserRepository) Create(ctx context.Context, entity *models.User) error {
+func (r *rdbChapterRepository) Create(ctx context.Context, entity *models.Chapter) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -34,8 +34,8 @@ func (r *rdbUserRepository) Create(ctx context.Context, entity *models.User) err
 	return r.adapter.Insert(ctx, entity)
 }
 
-func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, error) {
-	var entity models.User
+func (r *rdbChapterRepository) Get(ctx context.Context, id string) (*models.Chapter, error) {
+	var entity models.Chapter
 
 	// Do the query
 	err := r.adapter.FindOneBy(ctx, "id", id, &entity)
@@ -48,7 +48,7 @@ func (r *rdbUserRepository) Get(ctx context.Context, id string) (*models.User, e
 	return &entity, nil
 }
 
-func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) error {
+func (r *rdbChapterRepository) Update(ctx context.Context, entity *models.Chapter) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -57,6 +57,6 @@ func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) err
 	return r.adapter.UpdateID(ctx, entity.ID, entity)
 }
 
-func (r *rdbUserRepository) Delete(ctx context.Context, id string) error {
+func (r *rdbChapterRepository) Delete(ctx context.Context, id string) error {
 	return r.adapter.Delete(ctx, id)
 }

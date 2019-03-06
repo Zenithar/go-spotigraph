@@ -7,6 +7,8 @@ require (
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/google/wire v0.2.1
+	github.com/gosimple/slug v1.4.2
+	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	go.opencensus.io v0.19.1
 	go.uber.org/zap v1.9.1
 	go.zenithar.org/pkg v0.0.0
