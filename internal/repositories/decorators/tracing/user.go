@@ -9,42 +9,79 @@ import (
 	"go.opencensus.io/trace"
 )
 
-type tracingUserRepositoryDecorator struct {
+type userRepositoryDecorator struct {
 	next repositories.User
 }
 
-// UserRepositoryTracing returns an user repository tracing decorator
-func UserRepositoryTracing(next repositories.User) repositories.User {
-	return &tracingUserRepositoryDecorator{
+// UserRepository returns an user repository tracing decorator
+func UserRepository(next repositories.User) repositories.User {
+	return &userRepositoryDecorator{
 		next: next,
 	}
 }
 
 // ---------------------------------------------
-func (d *tracingUserRepositoryDecorator) Create(ctx context.Context, entity *models.User) error {
+func (d *userRepositoryDecorator) Create(ctx context.Context, entity *models.User) error {
+	// Start span
 	ctx, span := trace.StartSpan(ctx, "user.Create")
-	defer span.End()
 
-	return d.next.Create(ctx, entity)
+	// Delegate to next service
+	err := d.next.Create(ctx, entity)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return err
 }
 
-func (d *tracingUserRepositoryDecorator) Get(ctx context.Context, id string) (*models.User, error) {
+func (d *userRepositoryDecorator) Get(ctx context.Context, id string) (*models.User, error) {
 	ctx, span := trace.StartSpan(ctx, "user.Get")
-	defer span.End()
 
-	return d.next.Get(ctx, id)
+	// Delegate to next service
+	entity, err := d.next.Get(ctx, id)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return entity, err
 }
 
-func (d *tracingUserRepositoryDecorator) Update(ctx context.Context, entity *models.User) error {
+func (d *userRepositoryDecorator) Update(ctx context.Context, entity *models.User) error {
 	ctx, span := trace.StartSpan(ctx, "user.Update")
-	defer span.End()
 
-	return d.next.Update(ctx, entity)
+	// Delegate to next service
+	err := d.next.Update(ctx, entity)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return err
 }
 
-func (d *tracingUserRepositoryDecorator) Delete(ctx context.Context, id string) error {
+func (d *userRepositoryDecorator) Delete(ctx context.Context, id string) error {
 	ctx, span := trace.StartSpan(ctx, "user.Delete")
-	defer span.End()
 
-	return d.next.Delete(ctx, id)
+	// Delegate to next service
+	err := d.next.Delete(ctx, id)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return err
 }

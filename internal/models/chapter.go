@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gosimple/slug"
@@ -33,4 +35,9 @@ func (c *Chapter) Validate() error {
 		validation.Field(c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
 		validation.Field(c.Slug, validation.Required, is.PrintableASCII, validation.Length(3, 0)),
 	)
+}
+
+// URN returns an uniform resource name for external linking
+func (c *Chapter) URN() string {
+	return fmt.Sprintf("urn:spom:v1:chapter:%s:%s", c.ID, c.Slug)
 }
