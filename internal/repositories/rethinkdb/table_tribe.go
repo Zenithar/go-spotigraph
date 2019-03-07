@@ -7,6 +7,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 
 	"go.uber.org/zap"
+	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
@@ -59,4 +60,8 @@ func (r *rdbTribeRepository) Update(ctx context.Context, entity *models.Tribe) e
 
 func (r *rdbTribeRepository) Delete(ctx context.Context, id string) error {
 	return r.adapter.Delete(ctx, id)
+}
+
+func (r *rdbTribeRepository) Search(ctx context.Context, filter *repositories.TribeSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Tribe, int, error) {
+	panic("Not implemented")
 }

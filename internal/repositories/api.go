@@ -23,12 +23,27 @@ type User interface {
 	FindByPrincipal(ctx context.Context, principal string) (*models.User, error)
 }
 
+// ChapterSearchFilter represents chapter entity collection search criteria
+type ChapterSearchFilter struct {
+	ChapterID string
+	Name      string
+	Slug      string
+}
+
 // Chapter describes chapter repository contract
 type Chapter interface {
 	Create(ctx context.Context, entity *models.Chapter) error
 	Get(ctx context.Context, id string) (*models.Chapter, error)
 	Update(ctx context.Context, entity *models.Chapter) error
 	Delete(ctx context.Context, id string) error
+	Search(ctx context.Context, filter *ChapterSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Chapter, int, error)
+}
+
+// GuildSearchFilter represents guild entity collection search criteria
+type GuildSearchFilter struct {
+	GuildID string
+	Name    string
+	Slug    string
 }
 
 // Guild describes guild repository contract
@@ -37,6 +52,14 @@ type Guild interface {
 	Get(ctx context.Context, id string) (*models.Guild, error)
 	Update(ctx context.Context, entity *models.Guild) error
 	Delete(ctx context.Context, id string) error
+	Search(ctx context.Context, filter *GuildSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Guild, int, error)
+}
+
+// SquadSearchFilter represents squad entity collection search criteria
+type SquadSearchFilter struct {
+	SquadID string
+	Name    string
+	Slug    string
 }
 
 // Squad describes squad repository contract
@@ -45,6 +68,15 @@ type Squad interface {
 	Get(ctx context.Context, id string) (*models.Squad, error)
 	Update(ctx context.Context, entity *models.Squad) error
 	Delete(ctx context.Context, id string) error
+	Search(ctx context.Context, filter *SquadSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Squad, int, error)
+	FindByName(ctx context.Context, name string) (*models.Squad, error)
+}
+
+// TribeSearchFilter represents tribe entity collection search criteria
+type TribeSearchFilter struct {
+	TribeID string
+	Name    string
+	Slug    string
 }
 
 // Tribe describes tribe repository contract
@@ -53,4 +85,5 @@ type Tribe interface {
 	Get(ctx context.Context, id string) (*models.Tribe, error)
 	Update(ctx context.Context, entity *models.Tribe) error
 	Delete(ctx context.Context, id string) error
+	Search(ctx context.Context, filter *TribeSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Tribe, int, error)
 }

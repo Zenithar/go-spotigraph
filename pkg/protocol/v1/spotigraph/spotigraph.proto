@@ -97,3 +97,93 @@ message UserSearchReq {
   google.protobuf.StringValue user_id = 4;
   google.protobuf.StringValue principal = 5;
 }
+
+// -----------------------------------------------------------------------------
+
+message SquadCreateReq {
+  string name = 1 [(validate.rules).string.email = true];
+}
+
+message SquadGetReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+}
+
+message SquadUpdateReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+  google.protobuf.StringValue name = 2;
+
+}
+
+message SingleSquadRes {
+  Error error = 1;
+  Domain.Squad entity = 2;
+}
+
+message PaginatedSquadRes {
+  Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  repeated Domain.Squad members = 6;
+}
+
+message SquadSearchReq {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue squad_id = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.StringValue slug = 6;
+}
+
+// -----------------------------------------------------------------------------
+
+message ChapterCreateReq {
+  string name = 1;
+}
+
+message ChapterGetReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+}
+
+message ChapterUpdateReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+  google.protobuf.StringValue name = 2;
+
+}
+
+message SingleChapterRes {
+  Error error = 1;
+  Domain.Chapter entity = 2;
+}
+
+message PaginatedChapterRes {
+  Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  repeated Domain.Chapter members = 6;
+}
+
+message ChapterSearchReq {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue chapter_id = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.StringValue slug = 6;
+}

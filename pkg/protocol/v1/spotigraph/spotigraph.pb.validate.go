@@ -807,6 +807,1112 @@ var _ interface {
 	ErrorName() string
 } = UserSearchReqValidationError{}
 
+// Validate checks the field values on SquadCreateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SquadCreateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if err := m._validateEmail(m.GetName()); err != nil {
+		return SquadCreateReqValidationError{
+			field:  "Name",
+			reason: "value must be a valid email address",
+			cause:  err,
+		}
+	}
+
+	return nil
+}
+
+func (m *SquadCreateReq) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+func (m *SquadCreateReq) _validateEmail(addr string) error {
+	a, err := mail.ParseAddress(addr)
+	if err != nil {
+		return err
+	}
+	addr = a.Address
+
+	if len(addr) > 254 {
+		return errors.New("email addresses cannot exceed 254 characters")
+	}
+
+	parts := strings.SplitN(addr, "@", 2)
+
+	if len(parts[0]) > 64 {
+		return errors.New("email address local phrase cannot exceed 64 characters")
+	}
+
+	return m._validateHostname(parts[1])
+}
+
+// SquadCreateReqValidationError is the validation error returned by
+// SquadCreateReq.Validate if the designated constraints aren't met.
+type SquadCreateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SquadCreateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SquadCreateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SquadCreateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SquadCreateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SquadCreateReqValidationError) ErrorName() string { return "SquadCreateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SquadCreateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSquadCreateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SquadCreateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SquadCreateReqValidationError{}
+
+// Validate checks the field values on SquadGetReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SquadGetReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return SquadGetReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_SquadGetReq_Id_Pattern.MatchString(m.GetId()) {
+		return SquadGetReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// SquadGetReqValidationError is the validation error returned by
+// SquadGetReq.Validate if the designated constraints aren't met.
+type SquadGetReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SquadGetReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SquadGetReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SquadGetReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SquadGetReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SquadGetReqValidationError) ErrorName() string { return "SquadGetReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SquadGetReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSquadGetReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SquadGetReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SquadGetReqValidationError{}
+
+var _SquadGetReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on SquadUpdateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SquadUpdateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return SquadUpdateReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_SquadUpdateReq_Id_Pattern.MatchString(m.GetId()) {
+		return SquadUpdateReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SquadUpdateReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SquadUpdateReqValidationError is the validation error returned by
+// SquadUpdateReq.Validate if the designated constraints aren't met.
+type SquadUpdateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SquadUpdateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SquadUpdateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SquadUpdateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SquadUpdateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SquadUpdateReqValidationError) ErrorName() string { return "SquadUpdateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SquadUpdateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSquadUpdateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SquadUpdateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SquadUpdateReqValidationError{}
+
+var _SquadUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on SingleSquadRes with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SingleSquadRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleSquadResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleSquadResValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SingleSquadResValidationError is the validation error returned by
+// SingleSquadRes.Validate if the designated constraints aren't met.
+type SingleSquadResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SingleSquadResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SingleSquadResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SingleSquadResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SingleSquadResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SingleSquadResValidationError) ErrorName() string { return "SingleSquadResValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SingleSquadResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSingleSquadRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SingleSquadResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SingleSquadResValidationError{}
+
+// Validate checks the field values on PaginatedSquadRes with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *PaginatedSquadRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PaginatedSquadResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Total
+
+	// no validation rules for PerPage
+
+	// no validation rules for Count
+
+	// no validation rules for CurrentPage
+
+	for idx, item := range m.GetMembers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedSquadResValidationError{
+					field:  fmt.Sprintf("Members[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PaginatedSquadResValidationError is the validation error returned by
+// PaginatedSquadRes.Validate if the designated constraints aren't met.
+type PaginatedSquadResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PaginatedSquadResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PaginatedSquadResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PaginatedSquadResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PaginatedSquadResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PaginatedSquadResValidationError) ErrorName() string {
+	return "PaginatedSquadResValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PaginatedSquadResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPaginatedSquadRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PaginatedSquadResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PaginatedSquadResValidationError{}
+
+// Validate checks the field values on SquadSearchReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SquadSearchReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Page
+
+	// no validation rules for PerPage
+
+	if v, ok := interface{}(m.GetSquadId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SquadSearchReqValidationError{
+				field:  "SquadId",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SquadSearchReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SquadSearchReqValidationError{
+				field:  "Slug",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SquadSearchReqValidationError is the validation error returned by
+// SquadSearchReq.Validate if the designated constraints aren't met.
+type SquadSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SquadSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SquadSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SquadSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SquadSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SquadSearchReqValidationError) ErrorName() string { return "SquadSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SquadSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSquadSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SquadSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SquadSearchReqValidationError{}
+
+// Validate checks the field values on ChapterCreateReq with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ChapterCreateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// ChapterCreateReqValidationError is the validation error returned by
+// ChapterCreateReq.Validate if the designated constraints aren't met.
+type ChapterCreateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChapterCreateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChapterCreateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChapterCreateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChapterCreateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChapterCreateReqValidationError) ErrorName() string { return "ChapterCreateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ChapterCreateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChapterCreateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChapterCreateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChapterCreateReqValidationError{}
+
+// Validate checks the field values on ChapterGetReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ChapterGetReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return ChapterGetReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_ChapterGetReq_Id_Pattern.MatchString(m.GetId()) {
+		return ChapterGetReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// ChapterGetReqValidationError is the validation error returned by
+// ChapterGetReq.Validate if the designated constraints aren't met.
+type ChapterGetReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChapterGetReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChapterGetReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChapterGetReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChapterGetReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChapterGetReqValidationError) ErrorName() string { return "ChapterGetReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ChapterGetReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChapterGetReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChapterGetReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChapterGetReqValidationError{}
+
+var _ChapterGetReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on ChapterUpdateReq with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ChapterUpdateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return ChapterUpdateReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_ChapterUpdateReq_Id_Pattern.MatchString(m.GetId()) {
+		return ChapterUpdateReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ChapterUpdateReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ChapterUpdateReqValidationError is the validation error returned by
+// ChapterUpdateReq.Validate if the designated constraints aren't met.
+type ChapterUpdateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChapterUpdateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChapterUpdateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChapterUpdateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChapterUpdateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChapterUpdateReqValidationError) ErrorName() string { return "ChapterUpdateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ChapterUpdateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChapterUpdateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChapterUpdateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChapterUpdateReqValidationError{}
+
+var _ChapterUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on SingleChapterRes with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *SingleChapterRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleChapterResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleChapterResValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SingleChapterResValidationError is the validation error returned by
+// SingleChapterRes.Validate if the designated constraints aren't met.
+type SingleChapterResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SingleChapterResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SingleChapterResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SingleChapterResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SingleChapterResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SingleChapterResValidationError) ErrorName() string { return "SingleChapterResValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SingleChapterResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSingleChapterRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SingleChapterResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SingleChapterResValidationError{}
+
+// Validate checks the field values on PaginatedChapterRes with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *PaginatedChapterRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PaginatedChapterResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Total
+
+	// no validation rules for PerPage
+
+	// no validation rules for Count
+
+	// no validation rules for CurrentPage
+
+	for idx, item := range m.GetMembers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedChapterResValidationError{
+					field:  fmt.Sprintf("Members[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PaginatedChapterResValidationError is the validation error returned by
+// PaginatedChapterRes.Validate if the designated constraints aren't met.
+type PaginatedChapterResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PaginatedChapterResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PaginatedChapterResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PaginatedChapterResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PaginatedChapterResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PaginatedChapterResValidationError) ErrorName() string {
+	return "PaginatedChapterResValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PaginatedChapterResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPaginatedChapterRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PaginatedChapterResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PaginatedChapterResValidationError{}
+
+// Validate checks the field values on ChapterSearchReq with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ChapterSearchReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Page
+
+	// no validation rules for PerPage
+
+	if v, ok := interface{}(m.GetChapterId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ChapterSearchReqValidationError{
+				field:  "ChapterId",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ChapterSearchReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ChapterSearchReqValidationError{
+				field:  "Slug",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ChapterSearchReqValidationError is the validation error returned by
+// ChapterSearchReq.Validate if the designated constraints aren't met.
+type ChapterSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChapterSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChapterSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChapterSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChapterSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChapterSearchReqValidationError) ErrorName() string { return "ChapterSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ChapterSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChapterSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChapterSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChapterSearchReqValidationError{}
+
 // Validate checks the field values on Domain_User with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
