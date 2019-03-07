@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 
-	"go.zenithar.org/spotimap/internal/helpers"
+	"go.zenithar.org/spotigraph/internal/helpers"
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
@@ -34,6 +34,6 @@ func (u *User) Validate() error {
 }
 
 // URN returns an uniform resource name for external linking
-func (c *User) URN() string {
-	return fmt.Sprintf("urn:spom:v1:user:%s", c.ID)
+func (u *User) URN() string {
+	return fmt.Sprintf("urn:spom:v1:user:%s", u.ID)
 }

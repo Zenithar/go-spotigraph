@@ -3,8 +3,8 @@ package tracing
 import (
 	"context"
 
-	"go.zenithar.org/spotimap/internal/models"
-	"go.zenithar.org/spotimap/internal/repositories"
+	"go.zenithar.org/spotigraph/internal/models"
+	"go.zenithar.org/spotigraph/internal/repositories"
 
 	"go.opencensus.io/trace"
 )

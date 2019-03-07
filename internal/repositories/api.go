@@ -3,7 +3,7 @@ package repositories
 import (
 	"context"
 
-	"go.zenithar.org/spotimap/internal/models"
+	"go.zenithar.org/spotigraph/internal/models"
 )
 
 // User describes user repository contract

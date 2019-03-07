@@ -7,7 +7,7 @@ import (
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gosimple/slug"
 
-	"go.zenithar.org/spotimap/internal/helpers"
+	"go.zenithar.org/spotigraph/internal/helpers"
 )
 
 // Tribe describes tribe attributes holder

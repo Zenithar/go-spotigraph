@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package spotigraph;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+message Error {
+  uint32 code = 1;
+  string message = 2;
+}
+
+message EmptyRes {
+  Error error = 1;
+}
+
+// -----------------------------------------------------------------------------
+
+message Domain {
+
+  message User {
+    string id = 1;
+    string principal = 2;
+    string urn = 3;
+  }
+
+  message Squad {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string urn = 4;
+  }
+
+  message Chapter {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string urn = 4;
+  }
+
+  message Guild {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string urn = 4;
+  }
+
+  message Tribe {
+    string id = 1;
+    string name = 2;
+    string slug = 3;
+    string urn = 4;
+  }
+
+}
+
+// -----------------------------------------------------------------------------
+
+message UserCreateReq {
+}
+
+message UserGetReq {
+}
+
+message SingleUserRes {
+  Error error = 1;
+  Domain.User user = 2;
+}
