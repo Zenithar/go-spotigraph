@@ -2,8 +2,7 @@ syntax = "proto3";
 
 package spotigraph;
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
 
 message Error {
   uint32 code = 1;
@@ -57,6 +56,7 @@ message Domain {
 // -----------------------------------------------------------------------------
 
 message UserCreateReq {
+  string principal = 1 [(validate.rules).string.email = true];
 }
 
 message UserGetReq {
@@ -64,5 +64,5 @@ message UserGetReq {
 
 message SingleUserRes {
   Error error = 1;
-  Domain.User user = 2;
+  Domain.User entity = 2;
 }
