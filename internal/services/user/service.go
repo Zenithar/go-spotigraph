@@ -35,6 +35,8 @@ func (s *service) Create(ctx context.Context, req *spotigraph.UserCreateReq) (*s
 		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
+		// Principal must be unique
+		constraints.UserPrincipalMustBeUnique(s.users, req.Principal),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,

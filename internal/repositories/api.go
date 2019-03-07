@@ -20,7 +20,7 @@ type User interface {
 	Update(ctx context.Context, entity *models.User) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error)
-	FindByPrincipal(ctx context.Context, id string) (*models.User, error)
+	FindByPrincipal(ctx context.Context, principal string) (*models.User, error)
 }
 
 // Chapter describes chapter repository contract

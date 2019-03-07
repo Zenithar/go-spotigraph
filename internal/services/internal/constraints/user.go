@@ -24,3 +24,17 @@ func UserMustExists(users repositories.User, id string, result *models.User) fun
 		return nil
 	}
 }
+
+// UserPrincipalMustBeUnique specification checks if the given principal already exists
+func UserPrincipalMustBeUnique(users repositories.User, principal string) func(ctx context.Context) error {
+	return func(ctx context.Context) error {
+
+		// Check principal existence
+		_, err := users.FindByPrincipal(ctx, principal)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+}
