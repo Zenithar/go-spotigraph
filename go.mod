@@ -17,5 +17,6 @@ require (
 	go.uber.org/zap v1.9.1
 	go.zenithar.org/pkg v0.0.0
 	golang.org/x/crypto v0.0.0-20190211182817-74369b46fc67
+	google.golang.org/genproto v0.0.0-20190201180003-4b09977fb922
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 )

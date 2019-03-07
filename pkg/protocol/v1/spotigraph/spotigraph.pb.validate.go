@@ -369,6 +369,21 @@ func (m *UserGetReq) Validate() error {
 		return nil
 	}
 
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return UserGetReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_UserGetReq_Id_Pattern.MatchString(m.GetId()) {
+		return UserGetReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
 	return nil
 }
 
@@ -425,6 +440,100 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UserGetReqValidationError{}
+
+var _UserGetReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on UserUpdateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *UserUpdateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return UserUpdateReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_UserUpdateReq_Id_Pattern.MatchString(m.GetId()) {
+		return UserUpdateReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetPrincipal()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserUpdateReqValidationError{
+				field:  "Principal",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// UserUpdateReqValidationError is the validation error returned by
+// UserUpdateReq.Validate if the designated constraints aren't met.
+type UserUpdateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserUpdateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserUpdateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserUpdateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserUpdateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserUpdateReqValidationError) ErrorName() string { return "UserUpdateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserUpdateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUserUpdateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserUpdateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserUpdateReqValidationError{}
+
+var _UserUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 // Validate checks the field values on SingleUserRes with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -510,6 +619,193 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SingleUserResValidationError{}
+
+// Validate checks the field values on PaginatedUserRes with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *PaginatedUserRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PaginatedUserResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Total
+
+	// no validation rules for PerPage
+
+	// no validation rules for Count
+
+	// no validation rules for CurrentPage
+
+	for idx, item := range m.GetMembers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedUserResValidationError{
+					field:  fmt.Sprintf("Members[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PaginatedUserResValidationError is the validation error returned by
+// PaginatedUserRes.Validate if the designated constraints aren't met.
+type PaginatedUserResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PaginatedUserResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PaginatedUserResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PaginatedUserResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PaginatedUserResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PaginatedUserResValidationError) ErrorName() string { return "PaginatedUserResValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PaginatedUserResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPaginatedUserRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PaginatedUserResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PaginatedUserResValidationError{}
+
+// Validate checks the field values on UserSearchReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *UserSearchReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Page
+
+	// no validation rules for PerPage
+
+	if v, ok := interface{}(m.GetUserId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserSearchReqValidationError{
+				field:  "UserId",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetPrincipal()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserSearchReqValidationError{
+				field:  "Principal",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// UserSearchReqValidationError is the validation error returned by
+// UserSearchReq.Validate if the designated constraints aren't met.
+type UserSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserSearchReqValidationError) ErrorName() string { return "UserSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUserSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserSearchReqValidationError{}
 
 // Validate checks the field values on Domain_User with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

@@ -7,6 +7,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 
 	"go.uber.org/zap"
+	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
@@ -59,4 +60,22 @@ func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) err
 
 func (r *rdbUserRepository) Delete(ctx context.Context, id string) error {
 	return r.adapter.Delete(ctx, id)
+}
+
+func (r *rdbUserRepository) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.User, int, error) {
+	panic("Not implemented")
+}
+
+func (r *rdbUserRepository) FindByPrincipal(ctx context.Context, principal string) (*models.User, error) {
+	var entity models.User
+
+	// Do the query
+	err := r.adapter.FindOneBy(ctx, "principal", principal, &entity)
+	if err != nil {
+		log.For(ctx).Error("Unable to query database", zap.Error(err))
+		return nil, err
+	}
+
+	// Return result
+	return &entity, nil
 }

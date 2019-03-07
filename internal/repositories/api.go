@@ -3,8 +3,15 @@ package repositories
 import (
 	"context"
 
+	"go.zenithar.org/pkg/db"
 	"go.zenithar.org/spotigraph/internal/models"
 )
+
+// UserSearchFilter represents user entity collection search criteria
+type UserSearchFilter struct {
+	UserID    string
+	Principal string
+}
 
 // User describes user repository contract
 type User interface {
@@ -12,6 +19,8 @@ type User interface {
 	Get(ctx context.Context, id string) (*models.User, error)
 	Update(ctx context.Context, entity *models.User) error
 	Delete(ctx context.Context, id string) error
+	Search(ctx context.Context, filter *UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error)
+	FindByPrincipal(ctx context.Context, id string) (*models.User, error)
 }
 
 // Chapter describes chapter repository contract

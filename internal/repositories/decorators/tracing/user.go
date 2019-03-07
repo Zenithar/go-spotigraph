@@ -3,6 +3,8 @@ package tracing
 import (
 	"context"
 
+	"go.zenithar.org/pkg/db"
+
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
@@ -84,4 +86,36 @@ func (d *userRepositoryDecorator) Delete(ctx context.Context, id string) error {
 
 	// Pass result to next decorator
 	return err
+}
+
+func (d *userRepositoryDecorator) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error) {
+	ctx, span := trace.StartSpan(ctx, "user.Search")
+
+	// Delegate to next service
+	entities, total, err := d.next.Search(ctx, filter, pagination, sortParams)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return entities, total, err
+}
+
+func (d *userRepositoryDecorator) FindByPrincipal(ctx context.Context, id string) (*models.User, error) {
+	ctx, span := trace.StartSpan(ctx, "user.Search")
+
+	// Delegate to next service
+	entity, err := d.next.FindByPrincipal(ctx, id)
+
+	// Set span status
+	spanStatus(span, err)
+
+	// End the span
+	span.End()
+
+	// Pass result to next decorator
+	return entity, err
 }

@@ -3,6 +3,8 @@ package metrics
 import (
 	"context"
 
+	"go.zenithar.org/pkg/db"
+
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
@@ -54,4 +56,12 @@ func (d *metricUserRepositoryDecorator) Update(ctx context.Context, entity *mode
 
 func (d *metricUserRepositoryDecorator) Delete(ctx context.Context, id string) error {
 	return d.next.Delete(ctx, id)
+}
+
+func (d *metricUserRepositoryDecorator) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error) {
+	return d.next.Search(ctx, filter, pagination, sortParams)
+}
+
+func (d *metricUserRepositoryDecorator) FindByPrincipal(ctx context.Context, id string) (*models.User, error) {
+	return d.next.FindByPrincipal(ctx, id)
 }

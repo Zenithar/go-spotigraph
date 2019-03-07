@@ -3,6 +3,7 @@ syntax = "proto3";
 package spotigraph;
 
 import "validate/validate.proto";
+import "google/protobuf/wrappers.proto";
 
 message Error {
   uint32 code = 1;
@@ -60,9 +61,39 @@ message UserCreateReq {
 }
 
 message UserGetReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+}
+
+message UserUpdateReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+  google.protobuf.StringValue principal = 2;
+
 }
 
 message SingleUserRes {
   Error error = 1;
   Domain.User entity = 2;
+}
+
+message PaginatedUserRes {
+  Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  repeated Domain.User members = 6;
+}
+
+message UserSearchReq {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue user_id = 4;
+  google.protobuf.StringValue principal = 5;
 }
