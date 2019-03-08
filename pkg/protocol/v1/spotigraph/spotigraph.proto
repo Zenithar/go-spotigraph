@@ -187,3 +187,93 @@ message ChapterSearchReq {
   google.protobuf.StringValue name = 5;
   google.protobuf.StringValue slug = 6;
 }
+
+// -----------------------------------------------------------------------------
+
+message GuildCreateReq {
+  string name = 1;
+}
+
+message GuildGetReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+}
+
+message GuildUpdateReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+  google.protobuf.StringValue name = 2;
+
+}
+
+message SingleGuildRes {
+  Error error = 1;
+  Domain.Guild entity = 2;
+}
+
+message PaginatedGuildRes {
+  Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  repeated Domain.Guild members = 6;
+}
+
+message GuildSearchReq {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue guild_id = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.StringValue slug = 6;
+}
+
+// -----------------------------------------------------------------------------
+
+message TribeCreateReq {
+  string name = 1;
+}
+
+message TribeGetReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+}
+
+message TribeUpdateReq {
+  string id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$",
+    len: 64,
+  }];
+  google.protobuf.StringValue name = 2;
+
+}
+
+message SingleTribeRes {
+  Error error = 1;
+  Domain.Tribe entity = 2;
+}
+
+message PaginatedTribeRes {
+  Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  repeated Domain.Tribe members = 6;
+}
+
+message TribeSearchReq {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue tribe_id = 4;
+  google.protobuf.StringValue name = 5;
+  google.protobuf.StringValue slug = 6;
+}

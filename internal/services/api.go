@@ -29,3 +29,19 @@ type Chapter interface {
 	Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (*spotigraph.SingleChapterRes, error)
 	Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error)
 }
+
+// Guild defines guild service contract
+type Guild interface {
+	Create(ctx context.Context, req *spotigraph.GuildCreateReq) (*spotigraph.SingleGuildRes, error)
+	Get(ctx context.Context, req *spotigraph.GuildGetReq) (*spotigraph.SingleGuildRes, error)
+	Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*spotigraph.SingleGuildRes, error)
+	Delete(ctx context.Context, req *spotigraph.GuildGetReq) (*spotigraph.EmptyRes, error)
+}
+
+// Tribe defines tribe service contract
+type Tribe interface {
+	Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*spotigraph.SingleTribeRes, error)
+	Get(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.SingleTribeRes, error)
+	Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*spotigraph.SingleTribeRes, error)
+	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.EmptyRes, error)
+}

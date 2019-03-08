@@ -29,6 +29,18 @@
 		SingleChapterRes
 		PaginatedChapterRes
 		ChapterSearchReq
+		GuildCreateReq
+		GuildGetReq
+		GuildUpdateReq
+		SingleGuildRes
+		PaginatedGuildRes
+		GuildSearchReq
+		TribeCreateReq
+		TribeGetReq
+		TribeUpdateReq
+		SingleTribeRes
+		PaginatedTribeRes
+		TribeSearchReq
 */
 package spotigraph
 
@@ -859,6 +871,390 @@ func (m *ChapterSearchReq) GetSlug() *google_protobuf3.StringValue {
 	return nil
 }
 
+type GuildCreateReq struct {
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (m *GuildCreateReq) Reset()                    { *m = GuildCreateReq{} }
+func (m *GuildCreateReq) String() string            { return proto.CompactTextString(m) }
+func (*GuildCreateReq) ProtoMessage()               {}
+func (*GuildCreateReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{21} }
+
+func (m *GuildCreateReq) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type GuildGetReq struct {
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *GuildGetReq) Reset()                    { *m = GuildGetReq{} }
+func (m *GuildGetReq) String() string            { return proto.CompactTextString(m) }
+func (*GuildGetReq) ProtoMessage()               {}
+func (*GuildGetReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{22} }
+
+func (m *GuildGetReq) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type GuildUpdateReq struct {
+	Id   string                        `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name *google_protobuf3.StringValue `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+}
+
+func (m *GuildUpdateReq) Reset()                    { *m = GuildUpdateReq{} }
+func (m *GuildUpdateReq) String() string            { return proto.CompactTextString(m) }
+func (*GuildUpdateReq) ProtoMessage()               {}
+func (*GuildUpdateReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{23} }
+
+func (m *GuildUpdateReq) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *GuildUpdateReq) GetName() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Name
+	}
+	return nil
+}
+
+type SingleGuildRes struct {
+	Error  *Error        `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Entity *Domain_Guild `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+}
+
+func (m *SingleGuildRes) Reset()                    { *m = SingleGuildRes{} }
+func (m *SingleGuildRes) String() string            { return proto.CompactTextString(m) }
+func (*SingleGuildRes) ProtoMessage()               {}
+func (*SingleGuildRes) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{24} }
+
+func (m *SingleGuildRes) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *SingleGuildRes) GetEntity() *Domain_Guild {
+	if m != nil {
+		return m.Entity
+	}
+	return nil
+}
+
+type PaginatedGuildRes struct {
+	Error       *Error          `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Total       uint32          `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	PerPage     uint32          `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Count       uint32          `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
+	CurrentPage uint32          `protobuf:"varint,5,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
+	Members     []*Domain_Guild `protobuf:"bytes,6,rep,name=members" json:"members,omitempty"`
+}
+
+func (m *PaginatedGuildRes) Reset()                    { *m = PaginatedGuildRes{} }
+func (m *PaginatedGuildRes) String() string            { return proto.CompactTextString(m) }
+func (*PaginatedGuildRes) ProtoMessage()               {}
+func (*PaginatedGuildRes) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{25} }
+
+func (m *PaginatedGuildRes) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *PaginatedGuildRes) GetTotal() uint32 {
+	if m != nil {
+		return m.Total
+	}
+	return 0
+}
+
+func (m *PaginatedGuildRes) GetPerPage() uint32 {
+	if m != nil {
+		return m.PerPage
+	}
+	return 0
+}
+
+func (m *PaginatedGuildRes) GetCount() uint32 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
+func (m *PaginatedGuildRes) GetCurrentPage() uint32 {
+	if m != nil {
+		return m.CurrentPage
+	}
+	return 0
+}
+
+func (m *PaginatedGuildRes) GetMembers() []*Domain_Guild {
+	if m != nil {
+		return m.Members
+	}
+	return nil
+}
+
+type GuildSearchReq struct {
+	Page    uint32                        `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage uint32                        `protobuf:"varint,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Sorts   []string                      `protobuf:"bytes,3,rep,name=sorts" json:"sorts,omitempty"`
+	GuildId *google_protobuf3.StringValue `protobuf:"bytes,4,opt,name=guild_id,json=guildId" json:"guild_id,omitempty"`
+	Name    *google_protobuf3.StringValue `protobuf:"bytes,5,opt,name=name" json:"name,omitempty"`
+	Slug    *google_protobuf3.StringValue `protobuf:"bytes,6,opt,name=slug" json:"slug,omitempty"`
+}
+
+func (m *GuildSearchReq) Reset()                    { *m = GuildSearchReq{} }
+func (m *GuildSearchReq) String() string            { return proto.CompactTextString(m) }
+func (*GuildSearchReq) ProtoMessage()               {}
+func (*GuildSearchReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{26} }
+
+func (m *GuildSearchReq) GetPage() uint32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+func (m *GuildSearchReq) GetPerPage() uint32 {
+	if m != nil {
+		return m.PerPage
+	}
+	return 0
+}
+
+func (m *GuildSearchReq) GetSorts() []string {
+	if m != nil {
+		return m.Sorts
+	}
+	return nil
+}
+
+func (m *GuildSearchReq) GetGuildId() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.GuildId
+	}
+	return nil
+}
+
+func (m *GuildSearchReq) GetName() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Name
+	}
+	return nil
+}
+
+func (m *GuildSearchReq) GetSlug() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Slug
+	}
+	return nil
+}
+
+type TribeCreateReq struct {
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (m *TribeCreateReq) Reset()                    { *m = TribeCreateReq{} }
+func (m *TribeCreateReq) String() string            { return proto.CompactTextString(m) }
+func (*TribeCreateReq) ProtoMessage()               {}
+func (*TribeCreateReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{27} }
+
+func (m *TribeCreateReq) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type TribeGetReq struct {
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *TribeGetReq) Reset()                    { *m = TribeGetReq{} }
+func (m *TribeGetReq) String() string            { return proto.CompactTextString(m) }
+func (*TribeGetReq) ProtoMessage()               {}
+func (*TribeGetReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{28} }
+
+func (m *TribeGetReq) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type TribeUpdateReq struct {
+	Id   string                        `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name *google_protobuf3.StringValue `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+}
+
+func (m *TribeUpdateReq) Reset()                    { *m = TribeUpdateReq{} }
+func (m *TribeUpdateReq) String() string            { return proto.CompactTextString(m) }
+func (*TribeUpdateReq) ProtoMessage()               {}
+func (*TribeUpdateReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{29} }
+
+func (m *TribeUpdateReq) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *TribeUpdateReq) GetName() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Name
+	}
+	return nil
+}
+
+type SingleTribeRes struct {
+	Error  *Error        `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Entity *Domain_Tribe `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+}
+
+func (m *SingleTribeRes) Reset()                    { *m = SingleTribeRes{} }
+func (m *SingleTribeRes) String() string            { return proto.CompactTextString(m) }
+func (*SingleTribeRes) ProtoMessage()               {}
+func (*SingleTribeRes) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{30} }
+
+func (m *SingleTribeRes) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *SingleTribeRes) GetEntity() *Domain_Tribe {
+	if m != nil {
+		return m.Entity
+	}
+	return nil
+}
+
+type PaginatedTribeRes struct {
+	Error       *Error          `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Total       uint32          `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	PerPage     uint32          `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Count       uint32          `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
+	CurrentPage uint32          `protobuf:"varint,5,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
+	Members     []*Domain_Tribe `protobuf:"bytes,6,rep,name=members" json:"members,omitempty"`
+}
+
+func (m *PaginatedTribeRes) Reset()                    { *m = PaginatedTribeRes{} }
+func (m *PaginatedTribeRes) String() string            { return proto.CompactTextString(m) }
+func (*PaginatedTribeRes) ProtoMessage()               {}
+func (*PaginatedTribeRes) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{31} }
+
+func (m *PaginatedTribeRes) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *PaginatedTribeRes) GetTotal() uint32 {
+	if m != nil {
+		return m.Total
+	}
+	return 0
+}
+
+func (m *PaginatedTribeRes) GetPerPage() uint32 {
+	if m != nil {
+		return m.PerPage
+	}
+	return 0
+}
+
+func (m *PaginatedTribeRes) GetCount() uint32 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
+func (m *PaginatedTribeRes) GetCurrentPage() uint32 {
+	if m != nil {
+		return m.CurrentPage
+	}
+	return 0
+}
+
+func (m *PaginatedTribeRes) GetMembers() []*Domain_Tribe {
+	if m != nil {
+		return m.Members
+	}
+	return nil
+}
+
+type TribeSearchReq struct {
+	Page    uint32                        `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage uint32                        `protobuf:"varint,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Sorts   []string                      `protobuf:"bytes,3,rep,name=sorts" json:"sorts,omitempty"`
+	TribeId *google_protobuf3.StringValue `protobuf:"bytes,4,opt,name=tribe_id,json=tribeId" json:"tribe_id,omitempty"`
+	Name    *google_protobuf3.StringValue `protobuf:"bytes,5,opt,name=name" json:"name,omitempty"`
+	Slug    *google_protobuf3.StringValue `protobuf:"bytes,6,opt,name=slug" json:"slug,omitempty"`
+}
+
+func (m *TribeSearchReq) Reset()                    { *m = TribeSearchReq{} }
+func (m *TribeSearchReq) String() string            { return proto.CompactTextString(m) }
+func (*TribeSearchReq) ProtoMessage()               {}
+func (*TribeSearchReq) Descriptor() ([]byte, []int) { return fileDescriptorSpotigraph, []int{32} }
+
+func (m *TribeSearchReq) GetPage() uint32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+func (m *TribeSearchReq) GetPerPage() uint32 {
+	if m != nil {
+		return m.PerPage
+	}
+	return 0
+}
+
+func (m *TribeSearchReq) GetSorts() []string {
+	if m != nil {
+		return m.Sorts
+	}
+	return nil
+}
+
+func (m *TribeSearchReq) GetTribeId() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.TribeId
+	}
+	return nil
+}
+
+func (m *TribeSearchReq) GetName() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Name
+	}
+	return nil
+}
+
+func (m *TribeSearchReq) GetSlug() *google_protobuf3.StringValue {
+	if m != nil {
+		return m.Slug
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Error)(nil), "spotigraph.Error")
 	proto.RegisterType((*EmptyRes)(nil), "spotigraph.EmptyRes")
@@ -886,6 +1282,18 @@ func init() {
 	proto.RegisterType((*SingleChapterRes)(nil), "spotigraph.SingleChapterRes")
 	proto.RegisterType((*PaginatedChapterRes)(nil), "spotigraph.PaginatedChapterRes")
 	proto.RegisterType((*ChapterSearchReq)(nil), "spotigraph.ChapterSearchReq")
+	proto.RegisterType((*GuildCreateReq)(nil), "spotigraph.GuildCreateReq")
+	proto.RegisterType((*GuildGetReq)(nil), "spotigraph.GuildGetReq")
+	proto.RegisterType((*GuildUpdateReq)(nil), "spotigraph.GuildUpdateReq")
+	proto.RegisterType((*SingleGuildRes)(nil), "spotigraph.SingleGuildRes")
+	proto.RegisterType((*PaginatedGuildRes)(nil), "spotigraph.PaginatedGuildRes")
+	proto.RegisterType((*GuildSearchReq)(nil), "spotigraph.GuildSearchReq")
+	proto.RegisterType((*TribeCreateReq)(nil), "spotigraph.TribeCreateReq")
+	proto.RegisterType((*TribeGetReq)(nil), "spotigraph.TribeGetReq")
+	proto.RegisterType((*TribeUpdateReq)(nil), "spotigraph.TribeUpdateReq")
+	proto.RegisterType((*SingleTribeRes)(nil), "spotigraph.SingleTribeRes")
+	proto.RegisterType((*PaginatedTribeRes)(nil), "spotigraph.PaginatedTribeRes")
+	proto.RegisterType((*TribeSearchReq)(nil), "spotigraph.TribeSearchReq")
 }
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
@@ -1915,6 +2323,512 @@ func (m *ChapterSearchReq) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *GuildCreateReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GuildCreateReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Name) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	return i, nil
+}
+
+func (m *GuildGetReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GuildGetReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	return i, nil
+}
+
+func (m *GuildUpdateReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GuildUpdateReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if m.Name != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Name.Size()))
+		n22, err := m.Name.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n22
+	}
+	return i, nil
+}
+
+func (m *SingleGuildRes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SingleGuildRes) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Error != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Error.Size()))
+		n23, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n23
+	}
+	if m.Entity != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Entity.Size()))
+		n24, err := m.Entity.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n24
+	}
+	return i, nil
+}
+
+func (m *PaginatedGuildRes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaginatedGuildRes) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Error != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Error.Size()))
+		n25, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n25
+	}
+	if m.Total != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Total))
+	}
+	if m.PerPage != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.PerPage))
+	}
+	if m.Count != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Count))
+	}
+	if m.CurrentPage != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.CurrentPage))
+	}
+	if len(m.Members) > 0 {
+		for _, msg := range m.Members {
+			dAtA[i] = 0x32
+			i++
+			i = encodeVarintSpotigraph(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
+func (m *GuildSearchReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GuildSearchReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Page != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Page))
+	}
+	if m.PerPage != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.PerPage))
+	}
+	if len(m.Sorts) > 0 {
+		for _, s := range m.Sorts {
+			dAtA[i] = 0x1a
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if m.GuildId != nil {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.GuildId.Size()))
+		n26, err := m.GuildId.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n26
+	}
+	if m.Name != nil {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Name.Size()))
+		n27, err := m.Name.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n27
+	}
+	if m.Slug != nil {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Slug.Size()))
+		n28, err := m.Slug.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n28
+	}
+	return i, nil
+}
+
+func (m *TribeCreateReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TribeCreateReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Name) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	return i, nil
+}
+
+func (m *TribeGetReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TribeGetReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	return i, nil
+}
+
+func (m *TribeUpdateReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TribeUpdateReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(len(m.Id)))
+		i += copy(dAtA[i:], m.Id)
+	}
+	if m.Name != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Name.Size()))
+		n29, err := m.Name.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n29
+	}
+	return i, nil
+}
+
+func (m *SingleTribeRes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SingleTribeRes) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Error != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Error.Size()))
+		n30, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n30
+	}
+	if m.Entity != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Entity.Size()))
+		n31, err := m.Entity.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n31
+	}
+	return i, nil
+}
+
+func (m *PaginatedTribeRes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PaginatedTribeRes) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Error != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Error.Size()))
+		n32, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n32
+	}
+	if m.Total != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Total))
+	}
+	if m.PerPage != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.PerPage))
+	}
+	if m.Count != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Count))
+	}
+	if m.CurrentPage != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.CurrentPage))
+	}
+	if len(m.Members) > 0 {
+		for _, msg := range m.Members {
+			dAtA[i] = 0x32
+			i++
+			i = encodeVarintSpotigraph(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
+func (m *TribeSearchReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TribeSearchReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Page != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Page))
+	}
+	if m.PerPage != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.PerPage))
+	}
+	if len(m.Sorts) > 0 {
+		for _, s := range m.Sorts {
+			dAtA[i] = 0x1a
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if m.TribeId != nil {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.TribeId.Size()))
+		n33, err := m.TribeId.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n33
+	}
+	if m.Name != nil {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Name.Size()))
+		n34, err := m.Name.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n34
+	}
+	if m.Slug != nil {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintSpotigraph(dAtA, i, uint64(m.Slug.Size()))
+		n35, err := m.Slug.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n35
+	}
+	return i, nil
+}
+
 func encodeVarintSpotigraph(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -2360,6 +3274,218 @@ func (m *ChapterSearchReq) Size() (n int) {
 	}
 	if m.ChapterId != nil {
 		l = m.ChapterId.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Name != nil {
+		l = m.Name.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Slug != nil {
+		l = m.Slug.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *GuildCreateReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *GuildGetReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *GuildUpdateReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Name != nil {
+		l = m.Name.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *SingleGuildRes) Size() (n int) {
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Entity != nil {
+		l = m.Entity.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *PaginatedGuildRes) Size() (n int) {
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Total != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Total))
+	}
+	if m.PerPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.PerPage))
+	}
+	if m.Count != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Count))
+	}
+	if m.CurrentPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.CurrentPage))
+	}
+	if len(m.Members) > 0 {
+		for _, e := range m.Members {
+			l = e.Size()
+			n += 1 + l + sovSpotigraph(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *GuildSearchReq) Size() (n int) {
+	var l int
+	_ = l
+	if m.Page != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Page))
+	}
+	if m.PerPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.PerPage))
+	}
+	if len(m.Sorts) > 0 {
+		for _, s := range m.Sorts {
+			l = len(s)
+			n += 1 + l + sovSpotigraph(uint64(l))
+		}
+	}
+	if m.GuildId != nil {
+		l = m.GuildId.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Name != nil {
+		l = m.Name.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Slug != nil {
+		l = m.Slug.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *TribeCreateReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *TribeGetReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *TribeUpdateReq) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Name != nil {
+		l = m.Name.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *SingleTribeRes) Size() (n int) {
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Entity != nil {
+		l = m.Entity.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	return n
+}
+
+func (m *PaginatedTribeRes) Size() (n int) {
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovSpotigraph(uint64(l))
+	}
+	if m.Total != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Total))
+	}
+	if m.PerPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.PerPage))
+	}
+	if m.Count != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Count))
+	}
+	if m.CurrentPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.CurrentPage))
+	}
+	if len(m.Members) > 0 {
+		for _, e := range m.Members {
+			l = e.Size()
+			n += 1 + l + sovSpotigraph(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *TribeSearchReq) Size() (n int) {
+	var l int
+	_ = l
+	if m.Page != 0 {
+		n += 1 + sovSpotigraph(uint64(m.Page))
+	}
+	if m.PerPage != 0 {
+		n += 1 + sovSpotigraph(uint64(m.PerPage))
+	}
+	if len(m.Sorts) > 0 {
+		for _, s := range m.Sorts {
+			l = len(s)
+			n += 1 + l + sovSpotigraph(uint64(l))
+		}
+	}
+	if m.TribeId != nil {
+		l = m.TribeId.Size()
 		n += 1 + l + sovSpotigraph(uint64(l))
 	}
 	if m.Name != nil {
@@ -5761,6 +6887,1590 @@ func (m *ChapterSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *GuildCreateReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GuildCreateReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GuildCreateReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GuildGetReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GuildGetReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GuildGetReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GuildUpdateReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GuildUpdateReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GuildUpdateReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Name == nil {
+				m.Name = &google_protobuf3.StringValue{}
+			}
+			if err := m.Name.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SingleGuildRes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SingleGuildRes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SingleGuildRes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Entity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Entity == nil {
+				m.Entity = &Domain_Guild{}
+			}
+			if err := m.Entity.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaginatedGuildRes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaginatedGuildRes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaginatedGuildRes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Total", wireType)
+			}
+			m.Total = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Total |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PerPage", wireType)
+			}
+			m.PerPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PerPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentPage", wireType)
+			}
+			m.CurrentPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CurrentPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Members", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Members = append(m.Members, &Domain_Guild{})
+			if err := m.Members[len(m.Members)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GuildSearchReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GuildSearchReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GuildSearchReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Page", wireType)
+			}
+			m.Page = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Page |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PerPage", wireType)
+			}
+			m.PerPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PerPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sorts", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sorts = append(m.Sorts, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GuildId", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.GuildId == nil {
+				m.GuildId = &google_protobuf3.StringValue{}
+			}
+			if err := m.GuildId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Name == nil {
+				m.Name = &google_protobuf3.StringValue{}
+			}
+			if err := m.Name.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Slug", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Slug == nil {
+				m.Slug = &google_protobuf3.StringValue{}
+			}
+			if err := m.Slug.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TribeCreateReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TribeCreateReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TribeCreateReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TribeGetReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TribeGetReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TribeGetReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TribeUpdateReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TribeUpdateReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TribeUpdateReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Name == nil {
+				m.Name = &google_protobuf3.StringValue{}
+			}
+			if err := m.Name.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SingleTribeRes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SingleTribeRes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SingleTribeRes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Entity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Entity == nil {
+				m.Entity = &Domain_Tribe{}
+			}
+			if err := m.Entity.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PaginatedTribeRes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PaginatedTribeRes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PaginatedTribeRes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Total", wireType)
+			}
+			m.Total = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Total |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PerPage", wireType)
+			}
+			m.PerPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PerPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentPage", wireType)
+			}
+			m.CurrentPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CurrentPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Members", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Members = append(m.Members, &Domain_Tribe{})
+			if err := m.Members[len(m.Members)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TribeSearchReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSpotigraph
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TribeSearchReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TribeSearchReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Page", wireType)
+			}
+			m.Page = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Page |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PerPage", wireType)
+			}
+			m.PerPage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.PerPage |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sorts", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sorts = append(m.Sorts, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TribeId", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TribeId == nil {
+				m.TribeId = &google_protobuf3.StringValue{}
+			}
+			if err := m.TribeId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Name == nil {
+				m.Name = &google_protobuf3.StringValue{}
+			}
+			if err := m.Name.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Slug", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSpotigraph
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Slug == nil {
+				m.Slug = &google_protobuf3.StringValue{}
+			}
+			if err := m.Slug.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSpotigraph(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSpotigraph
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipSpotigraph(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -5871,56 +8581,63 @@ func init() {
 }
 
 var fileDescriptorSpotigraph = []byte{
-	// 810 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x95, 0x4d, 0x4f, 0x33, 0x55,
-	0x14, 0xc7, 0x33, 0x9d, 0x4e, 0x4b, 0x4f, 0x69, 0x53, 0x2e, 0x1a, 0x6a, 0x83, 0x4d, 0x9d, 0x18,
-	0x21, 0x12, 0x5a, 0x28, 0x12, 0x41, 0x36, 0x0a, 0x22, 0x61, 0x07, 0x53, 0x71, 0xa1, 0x51, 0xbc,
-	0xed, 0x5c, 0x87, 0x09, 0xd3, 0x99, 0xe1, 0xce, 0x1d, 0x08, 0x7e, 0x12, 0x57, 0x7e, 0x10, 0x57,
-	0xee, 0x74, 0xe9, 0xd2, 0xb8, 0x30, 0x86, 0x9d, 0x5b, 0x57, 0x2e, 0x9f, 0xdc, 0x97, 0x69, 0xe7,
-	0x29, 0x3c, 0xd0, 0x36, 0x4d, 0x77, 0xf7, 0xe5, 0x9c, 0xff, 0x39, 0x37, 0xe7, 0xf7, 0x9f, 0x81,
-	0x8d, 0xf0, 0xda, 0x69, 0x85, 0x34, 0x60, 0x41, 0x2f, 0xf0, 0x5a, 0xb7, 0xdb, 0xad, 0x28, 0x0c,
-	0x98, 0xeb, 0x50, 0x1c, 0x5e, 0xa5, 0x96, 0x4d, 0x11, 0x81, 0x60, 0x78, 0x52, 0x5b, 0xb9, 0xc5,
-	0x9e, 0x6b, 0x63, 0x46, 0x5a, 0xc9, 0x42, 0x06, 0xd5, 0xea, 0x4e, 0x10, 0x38, 0x1e, 0x91, 0xa2,
-	0xdd, 0xf8, 0x87, 0xd6, 0x1d, 0xc5, 0x61, 0x48, 0x68, 0x24, 0xef, 0xcd, 0x5d, 0x30, 0x8e, 0x29,
-	0x0d, 0x28, 0x42, 0x90, 0xed, 0x05, 0x36, 0xa9, 0x6a, 0x0d, 0x6d, 0xbd, 0x64, 0x89, 0x35, 0xaa,
-	0x42, 0xbe, 0x4f, 0xa2, 0x08, 0x3b, 0xa4, 0x9a, 0x69, 0x68, 0xeb, 0x05, 0x2b, 0xd9, 0x9a, 0x3b,
-	0xb0, 0x70, 0xdc, 0x0f, 0xd9, 0xbd, 0x45, 0x22, 0xb4, 0x06, 0x06, 0xe1, 0x12, 0x22, 0xb5, 0xd8,
-	0x5e, 0x6a, 0xa6, 0x3a, 0x15, 0xda, 0x96, 0xbc, 0x37, 0x7f, 0xd6, 0x21, 0xf7, 0x79, 0xd0, 0xc7,
-	0xae, 0x5f, 0xfb, 0x02, 0xb2, 0x17, 0x11, 0xa1, 0xa8, 0x0c, 0x19, 0xd7, 0x16, 0x89, 0x05, 0x2b,
-	0xe3, 0xda, 0x68, 0x15, 0x0a, 0x21, 0x75, 0xfd, 0x9e, 0x1b, 0x62, 0x4f, 0xd5, 0x1c, 0x1e, 0xa0,
-	0x0a, 0xe8, 0x31, 0xf5, 0xab, 0xba, 0x38, 0xe7, 0xcb, 0xda, 0x39, 0x18, 0x9d, 0x9b, 0x18, 0xdb,
-	0x8f, 0x84, 0x10, 0x64, 0x7d, 0xdc, 0x4f, 0xfa, 0x16, 0x6b, 0x7e, 0x16, 0x79, 0xb1, 0xa3, 0xf2,
-	0xc5, 0x3a, 0x91, 0xcc, 0x0e, 0x25, 0x3b, 0x90, 0x3f, 0xba, 0xc2, 0x21, 0x7b, 0xa2, 0xbb, 0xe9,
-	0x45, 0xcf, 0xc1, 0x38, 0x89, 0x5d, 0xcf, 0x9e, 0xad, 0xe4, 0x97, 0xd4, 0xed, 0x92, 0xd9, 0x49,
-	0x9a, 0x7b, 0x50, 0xe2, 0x53, 0x39, 0xa2, 0x04, 0x33, 0x62, 0x91, 0x1b, 0xb4, 0x96, 0x1e, 0x87,
-	0xa8, 0x70, 0x58, 0xf8, 0xe5, 0xdf, 0x5f, 0xf5, 0x2c, 0xcd, 0x7c, 0xaf, 0xa5, 0x26, 0x63, 0xee,
-	0x01, 0xf0, 0xcc, 0x13, 0xc2, 0x78, 0xda, 0x87, 0xc3, 0x8e, 0x0e, 0x6b, 0x3c, 0xfe, 0x6d, 0xba,
-	0xdc, 0x2e, 0x7f, 0xf7, 0xcd, 0xd6, 0xe6, 0xfe, 0x67, 0x9b, 0x5f, 0xe3, 0xcd, 0x1f, 0xbf, 0xdd,
-	0x78, 0xff, 0x27, 0xed, 0x53, 0xde, 0xad, 0x79, 0x27, 0x6b, 0x5e, 0x84, 0xb6, 0xaa, 0x39, 0x41,
-	0x32, 0xfa, 0x64, 0x14, 0x97, 0x62, 0x7b, 0xb5, 0x29, 0x89, 0x6f, 0x26, 0xc4, 0x37, 0x3b, 0x8c,
-	0xba, 0xbe, 0xf3, 0x15, 0xf6, 0x62, 0x92, 0x6e, 0xd9, 0x85, 0x52, 0xc7, 0xf5, 0x1d, 0x8f, 0xf0,
-	0xf2, 0x93, 0x70, 0x8c, 0x5a, 0x90, 0x23, 0x3e, 0x73, 0xd9, 0xbd, 0x2a, 0xb9, 0x92, 0x8e, 0x94,
-	0x80, 0x37, 0x85, 0xa8, 0x0a, 0x33, 0xff, 0xd4, 0xa0, 0x72, 0x86, 0x1d, 0xd7, 0xc7, 0x8c, 0xd8,
-	0x13, 0x97, 0x7b, 0x0b, 0x0c, 0x16, 0x30, 0xf5, 0xc0, 0x92, 0x25, 0x37, 0xe8, 0x1d, 0x58, 0x08,
-	0x09, 0xbd, 0x0c, 0xb9, 0x39, 0x75, 0x71, 0x91, 0x0f, 0x09, 0x3d, 0xc3, 0x0e, 0xe1, 0x09, 0xbd,
-	0x20, 0xf6, 0x99, 0x18, 0x6d, 0xc9, 0x92, 0x1b, 0xf4, 0x1e, 0x2c, 0xf6, 0x62, 0x4a, 0x89, 0xcf,
-	0x64, 0x92, 0x21, 0x2e, 0x8b, 0xea, 0x4c, 0x24, 0x6e, 0x73, 0xbf, 0xf7, 0xbb, 0x84, 0x46, 0xd5,
-	0x5c, 0x43, 0x7f, 0xee, 0x65, 0x49, 0x9c, 0xf9, 0x9b, 0x26, 0xe7, 0xd7, 0x21, 0x98, 0xf6, 0xae,
-	0xf8, 0xfc, 0x10, 0x64, 0x85, 0xbe, 0xfa, 0x90, 0xf0, 0xf5, 0x6b, 0xcd, 0x66, 0x1e, 0x35, 0x1b,
-	0x05, 0x94, 0x45, 0x55, 0xbd, 0xa1, 0xaf, 0x17, 0x2c, 0xb9, 0x41, 0xbb, 0x90, 0x8f, 0x23, 0x42,
-	0x2f, 0x5d, 0x5b, 0x3c, 0xe2, 0xa5, 0xb1, 0xe6, 0x78, 0xf0, 0xe9, 0x08, 0x0f, 0xc6, 0x64, 0x3c,
-	0xb4, 0xa0, 0x2c, 0x3e, 0x25, 0x43, 0xfa, 0xdf, 0x55, 0x46, 0x7a, 0x04, 0xbe, 0x38, 0x36, 0xf7,
-	0xa1, 0x28, 0x12, 0xa6, 0x80, 0xde, 0x57, 0xb5, 0xa6, 0xa3, 0x7e, 0x2b, 0x65, 0xf0, 0x97, 0x1e,
-	0x28, 0x5b, 0xbd, 0x86, 0xb2, 0x64, 0x5d, 0x54, 0x9d, 0x88, 0xbe, 0xad, 0x11, 0xd8, 0xab, 0x4f,
-	0x20, 0x21, 0x55, 0x13, 0xda, 0xff, 0xd2, 0x60, 0x69, 0x40, 0xfb, 0xe4, 0x05, 0xe7, 0x87, 0x7b,
-	0x7b, 0x14, 0xf7, 0x37, 0xbf, 0x6d, 0xc0, 0xfb, 0x7f, 0x9a, 0x1a, 0xdd, 0x8c, 0x81, 0xff, 0x18,
-	0x16, 0x22, 0x2e, 0x3b, 0x2e, 0xf1, 0x79, 0x11, 0x7d, 0x3a, 0x84, 0xc1, 0x18, 0x17, 0x06, 0x9e,
-	0x21, 0xfe, 0x05, 0xb9, 0x71, 0x32, 0x78, 0xa4, 0xf9, 0x01, 0x54, 0xd4, 0x2f, 0x71, 0x68, 0x0e,
-	0x94, 0x36, 0x87, 0xc2, 0xec, 0x00, 0x4a, 0x2a, 0x6e, 0x0a, 0x4f, 0x84, 0x83, 0x22, 0xf3, 0x72,
-	0x45, 0x00, 0x15, 0xe9, 0x0a, 0x55, 0x77, 0x22, 0x4c, 0xdb, 0x23, 0xbe, 0xa8, 0x3d, 0xc1, 0x4e,
-	0xa2, 0x9b, 0x38, 0xe3, 0x6f, 0x0d, 0x96, 0x07, 0xce, 0x98, 0xa6, 0xe8, 0xfc, 0xbc, 0xf1, 0xd1,
-	0xa8, 0x37, 0x9e, 0x7b, 0xdf, 0xc0, 0x1d, 0xff, 0x6b, 0x83, 0x21, 0xce, 0xd8, 0x1f, 0x07, 0x00,
-	0x3d, 0x29, 0x3c, 0xae, 0x43, 0x0a, 0x2a, 0x7e, 0x3e, 0x1e, 0x39, 0x5c, 0xfc, 0xfd, 0xa1, 0xae,
-	0xfd, 0xf1, 0x50, 0xd7, 0xfe, 0x79, 0xa8, 0x6b, 0xdd, 0x9c, 0x88, 0xdc, 0x79, 0x15, 0x00, 0x00,
-	0xff, 0xff, 0x1b, 0xf3, 0x80, 0x8e, 0xd1, 0x0b, 0x00, 0x00,
+	// 915 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x57, 0x41, 0x8f, 0xdb, 0x44,
+	0x14, 0x96, 0xe3, 0x38, 0xd9, 0xbc, 0x34, 0xd1, 0x76, 0x0a, 0x6a, 0x88, 0xca, 0x6a, 0xb1, 0x2a,
+	0xba, 0xa2, 0xda, 0x64, 0x9b, 0x52, 0xd1, 0xa5, 0x17, 0xd8, 0x52, 0xaa, 0xde, 0x5a, 0x87, 0x72,
+	0x00, 0x41, 0x99, 0x8d, 0x07, 0xaf, 0x55, 0xc7, 0x76, 0xc7, 0xe3, 0x56, 0xe5, 0x97, 0x70, 0xe2,
+	0x87, 0x70, 0xe2, 0x06, 0x47, 0x8e, 0x88, 0x03, 0x42, 0x7b, 0xe3, 0xca, 0x89, 0x23, 0x9a, 0x37,
+	0xe3, 0xc4, 0x9b, 0x4d, 0x77, 0xe3, 0xc8, 0xb2, 0xf6, 0x36, 0x9e, 0x79, 0xef, 0xfb, 0xde, 0xd3,
+	0xfb, 0xbe, 0xbc, 0x5d, 0xb8, 0x19, 0x3f, 0xf7, 0x86, 0x31, 0x8f, 0x44, 0x34, 0x89, 0x82, 0xe1,
+	0xcb, 0x5b, 0xc3, 0x24, 0x8e, 0x84, 0xef, 0x71, 0x1a, 0x1f, 0xe5, 0x8e, 0x03, 0x8c, 0x20, 0x30,
+	0xbf, 0xe9, 0x5f, 0x7d, 0x49, 0x03, 0xdf, 0xa5, 0x82, 0x0d, 0xb3, 0x83, 0x0a, 0xea, 0x6f, 0x79,
+	0x51, 0xe4, 0x05, 0x4c, 0x81, 0x1e, 0xa6, 0xdf, 0x0f, 0x5f, 0x71, 0x1a, 0xc7, 0x8c, 0x27, 0xea,
+	0xdd, 0xbe, 0x03, 0xd6, 0x03, 0xce, 0x23, 0x4e, 0x08, 0xd4, 0x27, 0x91, 0xcb, 0x7a, 0xc6, 0xb6,
+	0xb1, 0xd3, 0x71, 0xf0, 0x4c, 0x7a, 0xd0, 0x9c, 0xb2, 0x24, 0xa1, 0x1e, 0xeb, 0xd5, 0xb6, 0x8d,
+	0x9d, 0x96, 0x93, 0x7d, 0xda, 0xb7, 0x61, 0xe3, 0xc1, 0x34, 0x16, 0xaf, 0x1d, 0x96, 0x90, 0x1b,
+	0x60, 0x31, 0x09, 0x81, 0xa9, 0xed, 0xd1, 0xe5, 0x41, 0xae, 0x52, 0xc4, 0x76, 0xd4, 0xbb, 0xfd,
+	0x93, 0x09, 0x8d, 0xcf, 0xa2, 0x29, 0xf5, 0xc3, 0xfe, 0xe7, 0x50, 0x7f, 0x9a, 0x30, 0x4e, 0xba,
+	0x50, 0xf3, 0x5d, 0x4c, 0x6c, 0x39, 0x35, 0xdf, 0x25, 0xd7, 0xa0, 0x15, 0x73, 0x3f, 0x9c, 0xf8,
+	0x31, 0x0d, 0x34, 0xe7, 0xfc, 0x82, 0x6c, 0x82, 0x99, 0xf2, 0xb0, 0x67, 0xe2, 0xbd, 0x3c, 0xf6,
+	0x9f, 0x80, 0x35, 0x7e, 0x91, 0x52, 0xf7, 0x14, 0x10, 0x81, 0x7a, 0x48, 0xa7, 0x59, 0xdd, 0x78,
+	0x96, 0x77, 0x49, 0x90, 0x7a, 0x3a, 0x1f, 0xcf, 0x19, 0x64, 0x7d, 0x0e, 0x39, 0x86, 0xe6, 0xfd,
+	0x23, 0x1a, 0x8b, 0x25, 0xd5, 0xad, 0x0f, 0xfa, 0x04, 0xac, 0x87, 0xa9, 0x1f, 0xb8, 0xe5, 0x42,
+	0x7e, 0xc1, 0xfd, 0x43, 0x56, 0x1e, 0xa4, 0x7d, 0x17, 0x3a, 0x72, 0x2a, 0xf7, 0x39, 0xa3, 0x82,
+	0x39, 0xec, 0x05, 0xb9, 0x91, 0x1f, 0x07, 0x32, 0x1c, 0xb4, 0x7e, 0xfe, 0xe7, 0x17, 0xb3, 0xce,
+	0x6b, 0xdf, 0x19, 0xb9, 0xc9, 0xd8, 0x77, 0x01, 0x64, 0xe6, 0x43, 0x26, 0x64, 0xda, 0x07, 0xf3,
+	0x8a, 0x0e, 0xfa, 0x32, 0xfe, 0x6d, 0x7e, 0x65, 0xd4, 0xfd, 0xf6, 0xeb, 0xbd, 0xdd, 0xfd, 0x4f,
+	0x77, 0xbf, 0xa2, 0xbb, 0x3f, 0x7c, 0x73, 0xf3, 0xfa, 0x8f, 0xc6, 0x27, 0xb2, 0x5a, 0xfb, 0x95,
+	0xe2, 0x7c, 0x1a, 0xbb, 0x9a, 0xb3, 0x40, 0x32, 0xf9, 0x78, 0x51, 0x2e, 0xed, 0xd1, 0xb5, 0x81,
+	0x52, 0xfc, 0x20, 0x53, 0xfc, 0x60, 0x2c, 0xb8, 0x1f, 0x7a, 0x5f, 0xd2, 0x20, 0x65, 0xf9, 0x92,
+	0x7d, 0xe8, 0x8c, 0xfd, 0xd0, 0x0b, 0x98, 0xa4, 0x2f, 0xa2, 0x63, 0x32, 0x84, 0x06, 0x0b, 0x85,
+	0x2f, 0x5e, 0x6b, 0xca, 0xab, 0xf9, 0x48, 0x25, 0xf0, 0x01, 0x82, 0xea, 0x30, 0xfb, 0x0f, 0x03,
+	0x36, 0x1f, 0x53, 0xcf, 0x0f, 0xa9, 0x60, 0x6e, 0x61, 0xba, 0xb7, 0xc0, 0x12, 0x91, 0xd0, 0x0d,
+	0x76, 0x1c, 0xf5, 0x41, 0xde, 0x81, 0x8d, 0x98, 0xf1, 0x67, 0xb1, 0x34, 0xa7, 0x89, 0x0f, 0xcd,
+	0x98, 0xf1, 0xc7, 0xd4, 0x63, 0x32, 0x61, 0x12, 0xa5, 0xa1, 0xc0, 0xd1, 0x76, 0x1c, 0xf5, 0x41,
+	0xde, 0x83, 0x4b, 0x93, 0x94, 0x73, 0x16, 0x0a, 0x95, 0x64, 0xe1, 0x63, 0x5b, 0xdf, 0x61, 0xe2,
+	0x2d, 0xe9, 0xf7, 0xe9, 0x21, 0xe3, 0x49, 0xaf, 0xb1, 0x6d, 0x9e, 0xd5, 0x59, 0x16, 0x67, 0xff,
+	0x6a, 0xa8, 0xf9, 0x8d, 0x19, 0xe5, 0x93, 0x23, 0x39, 0x3f, 0x02, 0x75, 0xc4, 0xd7, 0x3f, 0x24,
+	0xf2, 0x7c, 0xa2, 0xd8, 0xda, 0xa9, 0x62, 0x93, 0x88, 0x8b, 0xa4, 0x67, 0x6e, 0x9b, 0x3b, 0x2d,
+	0x47, 0x7d, 0x90, 0x3b, 0xd0, 0x4c, 0x13, 0xc6, 0x9f, 0xf9, 0x2e, 0x36, 0x71, 0xde, 0x58, 0x1b,
+	0x32, 0xf8, 0xd1, 0x82, 0x1e, 0xac, 0x62, 0x7a, 0x18, 0x42, 0x17, 0x7f, 0x4a, 0xe6, 0xea, 0x7f,
+	0x57, 0x1b, 0xe9, 0x94, 0xf0, 0xf1, 0xda, 0xde, 0x87, 0x36, 0x26, 0xac, 0x21, 0xfa, 0x50, 0x73,
+	0xad, 0xa7, 0xfa, 0xbd, 0x9c, 0xc1, 0xcf, 0x6b, 0x50, 0x95, 0xfa, 0x1c, 0xba, 0x4a, 0xeb, 0xc8,
+	0x5a, 0x48, 0x7d, 0x7b, 0x0b, 0x62, 0xef, 0x2d, 0x91, 0x84, 0x42, 0xcd, 0xd4, 0xfe, 0xa7, 0x01,
+	0x97, 0x67, 0x6a, 0x2f, 0x4e, 0x58, 0x9d, 0xdc, 0x47, 0x8b, 0x72, 0x7f, 0x73, 0x6f, 0x33, 0xbd,
+	0xff, 0x6b, 0xe8, 0xd1, 0x95, 0x2c, 0xf8, 0x8f, 0x60, 0x23, 0x91, 0xb0, 0xab, 0x2a, 0xbe, 0x89,
+	0xd1, 0x8f, 0xe6, 0x62, 0xb0, 0x56, 0x15, 0x83, 0xcc, 0xc0, 0x5d, 0xd0, 0x58, 0x25, 0x43, 0x46,
+	0xda, 0xef, 0xc3, 0xa6, 0x5e, 0x89, 0x73, 0x73, 0x90, 0xbc, 0x39, 0xb4, 0xcc, 0xee, 0x41, 0x47,
+	0xc7, 0xad, 0xe1, 0x89, 0x78, 0x46, 0x52, 0x95, 0x2b, 0x22, 0xd8, 0x54, 0xae, 0xd0, 0xbc, 0x85,
+	0x64, 0x3a, 0x5a, 0xf0, 0x45, 0x7f, 0x89, 0x76, 0x32, 0xdc, 0xcc, 0x19, 0x7f, 0x19, 0x70, 0x65,
+	0xe6, 0x8c, 0x75, 0x48, 0xab, 0xf3, 0xc6, 0x87, 0x8b, 0xde, 0x38, 0xab, 0xbf, 0x99, 0x3b, 0xfe,
+	0x33, 0x66, 0x43, 0x2c, 0xd9, 0x1f, 0xf7, 0x00, 0x26, 0x0a, 0x78, 0x55, 0x87, 0xb4, 0x74, 0x7c,
+	0x45, 0x1e, 0xb9, 0x0e, 0x5d, 0xfc, 0x0b, 0xef, 0x6c, 0x87, 0xec, 0x43, 0x1b, 0xa3, 0xd6, 0xdb,
+	0x19, 0x98, 0x5a, 0xf9, 0xce, 0x40, 0xd6, 0xd2, 0x77, 0x86, 0x42, 0x5d, 0xba, 0x33, 0x8a, 0x13,
+	0x5e, 0xb0, 0x9d, 0xa1, 0x1a, 0x38, 0xb1, 0x33, 0xf0, 0xaa, 0xfc, 0x9d, 0xe1, 0x49, 0xd8, 0x95,
+	0x77, 0x06, 0x46, 0x57, 0xe7, 0x07, 0xfc, 0xf7, 0xe4, 0x5c, 0x3f, 0x60, 0xd4, 0x7a, 0x7e, 0xc0,
+	0xd4, 0xca, 0xfd, 0x80, 0xac, 0xa5, 0xfb, 0x41, 0xa1, 0x2e, 0xf5, 0x43, 0x71, 0xc2, 0x0b, 0xe6,
+	0x07, 0xd5, 0xc0, 0x09, 0x3f, 0xe0, 0x55, 0xf9, 0x7e, 0x10, 0x12, 0x76, 0x65, 0x3f, 0x60, 0x74,
+	0x35, 0x7e, 0x38, 0xb8, 0xf4, 0xdb, 0xf1, 0x96, 0xf1, 0xfb, 0xf1, 0x96, 0xf1, 0xf7, 0xf1, 0x96,
+	0x71, 0xd8, 0xc0, 0xc8, 0xdb, 0xff, 0x07, 0x00, 0x00, 0xff, 0xff, 0xe0, 0x22, 0x45, 0x50, 0xf1,
+	0x11, 0x00, 0x00,
 }

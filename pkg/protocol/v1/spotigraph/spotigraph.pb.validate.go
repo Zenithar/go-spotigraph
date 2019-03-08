@@ -1913,6 +1913,1056 @@ var _ interface {
 	ErrorName() string
 } = ChapterSearchReqValidationError{}
 
+// Validate checks the field values on GuildCreateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GuildCreateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// GuildCreateReqValidationError is the validation error returned by
+// GuildCreateReq.Validate if the designated constraints aren't met.
+type GuildCreateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GuildCreateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GuildCreateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GuildCreateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GuildCreateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GuildCreateReqValidationError) ErrorName() string { return "GuildCreateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GuildCreateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGuildCreateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GuildCreateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GuildCreateReqValidationError{}
+
+// Validate checks the field values on GuildGetReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GuildGetReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return GuildGetReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_GuildGetReq_Id_Pattern.MatchString(m.GetId()) {
+		return GuildGetReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// GuildGetReqValidationError is the validation error returned by
+// GuildGetReq.Validate if the designated constraints aren't met.
+type GuildGetReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GuildGetReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GuildGetReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GuildGetReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GuildGetReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GuildGetReqValidationError) ErrorName() string { return "GuildGetReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GuildGetReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGuildGetReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GuildGetReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GuildGetReqValidationError{}
+
+var _GuildGetReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on GuildUpdateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GuildUpdateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return GuildUpdateReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_GuildUpdateReq_Id_Pattern.MatchString(m.GetId()) {
+		return GuildUpdateReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GuildUpdateReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// GuildUpdateReqValidationError is the validation error returned by
+// GuildUpdateReq.Validate if the designated constraints aren't met.
+type GuildUpdateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GuildUpdateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GuildUpdateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GuildUpdateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GuildUpdateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GuildUpdateReqValidationError) ErrorName() string { return "GuildUpdateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GuildUpdateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGuildUpdateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GuildUpdateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GuildUpdateReqValidationError{}
+
+var _GuildUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on SingleGuildRes with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SingleGuildRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleGuildResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleGuildResValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SingleGuildResValidationError is the validation error returned by
+// SingleGuildRes.Validate if the designated constraints aren't met.
+type SingleGuildResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SingleGuildResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SingleGuildResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SingleGuildResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SingleGuildResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SingleGuildResValidationError) ErrorName() string { return "SingleGuildResValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SingleGuildResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSingleGuildRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SingleGuildResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SingleGuildResValidationError{}
+
+// Validate checks the field values on PaginatedGuildRes with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *PaginatedGuildRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PaginatedGuildResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Total
+
+	// no validation rules for PerPage
+
+	// no validation rules for Count
+
+	// no validation rules for CurrentPage
+
+	for idx, item := range m.GetMembers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedGuildResValidationError{
+					field:  fmt.Sprintf("Members[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PaginatedGuildResValidationError is the validation error returned by
+// PaginatedGuildRes.Validate if the designated constraints aren't met.
+type PaginatedGuildResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PaginatedGuildResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PaginatedGuildResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PaginatedGuildResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PaginatedGuildResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PaginatedGuildResValidationError) ErrorName() string {
+	return "PaginatedGuildResValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PaginatedGuildResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPaginatedGuildRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PaginatedGuildResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PaginatedGuildResValidationError{}
+
+// Validate checks the field values on GuildSearchReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GuildSearchReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Page
+
+	// no validation rules for PerPage
+
+	if v, ok := interface{}(m.GetGuildId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GuildSearchReqValidationError{
+				field:  "GuildId",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GuildSearchReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GuildSearchReqValidationError{
+				field:  "Slug",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// GuildSearchReqValidationError is the validation error returned by
+// GuildSearchReq.Validate if the designated constraints aren't met.
+type GuildSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GuildSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GuildSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GuildSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GuildSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GuildSearchReqValidationError) ErrorName() string { return "GuildSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GuildSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGuildSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GuildSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GuildSearchReqValidationError{}
+
+// Validate checks the field values on TribeCreateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *TribeCreateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// TribeCreateReqValidationError is the validation error returned by
+// TribeCreateReq.Validate if the designated constraints aren't met.
+type TribeCreateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TribeCreateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TribeCreateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TribeCreateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TribeCreateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TribeCreateReqValidationError) ErrorName() string { return "TribeCreateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TribeCreateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTribeCreateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TribeCreateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TribeCreateReqValidationError{}
+
+// Validate checks the field values on TribeGetReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *TribeGetReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return TribeGetReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_TribeGetReq_Id_Pattern.MatchString(m.GetId()) {
+		return TribeGetReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// TribeGetReqValidationError is the validation error returned by
+// TribeGetReq.Validate if the designated constraints aren't met.
+type TribeGetReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TribeGetReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TribeGetReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TribeGetReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TribeGetReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TribeGetReqValidationError) ErrorName() string { return "TribeGetReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TribeGetReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTribeGetReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TribeGetReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TribeGetReqValidationError{}
+
+var _TribeGetReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on TribeUpdateReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *TribeUpdateReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) != 64 {
+		return TribeUpdateReqValidationError{
+			field:  "Id",
+			reason: "value length must be 64 runes",
+		}
+
+	}
+
+	if !_TribeUpdateReq_Id_Pattern.MatchString(m.GetId()) {
+		return TribeUpdateReqValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TribeUpdateReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// TribeUpdateReqValidationError is the validation error returned by
+// TribeUpdateReq.Validate if the designated constraints aren't met.
+type TribeUpdateReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TribeUpdateReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TribeUpdateReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TribeUpdateReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TribeUpdateReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TribeUpdateReqValidationError) ErrorName() string { return "TribeUpdateReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TribeUpdateReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTribeUpdateReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TribeUpdateReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TribeUpdateReqValidationError{}
+
+var _TribeUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on SingleTribeRes with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SingleTribeRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleTribeResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SingleTribeResValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SingleTribeResValidationError is the validation error returned by
+// SingleTribeRes.Validate if the designated constraints aren't met.
+type SingleTribeResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SingleTribeResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SingleTribeResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SingleTribeResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SingleTribeResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SingleTribeResValidationError) ErrorName() string { return "SingleTribeResValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SingleTribeResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSingleTribeRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SingleTribeResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SingleTribeResValidationError{}
+
+// Validate checks the field values on PaginatedTribeRes with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *PaginatedTribeRes) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PaginatedTribeResValidationError{
+				field:  "Error",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Total
+
+	// no validation rules for PerPage
+
+	// no validation rules for Count
+
+	// no validation rules for CurrentPage
+
+	for idx, item := range m.GetMembers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedTribeResValidationError{
+					field:  fmt.Sprintf("Members[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// PaginatedTribeResValidationError is the validation error returned by
+// PaginatedTribeRes.Validate if the designated constraints aren't met.
+type PaginatedTribeResValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PaginatedTribeResValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PaginatedTribeResValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PaginatedTribeResValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PaginatedTribeResValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PaginatedTribeResValidationError) ErrorName() string {
+	return "PaginatedTribeResValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PaginatedTribeResValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPaginatedTribeRes.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PaginatedTribeResValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PaginatedTribeResValidationError{}
+
+// Validate checks the field values on TribeSearchReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *TribeSearchReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Page
+
+	// no validation rules for PerPage
+
+	if v, ok := interface{}(m.GetTribeId()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TribeSearchReqValidationError{
+				field:  "TribeId",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TribeSearchReqValidationError{
+				field:  "Name",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TribeSearchReqValidationError{
+				field:  "Slug",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// TribeSearchReqValidationError is the validation error returned by
+// TribeSearchReq.Validate if the designated constraints aren't met.
+type TribeSearchReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TribeSearchReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TribeSearchReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TribeSearchReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TribeSearchReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TribeSearchReqValidationError) ErrorName() string { return "TribeSearchReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TribeSearchReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTribeSearchReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TribeSearchReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TribeSearchReqValidationError{}
+
 // Validate checks the field values on Domain_User with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.

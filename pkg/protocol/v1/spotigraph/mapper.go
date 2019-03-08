@@ -60,3 +60,43 @@ func FromChapters(entities []*models.Chapter) []*Domain_Chapter {
 	}
 	return collection
 }
+
+// ---------------------------------------------------------------------------
+
+// FromGuild returns a DTO instance from entity one
+func FromGuild(entity *models.Guild) *Domain_Guild {
+	return &Domain_Guild{
+		Id:   entity.ID,
+		Name: entity.Name,
+		Urn:  entity.URN(),
+	}
+}
+
+// FromGuilds returns a DTO collection from model collection
+func FromGuilds(entities []*models.Guild) []*Domain_Guild {
+	collection := make([]*Domain_Guild, len(entities))
+	for k, v := range entities {
+		collection[k] = FromGuild(v)
+	}
+	return collection
+}
+
+// ---------------------------------------------------------------------------
+
+// FromTribe returns a DTO instance from entity one
+func FromTribe(entity *models.Tribe) *Domain_Tribe {
+	return &Domain_Tribe{
+		Id:   entity.ID,
+		Name: entity.Name,
+		Urn:  entity.URN(),
+	}
+}
+
+// FromTribes returns a DTO collection from model collection
+func FromTribes(entities []*models.Tribe) []*Domain_Tribe {
+	collection := make([]*Domain_Tribe, len(entities))
+	for k, v := range entities {
+		collection[k] = FromTribe(v)
+	}
+	return collection
+}
