@@ -26,18 +26,44 @@ func mustExists(finder EntityRetrieverFunc) func(ctx context.Context) error {
 
 // UserMustExists specification checks if given user exists
 func UserMustExists(users repositories.User, id string, entity *models.User) func(ctx context.Context) error {
+	var err error
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
-			return users.Get(ctx, id)
+			entity, err = users.Get(ctx, id)
+			return entity, err
 		},
 	)
 }
 
 // SquadMustExists specification checks if given squad exists
 func SquadMustExists(squads repositories.Squad, id string, entity *models.Squad) func(ctx context.Context) error {
+	var err error
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
-			return squads.Get(ctx, id)
+			entity, err = squads.Get(ctx, id)
+			return entity, err
+		},
+	)
+}
+
+// ChapterMustExists specification checks if given chapter exists
+func ChapterMustExists(chapters repositories.Chapter, id string, entity *models.Chapter) func(ctx context.Context) error {
+	var err error
+	return mustExists(
+		func(ctx context.Context) (interface{}, error) {
+			entity, err = chapters.Get(ctx, id)
+			return entity, err
+		},
+	)
+}
+
+// TribeMustExists specification checks if given tribe exists
+func TribeMustExists(tribes repositories.Tribe, id string, entity *models.Tribe) func(ctx context.Context) error {
+	var err error
+	return mustExists(
+		func(ctx context.Context) (interface{}, error) {
+			entity, err = tribes.Get(ctx, id)
+			return entity, err
 		},
 	)
 }

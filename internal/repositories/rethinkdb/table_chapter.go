@@ -65,3 +65,18 @@ func (r *rdbChapterRepository) Delete(ctx context.Context, id string) error {
 func (r *rdbChapterRepository) Search(ctx context.Context, filter *repositories.ChapterSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Chapter, int, error) {
 	panic("Not implemented")
 }
+
+func (r *rdbChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {
+	var entity models.Chapter
+
+	// Do the query
+	err := r.adapter.FindOneBy(ctx, "name", name, &entity)
+	if err != nil {
+		log.For(ctx).Error("Unable to query database", zap.Error(err))
+		return nil, err
+	}
+
+	// Return result
+	return &entity, nil
+}
+

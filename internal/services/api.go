@@ -21,3 +21,11 @@ type Squad interface {
 	Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*spotigraph.SingleSquadRes, error)
 	Delete(ctx context.Context, req *spotigraph.SquadGetReq) (*spotigraph.EmptyRes, error)
 }
+
+// Chapter defines chapter service contract
+type Chapter interface {
+	Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (*spotigraph.SingleChapterRes, error)
+	Get(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.SingleChapterRes, error)
+	Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (*spotigraph.SingleChapterRes, error)
+	Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error)
+}

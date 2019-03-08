@@ -37,6 +37,7 @@ type Chapter interface {
 	Update(ctx context.Context, entity *models.Chapter) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *ChapterSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Chapter, int, error)
+	FindByName(ctx context.Context, name string) (*models.Chapter, error)
 }
 
 // GuildSearchFilter represents guild entity collection search criteria
@@ -53,6 +54,7 @@ type Guild interface {
 	Update(ctx context.Context, entity *models.Guild) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *GuildSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Guild, int, error)
+	FindByName(ctx context.Context, name string) (*models.Guild, error)
 }
 
 // SquadSearchFilter represents squad entity collection search criteria
@@ -86,4 +88,5 @@ type Tribe interface {
 	Update(ctx context.Context, entity *models.Tribe) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *TribeSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Tribe, int, error)
+	FindByName(ctx context.Context, name string) (*models.Tribe, error)
 }

@@ -65,3 +65,17 @@ func (r *rdbTribeRepository) Delete(ctx context.Context, id string) error {
 func (r *rdbTribeRepository) Search(ctx context.Context, filter *repositories.TribeSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Tribe, int, error) {
 	panic("Not implemented")
 }
+
+func (r *rdbTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {
+	var entity models.Tribe
+
+	// Do the query
+	err := r.adapter.FindOneBy(ctx, "name", name, &entity)
+	if err != nil {
+		log.For(ctx).Error("Unable to query database", zap.Error(err))
+		return nil, err
+	}
+
+	// Return result
+	return &entity, nil
+}

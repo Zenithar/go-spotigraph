@@ -39,3 +39,19 @@ func SquadNameMustBeUnique(squads repositories.Squad, name string) func(ctx cont
 			return squads.FindByName(ctx, name)
 		}, "Squad name")
 }
+
+// ChapterNameMustBeUnique returns specification for chapter name uniqueness
+func ChapterNameMustBeUnique(chapters repositories.Chapter, name string) func(ctx context.Context) error {
+	return mustBeUnique(
+		func(ctx context.Context) (interface{}, error) {
+			return chapters.FindByName(ctx, name)
+		}, "Chapter name")
+}
+
+// TribeNameMustBeUnique returns specification for tribe name uniqueness
+func TribeNameMustBeUnique(tribes repositories.Tribe, name string) func(ctx context.Context) error {
+	return mustBeUnique(
+		func(ctx context.Context) (interface{}, error) {
+			return tribes.FindByName(ctx, name)
+		}, "Tribe name")
+}
