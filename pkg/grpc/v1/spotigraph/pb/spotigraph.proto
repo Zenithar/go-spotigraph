@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package pb;
+
+import "pkg/protocol/v1/spotigraph/spotigraph.proto";
+
+service UserService {
+    rpc Create(spotigraph.UserCreateReq) returns (spotigraph.SingleUserRes);
+    rpc Get(spotigraph.UserGetReq) returns (spotigraph.SingleUserRes);
+    rpc Update(spotigraph.UserUpdateReq) returns (spotigraph.SingleUserRes);
+    rpc Delete(spotigraph.UserGetReq) returns (spotigraph.EmptyRes);
+}
+
+service SquadService {
+    rpc Create(spotigraph.SquadCreateReq) returns (spotigraph.SingleSquadRes);
+    rpc Get(spotigraph.SquadGetReq) returns (spotigraph.SingleSquadRes);
+    rpc Update(spotigraph.SquadUpdateReq) returns (spotigraph.SingleSquadRes);
+    rpc Delete(spotigraph.SquadGetReq) returns (spotigraph.EmptyRes);
+}
+
+service ChapterService {
+    rpc Create(spotigraph.ChapterCreateReq) returns (spotigraph.SingleChapterRes);
+    rpc Get(spotigraph.ChapterGetReq) returns (spotigraph.SingleChapterRes);
+    rpc Update(spotigraph.ChapterUpdateReq) returns (spotigraph.SingleChapterRes);
+    rpc Delete(spotigraph.ChapterGetReq) returns (spotigraph.EmptyRes);
+}
+
+service GuildService {
+    rpc Create(spotigraph.GuildCreateReq) returns (spotigraph.SingleGuildRes);
+    rpc Get(spotigraph.GuildGetReq) returns (spotigraph.SingleGuildRes);
+    rpc Update(spotigraph.GuildUpdateReq) returns (spotigraph.SingleGuildRes);
+    rpc Delete(spotigraph.GuildGetReq) returns (spotigraph.EmptyRes);
+}
+
+service TribeService {
+    rpc Create(spotigraph.TribeCreateReq) returns (spotigraph.SingleTribeRes);
+    rpc Get(spotigraph.TribeGetReq) returns (spotigraph.SingleTribeRes);
+    rpc Update(spotigraph.TribeUpdateReq) returns (spotigraph.SingleTribeRes);
+    rpc Delete(spotigraph.TribeGetReq) returns (spotigraph.EmptyRes);
+}
