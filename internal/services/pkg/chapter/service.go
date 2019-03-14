@@ -1,4 +1,4 @@
-package Chapter
+package chapter
 
 import (
 	"context"

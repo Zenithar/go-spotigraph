@@ -79,4 +79,3 @@ func (r *rdbChapterRepository) FindByName(ctx context.Context, name string) (*mo
 	// Return result
 	return &entity, nil
 }
-

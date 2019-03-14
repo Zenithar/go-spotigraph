@@ -1,4 +1,4 @@
-package Tribe
+package tribe
 
 import (
 	"context"

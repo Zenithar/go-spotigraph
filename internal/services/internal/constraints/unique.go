@@ -40,6 +40,14 @@ func SquadNameMustBeUnique(squads repositories.Squad, name string) func(ctx cont
 		}, "Squad name")
 }
 
+// GuildNameMustBeUnique returns specification for chapter name uniqueness
+func GuildNameMustBeUnique(guilds repositories.Guild, name string) func(ctx context.Context) error {
+	return mustBeUnique(
+		func(ctx context.Context) (interface{}, error) {
+			return guilds.FindByName(ctx, name)
+		}, "Guild name")
+}
+
 // ChapterNameMustBeUnique returns specification for chapter name uniqueness
 func ChapterNameMustBeUnique(chapters repositories.Chapter, name string) func(ctx context.Context) error {
 	return mustBeUnique(

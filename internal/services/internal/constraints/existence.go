@@ -46,6 +46,17 @@ func SquadMustExists(squads repositories.Squad, id string, entity *models.Squad)
 	)
 }
 
+// GuildMustExists specification checks if given guild exists
+func GuildMustExists(guilds repositories.Guild, id string, entity *models.Guild) func(ctx context.Context) error {
+	var err error
+	return mustExists(
+		func(ctx context.Context) (interface{}, error) {
+			entity, err = guilds.Get(ctx, id)
+			return entity, err
+		},
+	)
+}
+
 // ChapterMustExists specification checks if given chapter exists
 func ChapterMustExists(chapters repositories.Chapter, id string, entity *models.Chapter) func(ctx context.Context) error {
 	var err error
