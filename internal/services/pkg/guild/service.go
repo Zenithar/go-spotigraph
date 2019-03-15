@@ -142,6 +142,9 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 
 	if req.Name != nil {
 		if err := constraints.Validate(ctx,
+			// Check acceptable name value
+			constraints.MustBeAName(req.Name.Value),
+			// Is already used ?
 			constraints.GuildNameMustBeUnique(s.Guilds, req.Name.Value),
 		); err != nil {
 			res.Error = &spotigraph.Error{
