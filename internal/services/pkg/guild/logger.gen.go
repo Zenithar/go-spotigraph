@@ -4,7 +4,7 @@ package guild
 // This code is generated with http://github.com/hexdigest/gowrap tool
 // using ../../../../tools/templates/logger template
 
-//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Guild -t ../../../../tools/templates/logger -o service.logger.gen.go
+//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Guild -t ../../../../tools/templates/logger -o logger.gen.go
 
 import (
 	"context"
@@ -22,7 +22,7 @@ type GuildLogger struct {
 }
 
 // NewGuildLogger instruments an implementation of the services.Guild with simple logging
-func NewGuildLogger(base services.Guild, logger log.LoggerFactory) GuildLogger {
+func NewGuildLogger(base services.Guild, logger log.Logger) GuildLogger {
 	return GuildLogger{
 		_base: base,
 		_log:  logger.With(zap.String("decorator", "logger")),

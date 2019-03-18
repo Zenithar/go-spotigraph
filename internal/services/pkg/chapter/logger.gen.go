@@ -4,7 +4,7 @@ package chapter
 // This code is generated with http://github.com/hexdigest/gowrap tool
 // using ../../../../tools/templates/logger template
 
-//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Chapter -t ../../../../tools/templates/logger -o chapter.logger.go
+//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Chapter -t ../../../../tools/templates/logger -o logger.gen.go
 
 import (
 	"context"
