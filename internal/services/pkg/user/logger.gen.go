@@ -22,7 +22,7 @@ type UserLogger struct {
 }
 
 // NewUserLogger instruments an implementation of the services.User with simple logging
-func NewUserLogger(base services.User, logger log.LoggerFactory) UserLogger {
+func NewUserLogger(base services.User, logger log.Logger) UserLogger {
 	return UserLogger{
 		_base: base,
 		_log:  logger.With(zap.String("decorator", "logger")),

@@ -22,7 +22,7 @@ type SquadLogger struct {
 }
 
 // NewSquadLogger instruments an implementation of the services.Squad with simple logging
-func NewSquadLogger(base services.Squad, logger log.LoggerFactory) SquadLogger {
+func NewSquadLogger(base services.Squad, logger log.Logger) SquadLogger {
 	return SquadLogger{
 		_base: base,
 		_log:  logger.With(zap.String("decorator", "logger")),

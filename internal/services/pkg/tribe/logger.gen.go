@@ -22,7 +22,7 @@ type TribeLogger struct {
 }
 
 // NewTribeLogger instruments an implementation of the services.Tribe with simple logging
-func NewTribeLogger(base services.Tribe, logger log.LoggerFactory) TribeLogger {
+func NewTribeLogger(base services.Tribe, logger log.Logger) TribeLogger {
 	return TribeLogger{
 		_base: base,
 		_log:  logger.With(zap.String("decorator", "logger")),

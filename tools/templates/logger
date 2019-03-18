@@ -14,7 +14,7 @@ type {{$decorator}} struct {
 }
 
 // New{{$decorator}} instruments an implementation of the {{.Interface.Type}} with simple logging
-func New{{$decorator}}(base {{.Interface.Type}}, logger log.LoggerFactory) {{$decorator}} {
+func New{{$decorator}}(base {{.Interface.Type}}, logger log.Logger) {{$decorator}} {
   return {{$decorator}}{
     _base: base,
     _log: logger.With(zap.String("decorator", "logger")),
