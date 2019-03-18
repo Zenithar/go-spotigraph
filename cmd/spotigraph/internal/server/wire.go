@@ -11,7 +11,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 )
 
-var serviceSet = wire.Set(
+var serviceSet = wire.NewSet(
 	user.New,
 	chapter.New,
 	squad.New,

@@ -3,12 +3,11 @@ package metrics
 import (
 	"context"
 
-	"go.zenithar.org/pkg/db"
-
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
 	"go.opencensus.io/stats"
+	"go.zenithar.org/pkg/db"
 )
 
 // -----------------------------------------------------------------------------

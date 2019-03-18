@@ -1,0 +1,49 @@
+import (
+  "io"
+
+  "go.uber.org/zap"
+  "go.zenithar.org/pkg/log"
+)
+
+{{ $decorator := (or .Vars.DecoratorName (printf "%sLogger" .Interface.Name)) }}
+
+// {{$decorator}} implements {{.Interface.Type}} that is instrumented with logger
+type {{$decorator}} struct {
+  _log log.Logger
+  _base {{.Interface.Type}}
+}
+
+// New{{$decorator}} instruments an implementation of the {{.Interface.Type}} with simple logging
+func New{{$decorator}}(base {{.Interface.Type}}, logger log.LoggerFactory) {{$decorator}} {
+  return {{$decorator}}{
+    _base: base,
+    _log: logger.With(zap.String("decorator", "logger")),
+  }
+}
+
+{{range $method := .Interface.Methods}}
+  // {{$method.Name}} implements {{$.Interface.Type}}
+  func (_d {{$decorator}}) {{$method.Declaration}} {
+      {{- if $method.HasParams}}
+        _d._log.Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
+      {{else}}
+        _d._log.Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
+      {{end -}}
+      defer func() {
+        {{- if $method.HasResults}}
+          {{- if $method.ReturnsError}}
+            if err != nil {
+              _d._log.Error("{{$decorator}}: method {{$method.Name}} returned an error", zap.String("method", "{{$method.Name}}"), zap.Error(err), zap.Any("result", {{$method.ResultsMap}}))
+            } else {
+              _d._log.Error("{{$decorator}}: method {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"), zap.Any("result", {{$method.ResultsMap}}))
+            }
+          {{else}}
+            _d._log.Debug("{{$decorator}}: calling {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
+          {{end -}}
+        {{else}}
+          _d._log.Debug("{{$decorator}}: {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
+        {{end -}}
+      }()
+      {{ $method.Pass "_d._base." }}
+  }
+{{end}}
