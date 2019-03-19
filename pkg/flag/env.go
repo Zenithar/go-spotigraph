@@ -31,8 +31,8 @@ import (
 	"strconv"
 	"strings"
 
-	"go.zenithar.org/pkg/log"
 	"github.com/fatih/structs"
+	"go.zenithar.org/pkg/log"
 )
 
 // AsEnvVariables sets struct values from environment variables

@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
-    "go.zenithar.org/spotigraph/pkg/flag"
-    
+	"go.zenithar.org/spotigraph/pkg/flag"
+
 	defaults "github.com/mcuadros/go-defaults"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -42,9 +42,8 @@ func Execute() error {
 // -----------------------------------------------------------------------------
 
 var (
-	cfgFile     string
-	autoMigrate bool
-	conf        = &config.Configuration{}
+	cfgFile string
+	conf    = &config.Configuration{}
 )
 
 // -----------------------------------------------------------------------------

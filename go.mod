@@ -5,7 +5,6 @@ go 1.12
 require (
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
-	github.com/dgraph-io/dgo v0.0.0-20190306204622-95299da439fd
 	github.com/fatih/structs v1.1.0
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/gogo/protobuf v1.2.1

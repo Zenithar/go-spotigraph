@@ -16,8 +16,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
-    
-	"go.zenithar.org/pkg/tlsconfig"
+
 	"github.com/google/wire"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
@@ -26,6 +25,7 @@ import (
 	"go.uber.org/zap"
 	rdb "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
+	"go.zenithar.org/pkg/tlsconfig"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
