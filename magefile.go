@@ -4,12 +4,19 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 )
 
-var Default = Build
+var (
+	Default    = Build
+	goFiles    = getGoFiles()
+	goSrcFiles = getGoSrcFiles()
+)
 
 func Build() error {
 	mg.Deps(Go.Lint)
@@ -56,7 +63,9 @@ func (Go) Deps() {
 // Format runs goimports on everything
 func (Go) Format() {
 	fmt.Println("## Format everything")
-	sh.RunV("find", ".", "-name", "*.go", "-exec", "goimports", "-w", "{}", ";")
+	args := []string{"-w"}
+	args = append(args, goFiles...)
+	sh.RunV("goimports", args...)
 }
 
 // Lint run linter.
@@ -98,3 +107,36 @@ func (Proto) GRPC() error {
 }
 
 // -----------------------------------------------------------------------------
+
+func getGoFiles() []string {
+	var goFiles []string
+
+	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+		if strings.Contains(path, "vendor/") {
+			return filepath.SkipDir
+		}
+
+		if !strings.HasSuffix(path, ".go") {
+			return nil
+		}
+
+		goFiles = append(goFiles, path)
+		return nil
+	})
+
+	return goFiles
+}
+
+func getGoSrcFiles() []string {
+	var goSrcFiles []string
+
+	for _, path := range goFiles {
+		if !strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+
+		goSrcFiles = append(goSrcFiles, path)
+	}
+
+	return goSrcFiles
+}
