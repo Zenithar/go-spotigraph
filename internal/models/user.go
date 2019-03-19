@@ -11,8 +11,9 @@ import (
 
 // User describes user attributes holder
 type User struct {
-	ID        string `json:"id"`
-	Principal string `json:"prn"`
+	ID        string   `json:"id"`
+	Principal string   `json:"prn"`
+	Meta      Metadata `json:"meta"`
 }
 
 // NewUser returns an user instance
@@ -35,5 +36,5 @@ func (u *User) Validate() error {
 
 // URN returns an uniform resource name for external linking
 func (u *User) URN() string {
-	return fmt.Sprintf("urn:spom:v1:user:%s", u.ID)
+	return fmt.Sprintf("urn:spfg:v1:user:%s", u.ID)
 }

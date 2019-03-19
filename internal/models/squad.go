@@ -12,8 +12,9 @@ import (
 
 // Squad describes squad attributes holder
 type Squad struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID   string   `json:"id"`
+	Name string   `json:"name"`
+	Meta Metadata `json:"meta"`
 }
 
 // NewSquad returns a squad instance
@@ -36,5 +37,5 @@ func (c *Squad) Validate() error {
 
 // URN returns an uniform resource name for external linking
 func (c *Squad) URN() string {
-	return fmt.Sprintf("urn:spom:v1:squad:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("urn:spfg:v1:squad:%s:%s", c.ID, slug.Make(c.Name))
 }
