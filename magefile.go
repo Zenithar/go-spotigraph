@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
+	"time"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -23,7 +25,21 @@ func Build() error {
 
 	fmt.Println("## Building")
 
-	return sh.Run("go", "build", "-o", "bin/spotigraph", "go.zenithar.org/spotigraph/cmd/spotigraph")
+	varsSetByLinker := map[string]string{
+		"go.zenithar.org/spotigraph/internal/version.Version":   tag(),
+		"go.zenithar.org/spotigraph/internal/version.Revision":  hash(),
+		"go.zenithar.org/spotigraph/internal/version.Branch":    "master",
+		"go.zenithar.org/spotigraph/internal/version.BuildUser": "jenkins",
+		"go.zenithar.org/spotigraph/internal/version.BuildDate": time.Now().Format(time.RFC3339),
+		"go.zenithar.org/spotigraph/internal/version.GoVersion": runtime.Version(),
+	}
+	var linkerArgs string
+	for name, value := range varsSetByLinker {
+		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
+	}
+	linkerArgs = fmt.Sprintf("-s -w %s", linkerArgs)
+
+	return sh.Run("go", "build", "-tags", "netgo", "-ldflags", linkerArgs, "-o", "bin/spotigraph", "go.zenithar.org/spotigraph/cmd/spotigraph")
 }
 
 func CI() {
@@ -139,4 +155,16 @@ func getGoSrcFiles() []string {
 	}
 
 	return goSrcFiles
+}
+
+// tag returns the git tag for the current branch or "" if none.
+func tag() string {
+	s, _ := sh.Output("git", "describe", "--tags")
+	return s
+}
+
+// hash returns the git hash for the current repo or "" if none.
+func hash() string {
+	hash, _ := sh.Output("git", "rev-parse", "--short", "HEAD")
+	return hash
 }
