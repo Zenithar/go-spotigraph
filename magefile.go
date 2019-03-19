@@ -21,7 +21,7 @@ var (
 )
 
 func Build() error {
-	mg.Deps(Go.Lint)
+	mg.SerialDeps(Proto.Service, Proto.GRPC, Go.Format, Go.Lint, Go.Test)
 
 	fmt.Println("## Building")
 
@@ -42,8 +42,22 @@ func Build() error {
 	return sh.Run("go", "build", "-tags", "netgo", "-ldflags", linkerArgs, "-o", "bin/spotigraph", "go.zenithar.org/spotigraph/cmd/spotigraph")
 }
 
-func CI() {
-	mg.SerialDeps(Proto.Service, Proto.GRPC, Go.Format, Go.Lint, Go.Test, Build)
+// -----------------------------------------------------------------------------
+
+type CI mg.Namespace
+
+// Validate circleci configuration file (circleci/config.yml).
+func (CI) Validate() error {
+	return sh.RunV("circleci-cli", "config", "validate")
+}
+
+// execute circleci job build on local.
+func (ci CI) Build() error {
+	return ci.localExecute("build")
+}
+
+func (ci CI) localExecute(job string) error {
+	return sh.RunV("circleci-cli", "local", "execute", "--job", job)
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +65,7 @@ func CI() {
 type Go mg.Namespace
 
 var deps = []string{
+	"github.com/CircleCI-Public/circleci-cli",
 	"github.com/golangci/golangci-lint/cmd/golangci-lint",
 	"github.com/gotestyourself/gotestsum",
 }
