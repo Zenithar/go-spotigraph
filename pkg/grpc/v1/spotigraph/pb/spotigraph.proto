@@ -1,40 +1,41 @@
 syntax = "proto3";
 
-package pb;
+package grpc.spotigraph.v1;
+option go_package = "pkg/grpc/v1/spotigraph/pb";
 
 import "pkg/protocol/v1/spotigraph/spotigraph.proto";
 
-service UserService {
-    rpc Create(spotigraph.UserCreateReq) returns (spotigraph.SingleUserRes);
-    rpc Get(spotigraph.UserGetReq) returns (spotigraph.SingleUserRes);
-    rpc Update(spotigraph.UserUpdateReq) returns (spotigraph.SingleUserRes);
-    rpc Delete(spotigraph.UserGetReq) returns (spotigraph.EmptyRes);
+service User {
+    rpc Create(.spotigraph.v1.UserCreateReq) returns (.spotigraph.v1.SingleUserRes);
+    rpc Get(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.SingleUserRes);
+    rpc Update(.spotigraph.v1.UserUpdateReq) returns (.spotigraph.v1.SingleUserRes);
+    rpc Delete(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.EmptyRes);
 }
 
-service SquadService {
-    rpc Create(spotigraph.SquadCreateReq) returns (spotigraph.SingleSquadRes);
-    rpc Get(spotigraph.SquadGetReq) returns (spotigraph.SingleSquadRes);
-    rpc Update(spotigraph.SquadUpdateReq) returns (spotigraph.SingleSquadRes);
-    rpc Delete(spotigraph.SquadGetReq) returns (spotigraph.EmptyRes);
+service Squad {
+    rpc Create(.spotigraph.v1.SquadCreateReq) returns (.spotigraph.v1.SingleSquadRes);
+    rpc Get(.spotigraph.v1.SquadGetReq) returns (.spotigraph.v1.SingleSquadRes);
+    rpc Update(.spotigraph.v1.SquadUpdateReq) returns (.spotigraph.v1.SingleSquadRes);
+    rpc Delete(.spotigraph.v1.SquadGetReq) returns (.spotigraph.v1.EmptyRes);
 }
 
-service ChapterService {
-    rpc Create(spotigraph.ChapterCreateReq) returns (spotigraph.SingleChapterRes);
-    rpc Get(spotigraph.ChapterGetReq) returns (spotigraph.SingleChapterRes);
-    rpc Update(spotigraph.ChapterUpdateReq) returns (spotigraph.SingleChapterRes);
-    rpc Delete(spotigraph.ChapterGetReq) returns (spotigraph.EmptyRes);
+service Chapter {
+    rpc Create(.spotigraph.v1.ChapterCreateReq) returns (.spotigraph.v1.SingleChapterRes);
+    rpc Get(.spotigraph.v1.ChapterGetReq) returns (.spotigraph.v1.SingleChapterRes);
+    rpc Update(.spotigraph.v1.ChapterUpdateReq) returns (.spotigraph.v1.SingleChapterRes);
+    rpc Delete(.spotigraph.v1.ChapterGetReq) returns (.spotigraph.v1.EmptyRes);
 }
 
-service GuildService {
-    rpc Create(spotigraph.GuildCreateReq) returns (spotigraph.SingleGuildRes);
-    rpc Get(spotigraph.GuildGetReq) returns (spotigraph.SingleGuildRes);
-    rpc Update(spotigraph.GuildUpdateReq) returns (spotigraph.SingleGuildRes);
-    rpc Delete(spotigraph.GuildGetReq) returns (spotigraph.EmptyRes);
+service Guild {
+    rpc Create(.spotigraph.v1.GuildCreateReq) returns (.spotigraph.v1.SingleGuildRes);
+    rpc Get(.spotigraph.v1.GuildGetReq) returns (.spotigraph.v1.SingleGuildRes);
+    rpc Update(.spotigraph.v1.GuildUpdateReq) returns (.spotigraph.v1.SingleGuildRes);
+    rpc Delete(.spotigraph.v1.GuildGetReq) returns (.spotigraph.v1.EmptyRes);
 }
 
-service TribeService {
-    rpc Create(spotigraph.TribeCreateReq) returns (spotigraph.SingleTribeRes);
-    rpc Get(spotigraph.TribeGetReq) returns (spotigraph.SingleTribeRes);
-    rpc Update(spotigraph.TribeUpdateReq) returns (spotigraph.SingleTribeRes);
-    rpc Delete(spotigraph.TribeGetReq) returns (spotigraph.EmptyRes);
+service Tribe {
+    rpc Create(.spotigraph.v1.TribeCreateReq) returns (.spotigraph.v1.SingleTribeRes);
+    rpc Get(.spotigraph.v1.TribeGetReq) returns (.spotigraph.v1.SingleTribeRes);
+    rpc Update(.spotigraph.v1.TribeUpdateReq) returns (.spotigraph.v1.SingleTribeRes);
+    rpc Delete(.spotigraph.v1.TribeGetReq) returns (.spotigraph.v1.EmptyRes);
 }

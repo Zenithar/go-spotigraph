@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package spotigraph;
+package spotigraph.v1;
+option go_package = "pkg/protocol/v1/spotigraph";
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/lyft/protoc-gen-validate/validate/validate.proto";

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"go.zenithar.org/pkg/log"
-	"go.zenithar.org/spotigraph/cmd/spotigraph/cmd"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/cmd"
 )
 
 // -----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ func init() {
 // -----------------------------------------------------------------------------
 
 func main() {
-	if err := cmd.RootCmd.Execute(); err != nil {
+	if err := cmd.Execute(); err != nil {
 		log.CheckErr("Unable to complete command execution", err)
 	}
 }
