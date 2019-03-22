@@ -20,6 +20,10 @@ var (
 	goSrcFiles = getGoSrcFiles()
 )
 
+func init() {
+	time.Local = time.UTC
+}
+
 func Build() error {
 	mg.SerialDeps(Proto.Service, Proto.GRPC, Go.Format, Go.Lint, Go.Test)
 
@@ -28,7 +32,7 @@ func Build() error {
 	varsSetByLinker := map[string]string{
 		"go.zenithar.org/spotigraph/internal/version.Version":   tag(),
 		"go.zenithar.org/spotigraph/internal/version.Revision":  hash(),
-		"go.zenithar.org/spotigraph/internal/version.Branch":    "master",
+		"go.zenithar.org/spotigraph/internal/version.Branch":    branch(),
 		"go.zenithar.org/spotigraph/internal/version.BuildUser": "jenkins",
 		"go.zenithar.org/spotigraph/internal/version.BuildDate": time.Now().Format(time.RFC3339),
 		"go.zenithar.org/spotigraph/internal/version.GoVersion": runtime.Version(),
@@ -184,5 +188,11 @@ func tag() string {
 // hash returns the git hash for the current repo or "" if none.
 func hash() string {
 	hash, _ := sh.Output("git", "rev-parse", "--short", "HEAD")
+	return hash
+}
+
+// branch returns the git branch for current repo
+func branch() string {
+	hash, _ := sh.Output("git", "rev-parse", "--abbrev-ref", "HEAD")
 	return hash
 }
