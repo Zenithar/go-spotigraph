@@ -24,26 +24,13 @@ func init() {
 	time.Local = time.UTC
 }
 
-func Build() error {
+func Build() {
+	fmt.Println("# Core packages")
 	mg.SerialDeps(Proto.Service, Proto.GRPC, Go.Format, Go.Lint, Go.Test)
 
-	fmt.Println("## Building")
-
-	varsSetByLinker := map[string]string{
-		"go.zenithar.org/spotigraph/internal/version.Version":   tag(),
-		"go.zenithar.org/spotigraph/internal/version.Revision":  hash(),
-		"go.zenithar.org/spotigraph/internal/version.Branch":    branch(),
-		"go.zenithar.org/spotigraph/internal/version.BuildUser": "jenkins",
-		"go.zenithar.org/spotigraph/internal/version.BuildDate": time.Now().Format(time.RFC3339),
-		"go.zenithar.org/spotigraph/internal/version.GoVersion": runtime.Version(),
-	}
-	var linkerArgs string
-	for name, value := range varsSetByLinker {
-		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
-	}
-	linkerArgs = fmt.Sprintf("-s -w %s", linkerArgs)
-
-	return sh.Run("go", "build", "-tags", "netgo", "-ldflags", linkerArgs, "-o", "bin/spotigraph", "go.zenithar.org/spotigraph/cmd/spotigraph")
+	fmt.Println("")
+	fmt.Println("# Artifacts")
+	mg.Deps(Bin.Spotigraph)
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +57,12 @@ type Go mg.Namespace
 
 var deps = []string{
 	"github.com/izumin5210/gex/cmd/gex",
+}
+
+// Generate go code
+func (Go) Generate() {
+	fmt.Println("## Generate code")
+	sh.RunV("go", "generate", "./...")
 }
 
 // Test run go test
@@ -142,6 +135,34 @@ func (Proto) GRPC() error {
 		"--cobra_out", "Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
 		"pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
 	)
+}
+
+// -----------------------------------------------------------------------------
+
+type Bin mg.Namespace
+
+func (Bin) Spotigraph() error {
+	return goBuild("go.zenithar.org/spotigraph/cmd/spotigraph", "spotigraph")
+}
+
+func goBuild(packageName, out string) error {
+	fmt.Printf(" > Building %s [%s]\n", out, packageName)
+
+	varsSetByLinker := map[string]string{
+		"go.zenithar.org/spotigraph/internal/version.Version":   tag(),
+		"go.zenithar.org/spotigraph/internal/version.Revision":  hash(),
+		"go.zenithar.org/spotigraph/internal/version.Branch":    branch(),
+		"go.zenithar.org/spotigraph/internal/version.BuildUser": "jenkins",
+		"go.zenithar.org/spotigraph/internal/version.BuildDate": time.Now().Format(time.RFC3339),
+		"go.zenithar.org/spotigraph/internal/version.GoVersion": runtime.Version(),
+	}
+	var linkerArgs string
+	for name, value := range varsSetByLinker {
+		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
+	}
+	linkerArgs = fmt.Sprintf("-s -w %s", linkerArgs)
+
+	return sh.Run("go", "build", "-tags", "netgo", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
 }
 
 // -----------------------------------------------------------------------------

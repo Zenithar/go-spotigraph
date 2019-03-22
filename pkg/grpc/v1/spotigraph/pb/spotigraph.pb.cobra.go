@@ -215,7 +215,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | create --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.UserCreateReq
+		var req spotigraph.UserCreateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -228,7 +228,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewUserClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -236,7 +236,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Create(ctx, req)
+		res, err := grpcClient.Create(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -267,7 +267,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | get --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.UserGetReq
+		var req spotigraph.UserGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -280,7 +280,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewUserClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -288,7 +288,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Get(ctx, req)
+		res, err := grpcClient.Get(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -319,7 +319,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | update --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.UserUpdateReq
+		var req spotigraph.UserUpdateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -332,7 +332,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewUserClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -340,7 +340,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Update(ctx, req)
+		res, err := grpcClient.Update(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -371,7 +371,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | delete --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.UserGetReq
+		var req spotigraph.UserGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -384,7 +384,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewUserClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -392,7 +392,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Delete(ctx, req)
+		res, err := grpcClient.Delete(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -408,6 +408,58 @@ Authenticate using the Authorization header (requires transport security):
 func init() {
 	UserClientCommand.AddCommand(user_DeleteClientCommand)
 	DefaultClientCommandConfig.AddFlags(user_DeleteClientCommand.Flags())
+}
+
+var user_SearchClientCommand = &cobra.Command{
+	Use:  "search",
+	Long: "Search client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	search -p > req.json
+Submit request using file:
+	search -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | search --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.UserSearchReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewUserClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Search(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	UserClientCommand.AddCommand(user_SearchClientCommand)
+	DefaultClientCommandConfig.AddFlags(user_SearchClientCommand.Flags())
 }
 
 var SquadClientCommand = &cobra.Command{
@@ -427,7 +479,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | create --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.SquadCreateReq
+		var req spotigraph.SquadCreateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -440,7 +492,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewSquadClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -448,7 +500,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Create(ctx, req)
+		res, err := grpcClient.Create(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -479,7 +531,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | get --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.SquadGetReq
+		var req spotigraph.SquadGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -492,7 +544,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewSquadClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -500,7 +552,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Get(ctx, req)
+		res, err := grpcClient.Get(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -531,7 +583,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | update --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.SquadUpdateReq
+		var req spotigraph.SquadUpdateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -544,7 +596,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewSquadClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -552,7 +604,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Update(ctx, req)
+		res, err := grpcClient.Update(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -583,7 +635,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | delete --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.SquadGetReq
+		var req spotigraph.SquadGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -596,7 +648,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewSquadClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -604,7 +656,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Delete(ctx, req)
+		res, err := grpcClient.Delete(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -620,6 +672,58 @@ Authenticate using the Authorization header (requires transport security):
 func init() {
 	SquadClientCommand.AddCommand(squad_DeleteClientCommand)
 	DefaultClientCommandConfig.AddFlags(squad_DeleteClientCommand.Flags())
+}
+
+var squad_SearchClientCommand = &cobra.Command{
+	Use:  "search",
+	Long: "Search client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	search -p > req.json
+Submit request using file:
+	search -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | search --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.SquadSearchReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewSquadClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Search(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	SquadClientCommand.AddCommand(squad_SearchClientCommand)
+	DefaultClientCommandConfig.AddFlags(squad_SearchClientCommand.Flags())
 }
 
 var ChapterClientCommand = &cobra.Command{
@@ -639,7 +743,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | create --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.ChapterCreateReq
+		var req spotigraph.ChapterCreateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -652,7 +756,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewChapterClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -660,7 +764,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Create(ctx, req)
+		res, err := grpcClient.Create(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -691,7 +795,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | get --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.ChapterGetReq
+		var req spotigraph.ChapterGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -704,7 +808,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewChapterClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -712,7 +816,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Get(ctx, req)
+		res, err := grpcClient.Get(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -743,7 +847,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | update --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.ChapterUpdateReq
+		var req spotigraph.ChapterUpdateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -756,7 +860,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewChapterClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -764,7 +868,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Update(ctx, req)
+		res, err := grpcClient.Update(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -795,7 +899,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | delete --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.ChapterGetReq
+		var req spotigraph.ChapterGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -808,7 +912,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewChapterClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -816,7 +920,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Delete(ctx, req)
+		res, err := grpcClient.Delete(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -832,6 +936,58 @@ Authenticate using the Authorization header (requires transport security):
 func init() {
 	ChapterClientCommand.AddCommand(chapter_DeleteClientCommand)
 	DefaultClientCommandConfig.AddFlags(chapter_DeleteClientCommand.Flags())
+}
+
+var chapter_SearchClientCommand = &cobra.Command{
+	Use:  "search",
+	Long: "Search client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	search -p > req.json
+Submit request using file:
+	search -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | search --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.ChapterSearchReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewChapterClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Search(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	ChapterClientCommand.AddCommand(chapter_SearchClientCommand)
+	DefaultClientCommandConfig.AddFlags(chapter_SearchClientCommand.Flags())
 }
 
 var GuildClientCommand = &cobra.Command{
@@ -851,7 +1007,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | create --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.GuildCreateReq
+		var req spotigraph.GuildCreateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -864,7 +1020,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewGuildClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -872,7 +1028,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Create(ctx, req)
+		res, err := grpcClient.Create(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -903,7 +1059,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | get --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.GuildGetReq
+		var req spotigraph.GuildGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -916,7 +1072,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewGuildClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -924,7 +1080,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Get(ctx, req)
+		res, err := grpcClient.Get(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -955,7 +1111,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | update --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.GuildUpdateReq
+		var req spotigraph.GuildUpdateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -968,7 +1124,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewGuildClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -976,7 +1132,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Update(ctx, req)
+		res, err := grpcClient.Update(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1007,7 +1163,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | delete --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.GuildGetReq
+		var req spotigraph.GuildGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -1020,7 +1176,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewGuildClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -1028,7 +1184,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Delete(ctx, req)
+		res, err := grpcClient.Delete(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1044,6 +1200,58 @@ Authenticate using the Authorization header (requires transport security):
 func init() {
 	GuildClientCommand.AddCommand(guild_DeleteClientCommand)
 	DefaultClientCommandConfig.AddFlags(guild_DeleteClientCommand.Flags())
+}
+
+var guild_SearchClientCommand = &cobra.Command{
+	Use:  "search",
+	Long: "Search client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	search -p > req.json
+Submit request using file:
+	search -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | search --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.GuildSearchReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewGuildClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Search(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	GuildClientCommand.AddCommand(guild_SearchClientCommand)
+	DefaultClientCommandConfig.AddFlags(guild_SearchClientCommand.Flags())
 }
 
 var TribeClientCommand = &cobra.Command{
@@ -1063,7 +1271,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | create --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.TribeCreateReq
+		var req spotigraph.TribeCreateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -1076,7 +1284,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewTribeClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -1084,7 +1292,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Create(ctx, req)
+		res, err := grpcClient.Create(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1115,7 +1323,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | get --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.TribeGetReq
+		var req spotigraph.TribeGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -1128,7 +1336,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewTribeClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -1136,7 +1344,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Get(ctx, req)
+		res, err := grpcClient.Get(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1167,7 +1375,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | update --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.TribeUpdateReq
+		var req spotigraph.TribeUpdateReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -1180,7 +1388,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewTribeClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -1188,7 +1396,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Update(ctx, req)
+		res, err := grpcClient.Update(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1219,7 +1427,7 @@ Authenticate using the Authorization header (requires transport security):
 	export SERVER_ADDR=api.example.com:443
 	echo '{json}' | delete --tls`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var req *spotigraph.TribeGetReq
+		var req spotigraph.TribeGetReq
 
 		// Get a connection
 		conn, err := dial(DefaultClientCommandConfig)
@@ -1232,7 +1440,7 @@ Authenticate using the Authorization header (requires transport security):
 		grpcClient := NewTribeClient(conn)
 
 		// Unmarshal request
-		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), req); err != nil {
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
 			return err
 		}
 
@@ -1240,7 +1448,7 @@ Authenticate using the Authorization header (requires transport security):
 		ctx := context.Background()
 
 		// Do the call
-		res, err := grpcClient.Delete(ctx, req)
+		res, err := grpcClient.Delete(ctx, &req)
 		if err != nil {
 			return err
 		}
@@ -1256,4 +1464,56 @@ Authenticate using the Authorization header (requires transport security):
 func init() {
 	TribeClientCommand.AddCommand(tribe_DeleteClientCommand)
 	DefaultClientCommandConfig.AddFlags(tribe_DeleteClientCommand.Flags())
+}
+
+var tribe_SearchClientCommand = &cobra.Command{
+	Use:  "search",
+	Long: "Search client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	search -p > req.json
+Submit request using file:
+	search -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | search --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.TribeSearchReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewTribeClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Search(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	TribeClientCommand.AddCommand(tribe_SearchClientCommand)
+	DefaultClientCommandConfig.AddFlags(tribe_SearchClientCommand.Flags())
 }

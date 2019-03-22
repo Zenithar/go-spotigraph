@@ -29,31 +29,35 @@ func init() {
 }
 
 var fileDescriptor_039c84dc8946bc09 = []byte{
-	// 371 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x94, 0xcd, 0x4e, 0xf2, 0x40,
-	0x18, 0x85, 0x13, 0xbe, 0xcf, 0x9a, 0xcc, 0x72, 0x36, 0x06, 0x84, 0xb0, 0xd7, 0x84, 0x06, 0xdc,
-	0xfa, 0x17, 0x41, 0x9a, 0xb0, 0x2c, 0xb2, 0x71, 0xd7, 0xc2, 0x9b, 0xd2, 0x58, 0xed, 0x30, 0x1d,
-	0x48, 0xbc, 0x0b, 0x97, 0x5e, 0x82, 0x97, 0x69, 0xe6, 0x6d, 0x33, 0xad, 0x93, 0xf9, 0x59, 0xb6,
-	0xe7, 0xcc, 0xe9, 0xc9, 0xd3, 0x93, 0x21, 0x57, 0xec, 0x2d, 0x0b, 0x33, 0xce, 0xb6, 0xe1, 0x69,
-	0x1a, 0x56, 0xac, 0x14, 0x79, 0xc6, 0x13, 0xb6, 0x0f, 0x59, 0xda, 0x79, 0x9a, 0x30, 0x5e, 0x8a,
-	0x92, 0x52, 0xe9, 0x9b, 0x74, 0x5e, 0x9f, 0xa6, 0x83, 0x6b, 0x79, 0x1e, 0xe5, 0x6d, 0x59, 0x68,
-	0x19, 0x7a, 0xc0, 0xec, 0xab, 0x47, 0xfe, 0x6f, 0x2a, 0xe0, 0x74, 0x41, 0x82, 0x39, 0x87, 0x44,
-	0x00, 0x1d, 0xfe, 0xcd, 0x9b, 0x48, 0xb9, 0x96, 0x62, 0x38, 0x0c, 0x74, 0x75, 0x9d, 0x7f, 0x64,
-	0x05, 0x48, 0x4f, 0x0c, 0x15, 0xbd, 0x27, 0xff, 0x22, 0x10, 0xb4, 0x6f, 0x88, 0x88, 0x40, 0xf8,
-	0xcf, 0x2f, 0x48, 0xb0, 0x61, 0x3b, 0x5b, 0x8b, 0x5a, 0xf2, 0xa7, 0xdc, 0x92, 0x60, 0x01, 0x05,
-	0x08, 0x70, 0x15, 0xb9, 0xd0, 0xa4, 0xe7, 0x77, 0x26, 0x3e, 0x63, 0xa8, 0x66, 0xdf, 0x3d, 0x72,
-	0xb6, 0x3e, 0x1c, 0x93, 0x1d, 0x5d, 0x2a, 0x26, 0x23, 0xfd, 0x7b, 0x52, 0x6f, 0xa1, 0x8c, 0x8c,
-	0x75, 0xd0, 0x24, 0xfb, 0x3c, 0xd6, 0x54, 0x06, 0xa6, 0x90, 0xa6, 0x8d, 0x27, 0x61, 0xa9, 0xb8,
-	0x18, 0x9b, 0xb4, 0x60, 0x3c, 0x39, 0x77, 0x8a, 0x8c, 0xab, 0x8c, 0x15, 0xcd, 0x4f, 0x8f, 0x9c,
-	0xcf, 0xf7, 0x09, 0x13, 0xc0, 0xe9, 0x4a, 0xc1, 0x19, 0x6b, 0xf6, 0xc6, 0xd1, 0xe2, 0x19, 0x1b,
-	0x4b, 0x35, 0xb6, 0xfa, 0xb7, 0x23, 0xa0, 0xa1, 0x39, 0xa8, 0x69, 0xe5, 0x4d, 0x59, 0x29, 0x48,
-	0x96, 0x46, 0x2d, 0x26, 0x6f, 0xd6, 0x83, 0x02, 0xe5, 0x2e, 0xe5, 0x5c, 0x51, 0x74, 0xcc, 0x0b,
-	0xd7, 0x8a, 0x50, 0xf7, 0xad, 0x08, 0x4d, 0x8e, 0x15, 0xa1, 0xee, 0x5c, 0x91, 0x4a, 0xb0, 0xaf,
-	0x08, 0x2d, 0xbe, 0x15, 0xa9, 0x1c, 0xfb, 0x8a, 0xba, 0x65, 0x9c, 0x68, 0x5e, 0x78, 0x9e, 0x82,
-	0x03, 0x0d, 0xea, 0x3e, 0x34, 0x68, 0x72, 0xa0, 0x41, 0xdd, 0x89, 0x46, 0x25, 0xd8, 0xd1, 0xa0,
-	0xc5, 0x87, 0x46, 0xe5, 0xd8, 0xd1, 0x74, 0xcb, 0xd8, 0xd0, 0x3c, 0x5d, 0xbe, 0xf6, 0xad, 0xb7,
-	0x7f, 0x1a, 0xe0, 0x95, 0x7d, 0xf3, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x12, 0xf8, 0x7e, 0x78, 0x21,
-	0x06, 0x00, 0x00,
+	// 440 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x95, 0x4f, 0x6b, 0xea, 0x40,
+	0x14, 0xc5, 0xc1, 0xf7, 0x5e, 0x1e, 0xcc, 0x72, 0x36, 0x0f, 0x7d, 0x8a, 0xa5, 0xcb, 0x16, 0x0c,
+	0xda, 0x6d, 0xff, 0x51, 0xad, 0xa1, 0x42, 0xa1, 0x68, 0xdd, 0x74, 0x17, 0xf5, 0x12, 0x43, 0x53,
+	0x33, 0x8e, 0xa3, 0xd0, 0x8f, 0xda, 0x75, 0x3f, 0x44, 0xb7, 0x65, 0x6e, 0xe2, 0x24, 0x0d, 0xf3,
+	0x47, 0x5c, 0xb6, 0xe7, 0xdc, 0xc3, 0x99, 0x9f, 0x07, 0x42, 0xce, 0xd8, 0x6b, 0xe4, 0x47, 0x9c,
+	0xcd, 0xfd, 0x5d, 0xd7, 0xdf, 0xb0, 0x54, 0xc4, 0x11, 0x0f, 0xd9, 0xd2, 0x67, 0xb3, 0xd2, 0x5f,
+	0x1d, 0xc6, 0x53, 0x91, 0x52, 0x2a, 0x7d, 0x9d, 0xd2, 0xbf, 0x77, 0xdd, 0xc6, 0xb9, 0xbc, 0x47,
+	0x79, 0x9e, 0x26, 0x95, 0x8c, 0x6a, 0x40, 0xef, 0xa3, 0x46, 0x7e, 0x4f, 0x37, 0xc0, 0xe9, 0x80,
+	0x78, 0x7d, 0x0e, 0xa1, 0x00, 0xda, 0xfc, 0x99, 0xd7, 0x91, 0x72, 0x26, 0x8d, 0x61, 0xdd, 0xa8,
+	0xaa, 0x93, 0x78, 0x15, 0x25, 0x20, 0x3d, 0x63, 0xd8, 0xd0, 0x6b, 0xf2, 0x2b, 0x00, 0x41, 0xeb,
+	0x9a, 0x88, 0x00, 0x84, 0xfb, 0x7e, 0x40, 0xbc, 0x29, 0x5b, 0x98, 0x5a, 0x64, 0x92, 0x3b, 0xe5,
+	0x92, 0x78, 0x03, 0x48, 0x40, 0x80, 0xad, 0xc8, 0xbf, 0x8a, 0x74, 0xff, 0xc6, 0xc4, 0xbb, 0xbc,
+	0x0e, 0x88, 0x37, 0x81, 0x90, 0xcf, 0x97, 0xda, 0x0e, 0x99, 0x24, 0x03, 0xda, 0x15, 0xf5, 0x29,
+	0x8c, 0xe2, 0x55, 0x28, 0x60, 0x91, 0xd7, 0xe8, 0x7d, 0xd6, 0xc8, 0x9f, 0xc9, 0x7a, 0x1b, 0x2e,
+	0xe8, 0x50, 0xc1, 0x6d, 0x55, 0x8b, 0x4b, 0xbd, 0xa0, 0xdb, 0xd2, 0xbe, 0x0b, 0x4d, 0xb2, 0xda,
+	0x6d, 0x86, 0xb7, 0xa1, 0x0b, 0xc9, 0x9f, 0xe5, 0x48, 0x18, 0x2a, 0xc0, 0xda, 0x26, 0x05, 0x61,
+	0x47, 0xce, 0x95, 0x42, 0x6c, 0x2b, 0x63, 0x64, 0xfc, 0xa0, 0x18, 0x6b, 0x6b, 0x14, 0x90, 0x4f,
+	0x4c, 0x90, 0xf7, 0x4d, 0x7a, 0x5f, 0x35, 0xf2, 0xb7, 0xbf, 0x0c, 0x99, 0x00, 0x4e, 0x47, 0x8a,
+	0x73, 0xf5, 0xc7, 0xc9, 0x1d, 0x05, 0xe9, 0xb6, 0xf6, 0x7d, 0xb9, 0x2d, 0x9b, 0x22, 0xb2, 0x6e,
+	0xea, 0x83, 0xf2, 0x07, 0x3a, 0x53, 0x46, 0x8a, 0xb7, 0xa1, 0x51, 0x41, 0xdc, 0x99, 0x75, 0xa3,
+	0x98, 0xdb, 0x4b, 0x19, 0xa9, 0x3f, 0x2a, 0xea, 0x86, 0x32, 0x05, 0xf7, 0x53, 0x13, 0xf7, 0xa2,
+	0x0f, 0xee, 0x3b, 0xd8, 0xc6, 0x89, 0x6d, 0xdf, 0xa8, 0xbb, 0xf6, 0x8d, 0x26, 0xcb, 0xbe, 0x51,
+	0xb7, 0xee, 0x5b, 0x25, 0x98, 0xf7, 0x8d, 0x16, 0xd7, 0xbe, 0x55, 0x8e, 0x79, 0xdf, 0xe5, 0x32,
+	0x47, 0xec, 0x1b, 0xcf, 0x0f, 0xd8, 0xf7, 0xbe, 0x09, 0x52, 0x7e, 0xe6, 0xf1, 0x0c, 0x2c, 0x94,
+	0x51, 0x77, 0x51, 0x46, 0x93, 0x85, 0x32, 0xea, 0x56, 0xca, 0x2a, 0xc1, 0x4c, 0x19, 0x2d, 0x2e,
+	0xca, 0x2a, 0xc7, 0x4c, 0xb9, 0x5c, 0xe6, 0x08, 0xca, 0x78, 0x7e, 0x00, 0xe5, 0x7d, 0x93, 0xbb,
+	0xff, 0x2f, 0x75, 0xe3, 0x67, 0x77, 0xe6, 0xe1, 0xb7, 0xf2, 0xe2, 0x3b, 0x00, 0x00, 0xff, 0xff,
+	0xe5, 0x1c, 0x5b, 0x60, 0x9a, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -72,6 +76,7 @@ type UserClient interface {
 	Get(ctx context.Context, in *spotigraph.UserGetReq, opts ...grpc.CallOption) (*spotigraph.SingleUserRes, error)
 	Update(ctx context.Context, in *spotigraph.UserUpdateReq, opts ...grpc.CallOption) (*spotigraph.SingleUserRes, error)
 	Delete(ctx context.Context, in *spotigraph.UserGetReq, opts ...grpc.CallOption) (*spotigraph.EmptyRes, error)
+	Search(ctx context.Context, in *spotigraph.UserSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedUserRes, error)
 }
 
 type userClient struct {
@@ -118,12 +123,22 @@ func (c *userClient) Delete(ctx context.Context, in *spotigraph.UserGetReq, opts
 	return out, nil
 }
 
+func (c *userClient) Search(ctx context.Context, in *spotigraph.UserSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedUserRes, error) {
+	out := new(spotigraph.PaginatedUserRes)
+	err := c.cc.Invoke(ctx, "/grpc.spotigraph.v1.User/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 type UserServer interface {
 	Create(context.Context, *spotigraph.UserCreateReq) (*spotigraph.SingleUserRes, error)
 	Get(context.Context, *spotigraph.UserGetReq) (*spotigraph.SingleUserRes, error)
 	Update(context.Context, *spotigraph.UserUpdateReq) (*spotigraph.SingleUserRes, error)
 	Delete(context.Context, *spotigraph.UserGetReq) (*spotigraph.EmptyRes, error)
+	Search(context.Context, *spotigraph.UserSearchReq) (*spotigraph.PaginatedUserRes, error)
 }
 
 func RegisterUserServer(s *grpc.Server, srv UserServer) {
@@ -202,6 +217,24 @@ func _User_Delete_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(spotigraph.UserSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.spotigraph.v1.User/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Search(ctx, req.(*spotigraph.UserSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _User_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "grpc.spotigraph.v1.User",
 	HandlerType: (*UserServer)(nil),
@@ -222,6 +255,10 @@ var _User_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _User_Delete_Handler,
 		},
+		{
+			MethodName: "Search",
+			Handler:    _User_Search_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
@@ -235,6 +272,7 @@ type SquadClient interface {
 	Get(ctx context.Context, in *spotigraph.SquadGetReq, opts ...grpc.CallOption) (*spotigraph.SingleSquadRes, error)
 	Update(ctx context.Context, in *spotigraph.SquadUpdateReq, opts ...grpc.CallOption) (*spotigraph.SingleSquadRes, error)
 	Delete(ctx context.Context, in *spotigraph.SquadGetReq, opts ...grpc.CallOption) (*spotigraph.EmptyRes, error)
+	Search(ctx context.Context, in *spotigraph.SquadSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedSquadRes, error)
 }
 
 type squadClient struct {
@@ -281,12 +319,22 @@ func (c *squadClient) Delete(ctx context.Context, in *spotigraph.SquadGetReq, op
 	return out, nil
 }
 
+func (c *squadClient) Search(ctx context.Context, in *spotigraph.SquadSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedSquadRes, error) {
+	out := new(spotigraph.PaginatedSquadRes)
+	err := c.cc.Invoke(ctx, "/grpc.spotigraph.v1.Squad/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SquadServer is the server API for Squad service.
 type SquadServer interface {
 	Create(context.Context, *spotigraph.SquadCreateReq) (*spotigraph.SingleSquadRes, error)
 	Get(context.Context, *spotigraph.SquadGetReq) (*spotigraph.SingleSquadRes, error)
 	Update(context.Context, *spotigraph.SquadUpdateReq) (*spotigraph.SingleSquadRes, error)
 	Delete(context.Context, *spotigraph.SquadGetReq) (*spotigraph.EmptyRes, error)
+	Search(context.Context, *spotigraph.SquadSearchReq) (*spotigraph.PaginatedSquadRes, error)
 }
 
 func RegisterSquadServer(s *grpc.Server, srv SquadServer) {
@@ -365,6 +413,24 @@ func _Squad_Delete_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Squad_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(spotigraph.SquadSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SquadServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.spotigraph.v1.Squad/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SquadServer).Search(ctx, req.(*spotigraph.SquadSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Squad_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "grpc.spotigraph.v1.Squad",
 	HandlerType: (*SquadServer)(nil),
@@ -385,6 +451,10 @@ var _Squad_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _Squad_Delete_Handler,
 		},
+		{
+			MethodName: "Search",
+			Handler:    _Squad_Search_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
@@ -398,6 +468,7 @@ type ChapterClient interface {
 	Get(ctx context.Context, in *spotigraph.ChapterGetReq, opts ...grpc.CallOption) (*spotigraph.SingleChapterRes, error)
 	Update(ctx context.Context, in *spotigraph.ChapterUpdateReq, opts ...grpc.CallOption) (*spotigraph.SingleChapterRes, error)
 	Delete(ctx context.Context, in *spotigraph.ChapterGetReq, opts ...grpc.CallOption) (*spotigraph.EmptyRes, error)
+	Search(ctx context.Context, in *spotigraph.ChapterSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedChapterRes, error)
 }
 
 type chapterClient struct {
@@ -444,12 +515,22 @@ func (c *chapterClient) Delete(ctx context.Context, in *spotigraph.ChapterGetReq
 	return out, nil
 }
 
+func (c *chapterClient) Search(ctx context.Context, in *spotigraph.ChapterSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedChapterRes, error) {
+	out := new(spotigraph.PaginatedChapterRes)
+	err := c.cc.Invoke(ctx, "/grpc.spotigraph.v1.Chapter/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChapterServer is the server API for Chapter service.
 type ChapterServer interface {
 	Create(context.Context, *spotigraph.ChapterCreateReq) (*spotigraph.SingleChapterRes, error)
 	Get(context.Context, *spotigraph.ChapterGetReq) (*spotigraph.SingleChapterRes, error)
 	Update(context.Context, *spotigraph.ChapterUpdateReq) (*spotigraph.SingleChapterRes, error)
 	Delete(context.Context, *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error)
+	Search(context.Context, *spotigraph.ChapterSearchReq) (*spotigraph.PaginatedChapterRes, error)
 }
 
 func RegisterChapterServer(s *grpc.Server, srv ChapterServer) {
@@ -528,6 +609,24 @@ func _Chapter_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chapter_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(spotigraph.ChapterSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChapterServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.spotigraph.v1.Chapter/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChapterServer).Search(ctx, req.(*spotigraph.ChapterSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Chapter_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "grpc.spotigraph.v1.Chapter",
 	HandlerType: (*ChapterServer)(nil),
@@ -548,6 +647,10 @@ var _Chapter_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _Chapter_Delete_Handler,
 		},
+		{
+			MethodName: "Search",
+			Handler:    _Chapter_Search_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
@@ -561,6 +664,7 @@ type GuildClient interface {
 	Get(ctx context.Context, in *spotigraph.GuildGetReq, opts ...grpc.CallOption) (*spotigraph.SingleGuildRes, error)
 	Update(ctx context.Context, in *spotigraph.GuildUpdateReq, opts ...grpc.CallOption) (*spotigraph.SingleGuildRes, error)
 	Delete(ctx context.Context, in *spotigraph.GuildGetReq, opts ...grpc.CallOption) (*spotigraph.EmptyRes, error)
+	Search(ctx context.Context, in *spotigraph.GuildSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedGuildRes, error)
 }
 
 type guildClient struct {
@@ -607,12 +711,22 @@ func (c *guildClient) Delete(ctx context.Context, in *spotigraph.GuildGetReq, op
 	return out, nil
 }
 
+func (c *guildClient) Search(ctx context.Context, in *spotigraph.GuildSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedGuildRes, error) {
+	out := new(spotigraph.PaginatedGuildRes)
+	err := c.cc.Invoke(ctx, "/grpc.spotigraph.v1.Guild/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GuildServer is the server API for Guild service.
 type GuildServer interface {
 	Create(context.Context, *spotigraph.GuildCreateReq) (*spotigraph.SingleGuildRes, error)
 	Get(context.Context, *spotigraph.GuildGetReq) (*spotigraph.SingleGuildRes, error)
 	Update(context.Context, *spotigraph.GuildUpdateReq) (*spotigraph.SingleGuildRes, error)
 	Delete(context.Context, *spotigraph.GuildGetReq) (*spotigraph.EmptyRes, error)
+	Search(context.Context, *spotigraph.GuildSearchReq) (*spotigraph.PaginatedGuildRes, error)
 }
 
 func RegisterGuildServer(s *grpc.Server, srv GuildServer) {
@@ -691,6 +805,24 @@ func _Guild_Delete_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Guild_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(spotigraph.GuildSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.spotigraph.v1.Guild/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildServer).Search(ctx, req.(*spotigraph.GuildSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Guild_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "grpc.spotigraph.v1.Guild",
 	HandlerType: (*GuildServer)(nil),
@@ -711,6 +843,10 @@ var _Guild_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _Guild_Delete_Handler,
 		},
+		{
+			MethodName: "Search",
+			Handler:    _Guild_Search_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
@@ -724,6 +860,7 @@ type TribeClient interface {
 	Get(ctx context.Context, in *spotigraph.TribeGetReq, opts ...grpc.CallOption) (*spotigraph.SingleTribeRes, error)
 	Update(ctx context.Context, in *spotigraph.TribeUpdateReq, opts ...grpc.CallOption) (*spotigraph.SingleTribeRes, error)
 	Delete(ctx context.Context, in *spotigraph.TribeGetReq, opts ...grpc.CallOption) (*spotigraph.EmptyRes, error)
+	Search(ctx context.Context, in *spotigraph.TribeSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedTribeRes, error)
 }
 
 type tribeClient struct {
@@ -770,12 +907,22 @@ func (c *tribeClient) Delete(ctx context.Context, in *spotigraph.TribeGetReq, op
 	return out, nil
 }
 
+func (c *tribeClient) Search(ctx context.Context, in *spotigraph.TribeSearchReq, opts ...grpc.CallOption) (*spotigraph.PaginatedTribeRes, error) {
+	out := new(spotigraph.PaginatedTribeRes)
+	err := c.cc.Invoke(ctx, "/grpc.spotigraph.v1.Tribe/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TribeServer is the server API for Tribe service.
 type TribeServer interface {
 	Create(context.Context, *spotigraph.TribeCreateReq) (*spotigraph.SingleTribeRes, error)
 	Get(context.Context, *spotigraph.TribeGetReq) (*spotigraph.SingleTribeRes, error)
 	Update(context.Context, *spotigraph.TribeUpdateReq) (*spotigraph.SingleTribeRes, error)
 	Delete(context.Context, *spotigraph.TribeGetReq) (*spotigraph.EmptyRes, error)
+	Search(context.Context, *spotigraph.TribeSearchReq) (*spotigraph.PaginatedTribeRes, error)
 }
 
 func RegisterTribeServer(s *grpc.Server, srv TribeServer) {
@@ -854,6 +1001,24 @@ func _Tribe_Delete_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tribe_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(spotigraph.TribeSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TribeServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.spotigraph.v1.Tribe/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TribeServer).Search(ctx, req.(*spotigraph.TribeSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Tribe_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "grpc.spotigraph.v1.Tribe",
 	HandlerType: (*TribeServer)(nil),
@@ -873,6 +1038,10 @@ var _Tribe_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _Tribe_Delete_Handler,
+		},
+		{
+			MethodName: "Search",
+			Handler:    _Tribe_Search_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

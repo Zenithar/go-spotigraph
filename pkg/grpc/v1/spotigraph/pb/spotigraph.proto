@@ -10,6 +10,7 @@ service User {
     rpc Get(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.SingleUserRes);
     rpc Update(.spotigraph.v1.UserUpdateReq) returns (.spotigraph.v1.SingleUserRes);
     rpc Delete(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.EmptyRes);
+    rpc Search(.spotigraph.v1.UserSearchReq) returns (.spotigraph.v1.PaginatedUserRes);
 }
 
 service Squad {
@@ -17,6 +18,7 @@ service Squad {
     rpc Get(.spotigraph.v1.SquadGetReq) returns (.spotigraph.v1.SingleSquadRes);
     rpc Update(.spotigraph.v1.SquadUpdateReq) returns (.spotigraph.v1.SingleSquadRes);
     rpc Delete(.spotigraph.v1.SquadGetReq) returns (.spotigraph.v1.EmptyRes);
+    rpc Search(.spotigraph.v1.SquadSearchReq) returns (.spotigraph.v1.PaginatedSquadRes);
 }
 
 service Chapter {
@@ -24,6 +26,7 @@ service Chapter {
     rpc Get(.spotigraph.v1.ChapterGetReq) returns (.spotigraph.v1.SingleChapterRes);
     rpc Update(.spotigraph.v1.ChapterUpdateReq) returns (.spotigraph.v1.SingleChapterRes);
     rpc Delete(.spotigraph.v1.ChapterGetReq) returns (.spotigraph.v1.EmptyRes);
+    rpc Search(.spotigraph.v1.ChapterSearchReq) returns (.spotigraph.v1.PaginatedChapterRes);
 }
 
 service Guild {
@@ -31,6 +34,7 @@ service Guild {
     rpc Get(.spotigraph.v1.GuildGetReq) returns (.spotigraph.v1.SingleGuildRes);
     rpc Update(.spotigraph.v1.GuildUpdateReq) returns (.spotigraph.v1.SingleGuildRes);
     rpc Delete(.spotigraph.v1.GuildGetReq) returns (.spotigraph.v1.EmptyRes);
+    rpc Search(.spotigraph.v1.GuildSearchReq) returns (.spotigraph.v1.PaginatedGuildRes);
 }
 
 service Tribe {
@@ -38,4 +42,5 @@ service Tribe {
     rpc Get(.spotigraph.v1.TribeGetReq) returns (.spotigraph.v1.SingleTribeRes);
     rpc Update(.spotigraph.v1.TribeUpdateReq) returns (.spotigraph.v1.SingleTribeRes);
     rpc Delete(.spotigraph.v1.TribeGetReq) returns (.spotigraph.v1.EmptyRes);
+    rpc Search(.spotigraph.v1.TribeSearchReq) returns (.spotigraph.v1.PaginatedTribeRes);
 }
