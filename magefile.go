@@ -133,6 +133,7 @@ func (Proto) GRPC() error {
 		"-I", "${GOPATH}/src",
 		"-I", "${GOPATH}/src/github.com/gogo/protobuf/protobuf",
 		"--gogo_out", "plugins=grpc,Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
+		"--cobra_out", "Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
 		"pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
 	)
 }

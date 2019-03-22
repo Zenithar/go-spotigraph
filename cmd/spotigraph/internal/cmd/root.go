@@ -30,6 +30,7 @@ func init() {
 
 	feature.DefaultMutableGate.AddFlag(serverCmd.Flags())
 	mainCmd.AddCommand(serverCmd)
+	mainCmd.AddCommand(clientCmd)
 }
 
 // -----------------------------------------------------------------------------
