@@ -65,9 +65,7 @@ func (ci CI) localExecute(job string) error {
 type Go mg.Namespace
 
 var deps = []string{
-	"github.com/CircleCI-Public/circleci-cli",
-	"github.com/golangci/golangci-lint/cmd/golangci-lint",
-	"github.com/gotestyourself/gotestsum",
+	"github.com/izumin5210/gex/cmd/gex",
 }
 
 // Test run go test
@@ -85,10 +83,14 @@ func (Go) Tidy() {
 // Deps install dependency tools.
 func (Go) Deps() {
 	fmt.Println("## Intalling dependencies")
+	sh.RunV("go", "mod", "vendor")
+
 	for _, dep := range deps {
 		fmt.Printf(" > %s\n", dep)
 		sh.RunV("go", "install", dep)
 	}
+
+	sh.RunV("gex", "--build")
 }
 
 // Format runs goimports on everything
