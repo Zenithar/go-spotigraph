@@ -52,7 +52,9 @@ func (r *rdbTribeRepository) Update(ctx context.Context, entity *models.Tribe) e
 		return err
 	}
 
-	return r.adapter.UpdateID(ctx, entity.ID, entity)
+	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
+		"name": entity.Name,
+	})
 }
 
 func (r *rdbTribeRepository) Delete(ctx context.Context, id string) error {
