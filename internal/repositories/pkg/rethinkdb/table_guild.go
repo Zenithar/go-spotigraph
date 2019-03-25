@@ -6,10 +6,8 @@ import (
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
-	"go.uber.org/zap"
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/rethinkdb"
-	"go.zenithar.org/pkg/log"
 	rdb "gopkg.in/rethinkdb/rethinkdb-go.v5"
 )
 
@@ -41,7 +39,6 @@ func (r *rdbGuildRepository) Get(ctx context.Context, id string) (*models.Guild,
 	// Do the query
 	err := r.adapter.FindOneBy(ctx, "id", id, &entity)
 	if err != nil {
-		log.For(ctx).Error("Unable to query database", zap.Error(err))
 		return nil, err
 	}
 
@@ -55,7 +52,9 @@ func (r *rdbGuildRepository) Update(ctx context.Context, entity *models.Guild) e
 		return err
 	}
 
-	return r.adapter.UpdateID(ctx, entity.ID, entity)
+	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
+		"name": entity.Name,
+	})
 }
 
 func (r *rdbGuildRepository) Delete(ctx context.Context, id string) error {
@@ -72,7 +71,6 @@ func (r *rdbGuildRepository) FindByName(ctx context.Context, name string) (*mode
 	// Do the query
 	err := r.adapter.FindOneBy(ctx, "name", name, &entity)
 	if err != nil {
-		log.For(ctx).Error("Unable to query database", zap.Error(err))
 		return nil, err
 	}
 

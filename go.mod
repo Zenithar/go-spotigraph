@@ -34,12 +34,14 @@ require (
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
 	github.com/izumin5210/gex v0.4.4 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/mitchellh/golicense v0.1.1 // indirect
+	github.com/mongodb/mongo-go-driver v0.3.0
 	github.com/montanaflynn/stats v0.5.0 // indirect
 	github.com/neurosnap/sentences v1.0.6 // indirect
 	github.com/pelletier/go-toml v1.2.0
