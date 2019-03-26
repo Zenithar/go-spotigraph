@@ -38,10 +38,11 @@ require (
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
+	go.mongodb.org/mongo-driver v1.0.0
 	go.opencensus.io v0.19.2
 	go.uber.org/zap v1.9.1
-	go.zenithar.org/pkg v0.0.3
-	go.zenithar.org/protoc-gen-cobra v0.0.2
+	go.zenithar.org/pkg v0.0.6
+	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
 	golang.org/x/net v0.0.0-20190311183353-d8887717615a
 	golang.org/x/oauth2 v0.0.0-20190319182350-c85d3e98c914
@@ -50,3 +51,7 @@ require (
 	gotest.tools/gotestsum v0.3.4
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )
+
+replace go.zenithar.org/pkg => github.com/Zenithar/go-pkg v0.0.6
+
+replace go.zenithar.org/protoc-gen-cobra => github.com/Zenithar/go-protoc-gen-cobra v0.0.3
