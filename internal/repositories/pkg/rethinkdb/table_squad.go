@@ -2,6 +2,7 @@ package rethinkdb
 
 import (
 	"context"
+	"strings"
 
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
@@ -62,7 +63,44 @@ func (r *rdbSquadRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *rdbSquadRepository) Search(ctx context.Context, filter *repositories.SquadSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Squad, int, error) {
-	panic("Not implemented")
+	var results []*models.Squad
+
+	// Build filter
+	filterFunc := func(row rdb.Term) rdb.Term {
+		var term = rdb.Expr(true)
+
+		// Squad ID
+		if len(strings.TrimSpace(filter.SquadID)) > 0 {
+			term = term.And(row.Field("id").Eq(filter.SquadID))
+		}
+
+		// Name
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			term = term.And(row.Field("name").Eq(filter.Name))
+		}
+
+		return term
+	}
+
+	// Run the count
+	count, err := r.adapter.WhereCount(ctx, filterFunc)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// Run the query
+	err = r.adapter.Search(ctx, &results, filterFunc, sortParams, pagination)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	if len(results) == 0 {
+		err = api.ErrNoResult
+	} else {
+		err = nil
+	}
+
+	return results, count, err
 }
 
 func (r *rdbSquadRepository) FindByName(ctx context.Context, name string) (*models.Squad, error) {

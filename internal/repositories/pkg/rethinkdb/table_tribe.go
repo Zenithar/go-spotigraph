@@ -2,6 +2,7 @@ package rethinkdb
 
 import (
 	"context"
+	"strings"
 
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
@@ -62,7 +63,44 @@ func (r *rdbTribeRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *rdbTribeRepository) Search(ctx context.Context, filter *repositories.TribeSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Tribe, int, error) {
-	panic("Not implemented")
+	var results []*models.Tribe
+
+	// Build filter
+	filterFunc := func(row rdb.Term) rdb.Term {
+		var term = rdb.Expr(true)
+
+		// Tribe ID
+		if len(strings.TrimSpace(filter.TribeID)) > 0 {
+			term = term.And(row.Field("id").Eq(filter.TribeID))
+		}
+
+		// Name
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			term = term.And(row.Field("name").Eq(filter.Name))
+		}
+
+		return term
+	}
+
+	// Run the count
+	count, err := r.adapter.WhereCount(ctx, filterFunc)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// Run the query
+	err = r.adapter.Search(ctx, &results, filterFunc, sortParams, pagination)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	if len(results) == 0 {
+		err = api.ErrNoResult
+	} else {
+		err = nil
+	}
+
+	return results, count, err
 }
 
 func (r *rdbTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {

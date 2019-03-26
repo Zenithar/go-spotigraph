@@ -2,6 +2,7 @@ package rethinkdb
 
 import (
 	"context"
+	"strings"
 
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
@@ -62,7 +63,44 @@ func (r *rdbUserRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *rdbUserRepository) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.User, int, error) {
-	panic("Not implemented")
+	var results []*models.User
+
+	// Build filter
+	filterFunc := func(row rdb.Term) rdb.Term {
+		var term = rdb.Expr(true)
+
+		// User ID
+		if len(strings.TrimSpace(filter.UserID)) > 0 {
+			term = term.And(row.Field("id").Eq(filter.UserID))
+		}
+
+		// Name
+		if len(strings.TrimSpace(filter.Principal)) > 0 {
+			term = term.And(row.Field("prn").Eq(filter.Principal))
+		}
+
+		return term
+	}
+
+	// Run the count
+	count, err := r.adapter.WhereCount(ctx, filterFunc)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// Run the query
+	err = r.adapter.Search(ctx, &results, filterFunc, sortParams, pagination)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	if len(results) == 0 {
+		err = api.ErrNoResult
+	} else {
+		err = nil
+	}
+
+	return results, count, err
 }
 
 func (r *rdbUserRepository) FindByPrincipal(ctx context.Context, principal string) (*models.User, error) {
