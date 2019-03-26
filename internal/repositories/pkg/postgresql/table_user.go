@@ -19,7 +19,7 @@ type pgUserRepository struct {
 func NewUserRepository(cfg *db.Configuration, session *sqlx.DB) repositories.User {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "prn",
+		"id", "prn", "meta",
 	}
 
 	// Sortable columns

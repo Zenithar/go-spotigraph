@@ -19,7 +19,7 @@ type pgTribeRepository struct {
 func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tribe {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label",
+		"id", "label", "meta",
 	}
 
 	// Sortable columns

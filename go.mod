@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/CircleCI-Public/circleci-cli v0.1.5490
+	github.com/Masterminds/squirrel v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
 	github.com/chzyer/logex v1.1.10 // indirect
 	github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 // indirect

@@ -8,6 +8,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -19,7 +20,7 @@ type pgChapterRepository struct {
 func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Chapter {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label",
+		"chapter_id", "label", "meta", "leader_id", "member_ids",
 	}
 
 	// Sortable columns
@@ -46,7 +47,7 @@ func (r *pgChapterRepository) Create(ctx context.Context, entity *models.Chapter
 func (r *pgChapterRepository) Get(ctx context.Context, id string) (*models.Chapter, error) {
 	var entity models.Chapter
 
-	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
+	if err := r.adapter.WhereAndFetchOne(ctx, sq.Eq{
 		"id": id,
 	}, &entity); err != nil {
 		return nil, err
@@ -63,13 +64,13 @@ func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter
 
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name": entity.Name,
-	}, map[string]interface{}{
+	}, sq.Eq{
 		"id": entity.ID,
 	})
 }
 
 func (r *pgChapterRepository) Delete(ctx context.Context, id string) error {
-	return r.adapter.RemoveOne(ctx, map[string]interface{}{
+	return r.adapter.RemoveOne(ctx, sq.Eq{
 		"id": id,
 	})
 }
@@ -81,7 +82,7 @@ func (r *pgChapterRepository) Search(ctx context.Context, filter *repositories.C
 func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {
 	var entity models.Chapter
 
-	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
+	if err := r.adapter.WhereAndFetchOne(ctx, sq.Eq{
 		"name": name,
 	}, &entity); err != nil {
 		return nil, err

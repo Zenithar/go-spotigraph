@@ -19,7 +19,7 @@ type pgGuildRepository struct {
 func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Guild {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label",
+		"id", "label", "meta",
 	}
 
 	// Sortable columns

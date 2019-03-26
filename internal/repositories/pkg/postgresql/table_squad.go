@@ -19,7 +19,7 @@ type pgSquadRepository struct {
 func NewSquadRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Squad {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label",
+		"id", "label", "meta",
 	}
 
 	// Sortable columns
