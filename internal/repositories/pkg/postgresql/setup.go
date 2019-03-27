@@ -1,8 +1,10 @@
 package postgresql
 
 import (
+	"github.com/gobuffalo/packr"
 	"github.com/google/wire"
 
+	migrate "github.com/rubenv/sql-migrate"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 )
 
@@ -32,3 +34,11 @@ var RepositorySet = wire.NewSet(
 	NewSquadRepository,
 	NewTribeRepository,
 )
+
+// ----------------------------------------------------------
+
+// Migrations contains all schema migrations
+var Migrations = &migrate.PackrMigrationSource{
+	Box: packr.NewBox("./migrations"),
+	Dir: "./migrations",
+}

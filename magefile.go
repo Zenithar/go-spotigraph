@@ -60,25 +60,25 @@ var deps = []string{
 }
 
 // Generate go code
-func (Go) Generate() {
+func (Go) Generate() error {
 	fmt.Println("## Generate code")
-	sh.RunV("go", "generate", "./...")
+	return sh.RunV("go", "generate", "./...")
 }
 
 // Test run go test
-func (Go) Test() {
+func (Go) Test() error {
 	fmt.Println("## Running tests")
-	sh.RunV("gotestsum", "--", "-short", "-race", "-cover", "./...")
+	return sh.RunV("gotestsum", "--", "-short", "-race", "-cover", "./...")
 }
 
 // Tidy add/remove depenedencies.
-func (Go) Tidy() {
+func (Go) Tidy() error {
 	fmt.Println("## Cleaning go modules")
-	sh.RunV("go", "mod", "tidy", "-v")
+	return sh.RunV("go", "mod", "tidy", "-v")
 }
 
 // Deps install dependency tools.
-func (Go) Deps() {
+func (Go) Deps() error {
 	fmt.Println("## Intalling dependencies")
 	sh.RunV("go", "mod", "vendor")
 
@@ -87,22 +87,22 @@ func (Go) Deps() {
 		sh.RunV("go", "install", dep)
 	}
 
-	sh.RunV("gex", "--build")
+	return sh.RunV("gex", "--build")
 }
 
 // Format runs goimports on everything
-func (Go) Format() {
+func (Go) Format() error {
 	fmt.Println("## Format everything")
 	args := []string{"-w"}
 	args = append(args, goFiles...)
-	sh.RunV("goimports", args...)
+	return sh.RunV("goimports", args...)
 }
 
 // Lint run linter.
-func (Go) Lint() {
+func (Go) Lint() error {
 	mg.Deps(Go.Format)
 	fmt.Println("## Lint go code")
-	sh.RunV("golangci-lint", "run")
+	return sh.RunV("golangci-lint", "run")
 }
 
 // -----------------------------------------------------------------------------

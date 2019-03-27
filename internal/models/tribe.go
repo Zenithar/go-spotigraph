@@ -38,12 +38,12 @@ func (c *Tribe) Validate() error {
 	)
 }
 
-// AddSquad adds the given user as member of tribe
+// AddSquad adds the given squad as member of tribe
 func (c *Tribe) AddSquad(s *Squad) {
 	c.Squads.AddIfNotContains(s.ID)
 }
 
-// RemoveMember removes the given user as member of tribe
+// RemoveSquad removes the given squad as member of tribe
 func (c *Tribe) RemoveSquad(s *Squad) {
 	c.Squads.Remove(s.ID)
 }
