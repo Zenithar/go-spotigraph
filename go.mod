@@ -33,6 +33,7 @@ require (
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/mongodb/mongo-go-driver v1.0.0
 	github.com/pelletier/go-toml v1.2.0
+	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/ryanuber/go-license v0.0.0-20180405065157-c69f41c2c8d6 // indirect
 	github.com/sirupsen/logrus v1.4.0

@@ -52,7 +52,9 @@ func (r *mgoTribeRepository) Update(ctx context.Context, entity *models.Tribe) e
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name": entity.Name,
+		"name":      entity.Name,
+		"meta":      entity.Meta,
+		"squad_ids": entity.Squads,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

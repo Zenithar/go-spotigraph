@@ -52,7 +52,9 @@ func (r *mgoGuildRepository) Update(ctx context.Context, entity *models.Guild) e
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name": entity.Name,
+		"name":       entity.Name,
+		"meta":       entity.Meta,
+		"member_ids": entity.Members,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

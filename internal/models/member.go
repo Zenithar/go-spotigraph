@@ -1,43 +1,11 @@
 package models
 
 import (
-	"database/sql/driver"
-	"encoding/json"
-	"errors"
 	"strings"
 )
 
 // StringArray describes string array type
 type StringArray []string
-
-// -----------------------------------------------------------------------------
-
-// Value exports metadata as json for sql driver
-func (s StringArray) Value() (driver.Value, error) {
-	j, err := json.Marshal(s)
-	return j, err
-}
-
-// Scan deserialize metadata from sql driver
-func (s *StringArray) Scan(src interface{}) error {
-	source, ok := src.([]byte)
-	if !ok {
-		return errors.New("type assertion .([]byte) failed.")
-	}
-
-	var i interface{}
-	err := json.Unmarshal(source, &i)
-	if err != nil {
-		return err
-	}
-
-	*s, ok = i.([]string)
-	if !ok {
-		return errors.New("type assertion .([]string) failed.")
-	}
-
-	return nil
-}
 
 // -----------------------------------------------------------------------------
 

@@ -52,7 +52,10 @@ func (r *mgoSquadRepository) Update(ctx context.Context, entity *models.Squad) e
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name": entity.Name,
+		"name":             entity.Name,
+		"meta":             entity.Meta,
+		"product_owner_id": entity.ProductOwner,
+		"member_ids":       entity.Members,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

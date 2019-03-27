@@ -2,6 +2,7 @@ package postgresql
 
 import (
 	"context"
+	"encoding/json"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
@@ -10,6 +11,7 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
 
 type pgChapterRepository struct {
@@ -20,17 +22,71 @@ type pgChapterRepository struct {
 func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Chapter {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"chapter_id", "label", "meta", "leader_id", "member_ids",
+		"id", "name", "meta", "leader_id", "member_ids",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"name",
+		"name", "leader_id",
 	}
 
 	return &pgChapterRepository{
 		adapter: db.NewCRUDTable(session, "", ChapterTableName, defaultColumns, sortableColumns),
 	}
+}
+
+// ------------------------------------------------------------
+
+type sqlChapter struct {
+	ID      string `db:"id"`
+	Name    string `db:"name"`
+	Meta    string `db:"meta"`
+	Leader  string `db:"leader_id"`
+	Members string `db:"member_ids"`
+}
+
+func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
+	meta, err := json.Marshal(entity.Meta)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	members, err := json.Marshal(entity.Members)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return &sqlChapter{
+		ID:      entity.ID,
+		Name:    entity.Name,
+		Meta:    string(meta),
+		Leader:  entity.Leader,
+		Members: string(members),
+	}, nil
+}
+
+func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
+	entity := &models.Chapter{
+		ID:     dto.ID,
+		Name:   dto.Name,
+		Leader: dto.Leader,
+	}
+
+	// Decode JSON columns
+
+	// Metadata
+	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// Membership
+	err = json.Unmarshal([]byte(dto.Members), &entity.Members)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return entity, nil
 }
 
 // ------------------------------------------------------------
@@ -41,11 +97,17 @@ func (r *pgChapterRepository) Create(ctx context.Context, entity *models.Chapter
 		return err
 	}
 
-	return r.adapter.Create(ctx, entity)
+	// Convert to DTO
+	data, err := toChapterSQL(entity)
+	if err != nil {
+		return err
+	}
+
+	return r.adapter.Create(ctx, data)
 }
 
 func (r *pgChapterRepository) Get(ctx context.Context, id string) (*models.Chapter, error) {
-	var entity models.Chapter
+	var entity sqlChapter
 
 	if err := r.adapter.WhereAndFetchOne(ctx, sq.Eq{
 		"id": id,
@@ -53,7 +115,7 @@ func (r *pgChapterRepository) Get(ctx context.Context, id string) (*models.Chapt
 		return nil, err
 	}
 
-	return &entity, nil
+	return entity.ToEntity()
 }
 
 func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter) error {
@@ -62,8 +124,17 @@ func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter
 		return err
 	}
 
+	// Intermediary DTO
+	obj, err := toChapterSQL(entity)
+	if err != nil {
+		return err
+	}
+
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name": entity.Name,
+		"name":       obj.Name,
+		"meta":       obj.Meta,
+		"leader_id":  obj.Leader,
+		"member_ids": obj.Members,
 	}, sq.Eq{
 		"id": entity.ID,
 	})
@@ -80,7 +151,7 @@ func (r *pgChapterRepository) Search(ctx context.Context, filter *repositories.C
 }
 
 func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {
-	var entity models.Chapter
+	var entity sqlChapter
 
 	if err := r.adapter.WhereAndFetchOne(ctx, sq.Eq{
 		"name": name,
@@ -88,5 +159,5 @@ func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*mod
 		return nil, err
 	}
 
-	return &entity, nil
+	return entity.ToEntity()
 }

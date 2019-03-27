@@ -2,6 +2,7 @@ package postgresql
 
 import (
 	"context"
+	"encoding/json"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
@@ -9,6 +10,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
 
 type pgTribeRepository struct {
@@ -19,7 +21,7 @@ type pgTribeRepository struct {
 func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tribe {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label", "meta",
+		"id", "label", "meta", "squad_ids",
 	}
 
 	// Sortable columns
@@ -34,17 +36,74 @@ func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tr
 
 // ------------------------------------------------------------
 
+type sqlTribe struct {
+	ID     string `db:"id"`
+	Name   string `db:"name"`
+	Meta   string `db:"meta"`
+	Squads string `db:"squad_ids"`
+}
+
+func toTribeSQL(entity *models.Tribe) (*sqlTribe, error) {
+	meta, err := json.Marshal(entity.Meta)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	squads, err := json.Marshal(entity.Squads)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return &sqlTribe{
+		ID:     entity.ID,
+		Name:   entity.Name,
+		Meta:   string(meta),
+		Squads: string(squads),
+	}, nil
+}
+
+func (dto *sqlTribe) ToEntity() (*models.Tribe, error) {
+	entity := &models.Tribe{
+		ID:   dto.ID,
+		Name: dto.Name,
+	}
+
+	// Decode JSON columns
+
+	// Metadata
+	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// Membership
+	err = json.Unmarshal([]byte(dto.Squads), &entity.Squads)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return entity, nil
+}
+
+// ------------------------------------------------------------
+
 func (r *pgTribeRepository) Create(ctx context.Context, entity *models.Tribe) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
 	}
 
-	return r.adapter.Create(ctx, entity)
+	// Convert to DTO
+	data, err := toTribeSQL(entity)
+	if err != nil {
+		return err
+	}
+
+	return r.adapter.Create(ctx, data)
 }
 
 func (r *pgTribeRepository) Get(ctx context.Context, id string) (*models.Tribe, error) {
-	var entity models.Tribe
+	var entity sqlTribe
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
 		"id": id,
@@ -52,7 +111,7 @@ func (r *pgTribeRepository) Get(ctx context.Context, id string) (*models.Tribe, 
 		return nil, err
 	}
 
-	return &entity, nil
+	return entity.ToEntity()
 }
 
 func (r *pgTribeRepository) Update(ctx context.Context, entity *models.Tribe) error {
@@ -61,10 +120,18 @@ func (r *pgTribeRepository) Update(ctx context.Context, entity *models.Tribe) er
 		return err
 	}
 
+	// Intermediary DTO
+	obj, err := toTribeSQL(entity)
+	if err != nil {
+		return err
+	}
+
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name": entity.Name,
+		"name":      obj.Name,
+		"meta":      obj.Meta,
+		"squad_ids": obj.Squads,
 	}, map[string]interface{}{
-		"id": entity.ID,
+		"id": obj.ID,
 	})
 }
 
@@ -79,7 +146,7 @@ func (r *pgTribeRepository) Search(ctx context.Context, filter *repositories.Tri
 }
 
 func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {
-	var entity models.Tribe
+	var entity sqlTribe
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
 		"name": name,
@@ -87,5 +154,5 @@ func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*model
 		return nil, err
 	}
 
-	return &entity, nil
+	return entity.ToEntity()
 }
