@@ -15,7 +15,6 @@ import (
 	_ "github.com/google/wire/cmd/wire"
 	_ "github.com/hexdigest/gowrap"
 	_ "github.com/lyft/protoc-gen-validate"
-	_ "github.com/rubenv/sql-migrate/sql-migrate"
 	_ "go.zenithar.org/protoc-gen-cobra"
 	_ "gotest.tools/gotestsum"
 )
