@@ -50,3 +50,8 @@ type Tribe interface {
 	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.EmptyRes, error)
 	Search(ctx context.Context, req *spotigraph.TribeSearchReq) (*spotigraph.PaginatedTribeRes, error)
 }
+
+// Graph defines graph service contract
+type Graph interface {
+	Expand(cx context.Context, req *spotigraph.NodeInfoReq) (*spotigraph.GraphRes, error)
+}

@@ -8,9 +8,12 @@ import (
 	"strings"
 
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
+	"go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
+	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
+	"go.zenithar.org/spotigraph/internal/services/pkg/graph"
 	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
 	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
@@ -23,6 +26,8 @@ import (
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"go.uber.org/zap"
+	mdb "go.zenithar.org/pkg/db/adapter/mongodb"
+	pgdb "go.zenithar.org/pkg/db/adapter/postgresql"
 	rdb "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
@@ -41,6 +46,7 @@ var serviceSet = wire.NewSet(
 	squad.New,
 	guild.New,
 	tribe.New,
+	graph.New,
 )
 
 // rdbConfig declares a Database configuration provider for Wire
@@ -53,7 +59,28 @@ func rdbConfig(cfg *config.Configuration) *rdb.Configuration {
 	}
 }
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe) (*grpc.Server, error) {
+// mgoConfig declares a Database configuration provider for Wire
+func mgoConfig(cfg *config.Configuration) *mdb.Configuration {
+	return &mdb.Configuration{
+		AutoMigrate:      cfg.Server.Database.AutoMigrate,
+		ConnectionString: cfg.Server.Database.Hosts,
+		DatabaseName:     cfg.Server.Database.Database,
+		Username:         cfg.Server.Database.Username,
+		Password:         cfg.Server.Database.Password,
+	}
+}
+
+// pgConfig declares a Database configuration provider for Wire
+func pgConfig(cfg *config.Configuration) *pgdb.Configuration {
+	return &pgdb.Configuration{
+		AutoMigrate:      cfg.Server.Database.AutoMigrate,
+		ConnectionString: cfg.Server.Database.Hosts,
+		Username:         cfg.Server.Database.Username,
+		Password:         cfg.Server.Database.Password,
+	}
+}
+
+func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph services.Graph) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -114,6 +141,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 	pb.RegisterGuildServer(server, guilds)
 	pb.RegisterSquadServer(server, squads)
 	pb.RegisterTribeServer(server, tribes)
+	pb.RegisterGraphServer(server, graph)
 
 	// Reflection
 	reflection.Register(server)
@@ -129,6 +157,30 @@ func setupRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Serve
 	wire.Build(
 		rdbConfig,
 		rethinkdb.RepositorySet,
+		serviceSet,
+		grpcServer,
+	)
+
+	return nil, nil
+}
+
+func setupMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+
+	wire.Build(
+		mgoConfig,
+		mongodb.RepositorySet,
+		serviceSet,
+		grpcServer,
+	)
+
+	return nil, nil
+}
+
+func setupPostgresDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+
+	wire.Build(
+		pgConfig,
+		postgresql.RepositorySet,
 		serviceSet,
 		grpcServer,
 	)

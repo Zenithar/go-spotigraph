@@ -22,9 +22,8 @@ type Guild struct {
 // NewGuild returns a guild instance
 func NewGuild(name string) *Guild {
 	return &Guild{
-		ID:      helpers.IDGeneratorFunc(),
-		Name:    name,
-		Members: make([]string, 0),
+		ID:   helpers.IDGeneratorFunc(),
+		Name: name,
 	}
 }
 

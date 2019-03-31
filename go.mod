@@ -38,6 +38,7 @@ require (
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/mitchellh/cli v1.0.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.1 // indirect
+	github.com/onsi/gomega v1.5.0
 	github.com/pelletier/go-toml v1.2.0
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829 // indirect

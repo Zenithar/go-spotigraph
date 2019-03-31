@@ -1517,3 +1517,59 @@ func init() {
 	TribeClientCommand.AddCommand(tribe_SearchClientCommand)
 	DefaultClientCommandConfig.AddFlags(tribe_SearchClientCommand.Flags())
 }
+
+var GraphClientCommand = &cobra.Command{
+	Use: "graph",
+}
+
+var graph_ExpandClientCommand = &cobra.Command{
+	Use:  "expand",
+	Long: "Expand client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	expand -p > req.json
+Submit request using file:
+	expand -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | expand --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.NodeInfoReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewGraphClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Expand(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	GraphClientCommand.AddCommand(graph_ExpandClientCommand)
+	DefaultClientCommandConfig.AddFlags(graph_ExpandClientCommand.Flags())
+}

@@ -16,13 +16,18 @@ import (
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"go.uber.org/zap"
+	"go.zenithar.org/pkg/db/adapter/mongodb"
+	"go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
+	mongodb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
+	postgresql2 "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	rethinkdb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
+	"go.zenithar.org/spotigraph/internal/services/pkg/graph"
 	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
 	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
@@ -53,7 +58,56 @@ func setupRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Serve
 	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesTribe := rethinkdb2.NewTribeRepository(configuration, session)
 	servicesTribe := tribe.New(repositoriesTribe)
-	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe)
+	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
+	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
+	if err != nil {
+		return nil, err
+	}
+	return server, nil
+}
+
+func setupMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+	configuration := mgoConfig(cfg)
+	client, err := mongodb.Connection(ctx, configuration)
+	if err != nil {
+		return nil, err
+	}
+	repositoriesUser := mongodb2.NewUserRepository(configuration, client)
+	servicesUser := user.New(repositoriesUser)
+	repositoriesChapter := mongodb2.NewChapterRepository(configuration, client)
+	servicesChapter := chapter.New(repositoriesChapter)
+	repositoriesGuild := mongodb2.NewGuildRepository(configuration, client)
+	servicesGuild := guild.New(repositoriesGuild)
+	repositoriesSquad := mongodb2.NewSquadRepository(configuration, client)
+	servicesSquad := squad.New(repositoriesSquad)
+	repositoriesTribe := mongodb2.NewTribeRepository(configuration, client)
+	servicesTribe := tribe.New(repositoriesTribe)
+	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
+	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
+	if err != nil {
+		return nil, err
+	}
+	return server, nil
+}
+
+func setupPostgresDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+	configuration := pgConfig(cfg)
+	db, err := postgresql.Connection(ctx, configuration)
+	if err != nil {
+		return nil, err
+	}
+	repositoriesUser := postgresql2.NewUserRepository(configuration, db)
+	servicesUser := user.New(repositoriesUser)
+	repositoriesChapter := postgresql2.NewChapterRepository(configuration, db)
+	servicesChapter := chapter.New(repositoriesChapter)
+	repositoriesGuild := postgresql2.NewGuildRepository(configuration, db)
+	servicesGuild := guild.New(repositoriesGuild)
+	repositoriesSquad := postgresql2.NewSquadRepository(configuration, db)
+	servicesSquad := squad.New(repositoriesSquad)
+	repositoriesTribe := postgresql2.NewTribeRepository(configuration, db)
+	servicesTribe := tribe.New(repositoriesTribe)
+	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
+	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +116,7 @@ func setupRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Serve
 
 // injector.go:
 
-var serviceSet = wire.NewSet(user.New, chapter.New, squad.New, guild.New, tribe.New)
+var serviceSet = wire.NewSet(user.New, chapter.New, squad.New, guild.New, tribe.New, graph.New)
 
 // rdbConfig declares a Database configuration provider for Wire
 func rdbConfig(cfg *config.Configuration) *rethinkdb.Configuration {
@@ -74,7 +128,28 @@ func rdbConfig(cfg *config.Configuration) *rethinkdb.Configuration {
 	}
 }
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe) (*grpc.Server, error) {
+// mgoConfig declares a Database configuration provider for Wire
+func mgoConfig(cfg *config.Configuration) *mongodb.Configuration {
+	return &mongodb.Configuration{
+		AutoMigrate:      cfg.Server.Database.AutoMigrate,
+		ConnectionString: cfg.Server.Database.Hosts,
+		DatabaseName:     cfg.Server.Database.Database,
+		Username:         cfg.Server.Database.Username,
+		Password:         cfg.Server.Database.Password,
+	}
+}
+
+// pgConfig declares a Database configuration provider for Wire
+func pgConfig(cfg *config.Configuration) *postgresql.Configuration {
+	return &postgresql.Configuration{
+		AutoMigrate:      cfg.Server.Database.AutoMigrate,
+		ConnectionString: cfg.Server.Database.Hosts,
+		Username:         cfg.Server.Database.Username,
+		Password:         cfg.Server.Database.Password,
+	}
+}
+
+func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph2 services.Graph) (*grpc.Server, error) {
 
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
@@ -113,6 +188,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 	pb.RegisterGuildServer(server, guilds)
 	pb.RegisterSquadServer(server, squads)
 	pb.RegisterTribeServer(server, tribes)
+	pb.RegisterGraphServer(server, graph2)
 	reflection.Register(server)
 
 	return server, nil

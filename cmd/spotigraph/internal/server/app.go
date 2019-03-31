@@ -104,6 +104,14 @@ func (s *application) checkConfiguration(cfg interface{}) error {
 		if config.Server.Database.Hosts == "" {
 			return fmt.Errorf("server: database hosts list is mandatory")
 		}
+	case "mongodb":
+		if config.Server.Database.Hosts == "" {
+			return fmt.Errorf("server: database hosts list is mandatory")
+		}
+	case "postgresql":
+		if config.Server.Database.Hosts == "" {
+			return fmt.Errorf("server: database hosts list is mandatory")
+		}
 	default:
 		return fmt.Errorf("server: invalid type (rethinkdb)")
 	}
@@ -118,6 +126,10 @@ func (s *application) setup(ctx context.Context) error {
 	switch s.cfg.Server.Database.Type {
 	case "rethinkdb":
 		s.server, err = setupRethinkDB(ctx, s.cfg)
+	case "mongodb":
+		s.server, err = setupMongoDB(ctx, s.cfg)
+	case "postgresql":
+		s.server, err = setupPostgresDB(ctx, s.cfg)
 	default:
 		log.For(ctx).Fatal("Unsupported database type", zap.String("use", s.cfg.Server.Database.Type))
 	}

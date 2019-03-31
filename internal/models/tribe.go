@@ -22,9 +22,8 @@ type Tribe struct {
 // NewTribe returns a tribe instance
 func NewTribe(name string) *Tribe {
 	return &Tribe{
-		ID:     helpers.IDGeneratorFunc(),
-		Name:   name,
-		Squads: make([]string, 0),
+		ID:   helpers.IDGeneratorFunc(),
+		Name: name,
 	}
 }
 

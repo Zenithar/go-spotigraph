@@ -44,3 +44,7 @@ service Tribe {
     rpc Delete(.spotigraph.v1.TribeGetReq) returns (.spotigraph.v1.EmptyRes);
     rpc Search(.spotigraph.v1.TribeSearchReq) returns (.spotigraph.v1.PaginatedTribeRes);
 }
+
+service Graph {
+    rpc Expand(.spotigraph.v1.NodeInfoReq) returns (.spotigraph.v1.GraphRes);
+}

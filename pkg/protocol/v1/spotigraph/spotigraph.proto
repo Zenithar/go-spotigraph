@@ -64,6 +64,61 @@ message Domain {
 
 }
 
+message Graph {
+
+  message Node {
+
+    // Type of Node supported
+    enum Type {
+        UNDEFINED = 0;
+        USER = 1;
+        CHAPTER = 2;
+        GUILD = 3;
+        SQUAD = 4;
+        TRIBE = 5;
+    }
+
+    // URN exported from the entity
+    string urn = 1;
+
+    // Type of the node
+    Type type = 2;
+
+    // Hold entity according previous type
+    oneof entity {
+        Domain.User user = 3;
+        Domain.Chapter chapter = 4;
+        Domain.Guild guild = 5;
+        Domain.Squad squad = 6;
+        Domain.Tribe tribe = 7;
+    }
+
+    // Additional properties
+    map<string, string> properties = 8;
+
+  }
+
+  message Edge {
+    // Source URN
+    string source = 1;
+
+    // Destination URN
+    string destination = 2;
+
+    // Additional properties
+    map<string, string> properties = 3;
+  }
+
+  // Nodes of the graph
+  repeated Node nodes = 1;
+
+  // Edges of the graph
+  repeated Edge edges = 2;
+
+  // Additional properties
+  map<string, string> properties = 3;
+}
+
 // -----------------------------------------------------------------------------
 
 message UserCreateReq {
@@ -286,4 +341,15 @@ message TribeSearchReq {
   google.protobuf.StringValue tribe_id = 4;
   google.protobuf.StringValue name = 5;
   google.protobuf.StringValue slug = 6;
+}
+
+// -----------------------------------------------------------------------------
+
+message NodeInfoReq {
+  string urn = 1;
+}
+
+message GraphRes {
+  Error error = 1;
+  Graph graph = 2;
 }
