@@ -78,4 +78,8 @@ func TestChapterMembership(t *testing.T) {
 	obj.RemoveMember(u1)
 	g.Expect(obj.Members.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
 	g.Expect(obj.Members).To(BeEmpty(), "Members should be empty")
+
+	obj.RemoveMember(u1)
+	g.Expect(obj.Members.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
+	g.Expect(obj.Members).To(BeEmpty(), "Members should be empty")
 }

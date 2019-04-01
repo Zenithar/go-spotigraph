@@ -28,9 +28,9 @@ func NewUser(principal string) *User {
 
 // Validate entity contraints
 func (u *User) Validate() error {
-	return validation.ValidateStruct(&u,
-		validation.Field(u.ID, validation.Required, is.Alphanumeric),
-		validation.Field(u.Principal, validation.Required, is.Base64),
+	return validation.ValidateStruct(u,
+		validation.Field(&u.ID, validation.Required, is.Alphanumeric),
+		validation.Field(&u.Principal, validation.Required, is.PrintableASCII),
 	)
 }
 
