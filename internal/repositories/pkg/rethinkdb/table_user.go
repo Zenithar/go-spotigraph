@@ -54,7 +54,7 @@ func (r *rdbUserRepository) Update(ctx context.Context, entity *models.User) err
 	}
 
 	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
-		"prn": entity.Principal,
+		"principal": entity.Principal,
 	})
 }
 
@@ -76,7 +76,7 @@ func (r *rdbUserRepository) Search(ctx context.Context, filter *repositories.Use
 
 		// Name
 		if len(strings.TrimSpace(filter.Principal)) > 0 {
-			term = term.And(row.Field("prn").Eq(filter.Principal))
+			term = term.And(row.Field("principal").Eq(filter.Principal))
 		}
 
 		return term

@@ -9,6 +9,7 @@ func FromUser(entity *models.User) *Domain_User {
 	return &Domain_User{
 		Id:        entity.ID,
 		Principal: entity.Principal,
+		Urn:       entity.URN(),
 	}
 }
 

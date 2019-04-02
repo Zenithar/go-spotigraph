@@ -54,7 +54,9 @@ func (r *rdbGuildRepository) Update(ctx context.Context, entity *models.Guild) e
 	}
 
 	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
-		"name": entity.Name,
+		"name":       entity.Name,
+		"member_ids": entity.Members,
+		"meta":       entity.Meta,
 	})
 }
 

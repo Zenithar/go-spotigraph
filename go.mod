@@ -9,6 +9,7 @@ require (
 	github.com/chzyer/logex v1.1.10 // indirect
 	github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 // indirect
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
+	github.com/davecgh/go-spew v1.1.1
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/fatih/structs v1.1.0
 	github.com/frapposelli/wwhrd v0.2.1
@@ -49,6 +50,7 @@ require (
 	go.zenithar.org/pkg v0.0.6
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
+	golang.org/x/net v0.0.0-20190313220215-9f648a60d977
 	golang.org/x/oauth2 v0.0.0-20190319182350-c85d3e98c914
 	google.golang.org/grpc v1.19.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect

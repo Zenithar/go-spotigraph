@@ -37,29 +37,25 @@ message Domain {
   message Squad {
     string id = 1;
     string name = 2;
-    string slug = 3;
-    string urn = 4;
+    string urn = 3;
   }
 
   message Chapter {
     string id = 1;
     string name = 2;
-    string slug = 3;
-    string urn = 4;
+    string urn = 3;
   }
 
   message Guild {
     string id = 1;
     string name = 2;
-    string slug = 3;
-    string urn = 4;
+    string urn = 3;
   }
 
   message Tribe {
     string id = 1;
     string name = 2;
-    string slug = 3;
-    string urn = 4;
+    string urn = 3;
   }
 
 }
@@ -166,7 +162,7 @@ message UserSearchReq {
 // -----------------------------------------------------------------------------
 
 message SquadCreateReq {
-  string name = 1 [(validate.rules).string.email = true];
+  string name = 1;
 }
 
 message SquadGetReq {

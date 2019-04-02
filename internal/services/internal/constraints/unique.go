@@ -3,9 +3,16 @@ package constraints
 import (
 	"context"
 	"fmt"
+	"reflect"
 
+	"go.zenithar.org/pkg/db"
+	"go.zenithar.org/spotigraph/internal/helpers"
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
+
+func isNil(c interface{}) bool {
+	return c == nil || (reflect.ValueOf(c).Kind() == reflect.Ptr && reflect.ValueOf(c).IsNil())
+}
 
 // mustBeUnique specification checks if the given name already exists
 func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context.Context) error {
@@ -13,11 +20,11 @@ func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context
 
 		// Retrieve object from repository
 		object, err := finder(ctx)
-		if err != nil {
+		if err != nil && err != db.ErrNoResult {
 			return err
 		}
-		if object != nil {
-			return fmt.Errorf("%s already used", attribute)
+		if !isNil(object) {
+			return fmt.Errorf("%s is already used", attribute)
 		}
 
 		return nil
@@ -28,7 +35,7 @@ func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context
 func UserPrincipalMustBeUnique(users repositories.User, principal string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
-			return users.FindByPrincipal(ctx, principal)
+			return users.FindByPrincipal(ctx, helpers.PrincipalHashFunc(principal))
 		}, "User principal")
 }
 

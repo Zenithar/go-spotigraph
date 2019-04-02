@@ -11,9 +11,9 @@ import (
 
 // User describes user attributes holder
 type User struct {
-	ID        string   `json:"id"`
-	Principal string   `json:"prn"`
-	Meta      Metadata `json:"meta"`
+	ID        string   `json:"id" bson:"_id" rethinkdb:"id"`
+	Principal string   `json:"principal" bson:"principal" rethinkdb:"principal"`
+	Meta      Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 }
 
 // NewUser returns an user instance

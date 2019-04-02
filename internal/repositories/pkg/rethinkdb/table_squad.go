@@ -54,7 +54,10 @@ func (r *rdbSquadRepository) Update(ctx context.Context, entity *models.Squad) e
 	}
 
 	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
-		"name": entity.Name,
+		"name":             entity.Name,
+		"product_owner_id": entity.ProductOwner,
+		"member_ids":       entity.Members,
+		"meta":             entity.Meta,
 	})
 }
 
