@@ -13,6 +13,8 @@ type UserSearchFilter struct {
 	Principal string
 }
 
+//go:generate mockgen -destination test/mock/user.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories User
+
 // User describes user repository contract
 type User interface {
 	Create(ctx context.Context, entity *models.User) error
@@ -29,6 +31,8 @@ type ChapterSearchFilter struct {
 	Name      string
 	Slug      string
 }
+
+//go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Chapter
 
 // Chapter describes chapter repository contract
 type Chapter interface {
@@ -47,6 +51,8 @@ type GuildSearchFilter struct {
 	Slug    string
 }
 
+//go:generate mockgen -destination test/mock/guild.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Guild
+
 // Guild describes guild repository contract
 type Guild interface {
 	Create(ctx context.Context, entity *models.Guild) error
@@ -64,6 +70,8 @@ type SquadSearchFilter struct {
 	Slug    string
 }
 
+//go:generate mockgen -destination test/mock/squad.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Squad
+
 // Squad describes squad repository contract
 type Squad interface {
 	Create(ctx context.Context, entity *models.Squad) error
@@ -80,6 +88,8 @@ type TribeSearchFilter struct {
 	Name    string
 	Slug    string
 }
+
+//go:generate mockgen -destination test/mock/tribe.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Tribe
 
 // Tribe describes tribe repository contract
 type Tribe interface {

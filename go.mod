@@ -18,6 +18,7 @@ require (
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
 	github.com/golangci/golangci-lint v1.16.0
+	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
 	github.com/gosimple/slug v1.4.2
