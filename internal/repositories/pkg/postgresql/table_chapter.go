@@ -3,6 +3,7 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
@@ -147,7 +148,19 @@ func (r *pgChapterRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgChapterRepository) Search(ctx context.Context, filter *repositories.ChapterSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Chapter, int, error) {
-	panic("Not implemented")
+	var results []*models.Chapter
+
+	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
+	if err != nil {
+		return nil, count, err
+	}
+
+	if len(results) == 0 {
+		return results, count, api.ErrNoResult
+	}
+
+	// Return results and total count
+	return results, count, nil
 }
 
 func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {
@@ -160,4 +173,25 @@ func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*mod
 	}
 
 	return entity.ToEntity()
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgChapterRepository) buildFilter(filter *repositories.ChapterSearchFilter) interface{} {
+	if filter != nil {
+		clauses := sq.Eq{
+			"1": "1",
+		}
+
+		if len(strings.TrimSpace(filter.ChapterID)) > 0 {
+			clauses["chapter_id"] = filter.ChapterID
+		}
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			clauses["name"] = filter.Name
+		}
+
+		return clauses
+	}
+
+	return nil
 }

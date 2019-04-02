@@ -3,12 +3,14 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
@@ -127,7 +129,19 @@ func (r *pgUserRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgUserRepository) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.User, int, error) {
-	panic("Not implemented")
+	var results []*models.User
+
+	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
+	if err != nil {
+		return nil, count, err
+	}
+
+	if len(results) == 0 {
+		return results, count, api.ErrNoResult
+	}
+
+	// Return results and total count
+	return results, count, nil
 }
 
 func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string) (*models.User, error) {
@@ -140,4 +154,25 @@ func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string
 	}
 
 	return entity.ToEntity()
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgUserRepository) buildFilter(filter *repositories.UserSearchFilter) interface{} {
+	if filter != nil {
+		clauses := sq.Eq{
+			"1": "1",
+		}
+
+		if len(strings.TrimSpace(filter.UserID)) > 0 {
+			clauses["user_id"] = filter.UserID
+		}
+		if len(strings.TrimSpace(filter.Principal)) > 0 {
+			clauses["prn"] = filter.Principal
+		}
+
+		return clauses
+	}
+
+	return nil
 }

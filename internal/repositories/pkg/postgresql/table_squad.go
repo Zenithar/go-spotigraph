@@ -3,12 +3,14 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
@@ -146,7 +148,19 @@ func (r *pgSquadRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgSquadRepository) Search(ctx context.Context, filter *repositories.SquadSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Squad, int, error) {
-	panic("Not implemented")
+	var results []*models.Squad
+
+	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
+	if err != nil {
+		return nil, count, err
+	}
+
+	if len(results) == 0 {
+		return results, count, api.ErrNoResult
+	}
+
+	// Return results and total count
+	return results, count, nil
 }
 
 func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*models.Squad, error) {
@@ -159,4 +173,25 @@ func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*model
 	}
 
 	return entity.ToEntity()
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgSquadRepository) buildFilter(filter *repositories.SquadSearchFilter) interface{} {
+	if filter != nil {
+		clauses := sq.Eq{
+			"1": "1",
+		}
+
+		if len(strings.TrimSpace(filter.SquadID)) > 0 {
+			clauses["squad_id"] = filter.SquadID
+		}
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			clauses["name"] = filter.Name
+		}
+
+		return clauses
+	}
+
+	return nil
 }

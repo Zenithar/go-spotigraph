@@ -3,12 +3,14 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
@@ -142,7 +144,19 @@ func (r *pgTribeRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgTribeRepository) Search(ctx context.Context, filter *repositories.TribeSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Tribe, int, error) {
-	panic("Not implemented")
+	var results []*models.Tribe
+
+	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
+	if err != nil {
+		return nil, count, err
+	}
+
+	if len(results) == 0 {
+		return results, count, api.ErrNoResult
+	}
+
+	// Return results and total count
+	return results, count, nil
 }
 
 func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {
@@ -155,4 +169,25 @@ func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*model
 	}
 
 	return entity.ToEntity()
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgTribeRepository) buildFilter(filter *repositories.TribeSearchFilter) interface{} {
+	if filter != nil {
+		clauses := sq.Eq{
+			"1": "1",
+		}
+
+		if len(strings.TrimSpace(filter.TribeID)) > 0 {
+			clauses["tribe_id"] = filter.TribeID
+		}
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			clauses["name"] = filter.Name
+		}
+
+		return clauses
+	}
+
+	return nil
 }

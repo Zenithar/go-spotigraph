@@ -3,12 +3,14 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
@@ -141,7 +143,19 @@ func (r *pgGuildRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgGuildRepository) Search(ctx context.Context, filter *repositories.GuildSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Guild, int, error) {
-	panic("Not implemented")
+	var results []*models.Guild
+
+	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
+	if err != nil {
+		return nil, count, err
+	}
+
+	if len(results) == 0 {
+		return results, count, api.ErrNoResult
+	}
+
+	// Return results and total count
+	return results, count, nil
 }
 
 func (r *pgGuildRepository) FindByName(ctx context.Context, name string) (*models.Guild, error) {
@@ -154,4 +168,25 @@ func (r *pgGuildRepository) FindByName(ctx context.Context, name string) (*model
 	}
 
 	return entity.ToEntity()
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgGuildRepository) buildFilter(filter *repositories.GuildSearchFilter) interface{} {
+	if filter != nil {
+		clauses := sq.Eq{
+			"1": "1",
+		}
+
+		if len(strings.TrimSpace(filter.GuildID)) > 0 {
+			clauses["guild_id"] = filter.GuildID
+		}
+		if len(strings.TrimSpace(filter.Name)) > 0 {
+			clauses["name"] = filter.Name
+		}
+
+		return clauses
+	}
+
+	return nil
 }
