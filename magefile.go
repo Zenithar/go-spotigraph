@@ -26,7 +26,7 @@ func init() {
 
 func Build() {
 	fmt.Println("# Core packages")
-	mg.SerialDeps(Proto.Service, Proto.GRPC, Go.Format, Go.Lint, Go.Test)
+	mg.SerialDeps(Go.Generate, Proto.Service, Proto.GRPC, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
 	fmt.Println("# Artifacts")
@@ -90,12 +90,20 @@ func (Go) Deps() error {
 	return sh.RunV("gex", "--build")
 }
 
-// Format runs goimports on everything
+// Format runs gofmt on everything
 func (Go) Format() error {
 	fmt.Println("## Format everything")
-	args := []string{"-w"}
+	args := []string{"-s", "-w"}
 	args = append(args, goFiles...)
-	return sh.RunV("goimports", args...)
+	return sh.RunV("gofmt", args...)
+}
+
+// Import runs goimports on everything
+func (Go) Import() error {
+	fmt.Println("## Process imports")
+	args := []string{"-w"}
+	args = append(args, goSrcFiles...)
+	return sh.RunV("goreturns", args...)
 }
 
 // Lint run linter.

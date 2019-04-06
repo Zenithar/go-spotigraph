@@ -6,6 +6,7 @@ run:
   skip-files:
     - ".*\\.pb\\.go$"
     - ".*\\.gen\\.go$"
+    - ".*\\_gen\\.go$"
     - "mock_.*\\.go"
 
 linters:

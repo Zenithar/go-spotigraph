@@ -6,13 +6,12 @@ package spotigraph
 import (
 	bytes "bytes"
 	fmt "fmt"
-	io "io"
-	math "math"
-
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
 	_ "github.com/lyft/protoc-gen-validate/validate"
+	io "io"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -4965,7 +4964,7 @@ func (m *Graph) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if len(m.Properties) > 0 {
-		for k, _ := range m.Properties {
+		for k := range m.Properties {
 			dAtA[i] = 0x1a
 			i++
 			v := m.Properties[k]
@@ -5021,7 +5020,7 @@ func (m *Graph_Node) MarshalTo(dAtA []byte) (int, error) {
 		i += nn2
 	}
 	if len(m.Properties) > 0 {
-		for k, _ := range m.Properties {
+		for k := range m.Properties {
 			dAtA[i] = 0x42
 			i++
 			v := m.Properties[k]
@@ -5141,7 +5140,7 @@ func (m *Graph_Edge) MarshalTo(dAtA []byte) (int, error) {
 		i += copy(dAtA[i:], m.Destination)
 	}
 	if len(m.Properties) > 0 {
-		for k, _ := range m.Properties {
+		for k := range m.Properties {
 			dAtA[i] = 0x1a
 			i++
 			v := m.Properties[k]

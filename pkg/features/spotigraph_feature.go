@@ -21,6 +21,6 @@ func init() {
 
 // defaultKubernetesFeatureGates consists of all known Spotigraph-specific feature keys.
 var defaultSpotigraphFeatureGates = map[feature.Feature]feature.Spec{
-	TracingRepositoryDecorator: feature.Spec{Default: true, PreRelease: feature.GA},
-	MetricRepositoryDecorator:  feature.Spec{Default: true, PreRelease: feature.GA},
+	TracingRepositoryDecorator: {Default: true, PreRelease: feature.GA},
+	MetricRepositoryDecorator:  {Default: true, PreRelease: feature.GA},
 }
