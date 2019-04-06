@@ -21,7 +21,6 @@ func Test_User_Creation(t *testing.T) {
 	testCases := []struct {
 		name    string
 		req     *spotigraph.UserCreateReq
-		result  *spotigraph.SingleUserRes
 		wantErr bool
 		prepare func(ctx context.Context, users *mock.MockUser)
 	}{
@@ -131,7 +130,6 @@ func Test_User_Get(t *testing.T) {
 	testCases := []struct {
 		name    string
 		req     *spotigraph.UserGetReq
-		result  *spotigraph.SingleUserRes
 		wantErr bool
 		prepare func(ctx context.Context, users *mock.MockUser)
 	}{
@@ -225,6 +223,153 @@ func Test_User_Get(t *testing.T) {
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
 				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
+			}
+		})
+
+	}
+}
+
+func Test_User_Update(t *testing.T) {
+	t.Parallel()
+
+	// Testcases
+	testCases := []struct {
+		name    string
+		req     *spotigraph.UserUpdateReq
+		wantErr bool
+		prepare func(ctx context.Context, users *mock.MockUser)
+	}{
+		// ---------------------------------------------------------------------
+		{
+			name:    "Null request",
+			wantErr: true,
+		},
+		{
+			name:    "Empty request",
+			req:     &spotigraph.UserUpdateReq{},
+			wantErr: true,
+		},
+		{
+			name: "Empty ID",
+			req: &spotigraph.UserUpdateReq{
+				Id: "",
+			},
+			wantErr: true,
+		},
+		{
+			name: "Invalid ID",
+			req: &spotigraph.UserUpdateReq{
+				Id: "123456789",
+			},
+			wantErr: true,
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			g := NewGomegaWithT(t)
+
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			// Arm mocks
+			ctx := context.Background()
+			users := mock.NewMockUser(ctrl)
+
+			// Prepare the mocks:
+			if tt.prepare != nil {
+				tt.prepare(ctx, users)
+			}
+
+			// Prepare service
+			underTest := user.New(users)
+
+			// Do the query
+			got, err := underTest.Update(ctx, tt.req)
+
+			// assert results expectations
+			if tt.wantErr {
+				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+			} else {
+				g.Expect(err).To(BeNil(), "Error should not be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
+				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
+			}
+		})
+
+	}
+}
+
+func Test_User_Delete(t *testing.T) {
+	t.Parallel()
+
+	// Testcases
+	testCases := []struct {
+		name    string
+		req     *spotigraph.UserGetReq
+		wantErr bool
+		prepare func(ctx context.Context, users *mock.MockUser)
+	}{
+		// ---------------------------------------------------------------------
+		{
+			name:    "Null request",
+			wantErr: true,
+		},
+		{
+			name:    "Empty request",
+			req:     &spotigraph.UserGetReq{},
+			wantErr: true,
+		},
+		{
+			name: "Empty ID",
+			req: &spotigraph.UserGetReq{
+				Id: "",
+			},
+			wantErr: true,
+		},
+		{
+			name: "Invalid ID",
+			req: &spotigraph.UserGetReq{
+				Id: "123456789",
+			},
+			wantErr: true,
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			g := NewGomegaWithT(t)
+
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			// Arm mocks
+			ctx := context.Background()
+			users := mock.NewMockUser(ctrl)
+
+			// Prepare the mocks:
+			if tt.prepare != nil {
+				tt.prepare(ctx, users)
+			}
+
+			// Prepare service
+			underTest := user.New(users)
+
+			// Do the query
+			got, err := underTest.Delete(ctx, tt.req)
+
+			// assert results expectations
+			if tt.wantErr {
+				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+			} else {
+				g.Expect(err).To(BeNil(), "Error should not be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
 			}
 		})
 
