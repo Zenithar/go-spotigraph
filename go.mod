@@ -5,7 +5,6 @@ go 1.12
 require (
 	github.com/CircleCI-Public/circleci-cli v0.1.5490
 	github.com/Masterminds/squirrel v1.1.0
-	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
 	github.com/chzyer/logex v1.1.10 // indirect
 	github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 // indirect
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
@@ -13,14 +12,14 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/frapposelli/wwhrd v0.2.1
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
+	github.com/gobuffalo/buffalo-plugins v1.11.0 // indirect
+	github.com/gobuffalo/meta v0.0.0-20190120163247-50bbb1fa260d // indirect
 	github.com/gobuffalo/packr v1.24.1
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
 	github.com/google/go-cmp v0.2.0
-	github.com/google/go-github v17.0.0+incompatible // indirect
-	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
 	github.com/gosimple/slug v1.4.2
@@ -36,6 +35,8 @@ require (
 	github.com/magefile/mage v1.8.0
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/onsi/gomega v1.5.0
+	github.com/ory/go-acc v0.0.0-20181118080137-ddc355013f90
+	github.com/ory/x v0.0.41 // indirect
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
@@ -46,7 +47,6 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
-	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.mongodb.org/mongo-driver v1.0.0
 	go.uber.org/zap v1.9.1
 	go.zenithar.org/pkg v0.0.6
@@ -55,7 +55,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	golang.org/x/tools v0.0.0-20190405180640-052fc3cfdbc2
 	google.golang.org/grpc v1.19.1
-	gopkg.in/gorp.v1 v1.7.2 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 	gotest.tools/gotestsum v0.3.4
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect

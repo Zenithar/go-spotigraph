@@ -123,6 +123,7 @@ func (Proto) Service() error {
 	return sh.Run(
 		"protoc",
 		"-I", ".",
+		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s/protobuf", packageVersion("github.com/gogo/protobuf")),
 		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s", packageVersion("github.com/gogo/protobuf")),
 		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/lyft/protoc-gen-validate@%s", packageVersion("github.com/lyft/protoc-gen-validate")),
 		"--gogo_out", "Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:.",
@@ -137,6 +138,7 @@ func (Proto) GRPC() error {
 	return sh.Run(
 		"protoc",
 		"-I", ".",
+		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s/protobuf", packageVersion("github.com/gogo/protobuf")),
 		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s", packageVersion("github.com/gogo/protobuf")),
 		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/lyft/protoc-gen-validate@%s", packageVersion("github.com/lyft/protoc-gen-validate")),
 		"--gogo_out", "plugins=grpc,Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
