@@ -16,5 +16,6 @@ import (
 	_ "github.com/hexdigest/gowrap"
 	_ "github.com/lyft/protoc-gen-validate"
 	_ "go.zenithar.org/protoc-gen-cobra"
+	_ "golang.org/x/tools/cmd/goimports"
 	_ "gotest.tools/gotestsum"
 )
