@@ -28,9 +28,11 @@ func init() {
 	mainCmd.AddCommand(versionCmd)
 	mainCmd.AddCommand(configCmd)
 
-	feature.DefaultMutableGate.AddFlag(serverCmd.Flags())
-	mainCmd.AddCommand(serverCmd)
+	feature.DefaultMutableGate.AddFlag(grpcCmd.Flags())
+	mainCmd.AddCommand(grpcCmd)
 	mainCmd.AddCommand(clientCmd)
+
+	mainCmd.AddCommand(graphqlCmd)
 }
 
 // -----------------------------------------------------------------------------

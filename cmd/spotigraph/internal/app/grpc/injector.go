@@ -1,6 +1,6 @@
 //+build wireinject
 
-package server
+package grpc
 
 import (
 	"context"

@@ -1,0 +1,16 @@
+
+# Refer to https://gqlgen.com/config/
+# for detailed .gqlgen.yml documentation.
+
+schema:
+  - schema/user.graphql
+exec:
+  filename: schema.gen.go
+models:
+  User:
+    model: go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph.Domain_User
+  UserCreateReq:
+    model: go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph.UserCreateReq
+resolver:
+  filename: resolver.go
+  type: Resolver

@@ -3,22 +3,21 @@ package cmd
 import (
 	"context"
 
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/server"
-
 	"github.com/dchest/uniuri"
 	"github.com/google/gops/agent"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
 
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/app/graphql"
 	"go.zenithar.org/spotigraph/internal/version"
 )
 
 // -----------------------------------------------------------------------------
 
-var serverCmd = &cobra.Command{
-	Use:   "server",
-	Short: "Starts the spotigraph server",
+var graphqlCmd = &cobra.Command{
+	Use:   "graphql",
+	Short: "Starts the spotigraph GraphQL server",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -32,7 +31,7 @@ var serverCmd = &cobra.Command{
 		// Prepare logger
 		log.Setup(ctx, &log.Options{
 			Debug:     conf.Debug.Enable,
-			AppName:   "spotigraph",
+			AppName:   "spotigraph-gql",
 			AppID:     appID,
 			Version:   version.Version,
 			Revision:  version.Revision,
@@ -55,9 +54,9 @@ var serverCmd = &cobra.Command{
 		}
 
 		// Starting banner
-		log.For(ctx).Info("Starting spotigraph server ...")
+		log.For(ctx).Info("Starting spotigraph GraphQL server ...")
 
 		// Start server
-		server.WaitForShutdown(ctx, conf)
+		graphql.WaitForShutdown(ctx, conf)
 	},
 }

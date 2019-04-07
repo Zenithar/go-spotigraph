@@ -1,0 +1,31 @@
+# User describe identity known by the service
+type User {
+  # Internal identifier
+  id:   ID!
+  # Node identifier
+  urn: String!
+  # Principal hash
+  principal: String! # required
+}
+
+# --------------------------------------------------------
+
+# Query extension
+type Query {
+  # List all users
+  users: [User!]!
+  # Retrieve an user by id
+  user(id: ID!): User!
+}
+
+# --------------------------------------------------------
+
+# Input object for user creation
+input UserCreateReq {
+  principal: String!
+}
+
+# Mutation extension
+type Mutation {
+  createUser(input: UserCreateReq!): User!
+}

@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.36.0 // indirect
+	github.com/99designs/gqlgen v0.8.3
 	github.com/CircleCI-Public/circleci-cli v0.1.5490
 	github.com/Masterminds/squirrel v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
@@ -25,6 +26,8 @@ require (
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gosimple/slug v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
@@ -50,6 +53,7 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
+	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.mongodb.org/mongo-driver v1.0.0
 	go.uber.org/zap v1.9.1
