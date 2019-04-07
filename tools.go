@@ -7,6 +7,7 @@ package tools
 // tool dependencies
 import (
 	_ "github.com/CircleCI-Public/circleci-cli"
+	_ "github.com/envoyproxy/protoc-gen-validate"
 	_ "github.com/frapposelli/wwhrd"
 	_ "github.com/gobuffalo/packr/packr"
 	_ "github.com/gogo/protobuf/protoc-gen-gogo"
@@ -14,7 +15,6 @@ import (
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/google/wire/cmd/wire"
 	_ "github.com/hexdigest/gowrap"
-	_ "github.com/lyft/protoc-gen-validate"
 	_ "github.com/sqs/goreturns"
 	_ "go.zenithar.org/protoc-gen-cobra"
 	_ "golang.org/x/tools/cmd/goimports"

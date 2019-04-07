@@ -2,6 +2,7 @@ package tribe
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"go.zenithar.org/pkg/db"
@@ -29,10 +30,17 @@ func New(Tribes repositories.Tribe) services.Tribe {
 func (s *service) Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*spotigraph.SingleTribeRes, error) {
 	res := &spotigraph.SingleTribeRes{}
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Name must be unique
@@ -47,15 +55,6 @@ func (s *service) Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*
 
 	// Prepare Tribe creation
 	entity := models.NewTribe(req.Name)
-
-	// Validate entity
-	if err := entity.Validate(); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "Unable to prepare Tribe object",
-		}
-		return res, err
-	}
 
 	// Create use in database
 	if err := s.Tribes.Create(ctx, entity); err != nil {
@@ -122,10 +121,17 @@ func (s *service) Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*
 		entity models.Tribe
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Tribe must exists
@@ -186,10 +192,17 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spo
 		entity models.Tribe
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Tribe must exists
@@ -239,9 +252,6 @@ func (s *service) Search(ctx context.Context, req *spotigraph.TribeSearchReq) (*
 	filter := &repositories.TribeSearchFilter{}
 	if req.TribeId != nil {
 		filter.TribeID = req.TribeId.Value
-	}
-	if req.Slug != nil {
-		filter.Slug = req.Slug.Value
 	}
 	if req.Name != nil {
 		filter.Name = req.Name.Value

@@ -82,6 +82,8 @@ message Graph {
 
     // Hold entity according previous type
     oneof entity {
+        option (validate.required) = true;
+
         Domain.User user = 3;
         Domain.Chapter chapter = 4;
         Domain.Guild guild = 5;
@@ -297,7 +299,11 @@ message GuildSearchReq {
 // -----------------------------------------------------------------------------
 
 message TribeCreateReq {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {
+    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
+    min_bytes: 3,
+    max_bytes: 50,
+  }];
 }
 
 message TribeGetReq {

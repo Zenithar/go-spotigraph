@@ -2486,7 +2486,19 @@ func (m *TribeCreateReq) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if l := len(m.GetName()); l < 3 || l > 50 {
+		return TribeCreateReqValidationError{
+			field:  "Name",
+			reason: "value length must be between 3 and 50 bytes, inclusive",
+		}
+	}
+
+	if !_TribeCreateReq_Name_Pattern.MatchString(m.GetName()) {
+		return TribeCreateReqValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[A-Za-z]+([ 0-9A-Za-z]+)*$\"",
+		}
+	}
 
 	return nil
 }
@@ -2544,6 +2556,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TribeCreateReqValidationError{}
+
+var _TribeCreateReq_Name_Pattern = regexp.MustCompile("^[A-Za-z]+([ 0-9A-Za-z]+)*$")
 
 // Validate checks the field values on TribeGetReq with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -3582,6 +3596,12 @@ func (m *Graph_Node) Validate() error {
 					cause:  err,
 				}
 			}
+		}
+
+	default:
+		return Graph_NodeValidationError{
+			field:  "Entity",
+			reason: "value is required",
 		}
 
 	}
