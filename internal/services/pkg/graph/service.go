@@ -2,7 +2,9 @@ package graph
 
 import (
 	"context"
+	"errors"
 	"net/http"
+	"strings"
 
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services"
@@ -16,17 +18,35 @@ type service struct {
 	chapters repositories.Chapter
 	guilds   repositories.Guild
 	tribes   repositories.Tribe
+
+	nodeResolverMap map[string]nodeResolverFunc
 }
+
+type nodeResolverFunc func(ctx context.Context, id string) (*spotigraph.Graph_Node, error)
+
+const (
+	urnPrefix      = "urn"
+	urnApplication = "spfg"
+	urnVersion     = "v1"
+)
 
 // New returns a service instance
 func New(users repositories.User, squads repositories.Squad, chapters repositories.Chapter, guilds repositories.Guild, tribes repositories.Tribe) services.Graph {
-	return &service{
+	s := &service{
 		users:    users,
 		squads:   squads,
 		chapters: chapters,
 		guilds:   guilds,
 		tribes:   tribes,
 	}
+
+	// Build resolvermap
+	s.nodeResolverMap = map[string]nodeResolverFunc{
+		"user": s.resolveUser,
+	}
+
+	// REtrun service
+	return s
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +95,49 @@ func (s *service) Expand(ctx context.Context, req *spotigraph.NodeInfoReq) (*spo
 // -----------------------------------------------------------------------------
 
 func (s *service) resolveNode(ctx context.Context, urn string) (*spotigraph.Graph_Node, error) {
-	return nil, nil
+	// Split urn as parts
+	parts := strings.SplitN(urn, ":", 4)
+
+	// Check part length
+	if len(parts) < 4 {
+		return nil, errors.New("invalid urn: wrong part length")
+	}
+
+	// Check static parts
+	if parts[0] != urnPrefix {
+		return nil, errors.New("invalid urn: invalid prefix")
+	}
+	if parts[1] != urnApplication {
+		return nil, errors.New("invalid urn: invalid application")
+	}
+	if parts[2] != urnVersion {
+		return nil, errors.New("invalid urn: invalid version")
+	}
+
+	// Rerieve node from repository
+	if resolver, ok := s.nodeResolverMap[parts[3]]; ok {
+		return resolver(ctx, parts[4])
+	}
+
+	// Error as default
+	return nil, errors.New("invalid urn: invalid type")
+}
+
+func (s *service) resolveUser(ctx context.Context, id string) (*spotigraph.Graph_Node, error) {
+	// Retrieve from repository
+	entity, err := s.users.Get(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	// Transform as node
+	return &spotigraph.Graph_Node{
+		Type: spotigraph.Graph_Node_USER,
+		Urn:  entity.URN(),
+		Properties: map[string]string{
+			"principal": entity.Principal,
+		},
+	}, nil
 }
 
 func (s *service) expandNode(ctx context.Context, n *spotigraph.Graph_Node) (*spotigraph.Graph, error) {
