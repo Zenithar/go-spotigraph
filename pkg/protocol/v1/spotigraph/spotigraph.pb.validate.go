@@ -911,7 +911,19 @@ func (m *SquadCreateReq) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if l := len(m.GetName()); l < 3 || l > 50 {
+		return SquadCreateReqValidationError{
+			field:  "Name",
+			reason: "value length must be between 3 and 50 bytes, inclusive",
+		}
+	}
+
+	if !_SquadCreateReq_Name_Pattern.MatchString(m.GetName()) {
+		return SquadCreateReqValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[A-Za-z]+([ 0-9A-Za-z]+)*$\"",
+		}
+	}
 
 	return nil
 }
@@ -969,6 +981,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SquadCreateReqValidationError{}
+
+var _SquadCreateReq_Name_Pattern = regexp.MustCompile("^[A-Za-z]+([ 0-9A-Za-z]+)*$")
 
 // Validate checks the field values on SquadGetReq with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1436,7 +1450,19 @@ func (m *ChapterCreateReq) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if l := len(m.GetName()); l < 3 || l > 50 {
+		return ChapterCreateReqValidationError{
+			field:  "Name",
+			reason: "value length must be between 3 and 50 bytes, inclusive",
+		}
+	}
+
+	if !_ChapterCreateReq_Name_Pattern.MatchString(m.GetName()) {
+		return ChapterCreateReqValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[A-Za-z]+([ 0-9A-Za-z]+)*$\"",
+		}
+	}
 
 	return nil
 }
@@ -1494,6 +1520,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ChapterCreateReqValidationError{}
+
+var _ChapterCreateReq_Name_Pattern = regexp.MustCompile("^[A-Za-z]+([ 0-9A-Za-z]+)*$")
 
 // Validate checks the field values on ChapterGetReq with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1961,7 +1989,19 @@ func (m *GuildCreateReq) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if l := len(m.GetName()); l < 3 || l > 50 {
+		return GuildCreateReqValidationError{
+			field:  "Name",
+			reason: "value length must be between 3 and 50 bytes, inclusive",
+		}
+	}
+
+	if !_GuildCreateReq_Name_Pattern.MatchString(m.GetName()) {
+		return GuildCreateReqValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"^[A-Za-z]+([ 0-9A-Za-z]+)*$\"",
+		}
+	}
 
 	return nil
 }
@@ -2019,6 +2059,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GuildCreateReqValidationError{}
+
+var _GuildCreateReq_Name_Pattern = regexp.MustCompile("^[A-Za-z]+([ 0-9A-Za-z]+)*$")
 
 // Validate checks the field values on GuildGetReq with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

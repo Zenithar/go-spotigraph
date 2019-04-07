@@ -2,6 +2,7 @@ package squad
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"go.zenithar.org/pkg/db"
@@ -29,10 +30,17 @@ func New(squads repositories.Squad) services.Squad {
 func (s *service) Create(ctx context.Context, req *spotigraph.SquadCreateReq) (*spotigraph.SingleSquadRes, error) {
 	res := &spotigraph.SingleSquadRes{}
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Name must be unique
@@ -47,15 +55,6 @@ func (s *service) Create(ctx context.Context, req *spotigraph.SquadCreateReq) (*
 
 	// Prepare squad creation
 	entity := models.NewSquad(req.Name)
-
-	// Validate entity
-	if err := entity.Validate(); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "Unable to prepare squad object",
-		}
-		return res, err
-	}
 
 	// Create use in database
 	if err := s.squads.Create(ctx, entity); err != nil {
@@ -122,10 +121,17 @@ func (s *service) Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*
 		entity models.Squad
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Squad must exists
@@ -186,10 +192,17 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.SquadGetReq) (*spo
 		entity models.Squad
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Squad must exists
@@ -239,9 +252,6 @@ func (s *service) Search(ctx context.Context, req *spotigraph.SquadSearchReq) (*
 	filter := &repositories.SquadSearchFilter{}
 	if req.SquadId != nil {
 		filter.SquadID = req.SquadId.Value
-	}
-	if req.Slug != nil {
-		filter.Slug = req.Slug.Value
 	}
 	if req.Name != nil {
 		filter.Name = req.Name.Value

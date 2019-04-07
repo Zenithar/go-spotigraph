@@ -164,7 +164,11 @@ message UserSearchReq {
 // -----------------------------------------------------------------------------
 
 message SquadCreateReq {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {
+    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
+    min_bytes: 3,
+    max_bytes: 50,
+  }];
 }
 
 message SquadGetReq {
@@ -209,7 +213,11 @@ message SquadSearchReq {
 // -----------------------------------------------------------------------------
 
 message ChapterCreateReq {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {
+    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
+    min_bytes: 3,
+    max_bytes: 50,
+  }];
 }
 
 message ChapterGetReq {
@@ -254,7 +262,11 @@ message ChapterSearchReq {
 // -----------------------------------------------------------------------------
 
 message GuildCreateReq {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {
+    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
+    min_bytes: 3,
+    max_bytes: 50,
+  }];
 }
 
 message GuildGetReq {
