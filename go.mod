@@ -31,7 +31,7 @@ require (
 	github.com/gosimple/slug v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
-	github.com/hexdigest/gowrap v1.1.2
+	github.com/hexdigest/gowrap v1.1.3
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect

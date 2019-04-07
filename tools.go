@@ -15,7 +15,7 @@ import (
 	_ "github.com/golang/mock/mockgen"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/google/wire/cmd/wire"
-	_ "github.com/hexdigest/gowrap"
+	_ "github.com/hexdigest/gowrap/cmd/gowrap"
 	_ "github.com/sqs/goreturns"
 	_ "go.zenithar.org/protoc-gen-cobra"
 	_ "golang.org/x/tools/cmd/goimports"
