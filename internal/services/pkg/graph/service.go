@@ -131,13 +131,7 @@ func (s *service) resolveUser(ctx context.Context, id string) (*spotigraph.Graph
 	}
 
 	// Transform as node
-	return &spotigraph.Graph_Node{
-		Type: spotigraph.Graph_Node_USER,
-		Urn:  entity.URN(),
-		Properties: map[string]string{
-			"principal": entity.Principal,
-		},
-	}, nil
+	return toNode(entity), nil
 }
 
 func (s *service) expandNode(ctx context.Context, n *spotigraph.Graph_Node) (*spotigraph.Graph, error) {
