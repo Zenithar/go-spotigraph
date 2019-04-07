@@ -29,7 +29,9 @@ func UserMustExists(users repositories.User, id string, entity *models.User) fun
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := users.Get(ctx, id)
-			*entity = *object
+			if object != nil {
+				*entity = *object
+			}
 			return entity, err
 		},
 	)
@@ -40,7 +42,9 @@ func SquadMustExists(squads repositories.Squad, id string, entity *models.Squad)
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := squads.Get(ctx, id)
-			*entity = *object
+			if object != nil {
+				*entity = *object
+			}
 			return entity, err
 		},
 	)
@@ -51,7 +55,9 @@ func GuildMustExists(guilds repositories.Guild, id string, entity *models.Guild)
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := guilds.Get(ctx, id)
-			*entity = *object
+			if object != nil {
+				*entity = *object
+			}
 			return entity, err
 		},
 	)
@@ -62,7 +68,9 @@ func ChapterMustExists(chapters repositories.Chapter, id string, entity *models.
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := chapters.Get(ctx, id)
-			*entity = *object
+			if object != nil {
+				*entity = *object
+			}
 			return entity, err
 		},
 	)
@@ -73,7 +81,9 @@ func TribeMustExists(tribes repositories.Tribe, id string, entity *models.Tribe)
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := tribes.Get(ctx, id)
-			*entity = *object
+			if object != nil {
+				*entity = *object
+			}
 			return entity, err
 		},
 	)

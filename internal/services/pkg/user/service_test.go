@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/gogo/protobuf/types"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/gomega"
 
@@ -15,14 +17,13 @@ import (
 )
 
 func Test_User_Creation(t *testing.T) {
-	t.Parallel()
-
 	// Testcases
 	testCases := []struct {
-		name    string
-		req     *spotigraph.UserCreateReq
-		wantErr bool
-		prepare func(ctx context.Context, users *mock.MockUser)
+		name      string
+		req       *spotigraph.UserCreateReq
+		publicErr *spotigraph.Error
+		wantErr   bool
+		prepare   func(ctx context.Context, users *mock.MockUser)
 	}{
 		// ---------------------------------------------------------------------
 		{
@@ -88,11 +89,9 @@ func Test_User_Creation(t *testing.T) {
 	// Subtests
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
-			defer ctrl.Finish()
 
 			// Arm mocks
 			ctx := context.Background()
@@ -112,19 +111,25 @@ func Test_User_Creation(t *testing.T) {
 			// assert results expectations
 			if tt.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
+				if tt.publicErr != nil {
+					g.Expect(got.Error).To(Equal(tt.publicErr), "Public error should be as expected")
+				}
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
 				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
 			}
+
+			ctrl.Finish()
 		})
 
 	}
 }
 
 func Test_User_Get(t *testing.T) {
-	t.Parallel()
 
 	// Testcases
 	testCases := []struct {
@@ -194,7 +199,6 @@ func Test_User_Get(t *testing.T) {
 	// Subtests
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -218,6 +222,8 @@ func Test_User_Get(t *testing.T) {
 			// assert results expectations
 			if tt.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
@@ -230,7 +236,6 @@ func Test_User_Get(t *testing.T) {
 }
 
 func Test_User_Update(t *testing.T) {
-	t.Parallel()
 
 	// Testcases
 	testCases := []struct {
@@ -263,12 +268,70 @@ func Test_User_Update(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		// ---------------------------------------------------------------------
+		{
+			name: "Non-Existent entity",
+			req: &spotigraph.UserUpdateReq{
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+			},
+			wantErr: true,
+		}, {
+			name: "Existent entity without update",
+			req: &spotigraph.UserUpdateReq{
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+			},
+			wantErr: false,
+		}, {
+			name: "Existent entity with prinicipal update",
+			req: &spotigraph.UserUpdateReq{
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Principal: &types.StringValue{Value: "tutu@foo.org"},
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(nil, db.ErrNoResult).Times(1)
+				users.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
+			},
+			wantErr: false,
+		}, {
+			name: "Existent entity with conflict principal",
+			req: &spotigraph.UserUpdateReq{
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Principal: &types.StringValue{Value: "tutu@foo.org"},
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(u1, nil).Times(1)
+			},
+			wantErr: true,
+		}, {
+			name: "Existent entity with error during update",
+			req: &spotigraph.UserUpdateReq{
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Principal: &types.StringValue{Value: "tutu@foo.org"},
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(nil, db.ErrNoResult).Times(1)
+				users.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
+			},
+			wantErr: true,
+		},
 	}
 
 	// Subtests
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -292,6 +355,8 @@ func Test_User_Update(t *testing.T) {
 			// assert results expectations
 			if tt.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
@@ -304,7 +369,6 @@ func Test_User_Update(t *testing.T) {
 }
 
 func Test_User_Delete(t *testing.T) {
-	t.Parallel()
 
 	// Testcases
 	testCases := []struct {
@@ -337,12 +401,44 @@ func Test_User_Delete(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		// ---------------------------------------------------------------------
+		{
+			name: "Non-Existent entity",
+			req: &spotigraph.UserGetReq{
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+			},
+			wantErr: true,
+		}, {
+			name: "Existent entity",
+			req: &spotigraph.UserGetReq{
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
+			},
+			wantErr: false,
+		}, {
+			name: "Existent entity with database error",
+			req: &spotigraph.UserGetReq{
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			},
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				u1 := models.NewUser("toto@foo.org")
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
+			},
+			wantErr: true,
+		},
 	}
 
 	// Subtests
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -366,6 +462,94 @@ func Test_User_Delete(t *testing.T) {
 			// assert results expectations
 			if tt.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
+			} else {
+				g.Expect(err).To(BeNil(), "Error should not be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
+			}
+		})
+
+	}
+}
+
+func Test_User_Search(t *testing.T) {
+
+	// Testcases
+	testCases := []struct {
+		name    string
+		req     *spotigraph.UserSearchReq
+		wantErr bool
+		prepare func(ctx context.Context, users *mock.MockUser)
+	}{
+		// ---------------------------------------------------------------------
+		{
+			name:    "Null request",
+			wantErr: true,
+		}, {
+			name:    "Empty request",
+			req:     &spotigraph.UserSearchReq{},
+			wantErr: false,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.User{}, 0, nil).Times(1)
+			},
+		}, {
+			name:    "Database error",
+			req:     &spotigraph.UserSearchReq{},
+			wantErr: true,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.User{}, 0, db.ErrNoModification).Times(1)
+			},
+		}, {
+			name: "Filter by principal",
+			req: &spotigraph.UserSearchReq{
+				Principal: &types.StringValue{Value: "toto@foo.org"},
+			},
+			wantErr: false,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.User{}, 0, nil).Times(1)
+			},
+		}, {
+			name: "Filter by UserID",
+			req: &spotigraph.UserSearchReq{
+				UserId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+			},
+			wantErr: false,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.User{}, 0, nil).Times(1)
+			},
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			g := NewGomegaWithT(t)
+
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			// Arm mocks
+			ctx := context.Background()
+			users := mock.NewMockUser(ctrl)
+
+			// Prepare the mocks:
+			if tt.prepare != nil {
+				tt.prepare(ctx, users)
+			}
+
+			// Prepare service
+			underTest := user.New(users)
+
+			// Do the query
+			got, err := underTest.Search(ctx, tt.req)
+
+			// assert results expectations
+			if tt.wantErr {
+				g.Expect(err).ToNot(BeNil(), "Error should be raised")
+				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")

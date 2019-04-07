@@ -2,7 +2,10 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+
+	"go.zenithar.org/spotigraph/internal/helpers"
 
 	"go.zenithar.org/pkg/db"
 
@@ -29,10 +32,17 @@ func New(users repositories.User) services.User {
 func (s *service) Create(ctx context.Context, req *spotigraph.UserCreateReq) (*spotigraph.SingleUserRes, error) {
 	res := &spotigraph.SingleUserRes{}
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Principal must be unique
@@ -47,15 +57,6 @@ func (s *service) Create(ctx context.Context, req *spotigraph.UserCreateReq) (*s
 
 	// Prepare user creation
 	entity := models.NewUser(req.Principal)
-
-	// Validate entity
-	if err := entity.Validate(); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "Unable to prepare user object",
-		}
-		return res, err
-	}
 
 	// Create use in database
 	if err := s.users.Create(ctx, entity); err != nil {
@@ -122,10 +123,17 @@ func (s *service) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*s
 		entity models.User
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// User must exists
@@ -139,6 +147,25 @@ func (s *service) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*s
 	}
 
 	updated := false
+
+	if req.Principal != nil {
+		// Compute hash first
+		hash := helpers.PrincipalHashFunc(req.Principal.Value)
+
+		// Check usage
+		if err := constraints.Validate(ctx,
+			// Principal must be unique
+			constraints.UserPrincipalMustBeUnique(s.users, hash),
+		); err != nil {
+			res.Error = &spotigraph.Error{
+				Code:    http.StatusConflict,
+				Message: "Principal already used",
+			}
+			return res, err
+		}
+		entity.Principal = hash
+		updated = true
+	}
 
 	// Skip operation when no updates
 	if updated {
@@ -169,10 +196,17 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.UserGetReq) (*spot
 		entity models.User
 	)
 
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
 	// Validate service constraints
 	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// User must exists

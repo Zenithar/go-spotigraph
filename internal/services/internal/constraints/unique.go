@@ -3,16 +3,11 @@ package constraints
 import (
 	"context"
 	"fmt"
-	"reflect"
 
 	"go.zenithar.org/pkg/db"
 	"go.zenithar.org/spotigraph/internal/helpers"
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
-
-func isNil(c interface{}) bool {
-	return c == nil || (reflect.ValueOf(c).Kind() == reflect.Ptr && reflect.ValueOf(c).IsNil())
-}
 
 // mustBeUnique specification checks if the given name already exists
 func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context.Context) error {
