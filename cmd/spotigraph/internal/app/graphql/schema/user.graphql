@@ -15,7 +15,7 @@ type Query {
   # List all users
   users: [User!]!
   # Retrieve an user by id
-  user(id: ID!): User!
+  user(id: ID!): SingleUserRes!
 }
 
 # --------------------------------------------------------
@@ -25,7 +25,19 @@ input UserCreateReq {
   principal: String!
 }
 
+# Single user response
+type SingleUserRes {
+  error: Error
+  entity: User
+}
+
+# Paginated user response
+type PaginatedUserRes {
+  error: Error
+  members: [User]
+}
+
 # Mutation extension
 type Mutation {
-  createUser(input: UserCreateReq!): User!
+  createUser(input: UserCreateReq!): SingleUserRes!
 }
