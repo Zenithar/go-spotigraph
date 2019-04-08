@@ -1,0 +1,32 @@
+import (
+    "go.opencensus.io/trace"
+)
+
+{{ $decorator := (or .Vars.DecoratorName (printf "%sWithOpenCensus" .Interface.Name)) }}
+
+// {{$decorator}} implements {{.Interface.Type}} interface instrumented with opentracing spans
+type {{$decorator}} struct {
+  {{.Interface.Type}}
+  _instance string
+}
+
+// New{{$decorator}} returns {{$decorator}}
+func New{{$decorator}} (base {{.Interface.Type}}, instance string) {{$decorator}} {
+  d := {{$decorator}} {
+    {{.Interface.Name}}: base,
+    _instance: instance,
+  }
+
+  return d
+}
+
+{{range $method := .Interface.Methods}}
+  {{if $method.AcceptsContext}}
+    // {{$method.Name}} implements {{$.Interface.Type}}
+    func (_d {{$decorator}}) {{$method.Declaration}} {
+      ctx, _span := trace.StartSpan(ctx, _d._instance + ".{{$.Interface.Type}}.{{$method.Name}}")
+      defer _span.End()
+      {{$method.Pass (printf "_d.%s." $.Interface.Name) }}
+    }
+  {{end}}
+{{end}}

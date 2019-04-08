@@ -5,7 +5,7 @@ import (
   "go.zenithar.org/pkg/log"
 )
 
-{{ $decorator := (or .Vars.DecoratorName (printf "%sLogger" .Interface.Name)) }}
+{{ $decorator := (or .Vars.DecoratorName (printf "%sWithLogger" .Interface.Name)) }}
 
 // {{$decorator}} implements {{.Interface.Type}} that is instrumented with logger
 type {{$decorator}} struct {

@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
 
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/app/graphql"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql"
 	"go.zenithar.org/spotigraph/internal/version"
 )
 

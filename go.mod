@@ -45,10 +45,10 @@ require (
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/onsi/gomega v1.5.0
-	github.com/opentracing/opentracing-go v1.1.0 // indirect
+	github.com/opentracing/opentracing-go v1.1.0
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
-	github.com/prometheus/client_golang v0.9.2 // indirect
+	github.com/prometheus/client_golang v0.9.2
 	github.com/prometheus/procfs v0.0.0-20190403104016-ea9eea638872 // indirect
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190327083759-54bad0a9b051
@@ -61,6 +61,7 @@ require (
 	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.mongodb.org/mongo-driver v1.0.0
+	go.opencensus.io v0.18.0
 	go.uber.org/zap v1.9.1
 	go.zenithar.org/pkg v0.0.6
 	go.zenithar.org/protoc-gen-cobra v0.0.3
