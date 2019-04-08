@@ -16,10 +16,12 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v0.0.14
 	github.com/fatih/structs v1.1.0
 	github.com/frapposelli/wwhrd v0.2.1
+	github.com/go-logfmt/logfmt v0.4.0 // indirect
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gobuffalo/packr v1.24.1
 	github.com/gogo/protobuf v1.2.1
+	github.com/gojuno/minimock v0.0.0-20190201083043-bbb4f602d884 // indirect
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
@@ -37,14 +39,17 @@ require (
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
+	github.com/kisielk/errcheck v1.2.0 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/onsi/gomega v1.5.0
+	github.com/opentracing/opentracing-go v1.1.0 // indirect
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_golang v0.9.2 // indirect
+	github.com/prometheus/procfs v0.0.0-20190403104016-ea9eea638872 // indirect
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190327083759-54bad0a9b051
 	github.com/ryanuber/go-license v0.0.0-20180405065157-c69f41c2c8d6 // indirect
@@ -60,8 +65,10 @@ require (
 	go.zenithar.org/pkg v0.0.6
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190404164418-38d8ce5564a5
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3 // indirect
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
-	golang.org/x/tools v0.0.0-20190405180640-052fc3cfdbc2
+	golang.org/x/sys v0.0.0-20190405154228-4b34438f7a67 // indirect
+	golang.org/x/tools v0.0.0-20190407030857-0fdf0c73855b
 	google.golang.org/grpc v1.19.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
