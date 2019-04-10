@@ -3,15 +3,13 @@
 //go:generate wire
 //+build !wireinject
 
-package grpc
+package http
 
 import (
 	"context"
 	"crypto/tls"
-	"github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
-	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/db/adapter/mongodb"
 	"go.zenithar.org/pkg/db/adapter/postgresql"
@@ -20,27 +18,23 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/core"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http/handlers"
 	mongodb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
 	postgresql2 "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	rethinkdb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/graph"
 	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
 	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
-	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/health"
-	"google.golang.org/grpc/health/grpc_health_v1"
-	"google.golang.org/grpc/reflection"
+	"net/http"
+	"time"
 )
 
 // Injectors from wire.go:
 
-func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 	configuration := core.MongoDBConfig(cfg)
 	client, err := mongodb.Connection(ctx, configuration)
 	if err != nil {
@@ -48,23 +42,22 @@ func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Se
 	}
 	repositoriesUser := mongodb2.NewUserRepository(configuration, client)
 	servicesUser := user.New(repositoriesUser)
+	repositoriesSquad := mongodb2.NewSquadRepository(configuration, client)
+	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesChapter := mongodb2.NewChapterRepository(configuration, client)
 	servicesChapter := chapter.New(repositoriesChapter)
 	repositoriesGuild := mongodb2.NewGuildRepository(configuration, client)
 	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesSquad := mongodb2.NewSquadRepository(configuration, client)
-	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesTribe := mongodb2.NewTribeRepository(configuration, client)
 	servicesTribe := tribe.New(repositoriesTribe)
-	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
-	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
+	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
 	if err != nil {
 		return nil, err
 	}
 	return server, nil
 }
 
-func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 	configuration := core.RethinkDBConfig(cfg)
 	session, err := rethinkdb.Connection(ctx, configuration)
 	if err != nil {
@@ -72,23 +65,22 @@ func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.
 	}
 	repositoriesUser := rethinkdb2.NewUserRepository(configuration, session)
 	servicesUser := user.New(repositoriesUser)
+	repositoriesSquad := rethinkdb2.NewSquadRepository(configuration, session)
+	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesChapter := rethinkdb2.NewChapterRepository(configuration, session)
 	servicesChapter := chapter.New(repositoriesChapter)
 	repositoriesGuild := rethinkdb2.NewGuildRepository(configuration, session)
 	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesSquad := rethinkdb2.NewSquadRepository(configuration, session)
-	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesTribe := rethinkdb2.NewTribeRepository(configuration, session)
 	servicesTribe := tribe.New(repositoriesTribe)
-	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
-	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
+	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
 	if err != nil {
 		return nil, err
 	}
 	return server, nil
 }
 
-func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 	configuration := core.PosgreSQLConfig(cfg)
 	db, err := postgresql.Connection(ctx, configuration)
 	if err != nil {
@@ -96,16 +88,15 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 	}
 	repositoriesUser := postgresql2.NewUserRepository(configuration, db)
 	servicesUser := user.New(repositoriesUser)
+	repositoriesSquad := postgresql2.NewSquadRepository(configuration, db)
+	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesChapter := postgresql2.NewChapterRepository(configuration, db)
 	servicesChapter := chapter.New(repositoriesChapter)
 	repositoriesGuild := postgresql2.NewGuildRepository(configuration, db)
 	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesSquad := postgresql2.NewSquadRepository(configuration, db)
-	servicesSquad := squad.New(repositoriesSquad)
 	repositoriesTribe := postgresql2.NewTribeRepository(configuration, db)
 	servicesTribe := tribe.New(repositoriesTribe)
-	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
-	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)
+	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
 	if err != nil {
 		return nil, err
 	}
@@ -114,24 +105,41 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph2 services.Graph) (*grpc.Server, error) {
+func httpServer(ctx context.Context, cfg *config.Configuration, users services.User, squads services.Squad, chapters services.Chapter, guilds services.Guild, tribes services.Tribe) (*http.Server, error) {
+	r := chi.NewRouter()
 
-	sopts := []grpc.ServerOption{}
-	grpc_zap.ReplaceGrpcLogger(zap.L())
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
-	sopts = append(sopts, grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(grpc_prometheus.StreamServerInterceptor, grpc_zap.StreamServerInterceptor(zap.L()), grpc_recovery.StreamServerInterceptor())), grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(grpc_recovery.UnaryServerInterceptor(), grpc_prometheus.UnaryServerInterceptor, grpc_zap.UnaryServerInterceptor(zap.L()))))
+	r.Use(middleware.Timeout(60 * time.Second))
 
-	if cfg.Server.GRPC.UseTLS {
+	r.Route("/api/v1", func(r chi.Router) {
+		r.Mount("users", handlers.UserRoutes(users))
+		r.Mount("squads", handlers.SquadRoutes(squads))
+		r.Mount("chapters", handlers.ChapterRoutes(chapters))
+		r.Mount("guilds", handlers.GuildRoutes(guilds))
+		r.Mount("tribes", handlers.TribeRoutes(tribes))
+	})
+
+	r.Handle("/healthz", http.HandlerFunc(healthz()))
+
+	server := &http.Server{
+		Handler: r,
+	}
+
+	if cfg.Server.HTTP.UseTLS {
 
 		clientAuth := tls.VerifyClientCertIfGiven
-		if cfg.Server.GRPC.TLS.ClientAuthenticationRequired {
+		if cfg.Server.HTTP.TLS.ClientAuthenticationRequired {
 			clientAuth = tls.RequireAndVerifyClientCert
 		}
 
 		tlsConfig, err := tlsconfig.Server(tlsconfig.Options{
-			KeyFile:    cfg.Server.GRPC.TLS.PrivateKeyPath,
-			CertFile:   cfg.Server.GRPC.TLS.CertificatePath,
-			CAFile:     cfg.Server.GRPC.TLS.CACertificatePath,
+			KeyFile:    cfg.Server.HTTP.TLS.PrivateKeyPath,
+			CertFile:   cfg.Server.HTTP.TLS.CertificatePath,
+			CAFile:     cfg.Server.HTTP.TLS.CACertificatePath,
 			ClientAuth: clientAuth,
 		})
 		if err != nil {
@@ -139,22 +147,10 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 			return nil, err
 		}
 
-		sopts = append(sopts, grpc.Creds(credentials.NewTLS(tlsConfig)))
+		server.TLSConfig = tlsConfig
 	} else {
 		log.For(ctx).Info("No transport authentication enabled")
 	}
-
-	server := grpc.NewServer(sopts...)
-
-	healthServer := health.NewServer()
-	grpc_health_v1.RegisterHealthServer(server, healthServer)
-	pb.RegisterUserServer(server, users)
-	pb.RegisterChapterServer(server, chapters)
-	pb.RegisterGuildServer(server, guilds)
-	pb.RegisterSquadServer(server, squads)
-	pb.RegisterTribeServer(server, tribes)
-	pb.RegisterGraphServer(server, graph2)
-	reflection.Register(server)
 
 	return server, nil
 }

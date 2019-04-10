@@ -1,3 +1,0 @@
-//+build wireinject
-
-package graphql

@@ -5,19 +5,10 @@ package grpc
 import (
 	"context"
 	"crypto/tls"
-	"strings"
 
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
-	"go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
-	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
-	"go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/core"
 	"go.zenithar.org/spotigraph/internal/services"
-	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/graph"
-	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
-	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
-	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
 
 	"github.com/google/wire"
@@ -26,9 +17,6 @@ import (
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"go.uber.org/zap"
-	mdb "go.zenithar.org/pkg/db/adapter/mongodb"
-	pgdb "go.zenithar.org/pkg/db/adapter/postgresql"
-	rdb "go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
 	"google.golang.org/grpc"
@@ -37,48 +25,6 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 )
-
-// -----------------------------------------------------------------------------
-
-var serviceSet = wire.NewSet(
-	user.New,
-	chapter.New,
-	squad.New,
-	guild.New,
-	tribe.New,
-	graph.New,
-)
-
-// rdbConfig declares a Database configuration provider for Wire
-func rdbConfig(cfg *config.Configuration) *rdb.Configuration {
-	return &rdb.Configuration{
-		AutoMigrate: cfg.Server.Database.AutoMigrate,
-		Addresses:   strings.Split(cfg.Server.Database.Hosts, ","),
-		Database:    cfg.Server.Database.Database,
-		AuthKey:     cfg.Server.Database.Password,
-	}
-}
-
-// mgoConfig declares a Database configuration provider for Wire
-func mgoConfig(cfg *config.Configuration) *mdb.Configuration {
-	return &mdb.Configuration{
-		AutoMigrate:      cfg.Server.Database.AutoMigrate,
-		ConnectionString: cfg.Server.Database.Hosts,
-		DatabaseName:     cfg.Server.Database.Database,
-		Username:         cfg.Server.Database.Username,
-		Password:         cfg.Server.Database.Password,
-	}
-}
-
-// pgConfig declares a Database configuration provider for Wire
-func pgConfig(cfg *config.Configuration) *pgdb.Configuration {
-	return &pgdb.Configuration{
-		AutoMigrate:      cfg.Server.Database.AutoMigrate,
-		ConnectionString: cfg.Server.Database.Hosts,
-		Username:         cfg.Server.Database.Username,
-		Password:         cfg.Server.Database.Password,
-	}
-}
 
 func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph services.Graph) (*grpc.Server, error) {
 	// gRPC middlewares
@@ -152,38 +98,26 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 // -----------------------------------------------------------------------------
 
-func setupRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-
+func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(
-		rdbConfig,
-		rethinkdb.RepositorySet,
-		serviceSet,
+		core.LocalMongoDBSet,
 		grpcServer,
 	)
-
-	return nil, nil
+	return &grpc.Server{}, nil
 }
 
-func setupMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-
+func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(
-		mgoConfig,
-		mongodb.RepositorySet,
-		serviceSet,
+		core.LocalRethinkDBSet,
 		grpcServer,
 	)
-
-	return nil, nil
+	return &grpc.Server{}, nil
 }
 
-func setupPostgresDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-
+func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(
-		pgConfig,
-		postgresql.RepositorySet,
-		serviceSet,
+		core.LocalPostgreSQLSet,
 		grpcServer,
 	)
-
-	return nil, nil
+	return &grpc.Server{}, nil
 }

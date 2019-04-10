@@ -6,6 +6,8 @@ import (
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
+//go:generate mockgen -destination test/mock/user.gen.go -package mock go.zenithar.org/spotigraph/internal/services User
+
 // User defines user service contract
 type User interface {
 	Create(ctx context.Context, req *spotigraph.UserCreateReq) (*spotigraph.SingleUserRes, error)
@@ -14,6 +16,8 @@ type User interface {
 	Delete(ctx context.Context, req *spotigraph.UserGetReq) (*spotigraph.EmptyRes, error)
 	Search(ctx context.Context, req *spotigraph.UserSearchReq) (*spotigraph.PaginatedUserRes, error)
 }
+
+//go:generate mockgen -destination test/mock/squad.gen.go -package mock go.zenithar.org/spotigraph/internal/services Squad
 
 // Squad defines squad service contract
 type Squad interface {
@@ -24,6 +28,8 @@ type Squad interface {
 	Search(ctx context.Context, req *spotigraph.SquadSearchReq) (*spotigraph.PaginatedSquadRes, error)
 }
 
+//go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/services Chapter
+
 // Chapter defines chapter service contract
 type Chapter interface {
 	Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (*spotigraph.SingleChapterRes, error)
@@ -32,6 +38,8 @@ type Chapter interface {
 	Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error)
 	Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (*spotigraph.PaginatedChapterRes, error)
 }
+
+//go:generate mockgen -destination test/mock/guild.gen.go -package mock go.zenithar.org/spotigraph/internal/services Guild
 
 // Guild defines guild service contract
 type Guild interface {
@@ -42,6 +50,8 @@ type Guild interface {
 	Search(ctx context.Context, req *spotigraph.GuildSearchReq) (*spotigraph.PaginatedGuildRes, error)
 }
 
+//go:generate mockgen -destination test/mock/tribe.gen.go -package mock go.zenithar.org/spotigraph/internal/services Tribe
+
 // Tribe defines tribe service contract
 type Tribe interface {
 	Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*spotigraph.SingleTribeRes, error)
@@ -50,6 +60,8 @@ type Tribe interface {
 	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.EmptyRes, error)
 	Search(ctx context.Context, req *spotigraph.TribeSearchReq) (*spotigraph.PaginatedTribeRes, error)
 }
+
+//go:generate mockgen -destination test/mock/graph.gen.go -package mock go.zenithar.org/spotigraph/internal/services Graph
 
 // Graph defines graph service contract
 type Graph interface {

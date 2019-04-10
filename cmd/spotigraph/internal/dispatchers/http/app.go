@@ -1,21 +1,26 @@
-package grpc
+package http
 
 import (
 	"context"
 	"fmt"
 	"net"
+	"net/http"
+	"sync/atomic"
 
 	"go.uber.org/zap"
-	"go.zenithar.org/pkg/log"
-	"google.golang.org/grpc"
 
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 )
 
 type application struct {
 	cfg    *config.Configuration
-	server *grpc.Server
+	server *http.Server
 }
+
+var (
+	healthy int32
+)
 
 // -----------------------------------------------------------------------------
 
@@ -34,13 +39,13 @@ func WaitForShutdown(ctx context.Context, cfg *config.Configuration) {
 		<-ctx.Done()
 		err := app.Shutdown(context.Background())
 		if err != nil {
-			log.For(ctx).Error("Unable to shutdown spotigraph service", zap.Error(err))
+			log.For(ctx).Error("Unable to shutdown spotigraph http service", zap.Error(err))
 		}
 	}()
 
 	// Start the server
 	if err := app.Serve(ctx); err != nil {
-		log.For(ctx).Fatal("Unable to start server", zap.Error(err))
+		log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
 	}
 }
 
@@ -62,30 +67,34 @@ func (s *application) ApplyConfiguration(cfg interface{}) error {
 
 // Serve starts the component
 func (s *application) Serve(ctx context.Context) error {
-	log.For(ctx).Info("Starting spotigraph service ...", zap.String("backend", s.cfg.Core.Mode))
+	log.For(ctx).Info("Starting spotigraph HTTP service ...")
 
 	// Setup the gRPC server
 	if err := s.setup(ctx); err != nil {
-		log.For(ctx).Error("Unable to initialize spotigraph service", zap.Error(err))
+		log.For(ctx).Error("Unable to initialize spotigraph HTTP service", zap.Error(err))
 		return err
 	}
 
 	// Initialize a listener
-	lis, err := net.Listen(s.cfg.Server.GRPC.Network, s.cfg.Server.GRPC.Listen)
+	lis, err := net.Listen(s.cfg.Server.HTTP.Network, s.cfg.Server.HTTP.Listen)
 	if err != nil {
 		return err
 	}
 
 	// Return no error
-	log.For(ctx).Info("Spotigraph service listening ...", zap.String("listen", s.cfg.Server.GRPC.Listen))
+	log.For(ctx).Info("Spotigraph HTTP service listening ...", zap.String("listen", s.cfg.Server.HTTP.Listen))
+	atomic.StoreInt32(&healthy, 1)
 	return s.server.Serve(lis)
 }
 
 // Shutdown the component
 func (s *application) Shutdown(ctx context.Context) error {
-	log.For(ctx).Info("Try to gracefully shutdown spotigraph ...")
+	log.For(ctx).Info("Try to gracefully shutdown spotigraph HTTP server...")
+	atomic.StoreInt32(&healthy, 0)
+
 	if s.server != nil {
-		s.server.GracefulStop()
+		s.server.SetKeepAlivesEnabled(false)
+		return s.server.Shutdown(ctx)
 	}
 	return nil
 }
@@ -137,15 +146,23 @@ func (s *application) setup(ctx context.Context) error {
 			s.server, err = setupLocalRethinkDB(ctx, s.cfg)
 		case "postgresql":
 			s.server, err = setupLocalPostgreSQL(ctx, s.cfg)
-		default:
-
 		}
 	case "remote":
-		log.For(ctx).Fatal("Invalid core mode, use 'local' only for gRPC service.")
 	default:
 		log.For(ctx).Fatal("Invalid core mode, use 'remote' or 'local'.")
 	}
 
-	// Return wired context
 	return err
+}
+
+// -----------------------------------------------------------------------------
+
+func healthz() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if atomic.LoadInt32(&healthy) == 1 {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		w.WriteHeader(http.StatusServiceUnavailable)
+	}
 }

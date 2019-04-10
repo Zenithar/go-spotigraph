@@ -16,6 +16,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v0.0.14
 	github.com/fatih/structs v1.1.0
 	github.com/frapposelli/wwhrd v0.2.1
+	github.com/go-chi/chi v3.3.2+incompatible
 	github.com/go-logfmt/logfmt v0.4.0 // indirect
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
@@ -38,6 +39,7 @@ require (
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
+	github.com/julienschmidt/httprouter v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/kisielk/errcheck v1.2.0 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14
