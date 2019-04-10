@@ -83,9 +83,6 @@ func (c *tribeCtrl) create() http.HandlerFunc {
 }
 
 func (c *tribeCtrl) read() http.HandlerFunc {
-	// Request type
-	var request spotigraph.TribeGetReq
-
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
@@ -99,14 +96,10 @@ func (c *tribeCtrl) read() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.tribes.Get(ctx, &request)
+		res, err := c.tribes.Get(ctx, &spotigraph.TribeGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -163,9 +156,6 @@ func (c *tribeCtrl) update() http.HandlerFunc {
 }
 
 func (c *tribeCtrl) delete() http.HandlerFunc {
-	// Request type
-	var request spotigraph.TribeGetReq
-
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
@@ -179,14 +169,10 @@ func (c *tribeCtrl) delete() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.tribes.Delete(ctx, &request)
+		res, err := c.tribes.Delete(ctx, &spotigraph.TribeGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return

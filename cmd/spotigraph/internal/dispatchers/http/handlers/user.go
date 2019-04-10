@@ -48,10 +48,10 @@ func (c *userCtrl) create() http.HandlerFunc {
 
 	// Response type
 	type response struct {
-		Context string                  `json:"@context"`
-		Type    string                  `json:"@type"`
-		ID      string                  `json:"@id"`
-		Entity  *spotigraph.Domain_User `json:",inline"`
+		Context                 string `json:"@context"`
+		Type                    string `json:"@type"`
+		ID                      string `json:"@id"`
+		*spotigraph.Domain_User `json:",omitempty"`
 	}
 
 	// Handler
@@ -74,18 +74,15 @@ func (c *userCtrl) create() http.HandlerFunc {
 
 		// Marshal response
 		asJSON(ctx, w, &response{
-			Context: jsonldContext,
-			Type:    "User",
-			ID:      fmt.Sprintf("/users/%s", res.Entity.Id),
-			Entity:  res.Entity,
+			Context:     jsonldContext,
+			Type:        "User",
+			ID:          fmt.Sprintf("/users/%s", res.Entity.Id),
+			Domain_User: res.Entity,
 		})
 	}
 }
 
 func (c *userCtrl) read() http.HandlerFunc {
-	// Request type
-	var request spotigraph.UserGetReq
-
 	// Response type
 	type response struct {
 		Context string                  `json:"@context"`
@@ -99,14 +96,10 @@ func (c *userCtrl) read() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.users.Get(ctx, &request)
+		res, err := c.users.Get(ctx, &spotigraph.UserGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -163,9 +156,6 @@ func (c *userCtrl) update() http.HandlerFunc {
 }
 
 func (c *userCtrl) delete() http.HandlerFunc {
-	// Request type
-	var request spotigraph.UserGetReq
-
 	// Response type
 	type response struct {
 		Context string                  `json:"@context"`
@@ -179,14 +169,10 @@ func (c *userCtrl) delete() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.users.Delete(ctx, &request)
+		res, err := c.users.Delete(ctx, &spotigraph.UserGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return

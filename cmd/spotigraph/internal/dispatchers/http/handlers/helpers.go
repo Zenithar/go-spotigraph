@@ -18,7 +18,7 @@ func asJSON(ctx context.Context, w http.ResponseWriter, response interface{}) {
 	}
 
 	// Set conteent type header
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	// Write response
 	_, err = w.Write(js)

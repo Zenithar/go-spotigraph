@@ -83,9 +83,6 @@ func (c *guildCtrl) create() http.HandlerFunc {
 }
 
 func (c *guildCtrl) read() http.HandlerFunc {
-	// Request type
-	var request spotigraph.GuildGetReq
-
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
@@ -99,14 +96,10 @@ func (c *guildCtrl) read() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.guilds.Get(ctx, &request)
+		res, err := c.guilds.Get(ctx, &spotigraph.GuildGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -163,9 +156,6 @@ func (c *guildCtrl) update() http.HandlerFunc {
 }
 
 func (c *guildCtrl) delete() http.HandlerFunc {
-	// Request type
-	var request spotigraph.GuildGetReq
-
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
@@ -179,14 +169,10 @@ func (c *guildCtrl) delete() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
-		}
-
 		// Delegate to service
-		res, err := c.guilds.Delete(ctx, &request)
+		res, err := c.guilds.Delete(ctx, &spotigraph.GuildGetReq{
+			Id: chi.URLParamFromCtx(ctx, "id"),
+		})
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return

@@ -17,7 +17,6 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/frapposelli/wwhrd v0.2.1
 	github.com/go-chi/chi v3.3.2+incompatible
-	github.com/go-logfmt/logfmt v0.4.0 // indirect
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gobuffalo/packr v1.24.1
@@ -29,8 +28,6 @@ require (
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
-	github.com/gorilla/context v1.1.1 // indirect
-	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gosimple/slug v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
@@ -39,9 +36,7 @@ require (
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
-	github.com/julienschmidt/httprouter v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
-	github.com/kisielk/errcheck v1.2.0 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
@@ -60,7 +55,6 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
-	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.mongodb.org/mongo-driver v1.0.0
 	go.opencensus.io v0.18.0
