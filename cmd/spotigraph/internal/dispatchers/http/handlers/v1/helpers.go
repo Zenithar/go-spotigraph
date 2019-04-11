@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
 func asJSON(ctx context.Context, w http.ResponseWriter, response interface{}) {
+
 	// Marshal response as json
 	js, err := json.Marshal(response)
 	if err != nil {
@@ -71,4 +73,12 @@ func asJSONError(ctx context.Context, w http.ResponseWriter, errObj interface{})
 			"message":  "Unable to handle this request",
 		})
 	}
+}
+
+func toUint32(value string, fallback uint32) uint32 {
+	v, err := strconv.ParseUint(value, 10, 32)
+	if v <= 0 || err != nil {
+		return fallback
+	}
+	return uint32(v)
 }

@@ -275,9 +275,7 @@ func (s *service) Search(ctx context.Context, req *spotigraph.UserSearchReq) (*s
 	res.CurrentPage = uint32(pagination.Page)
 
 	// If no result back to first page
-	if err != db.ErrNoResult {
-		res.Members = spotigraph.FromUsers(entities)
-	}
+	res.Members = spotigraph.FromUsers(entities)
 
 	// Return results
 	return res, nil

@@ -542,10 +542,12 @@ func Test_User_Search(t *testing.T) {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
+				g.Expect(got.Members).To(BeNil(), "Members should be nil")
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
+				g.Expect(got.Members).ToNot(BeNil(), "Members should not be nil")
 			}
 		})
 	}

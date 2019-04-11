@@ -49,6 +49,7 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
+	github.com/ugorji/go v1.1.4 // indirect
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.mongodb.org/mongo-driver v1.0.0
 	go.opencensus.io v0.20.2

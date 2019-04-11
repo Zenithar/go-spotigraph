@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi"
+	"github.com/gogo/protobuf/types"
 
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
@@ -183,9 +185,6 @@ func (c *userCtrl) delete() http.HandlerFunc {
 }
 
 func (c *userCtrl) search() http.HandlerFunc {
-	// Request type
-	var request spotigraph.UserSearchReq
-
 	// Response type
 	type response struct {
 		Context                      string `json:"@context"`
@@ -199,14 +198,26 @@ func (c *userCtrl) search() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-			asJSONError(ctx, w, err)
-			return
+		var (
+			q         = r.URL.Query()
+			page      = q.Get("page")
+			perPage   = q.Get("perPage")
+			sorts     = strings.Split(q.Get("sorts"), ",")
+			principal = q.Get("principal")
+		)
+
+		// Prepare request filter
+		req := &spotigraph.UserSearchReq{
+			Page:    toUint32(page, 1),
+			PerPage: toUint32(perPage, 25),
+			Sorts:   sorts,
+		}
+		if principal != "" {
+			req.Principal = &types.StringValue{Value: principal}
 		}
 
 		// Delegate to service
-		res, err := c.users.Search(ctx, &request)
+		res, err := c.users.Search(ctx, req)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -215,8 +226,8 @@ func (c *userCtrl) search() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context:          jsonldContext,
-			Type:             "Collection",
-			ID:               r.RequestURI,
+			Type:             "UserCollection",
+			ID:               r.URL.RequestURI(),
 			PaginatedUserRes: res,
 		})
 	}

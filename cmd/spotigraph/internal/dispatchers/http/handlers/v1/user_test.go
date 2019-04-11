@@ -21,6 +21,7 @@ type TestCase struct {
 	name           string
 	requestMethod  string
 	requestURL     string
+	requestParams  func(*http.Request)
 	requestBody    io.Reader
 	prepare        func(context.Context, *mock.MockUser)
 	expectedStatus int
@@ -44,6 +45,11 @@ func userTestSpec(tt *TestCase) func(t *testing.T) {
 		// Prepare the request
 		req, err := http.NewRequest(tt.requestMethod, tt.requestURL, tt.requestBody)
 		g.Expect(err).To(BeNil(), "Request building error should be nil")
+
+		// Update request
+		if tt.requestParams != nil {
+			tt.requestParams(req)
+		}
 
 		// Prepare the mocks:
 		if tt.prepare != nil {
@@ -199,6 +205,14 @@ func TestUpdateUserHandler(t *testing.T) {
 			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
 		},
 		{
+			name:           "invalid payload",
+			requestMethod:  "POST",
+			requestURL:     "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:    bytes.NewBuffer([]byte("{aa")),
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+		},
+		{
 			name:          "service error",
 			requestMethod: "POST",
 			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
@@ -275,6 +289,98 @@ func TestDeleteUserHandler(t *testing.T) {
 			},
 			expectedStatus: http.StatusNotFound,
 			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, userTestSpec(tt))
+	}
+}
+
+func TestSearchUserHandler(t *testing.T) {
+	// Testcase list
+	testCases := []*TestCase{
+		{
+			name:          "empty collection",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Count:       0,
+					CurrentPage: 0,
+					Total:       0,
+					PerPage:     25,
+					Members:     make([]*spotigraph.Domain_User, 0),
+				}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/","per_page":25}`),
+		},
+		{
+			name:          "1 page collection",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Count:       1,
+					CurrentPage: 1,
+					Total:       3,
+					PerPage:     25,
+					Members: []*spotigraph.Domain_User{
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+					},
+				}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/","total":3,"per_page":25,"count":1,"current_page":1,"members":[{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}]}`),
+		},
+		{
+			name:          "1 page collection with principal",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestParams: func(req *http.Request) {
+				q := req.URL.Query()
+				q.Add("principal", "toto@foo.org")
+				req.URL.RawQuery = q.Encode()
+			},
+			requestBody: nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Count:       1,
+					CurrentPage: 1,
+					Total:       3,
+					PerPage:     25,
+					Members: []*spotigraph.Domain_User{
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+					},
+				}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/?principal=toto%40foo.org","total":3,"per_page":25,"count":1,"current_page":1,"members":[{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}]}`),
+		},
+		{
+			name:          "service error",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{}, db.ErrTooManyResults)
+			},
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
 		},
 	}
 
