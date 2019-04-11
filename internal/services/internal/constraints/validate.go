@@ -11,10 +11,6 @@ type Validable interface {
 func MustBeValid(validable Validable) func(context.Context) error {
 	return func(ctx context.Context) error {
 		// Validate request
-		if err := validable.Validate(); err != nil {
-			return err
-		}
-
-		return nil
+		return validable.Validate()
 	}
 }

@@ -1,5 +1,7 @@
 # go-spotigraph
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Zenithar/go-spotigraph)](https://goreportcard.com/report/github.com/Zenithar/go-spotigraph)
+
 Spotify Agile model mapping microservice
 
 ## Build

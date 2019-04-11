@@ -285,7 +285,7 @@ func Test_User_Update(t *testing.T) {
 			},
 			wantErr: false,
 		}, {
-			name: "Existent entity with prinicipal update",
+			name: "Existent entity with principal update",
 			req: &spotigraph.UserUpdateReq{
 				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 				Principal: &types.StringValue{Value: "tutu@foo.org"},
