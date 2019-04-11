@@ -59,13 +59,13 @@ func asJSONError(ctx context.Context, w http.ResponseWriter, errObj interface{})
 		})
 	default:
 		// Write HTTP status
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 
 		// Return public error
 		asJSON(ctx, w, map[string]interface{}{
 			"@context": jsonldContext,
 			"@type":    "Error",
-			"code":     http.StatusInternalServerError,
+			"code":     http.StatusBadRequest,
 			"message":  "Unable to handle this request",
 		})
 	}

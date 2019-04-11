@@ -30,7 +30,7 @@ func UserRoutes(users services.User) chi.Router {
 	r.Get("/", ctrl.search())
 	r.Post("/", ctrl.create())
 
-	r.Route("/{id}", func(r chi.Router) {
+	r.Route("/:id", func(r chi.Router) {
 		r.Get("/", ctrl.read())
 		r.Put("/", ctrl.update())
 		r.Delete("/", ctrl.delete())
@@ -67,7 +67,7 @@ func (c *userCtrl) create() http.HandlerFunc {
 
 		// Delegate to service
 		res, err := c.users.Create(ctx, &request)
-		if err != nil {
+		if err != nil || res.Error != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
 		}
