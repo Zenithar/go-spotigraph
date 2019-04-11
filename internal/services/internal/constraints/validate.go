@@ -1,8 +1,6 @@
 package constraints
 
-import (
-	"context"
-)
+import "context"
 
 // Validable interface used to defines Validation protocol
 type Validable interface {

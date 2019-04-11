@@ -4169,6 +4169,7 @@ func TestErrorJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestEmptyResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4187,6 +4188,7 @@ func TestEmptyResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomainJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4205,6 +4207,7 @@ func TestDomainJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomain_UserJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4223,6 +4226,7 @@ func TestDomain_UserJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomain_SquadJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4241,6 +4245,7 @@ func TestDomain_SquadJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomain_ChapterJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4259,6 +4264,7 @@ func TestDomain_ChapterJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomain_GuildJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4277,6 +4283,7 @@ func TestDomain_GuildJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestDomain_TribeJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4295,6 +4302,7 @@ func TestDomain_TribeJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGraphJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4313,6 +4321,7 @@ func TestGraphJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGraph_NodeJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4331,6 +4340,7 @@ func TestGraph_NodeJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGraph_EdgeJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4349,6 +4359,7 @@ func TestGraph_EdgeJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestUserCreateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4367,6 +4378,7 @@ func TestUserCreateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestUserGetReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4385,6 +4397,7 @@ func TestUserGetReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestUserUpdateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4403,6 +4416,7 @@ func TestUserUpdateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSingleUserResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4421,6 +4435,7 @@ func TestSingleUserResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestPaginatedUserResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4439,6 +4454,7 @@ func TestPaginatedUserResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestUserSearchReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4457,6 +4473,7 @@ func TestUserSearchReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSquadCreateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4475,6 +4492,7 @@ func TestSquadCreateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSquadGetReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4493,6 +4511,7 @@ func TestSquadGetReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSquadUpdateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4511,6 +4530,7 @@ func TestSquadUpdateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSingleSquadResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4529,6 +4549,7 @@ func TestSingleSquadResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestPaginatedSquadResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4547,6 +4568,7 @@ func TestPaginatedSquadResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSquadSearchReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4565,6 +4587,7 @@ func TestSquadSearchReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestChapterCreateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4583,6 +4606,7 @@ func TestChapterCreateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestChapterGetReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4601,6 +4625,7 @@ func TestChapterGetReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestChapterUpdateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4619,6 +4644,7 @@ func TestChapterUpdateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSingleChapterResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4637,6 +4663,7 @@ func TestSingleChapterResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestPaginatedChapterResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4655,6 +4682,7 @@ func TestPaginatedChapterResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestChapterSearchReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4673,6 +4701,7 @@ func TestChapterSearchReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGuildCreateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4691,6 +4720,7 @@ func TestGuildCreateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGuildGetReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4709,6 +4739,7 @@ func TestGuildGetReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGuildUpdateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4727,6 +4758,7 @@ func TestGuildUpdateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSingleGuildResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4745,6 +4777,7 @@ func TestSingleGuildResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestPaginatedGuildResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4763,6 +4796,7 @@ func TestPaginatedGuildResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGuildSearchReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4781,6 +4815,7 @@ func TestGuildSearchReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestTribeCreateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4799,6 +4834,7 @@ func TestTribeCreateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestTribeGetReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4817,6 +4853,7 @@ func TestTribeGetReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestTribeUpdateReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4835,6 +4872,7 @@ func TestTribeUpdateReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestSingleTribeResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4853,6 +4891,7 @@ func TestSingleTribeResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestPaginatedTribeResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4871,6 +4910,7 @@ func TestPaginatedTribeResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestTribeSearchReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4889,6 +4929,7 @@ func TestTribeSearchReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestNodeInfoReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4907,6 +4948,7 @@ func TestNodeInfoReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestGraphResJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -4925,6 +4967,7 @@ func TestGraphResJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+
 func TestErrorProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -7677,4 +7720,4 @@ func BenchmarkGraphResSize(b *testing.B) {
 	b.SetBytes(int64(total / b.N))
 }
 
-//These tests are generated by github.com/gogo/protobuf/plugin/testgen
+// These tests are generated by github.com/gogo/protobuf/plugin/testgen

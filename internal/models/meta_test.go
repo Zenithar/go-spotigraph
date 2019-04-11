@@ -43,5 +43,4 @@ func TestMetadataModification(t *testing.T) {
 	g.Expect(obj.Has("foo.test")).To(BeTrue(), "Metadata should contain given key")
 	g.Expect(obj.Get("foo.test")).ToNot(BeEmpty(), "Metadata key should return non empty list")
 	g.Expect(len(obj.Get("foo.test"))).To(Equal(3), "Metadata key should return 3 element list")
-
 }

@@ -12,7 +12,6 @@ import (
 // mustBeUnique specification checks if the given name already exists
 func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
-
 		// Retrieve object from repository
 		object, err := finder(ctx)
 		if err != nil && err != db.ErrNoResult {

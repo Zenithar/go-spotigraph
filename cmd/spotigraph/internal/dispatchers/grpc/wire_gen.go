@@ -115,7 +115,6 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 // wire.go:
 
 func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph2 services.Graph) (*grpc.Server, error) {
-
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 

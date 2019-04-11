@@ -10,7 +10,6 @@ import (
 )
 
 func TestNullConstraint(t *testing.T) {
-
 	// Testcases
 	tc := []struct {
 		name    string

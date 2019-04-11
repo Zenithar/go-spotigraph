@@ -69,5 +69,4 @@ func asJSONError(ctx context.Context, w http.ResponseWriter, errObj interface{})
 			"message":  "Unable to handle this request",
 		})
 	}
-
 }

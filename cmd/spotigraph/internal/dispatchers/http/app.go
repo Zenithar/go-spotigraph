@@ -18,9 +18,7 @@ type application struct {
 	server *http.Server
 }
 
-var (
-	healthy int32
-)
+var healthy int32
 
 // -----------------------------------------------------------------------------
 

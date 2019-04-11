@@ -1,8 +1,6 @@
 package models
 
-import (
-	"strings"
-)
+import "strings"
 
 // StringArray describes string array type
 type StringArray []string

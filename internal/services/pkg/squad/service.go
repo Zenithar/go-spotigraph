@@ -117,9 +117,8 @@ func (s *service) Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*
 	res := &spotigraph.SingleSquadRes{}
 
 	// Prepare expected results
-	var (
-		entity models.Squad
-	)
+
+	var entity models.Squad
 
 	// Check request
 	if req == nil {
@@ -165,7 +164,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*
 
 	// Skip operation when no updates
 	if updated {
-
 		// Create account in database
 		if err := s.squads.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
@@ -174,7 +172,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*
 			}
 			return res, err
 		}
-
 	}
 
 	// Prepare response
@@ -188,9 +185,8 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.SquadGetReq) (*spo
 	res := &spotigraph.EmptyRes{}
 
 	// Prepare expected results
-	var (
-		entity models.Squad
-	)
+
+	var entity models.Squad
 
 	// Check request
 	if req == nil {

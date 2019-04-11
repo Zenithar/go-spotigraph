@@ -1,8 +1,6 @@
 package constraints
 
-import (
-	"context"
-)
+import "context"
 
 // Builder defines matcher constraints
 type Builder func(context.Context) error

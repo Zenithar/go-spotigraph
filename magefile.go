@@ -95,7 +95,7 @@ func (Go) Format() error {
 	fmt.Println("## Format everything")
 	args := []string{"-s", "-w"}
 	args = append(args, goFiles...)
-	return sh.RunV("gofmt", args...)
+	return sh.RunV("gofumpt", args...)
 }
 
 // Import runs goimports on everything

@@ -119,9 +119,8 @@ func (s *service) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*s
 	res := &spotigraph.SingleUserRes{}
 
 	// Prepare expected results
-	var (
-		entity models.User
-	)
+
+	var entity models.User
 
 	// Check request
 	if req == nil {
@@ -169,7 +168,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*s
 
 	// Skip operation when no updates
 	if updated {
-
 		// Create account in database
 		if err := s.users.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
@@ -178,7 +176,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*s
 			}
 			return res, err
 		}
-
 	}
 
 	// Prepare response
@@ -192,9 +189,8 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.UserGetReq) (*spot
 	res := &spotigraph.EmptyRes{}
 
 	// Prepare expected results
-	var (
-		entity models.User
-	)
+
+	var entity models.User
 
 	// Check request
 	if req == nil {

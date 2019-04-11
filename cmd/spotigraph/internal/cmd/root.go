@@ -56,7 +56,7 @@ func initConfig() {
 
 	switch {
 	case cfgFile != "":
-		//If the config file doesn't exists, let's exit
+		// If the config file doesn't exists, let's exit
 		if _, err := os.Stat(cfgFile); os.IsNotExist(err) {
 			log.Bg().Fatal("File doesn't exists", zap.Error(err))
 		}

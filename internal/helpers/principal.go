@@ -6,9 +6,7 @@ import (
 	"golang.org/x/crypto/blake2b"
 )
 
-var (
-	principalHashKey = []byte(`7EcP%Sm5=Wgoce5Sb"%[E.<&xG8t5soYU$CzdIMTgK@^4i(Zo|)LoDB'!g"R2]8$`)
-)
+var principalHashKey = []byte(`7EcP%Sm5=Wgoce5Sb"%[E.<&xG8t5soYU$CzdIMTgK@^4i(Zo|)LoDB'!g"R2]8$`)
 
 // PrincipalHashFunc return the principal hashed using Blake2b keyed algorithm
 var PrincipalHashFunc = func(principal string) string {

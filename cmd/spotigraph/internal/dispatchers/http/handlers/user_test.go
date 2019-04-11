@@ -15,7 +15,7 @@ import (
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
-func TestListUsersHandler(t *testing.T) {
+func TestCreateUserHandler(t *testing.T) {
 	// Testcase list
 	testCases := []struct {
 		name           string
@@ -113,6 +113,5 @@ func TestListUsersHandler(t *testing.T) {
 			g.Expect(rr.Body).ToNot(BeNil(), "Request Body should not be nil")
 			g.Expect(rr.Body.Bytes()).To(Equal(tt.expectedBody), "Request body should be as expected")
 		})
-
 	}
 }

@@ -123,12 +123,10 @@ func Test_Chapter_Creation(t *testing.T) {
 				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
 			}
 		})
-
 	}
 }
 
 func Test_Chapter_Get(t *testing.T) {
-
 	// Testcases
 	testCases := []struct {
 		name    string
@@ -229,12 +227,10 @@ func Test_Chapter_Get(t *testing.T) {
 				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
 			}
 		})
-
 	}
 }
 
 func Test_Chapter_Update(t *testing.T) {
-
 	// Testcases
 	testCases := []struct {
 		name    string
@@ -362,12 +358,10 @@ func Test_Chapter_Update(t *testing.T) {
 				g.Expect(got.Entity).ToNot(BeNil(), "Entity should not be nil")
 			}
 		})
-
 	}
 }
 
 func Test_Chapter_Delete(t *testing.T) {
-
 	// Testcases
 	testCases := []struct {
 		name    string
@@ -468,12 +462,10 @@ func Test_Chapter_Delete(t *testing.T) {
 				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
 			}
 		})
-
 	}
 }
 
 func Test_Chapter_Search(t *testing.T) {
-
 	// Testcases
 	testCases := []struct {
 		name    string
@@ -554,6 +546,5 @@ func Test_Chapter_Search(t *testing.T) {
 				g.Expect(got.Error).To(BeNil(), "Public error should be nil")
 			}
 		})
-
 	}
 }

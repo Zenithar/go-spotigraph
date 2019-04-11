@@ -124,9 +124,8 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 	res := &spotigraph.SingleChapterRes{}
 
 	// Prepare expected results
-	var (
-		entity models.Chapter
-	)
+
+	var entity models.Chapter
 
 	// Check request
 	if req == nil {
@@ -172,7 +171,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 
 	// Skip operation when no updates
 	if updated {
-
 		// Create account in database
 		if err := s.Chapters.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
@@ -181,7 +179,6 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 			}
 			return res, err
 		}
-
 	}
 
 	// Prepare response
@@ -195,9 +192,8 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*s
 	res := &spotigraph.EmptyRes{}
 
 	// Prepare expected results
-	var (
-		entity models.Chapter
-	)
+
+	var entity models.Chapter
 
 	// Check request
 	if req == nil {

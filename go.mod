@@ -67,11 +67,12 @@ require (
 	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3 // indirect
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	golang.org/x/sys v0.0.0-20190405154228-4b34438f7a67 // indirect
-	golang.org/x/tools v0.0.0-20190407030857-0fdf0c73855b
+	golang.org/x/tools v0.0.0-20190409171012-9e5445377b7a
 	google.golang.org/grpc v1.19.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 	gotest.tools v2.2.0+incompatible // indirect
 	gotest.tools/gotestsum v0.3.4
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
+	mvdan.cc/gofumpt v0.0.0-20190409214416-edb99e29e718
 )
