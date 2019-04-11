@@ -17,7 +17,6 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/core"
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http/handlers"
 	"go.zenithar.org/spotigraph/internal/services"
 )
 
@@ -35,11 +34,12 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	// API endpoint
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("users", handlers.UserRoutes(users))
-		r.Mount("squads", handlers.SquadRoutes(squads))
-		r.Mount("chapters", handlers.ChapterRoutes(chapters))
-		r.Mount("guilds", handlers.GuildRoutes(guilds))
-		r.Mount("tribes", handlers.TribeRoutes(tribes))
+		r.Use(apiVersionCtx("v1"))
+		r.Mount("users", v1.UserRoutes(users))
+		r.Mount("squads", v1.SquadRoutes(squads))
+		r.Mount("chapters", v1.ChapterRoutes(chapters))
+		r.Mount("guilds", v1.GuildRoutes(guilds))
+		r.Mount("tribes", v1.TribeRoutes(tribes))
 	})
 
 	// Health checking status endpoint

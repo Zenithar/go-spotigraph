@@ -1,4 +1,4 @@
-package handlers
+package v1
 
 import (
 	"encoding/json"
@@ -11,19 +11,19 @@ import (
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
-type guildCtrl struct {
-	guilds services.Guild
+type squadCtrl struct {
+	squads services.Squad
 }
 
 // -----------------------------------------------------------------------------
 
-// GuildRoutes returns guild management related API
-func GuildRoutes(guilds services.Guild) chi.Router {
+// SquadRoutes returns squad management related API
+func SquadRoutes(squads services.Squad) chi.Router {
 	r := chi.NewRouter()
 
 	// Initialize controller
-	ctrl := &guildCtrl{
-		guilds: guilds,
+	ctrl := &squadCtrl{
+		squads: squads,
 	}
 
 	// Map routes
@@ -42,16 +42,16 @@ func GuildRoutes(guilds services.Guild) chi.Router {
 
 // -----------------------------------------------------------------------------
 
-func (c *guildCtrl) create() http.HandlerFunc {
+func (c *squadCtrl) create() http.HandlerFunc {
 	// Request type
-	var request spotigraph.GuildCreateReq
+	var request spotigraph.SquadCreateReq
 
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Guild `json:",inline"`
+		Entity  *spotigraph.Domain_Squad `json:",inline"`
 	}
 
 	// Handler
@@ -66,7 +66,7 @@ func (c *guildCtrl) create() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.guilds.Create(ctx, &request)
+		res, err := c.squads.Create(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -75,20 +75,20 @@ func (c *guildCtrl) create() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Guild",
-			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
+			Type:    "Squad",
+			ID:      fmt.Sprintf("/squads/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *guildCtrl) read() http.HandlerFunc {
+func (c *squadCtrl) read() http.HandlerFunc {
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Guild `json:",inline"`
+		Entity  *spotigraph.Domain_Squad `json:",inline"`
 	}
 
 	// Handler
@@ -97,7 +97,7 @@ func (c *guildCtrl) read() http.HandlerFunc {
 		ctx := r.Context()
 
 		// Delegate to service
-		res, err := c.guilds.Get(ctx, &spotigraph.GuildGetReq{
+		res, err := c.squads.Get(ctx, &spotigraph.SquadGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
 		if err != nil {
@@ -108,23 +108,23 @@ func (c *guildCtrl) read() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Guild",
-			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
+			Type:    "Squad",
+			ID:      fmt.Sprintf("/squads/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *guildCtrl) update() http.HandlerFunc {
+func (c *squadCtrl) update() http.HandlerFunc {
 	// Request type
-	var request spotigraph.GuildUpdateReq
+	var request spotigraph.SquadUpdateReq
 
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Guild `json:",inline"`
+		Entity  *spotigraph.Domain_Squad `json:",inline"`
 	}
 
 	// Handler
@@ -139,7 +139,7 @@ func (c *guildCtrl) update() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.guilds.Update(ctx, &request)
+		res, err := c.squads.Update(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -148,20 +148,20 @@ func (c *guildCtrl) update() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Guild",
-			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
+			Type:    "Squad",
+			ID:      fmt.Sprintf("/squads/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *guildCtrl) delete() http.HandlerFunc {
+func (c *squadCtrl) delete() http.HandlerFunc {
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Guild `json:",inline"`
+		Entity  *spotigraph.Domain_Squad `json:",inline"`
 	}
 
 	// Handler
@@ -170,7 +170,7 @@ func (c *guildCtrl) delete() http.HandlerFunc {
 		ctx := r.Context()
 
 		// Delegate to service
-		res, err := c.guilds.Delete(ctx, &spotigraph.GuildGetReq{
+		res, err := c.squads.Delete(ctx, &spotigraph.SquadGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
 		if err != nil {
@@ -179,20 +179,20 @@ func (c *guildCtrl) delete() http.HandlerFunc {
 		}
 
 		// Marshal response
-		asJSONStatus(ctx, w, http.StatusOK, "Guild successfully deleted.")
+		asJSONStatus(ctx, w, http.StatusOK, "Squad successfully deleted.")
 	}
 }
 
-func (c *guildCtrl) search() http.HandlerFunc {
+func (c *squadCtrl) search() http.HandlerFunc {
 	// Request type
-	var request spotigraph.GuildSearchReq
+	var request spotigraph.SquadSearchReq
 
 	// Response type
 	type response struct {
 		Context string                        `json:"@context"`
 		Type    string                        `json:"@type"`
 		ID      string                        `json:"@id"`
-		Page    *spotigraph.PaginatedGuildRes `json:",inline"`
+		Page    *spotigraph.PaginatedSquadRes `json:",inline"`
 	}
 
 	// Handler
@@ -207,7 +207,7 @@ func (c *guildCtrl) search() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.guilds.Search(ctx, &request)
+		res, err := c.squads.Search(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return

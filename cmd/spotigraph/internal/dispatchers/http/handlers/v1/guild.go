@@ -1,4 +1,4 @@
-package handlers
+package v1
 
 import (
 	"encoding/json"
@@ -11,19 +11,19 @@ import (
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
-type tribeCtrl struct {
-	tribes services.Tribe
+type guildCtrl struct {
+	guilds services.Guild
 }
 
 // -----------------------------------------------------------------------------
 
-// TribeRoutes returns tribe management related API
-func TribeRoutes(tribes services.Tribe) chi.Router {
+// GuildRoutes returns guild management related API
+func GuildRoutes(guilds services.Guild) chi.Router {
 	r := chi.NewRouter()
 
 	// Initialize controller
-	ctrl := &tribeCtrl{
-		tribes: tribes,
+	ctrl := &guildCtrl{
+		guilds: guilds,
 	}
 
 	// Map routes
@@ -42,16 +42,16 @@ func TribeRoutes(tribes services.Tribe) chi.Router {
 
 // -----------------------------------------------------------------------------
 
-func (c *tribeCtrl) create() http.HandlerFunc {
+func (c *guildCtrl) create() http.HandlerFunc {
 	// Request type
-	var request spotigraph.TribeCreateReq
+	var request spotigraph.GuildCreateReq
 
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Tribe `json:",inline"`
+		Entity  *spotigraph.Domain_Guild `json:",inline"`
 	}
 
 	// Handler
@@ -66,7 +66,7 @@ func (c *tribeCtrl) create() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.tribes.Create(ctx, &request)
+		res, err := c.guilds.Create(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -75,20 +75,20 @@ func (c *tribeCtrl) create() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Tribe",
-			ID:      fmt.Sprintf("/tribes/%s", res.Entity.Id),
+			Type:    "Guild",
+			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *tribeCtrl) read() http.HandlerFunc {
+func (c *guildCtrl) read() http.HandlerFunc {
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Tribe `json:",inline"`
+		Entity  *spotigraph.Domain_Guild `json:",inline"`
 	}
 
 	// Handler
@@ -97,7 +97,7 @@ func (c *tribeCtrl) read() http.HandlerFunc {
 		ctx := r.Context()
 
 		// Delegate to service
-		res, err := c.tribes.Get(ctx, &spotigraph.TribeGetReq{
+		res, err := c.guilds.Get(ctx, &spotigraph.GuildGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
 		if err != nil {
@@ -108,23 +108,23 @@ func (c *tribeCtrl) read() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Tribe",
-			ID:      fmt.Sprintf("/tribes/%s", res.Entity.Id),
+			Type:    "Guild",
+			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *tribeCtrl) update() http.HandlerFunc {
+func (c *guildCtrl) update() http.HandlerFunc {
 	// Request type
-	var request spotigraph.TribeUpdateReq
+	var request spotigraph.GuildUpdateReq
 
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Tribe `json:",inline"`
+		Entity  *spotigraph.Domain_Guild `json:",inline"`
 	}
 
 	// Handler
@@ -139,7 +139,7 @@ func (c *tribeCtrl) update() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.tribes.Update(ctx, &request)
+		res, err := c.guilds.Update(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return
@@ -148,20 +148,20 @@ func (c *tribeCtrl) update() http.HandlerFunc {
 		// Marshal response
 		asJSON(ctx, w, &response{
 			Context: jsonldContext,
-			Type:    "Tribe",
-			ID:      fmt.Sprintf("/tribes/%s", res.Entity.Id),
+			Type:    "Guild",
+			ID:      fmt.Sprintf("/guilds/%s", res.Entity.Id),
 			Entity:  res.Entity,
 		})
 	}
 }
 
-func (c *tribeCtrl) delete() http.HandlerFunc {
+func (c *guildCtrl) delete() http.HandlerFunc {
 	// Response type
 	type response struct {
 		Context string                   `json:"@context"`
 		Type    string                   `json:"@type"`
 		ID      string                   `json:"@id"`
-		Entity  *spotigraph.Domain_Tribe `json:",inline"`
+		Entity  *spotigraph.Domain_Guild `json:",inline"`
 	}
 
 	// Handler
@@ -170,7 +170,7 @@ func (c *tribeCtrl) delete() http.HandlerFunc {
 		ctx := r.Context()
 
 		// Delegate to service
-		res, err := c.tribes.Delete(ctx, &spotigraph.TribeGetReq{
+		res, err := c.guilds.Delete(ctx, &spotigraph.GuildGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
 		if err != nil {
@@ -179,20 +179,20 @@ func (c *tribeCtrl) delete() http.HandlerFunc {
 		}
 
 		// Marshal response
-		asJSONStatus(ctx, w, http.StatusOK, "Tribe successfully deleted.")
+		asJSONStatus(ctx, w, http.StatusOK, "Guild successfully deleted.")
 	}
 }
 
-func (c *tribeCtrl) search() http.HandlerFunc {
+func (c *guildCtrl) search() http.HandlerFunc {
 	// Request type
-	var request spotigraph.TribeSearchReq
+	var request spotigraph.GuildSearchReq
 
 	// Response type
 	type response struct {
 		Context string                        `json:"@context"`
 		Type    string                        `json:"@type"`
 		ID      string                        `json:"@id"`
-		Page    *spotigraph.PaginatedTribeRes `json:",inline"`
+		Page    *spotigraph.PaginatedGuildRes `json:",inline"`
 	}
 
 	// Handler
@@ -207,7 +207,7 @@ func (c *tribeCtrl) search() http.HandlerFunc {
 		}
 
 		// Delegate to service
-		res, err := c.tribes.Search(ctx, &request)
+		res, err := c.guilds.Search(ctx, &request)
 		if err != nil {
 			asJSONResultError(ctx, w, res.Error, err)
 			return

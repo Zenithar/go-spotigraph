@@ -1,4 +1,4 @@
-package handlers
+package v1
 
 import (
 	"context"
@@ -41,6 +41,8 @@ func asJSONStatus(ctx context.Context, w http.ResponseWriter, code int, message 
 func asJSONResultError(ctx context.Context, w http.ResponseWriter, publicErr *spotigraph.Error, internalErr error) {
 	if publicErr != nil {
 		asJSONError(ctx, w, publicErr)
+	} else {
+		asJSONError(ctx, w, internalErr)
 	}
 }
 
