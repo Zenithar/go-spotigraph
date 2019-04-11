@@ -17,6 +17,7 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/core"
+	v1 "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http/handlers/v1"
 	"go.zenithar.org/spotigraph/internal/services"
 )
 
@@ -34,7 +35,6 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	// API endpoint
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Use(apiVersionCtx("v1"))
 		r.Mount("users", v1.UserRoutes(users))
 		r.Mount("squads", v1.SquadRoutes(squads))
 		r.Mount("chapters", v1.ChapterRoutes(chapters))

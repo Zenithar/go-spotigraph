@@ -18,7 +18,7 @@ type guildCtrl struct {
 // -----------------------------------------------------------------------------
 
 // GuildRoutes returns guild management related API
-func GuildRoutes(guilds services.Guild) chi.Router {
+func GuildRoutes(guilds services.Guild) http.Handler {
 	r := chi.NewRouter()
 
 	// Initialize controller

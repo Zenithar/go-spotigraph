@@ -18,7 +18,7 @@ type userCtrl struct {
 // -----------------------------------------------------------------------------
 
 // UserRoutes returns user management related API
-func UserRoutes(users services.User) chi.Router {
+func UserRoutes(users services.User) http.Handler {
 	r := chi.NewRouter()
 
 	// Initialize controller
@@ -32,7 +32,7 @@ func UserRoutes(users services.User) chi.Router {
 
 	r.Route("/{id}", func(r chi.Router) {
 		r.Get("/", ctrl.read())
-		r.Put("/", ctrl.update())
+		r.Post("/", ctrl.update())
 		r.Delete("/", ctrl.delete())
 	})
 
@@ -121,10 +121,10 @@ func (c *userCtrl) update() http.HandlerFunc {
 
 	// Response type
 	type response struct {
-		Context string                  `json:"@context"`
-		Type    string                  `json:"@type"`
-		ID      string                  `json:"@id"`
-		Entity  *spotigraph.Domain_User `json:",inline"`
+		Context                 string `json:"@context"`
+		Type                    string `json:"@type"`
+		ID                      string `json:"@id"`
+		*spotigraph.Domain_User `json:",omitempty"`
 	}
 
 	// Handler
@@ -147,10 +147,10 @@ func (c *userCtrl) update() http.HandlerFunc {
 
 		// Marshal response
 		asJSON(ctx, w, &response{
-			Context: jsonldContext,
-			Type:    "User",
-			ID:      fmt.Sprintf("/users/%s", res.Entity.Id),
-			Entity:  res.Entity,
+			Context:     jsonldContext,
+			Type:        "User",
+			ID:          fmt.Sprintf("/users/%s", res.Entity.Id),
+			Domain_User: res.Entity,
 		})
 	}
 }
@@ -158,10 +158,9 @@ func (c *userCtrl) update() http.HandlerFunc {
 func (c *userCtrl) delete() http.HandlerFunc {
 	// Response type
 	type response struct {
-		Context string                  `json:"@context"`
-		Type    string                  `json:"@type"`
-		ID      string                  `json:"@id"`
-		Entity  *spotigraph.Domain_User `json:",inline"`
+		Context string `json:"@context"`
+		Type    string `json:"@type"`
+		ID      string `json:"@id"`
 	}
 
 	// Handler
@@ -189,10 +188,10 @@ func (c *userCtrl) search() http.HandlerFunc {
 
 	// Response type
 	type response struct {
-		Context string                       `json:"@context"`
-		Type    string                       `json:"@type"`
-		ID      string                       `json:"@id"`
-		Page    *spotigraph.PaginatedUserRes `json:",inline"`
+		Context                      string `json:"@context"`
+		Type                         string `json:"@type"`
+		ID                           string `json:"@id"`
+		*spotigraph.PaginatedUserRes `json:",inline"`
 	}
 
 	// Handler
@@ -215,10 +214,10 @@ func (c *userCtrl) search() http.HandlerFunc {
 
 		// Marshal response
 		asJSON(ctx, w, &response{
-			Context: jsonldContext,
-			Type:    "Collection",
-			ID:      r.RequestURI,
-			Page:    res,
+			Context:          jsonldContext,
+			Type:             "Collection",
+			ID:               r.RequestURI,
+			PaginatedUserRes: res,
 		})
 	}
 }

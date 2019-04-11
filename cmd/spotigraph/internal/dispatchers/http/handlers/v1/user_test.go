@@ -23,7 +23,6 @@ type TestCase struct {
 	requestURL     string
 	requestBody    io.Reader
 	prepare        func(context.Context, *mock.MockUser)
-	wantErr        bool
 	expectedStatus int
 	expectedBody   []byte
 }
@@ -168,6 +167,111 @@ func TestReadUserHandler(t *testing.T) {
 					},
 				}
 				users.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
+			},
+			expectedStatus: http.StatusNotFound,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, userTestSpec(tt))
+	}
+}
+
+func TestUpdateUserHandler(t *testing.T) {
+	// Testcase list
+	testCases := []*TestCase{
+		{
+			name:          "valid payload",
+			requestMethod: "POST",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   bytes.NewBuffer([]byte("{}")),
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				res := &spotigraph.SingleUserRes{
+					Entity: &spotigraph.Domain_User{
+						Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+					},
+				}
+				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(res, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
+		},
+		{
+			name:          "service error",
+			requestMethod: "POST",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   bytes.NewBuffer([]byte("{}")),
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
+			},
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+		},
+		{
+			name:          "entity not found",
+			requestMethod: "POST",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   bytes.NewBuffer([]byte("{}")),
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				res := &spotigraph.SingleUserRes{
+					Error: &spotigraph.Error{
+						Code:    http.StatusNotFound,
+						Message: "User not found !",
+					},
+				}
+				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
+			},
+			expectedStatus: http.StatusNotFound,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+		},
+	}
+
+	// Subtests
+	for _, tt := range testCases {
+		t.Run(tt.name, userTestSpec(tt))
+	}
+}
+
+func TestDeleteUserHandler(t *testing.T) {
+	// Testcase list
+	testCases := []*TestCase{
+		{
+			name:          "valid payload",
+			requestMethod: "DELETE",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.EmptyRes{}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Status","code":200,"message":"User successfully deleted."}`),
+		},
+		{
+			name:          "service error",
+			requestMethod: "DELETE",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.EmptyRes{}, db.ErrTooManyResults)
+			},
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+		},
+		{
+			name:          "entity not found",
+			requestMethod: "DELETE",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				res := &spotigraph.EmptyRes{
+					Error: &spotigraph.Error{
+						Code:    http.StatusNotFound,
+						Message: "User not found !",
+					},
+				}
+				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
 			},
 			expectedStatus: http.StatusNotFound,
 			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),

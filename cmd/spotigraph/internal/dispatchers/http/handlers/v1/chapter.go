@@ -18,7 +18,7 @@ type chapterCtrl struct {
 // -----------------------------------------------------------------------------
 
 // ChapterRoutes returns chapter management related API
-func ChapterRoutes(chapters services.Chapter) chi.Router {
+func ChapterRoutes(chapters services.Chapter) http.Handler {
 	r := chi.NewRouter()
 
 	// Initialize controller

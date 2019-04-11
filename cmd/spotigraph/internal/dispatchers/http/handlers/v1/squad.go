@@ -18,7 +18,7 @@ type squadCtrl struct {
 // -----------------------------------------------------------------------------
 
 // SquadRoutes returns squad management related API
-func SquadRoutes(squads services.Squad) chi.Router {
+func SquadRoutes(squads services.Squad) http.Handler {
 	r := chi.NewRouter()
 
 	// Initialize controller

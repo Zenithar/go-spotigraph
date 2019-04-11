@@ -18,7 +18,7 @@ type tribeCtrl struct {
 // -----------------------------------------------------------------------------
 
 // TribeRoutes returns tribe management related API
-func TribeRoutes(tribes services.Tribe) chi.Router {
+func TribeRoutes(tribes services.Tribe) http.Handler {
 	r := chi.NewRouter()
 
 	// Initialize controller

@@ -18,7 +18,7 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/core"
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http/handlers"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http/handlers/v1"
 	mongodb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
 	postgresql2 "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	rethinkdb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
@@ -116,11 +116,11 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("users", handlers.UserRoutes(users))
-		r.Mount("squads", handlers.SquadRoutes(squads))
-		r.Mount("chapters", handlers.ChapterRoutes(chapters))
-		r.Mount("guilds", handlers.GuildRoutes(guilds))
-		r.Mount("tribes", handlers.TribeRoutes(tribes))
+		r.Mount("users", v1.UserRoutes(users))
+		r.Mount("squads", v1.SquadRoutes(squads))
+		r.Mount("chapters", v1.ChapterRoutes(chapters))
+		r.Mount("guilds", v1.GuildRoutes(guilds))
+		r.Mount("tribes", v1.TribeRoutes(tribes))
 	})
 
 	r.Handle("/healthz", http.HandlerFunc(healthz()))
