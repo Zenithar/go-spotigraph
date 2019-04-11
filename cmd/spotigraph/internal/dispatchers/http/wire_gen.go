@@ -117,10 +117,6 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Mount("users", v1.UserRoutes(users))
-		r.Mount("squads", v1.SquadRoutes(squads))
-		r.Mount("chapters", v1.ChapterRoutes(chapters))
-		r.Mount("guilds", v1.GuildRoutes(guilds))
-		r.Mount("tribes", v1.TribeRoutes(tribes))
 	})
 
 	r.Handle("/healthz", http.HandlerFunc(healthz()))

@@ -79,7 +79,7 @@ func TestCreateUserHandler(t *testing.T) {
 			requestURL:     "/",
 			requestBody:    bytes.NewBuffer([]byte("")),
 			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
 		},
 		{
 			name:           "invalid json request",
@@ -87,7 +87,7 @@ func TestCreateUserHandler(t *testing.T) {
 			requestURL:     "/",
 			requestBody:    bytes.NewBuffer([]byte("a]))")),
 			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
 		},
 		{
 			name:          "valid payload",
@@ -102,11 +102,11 @@ func TestCreateUserHandler(t *testing.T) {
 				}
 				users.EXPECT().Create(gomock.Any(), gomock.Any()).Times(1).Return(res, nil)
 			},
-			expectedStatus: http.StatusOK,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
+			expectedStatus: http.StatusCreated,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/api/v1/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
 		},
 		{
-			name:          "service error",
+			name:          "principal conflict",
 			requestMethod: "POST",
 			requestURL:    "/",
 			requestBody:   bytes.NewBuffer([]byte("{}")),
@@ -120,7 +120,17 @@ func TestCreateUserHandler(t *testing.T) {
 				users.EXPECT().Create(gomock.Any(), gomock.Any()).Times(1).Return(res, nil)
 			},
 			expectedStatus: http.StatusConflict,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":409,"message":"Principal already used"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":409,"message":"Principal already used"}`),
+		}, {
+			name:          "service error",
+			requestMethod: "POST",
+			requestURL:    "/",
+			requestBody:   bytes.NewBuffer([]byte("{}")),
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Create(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
+			},
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
 		},
 	}
 
@@ -147,7 +157,7 @@ func TestReadUserHandler(t *testing.T) {
 				users.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(res, nil)
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/api/v1/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
 		},
 		{
 			name:          "service error",
@@ -157,8 +167,8 @@ func TestReadUserHandler(t *testing.T) {
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
-			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
 		},
 		{
 			name:          "entity not found",
@@ -175,7 +185,7 @@ func TestReadUserHandler(t *testing.T) {
 				users.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
 			},
 			expectedStatus: http.StatusNotFound,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":404,"message":"User not found !"}`),
 		},
 	}
 
@@ -202,7 +212,7 @@ func TestUpdateUserHandler(t *testing.T) {
 				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(res, nil)
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/api/v1/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
 		},
 		{
 			name:           "invalid payload",
@@ -210,7 +220,7 @@ func TestUpdateUserHandler(t *testing.T) {
 			requestURL:     "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 			requestBody:    bytes.NewBuffer([]byte("{aa")),
 			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
 		},
 		{
 			name:          "service error",
@@ -220,8 +230,8 @@ func TestUpdateUserHandler(t *testing.T) {
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
-			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
 		},
 		{
 			name:          "entity not found",
@@ -238,7 +248,7 @@ func TestUpdateUserHandler(t *testing.T) {
 				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
 			},
 			expectedStatus: http.StatusNotFound,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":404,"message":"User not found !"}`),
 		},
 	}
 
@@ -260,7 +270,7 @@ func TestDeleteUserHandler(t *testing.T) {
 				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.EmptyRes{}, nil)
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Status","code":200,"message":"User successfully deleted."}`),
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Status","code":200,"message":"User successfully deleted"}`),
 		},
 		{
 			name:          "service error",
@@ -270,8 +280,8 @@ func TestDeleteUserHandler(t *testing.T) {
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.EmptyRes{}, db.ErrTooManyResults)
 			},
-			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
 		},
 		{
 			name:          "entity not found",
@@ -288,7 +298,7 @@ func TestDeleteUserHandler(t *testing.T) {
 				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(res, db.ErrNoResult)
 			},
 			expectedStatus: http.StatusNotFound,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":404,"message":"User not found !"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":404,"message":"User not found !"}`),
 		},
 	}
 
@@ -372,6 +382,74 @@ func TestSearchUserHandler(t *testing.T) {
 			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/?principal=toto%40foo.org","total":3,"per_page":25,"count":1,"current_page":1,"members":[{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}]}`),
 		},
 		{
+			name:          "invalid page number",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestParams: func(req *http.Request) {
+				q := req.URL.Query()
+				q.Add("page", "-4")
+				req.URL.RawQuery = q.Encode()
+			},
+			requestBody: nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Count:       1,
+					CurrentPage: 1,
+					Total:       1,
+					PerPage:     25,
+					Members: []*spotigraph.Domain_User{
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+					},
+				}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/?page=-4","total":1,"per_page":25,"count":1,"current_page":1,"members":[{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}]}`),
+		}, {
+			name:          "with page number and page size",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestParams: func(req *http.Request) {
+				q := req.URL.Query()
+				q.Add("page", "2")
+				q.Add("perPage", "2")
+				req.URL.RawQuery = q.Encode()
+			},
+			requestBody: nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Count:       1,
+					CurrentPage: 1,
+					Total:       1,
+					PerPage:     25,
+					Members: []*spotigraph.Domain_User{
+						{
+							Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+						},
+					},
+				}, nil)
+			},
+			expectedStatus: http.StatusOK,
+			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"UserCollection","@id":"/?page=2\u0026perPage=2","total":1,"per_page":25,"count":1,"current_page":1,"members":[{"id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}]}`),
+		},
+		{
+			name:          "service error",
+			requestMethod: "GET",
+			requestURL:    "/",
+			requestBody:   nil,
+			prepare: func(ctx context.Context, users *mock.MockUser) {
+				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{
+					Error: &spotigraph.Error{
+						Code:    http.StatusNotFound,
+						Message: "No results",
+					},
+				}, nil)
+			},
+			expectedStatus: http.StatusNotFound,
+			expectedBody:   []byte(`{"@type":"Error","code":404,"message":"No results"}`),
+		},
+		{
 			name:          "service error",
 			requestMethod: "GET",
 			requestURL:    "/",
@@ -379,8 +457,8 @@ func TestSearchUserHandler(t *testing.T) {
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{}, db.ErrTooManyResults)
 			},
-			expectedStatus: http.StatusBadRequest,
-			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"Error","code":400,"message":"Unable to handle this request"}`),
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
 		},
 	}
 
