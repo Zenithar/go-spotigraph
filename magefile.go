@@ -83,7 +83,7 @@ func (Go) Generate() error {
 // Test run go test
 func (Go) Test() error {
 	fmt.Println("## Running tests")
-	return sh.RunV("gotestsum", "--", "-short", "-race", "-cover", "./...")
+	return sh.RunV("gotestsum", "--junitfile", "unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
 }
 
 // Tidy add/remove depenedencies.

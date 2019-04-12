@@ -13,3 +13,4 @@
 *.gen.go
 bin
 vendor
+unit-tests.xml
