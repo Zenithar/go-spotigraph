@@ -49,21 +49,22 @@ Spotify Agile model mapping microservice
 - [x] PostgreSQL json column support
 - [ ] BoltDB backend study
 - [ ] DGraph backend study
+- [ ] DynamoDB backend study
 
 ### Dispatchers
 
 - [x] gRPC Server
 - [ ] GraphQL Server
-- [ ] REST Api
+- [x] REST Api
 
 ### Decorators
 
 - [x] Code generation
 - [ ] Cache support
 - [ ] Logger support
-- [ ] OpenTracing support
-- [ ] Prometheus support
-- [ ] OpenCensus support
+- [x] Tracing support
+- [x] Prometheus support
+- [x] OpenCensus support
 - [ ] Instrumented service providers for wire
 
 ### Tests

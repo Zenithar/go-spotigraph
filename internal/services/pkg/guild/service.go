@@ -48,7 +48,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.GuildCreateReq) (*
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
-			Message: "Unable to validate request",
+			Message: err.Error(),
 		}
 		return res, err
 	}
@@ -138,7 +138,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
-			Message: "Unable to validate request",
+			Message: err.Error(),
 		}
 		return res, err
 	}
@@ -154,7 +154,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 		); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusConflict,
-				Message: "Guild name already used",
+				Message: err.Error(),
 			}
 			return res, err
 		}
@@ -206,7 +206,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.GuildGetReq) (*spo
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
-			Message: "Unable to validate request",
+			Message: err.Error(),
 		}
 		return res, err
 	}
@@ -258,7 +258,7 @@ func (s *service) Search(ctx context.Context, req *spotigraph.GuildSearchReq) (*
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
-			Message: err.Error(),
+			Message: "Unable to process request",
 		}
 		return res, err
 	}

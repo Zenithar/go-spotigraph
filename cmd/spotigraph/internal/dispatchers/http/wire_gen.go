@@ -10,6 +10,8 @@ import (
 	"crypto/tls"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"go.opencensus.io/plugin/ochttp"
+	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/db/adapter/mongodb"
 	"go.zenithar.org/pkg/db/adapter/postgresql"
@@ -116,13 +118,14 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("users", v1.UserRoutes(users))
+		r.Mount("/users", ochttp.WithRouteTag(v1.UserRoutes(users), "/api/v1/users"))
 	})
 
-	r.Handle("/healthz", http.HandlerFunc(healthz()))
-
 	server := &http.Server{
-		Handler: r,
+		Handler: &ochttp.Handler{
+			Handler:     r,
+			Propagation: &b3.HTTPFormat{},
+		},
 	}
 
 	if cfg.Server.HTTP.UseTLS {
@@ -145,7 +148,7 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 		server.TLSConfig = tlsConfig
 	} else {
-		log.For(ctx).Info("No transport authentication enabled")
+		log.For(ctx).Info("No transport encryption enabled for HTTP server")
 	}
 
 	return server, nil

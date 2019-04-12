@@ -11,6 +11,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/google/wire"
+	"go.opencensus.io/plugin/ochttp"
+	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"go.uber.org/zap"
 
 	"go.zenithar.org/pkg/log"
@@ -35,15 +37,15 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	// API endpoint
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("users", v1.UserRoutes(users))
+		r.Mount("/users", ochttp.WithRouteTag(v1.UserRoutes(users), "/api/v1/users"))
 	})
-
-	// Health checking status endpoint
-	r.Handle("/healthz", http.HandlerFunc(healthz()))
 
 	// Assign router to server
 	server := &http.Server{
-		Handler: r,
+		Handler: &ochttp.Handler{
+			Handler:     r,
+			Propagation: &b3.HTTPFormat{},
+		},
 	}
 
 	// Enable TLS if requested
@@ -69,7 +71,7 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 		// Create the TLS credentials
 		server.TLSConfig = tlsConfig
 	} else {
-		log.For(ctx).Info("No transport authentication enabled")
+		log.For(ctx).Info("No transport encryption enabled for HTTP server")
 	}
 
 	// Return result

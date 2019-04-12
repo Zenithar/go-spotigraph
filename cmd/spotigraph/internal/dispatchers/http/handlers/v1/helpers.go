@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"go.uber.org/zap"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/web/respond"
 )
 
@@ -25,12 +27,14 @@ type Error interface {
 }
 
 func publicError(w http.ResponseWriter, r *http.Request, res Error, err error) bool {
+	log.For(r.Context()).Error("Unable to handle the request", zap.Error(err))
+
 	if res != nil && res.GetError() != nil {
 		respond.WithError(w, r, int(res.GetError().Code), res.GetError().Message)
 		return true
 	}
 	if err != nil {
-		respond.WithError(w, r, http.StatusInternalServerError, err)
+		respond.WithError(w, r, http.StatusInternalServerError, "Oups, something goes wrong during request handling !")
 		return true
 	}
 

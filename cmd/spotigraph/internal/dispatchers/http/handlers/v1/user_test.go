@@ -145,7 +145,7 @@ func TestCreateUserHandler(t *testing.T) {
 				users.EXPECT().Create(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Oups, something goes wrong during request handling !"}`),
 		},
 	}
 
@@ -183,7 +183,7 @@ func TestReadUserHandler(t *testing.T) {
 				users.EXPECT().Get(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Oups, something goes wrong during request handling !"}`),
 		},
 		{
 			name:          "entity not found",
@@ -255,7 +255,7 @@ func TestUpdateUserHandler(t *testing.T) {
 				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Oups, something goes wrong during request handling !"}`),
 		},
 		{
 			name:          "entity not found",
@@ -308,7 +308,7 @@ func TestDeleteUserHandler(t *testing.T) {
 				users.EXPECT().Delete(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.EmptyRes{}, db.ErrTooManyResults)
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Oups, something goes wrong during request handling !"}`),
 		},
 		{
 			name:          "entity not found",
@@ -485,7 +485,7 @@ func TestSearchUserHandler(t *testing.T) {
 				users.EXPECT().Search(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.PaginatedUserRes{}, db.ErrTooManyResults)
 			},
 			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Unable to process this request"}`),
+			expectedBody:   []byte(`{"@type":"Error","code":500,"message":"Oups, something goes wrong during request handling !"}`),
 		},
 	}
 
