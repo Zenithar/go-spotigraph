@@ -6,18 +6,22 @@ import (
 	"github.com/dchest/uniuri"
 	"github.com/google/gops/agent"
 	"github.com/spf13/cobra"
+	"go.opencensus.io/stats/view"
+	"go.opencensus.io/trace"
 	"go.uber.org/zap"
-	"go.zenithar.org/pkg/log"
 
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc"
+	"go.zenithar.org/pkg/log"
+	"go.zenithar.org/pkg/platform/jaeger"
+	"go.zenithar.org/pkg/platform/prometheus"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http"
 	"go.zenithar.org/spotigraph/internal/version"
 )
 
 // -----------------------------------------------------------------------------
 
-var grpcCmd = &cobra.Command{
-	Use:   "grpc",
-	Short: "Starts the spotigraph gRPC server",
+var httpCmd = &cobra.Command{
+	Use:   "http",
+	Short: "Starts the spotigraph HTTP server",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -31,7 +35,7 @@ var grpcCmd = &cobra.Command{
 		// Prepare logger
 		log.Setup(ctx, &log.Options{
 			Debug:     conf.Debug.Enable,
-			AppName:   "spotigraph-grpc",
+			AppName:   "spotigraph-http",
 			AppID:     appID,
 			Version:   version.Version,
 			Revision:  version.Revision,
@@ -53,10 +57,35 @@ var grpcCmd = &cobra.Command{
 			}
 		}
 
+		// Start prometheus
+		if conf.Instrumentation.Prometheus.Enabled {
+			log.For(ctx).Info("prometheus exporter enabled")
+
+			exporter, err := prometheus.NewExporter(conf.Instrumentation.Prometheus.Config)
+			log.For(ctx).Fatal("Unable to register prometheus exporter", zap.Error(err))
+
+			view.RegisterExporter(exporter)
+		}
+
+		// Start tracing
+		if conf.Instrumentation.Jaeger.Enabled {
+			log.For(ctx).Info("jaeger exporter enabled")
+
+			exporter, err := jaeger.NewExporter(conf.Instrumentation.Jaeger.Config)
+			log.For(ctx).Fatal("Unable to register jaeger exporter", zap.Error(err))
+
+			trace.RegisterExporter(exporter)
+
+			// Trace everything when debugging is enabled
+			if conf.Debug.Enable {
+				trace.ApplyConfig(trace.Config{DefaultSampler: trace.AlwaysSample()})
+			}
+		}
+
 		// Starting banner
-		log.For(ctx).Info("Starting spotigraph gRPC server ...")
+		log.For(ctx).Info("Starting spotigraph HTTP server ...")
 
 		// Start server
-		grpc.WaitForShutdown(ctx, conf)
+		http.WaitForShutdown(ctx, conf)
 	},
 }

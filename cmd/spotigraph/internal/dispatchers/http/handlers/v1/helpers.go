@@ -6,7 +6,7 @@ import (
 
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 
-	"go.zenithar.org/spotigraph/pkg/respond"
+	"go.zenithar.org/pkg/web/respond"
 )
 
 func toUint32(value string, fallback uint32) uint32 {

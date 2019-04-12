@@ -42,19 +42,19 @@ import (
 
 func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	configuration := core.MongoDBConfig(cfg)
-	client, err := mongodb.Connection(ctx, configuration)
+	wrappedClient, err := mongodb.Connection(ctx, configuration)
 	if err != nil {
 		return nil, err
 	}
-	repositoriesUser := mongodb2.NewUserRepository(configuration, client)
+	repositoriesUser := mongodb2.NewUserRepository(configuration, wrappedClient)
 	servicesUser := user.New(repositoriesUser)
-	repositoriesChapter := mongodb2.NewChapterRepository(configuration, client)
+	repositoriesChapter := mongodb2.NewChapterRepository(configuration, wrappedClient)
 	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := mongodb2.NewGuildRepository(configuration, client)
+	repositoriesGuild := mongodb2.NewGuildRepository(configuration, wrappedClient)
 	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesSquad := mongodb2.NewSquadRepository(configuration, client)
+	repositoriesSquad := mongodb2.NewSquadRepository(configuration, wrappedClient)
 	servicesSquad := squad.New(repositoriesSquad)
-	repositoriesTribe := mongodb2.NewTribeRepository(configuration, client)
+	repositoriesTribe := mongodb2.NewTribeRepository(configuration, wrappedClient)
 	servicesTribe := tribe.New(repositoriesTribe)
 	servicesGraph := graph.New(repositoriesUser, repositoriesSquad, repositoriesChapter, repositoriesGuild, repositoriesTribe)
 	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe, servicesGraph)

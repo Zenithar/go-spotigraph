@@ -3,12 +3,11 @@ package mongodb
 import (
 	"context"
 
+	mongowrapper "github.com/opencensus-integrations/gomongowrapper"
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/mongodb"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
-
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type mgoTribeRepository struct {
@@ -16,7 +15,7 @@ type mgoTribeRepository struct {
 }
 
 // NewTribeRepository returns an initialized MongoDB repository for tribes
-func NewTribeRepository(cfg *db.Configuration, session *mongo.Client) repositories.Tribe {
+func NewTribeRepository(cfg *db.Configuration, session *mongowrapper.WrappedClient) repositories.Tribe {
 	return &mgoTribeRepository{
 		adapter: db.NewCRUDTable(session, cfg.DatabaseName, TribeTableName),
 	}

@@ -6,12 +6,12 @@ import (
 	"strings"
 
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
-	"go.zenithar.org/spotigraph/pkg/flag"
 
 	defaults "github.com/mcuadros/go-defaults"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+	"go.zenithar.org/pkg/flags"
 	"go.zenithar.org/pkg/flags/feature"
 	"go.zenithar.org/pkg/log"
 )
@@ -29,6 +29,7 @@ func init() {
 	mainCmd.AddCommand(configCmd)
 
 	feature.DefaultMutableGate.AddFlag(grpcCmd.Flags())
+	mainCmd.AddCommand(httpCmd)
 	mainCmd.AddCommand(grpcCmd)
 	mainCmd.AddCommand(clientCmd)
 }
@@ -50,7 +51,7 @@ var (
 // -----------------------------------------------------------------------------
 
 func initConfig() {
-	for k := range flag.AsEnvVariables(conf, "", false) {
+	for k := range flags.AsEnvVariables(conf, "", false) {
 		log.CheckErr("Unable to bind environment variable", viper.BindEnv(strings.ToLower(strings.Replace(k, "_", ".", -1)), "SPFG_"+k), zap.String("var", "SPFG_"+k))
 	}
 

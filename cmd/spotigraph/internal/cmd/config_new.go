@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"sort"
 
-	"go.zenithar.org/spotigraph/pkg/flag"
-
 	defaults "github.com/mcuadros/go-defaults"
 	toml "github.com/pelletier/go-toml"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"go.zenithar.org/pkg/flags"
 )
 
 // -----------------------------------------------------------------------------
@@ -31,7 +30,7 @@ var configNewCmd = &cobra.Command{
 			}
 			fmt.Println(string(btes))
 		} else {
-			m := flag.AsEnvVariables(conf, "SPFG", true)
+			m := flags.AsEnvVariables(conf, "SPFG", true)
 			keys := []string{}
 
 			for k := range m {

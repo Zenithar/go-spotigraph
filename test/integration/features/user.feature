@@ -26,7 +26,7 @@ Feature: User Management
 
     @delete
     Scenario: Removing an user identity
-        Given an external identity
+        Given an external user identity
         When removing the user
         Then entity should be removed
         And no error should be raised

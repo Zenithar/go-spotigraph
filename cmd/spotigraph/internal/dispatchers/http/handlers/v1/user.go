@@ -8,10 +8,10 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/gogo/protobuf/types"
 
+	"go.zenithar.org/pkg/web/request"
+	"go.zenithar.org/pkg/web/respond"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
-	"go.zenithar.org/spotigraph/pkg/request"
-	"go.zenithar.org/spotigraph/pkg/respond"
 )
 
 type userCtrl struct {
