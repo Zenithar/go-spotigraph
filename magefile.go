@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -20,13 +21,27 @@ var (
 	goSrcFiles = getGoSrcFiles()
 )
 
+var curDir = func() string {
+	name, _ := os.Getwd()
+	return name
+}()
+
+// Calculate file paths
+var toolsBinDir = normalizePath(path.Join(curDir, "bin"))
+
 func init() {
 	time.Local = time.UTC
+
+	// Add local bin in PATH
+	err := os.Setenv("PATH", fmt.Sprintf("%s:%s", toolsBinDir, os.Getenv("PATH")))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func Build() {
 	fmt.Println("# Core packages")
-	mg.SerialDeps(Go.Generate, Proto.Service, Proto.GRPC, Go.Format, Go.Import, Go.Lint, Go.Test)
+	mg.SerialDeps(Prototool.Generate, Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
 	fmt.Println("# Artifacts")
@@ -115,36 +130,17 @@ func (Go) Lint() error {
 
 // -----------------------------------------------------------------------------
 
-type Proto mg.Namespace
+type Prototool mg.Namespace
 
-// Service generate service protobuf objects
-func (Proto) Service() error {
-	fmt.Println("## Generating service DTO")
-	return sh.Run(
-		"protoc",
-		"-I", ".",
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s/protobuf", packageVersion("github.com/gogo/protobuf")),
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s", packageVersion("github.com/gogo/protobuf")),
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/lyft/protoc-gen-validate@%s", packageVersion("github.com/lyft/protoc-gen-validate")),
-		"--gogo_out", "Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:.",
-		"--validate_out", "lang=gogo:.",
-		"pkg/protocol/v1/spotigraph/spotigraph.proto",
-	)
+func (Prototool) Lint() error {
+	fmt.Println("## Protobuf lint")
+	return sh.RunV("prototool", "generate")
 }
 
-// GRPC generate grpc stubs
-func (Proto) GRPC() error {
-	fmt.Println("## Generating gRPC stubs")
-	return sh.Run(
-		"protoc",
-		"-I", ".",
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s/protobuf", packageVersion("github.com/gogo/protobuf")),
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/gogo/protobuf@%s", packageVersion("github.com/gogo/protobuf")),
-		"-I", fmt.Sprintf("${GOPATH}/pkg/mod/github.com/lyft/protoc-gen-validate@%s", packageVersion("github.com/lyft/protoc-gen-validate")),
-		"--gogo_out", "plugins=grpc,Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
-		"--cobra_out", "Mpkg/protocol/v1/spotigraph/spotigraph.proto=go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph:.",
-		"pkg/grpc/v1/spotigraph/pb/spotigraph.proto",
-	)
+func (Prototool) Generate() error {
+	mg.Deps(Prototool.Lint)
+	fmt.Println("## Protobuf code generation")
+	return sh.RunV("prototool", "generate")
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +158,7 @@ func goBuild(packageName, out string) error {
 		"go.zenithar.org/spotigraph/internal/version.Version":   tag(),
 		"go.zenithar.org/spotigraph/internal/version.Revision":  hash(),
 		"go.zenithar.org/spotigraph/internal/version.Branch":    branch(),
-		"go.zenithar.org/spotigraph/internal/version.BuildUser": "jenkins",
+		"go.zenithar.org/spotigraph/internal/version.BuildUser": os.Getenv("USER"),
 		"go.zenithar.org/spotigraph/internal/version.BuildDate": time.Now().Format(time.RFC3339),
 		"go.zenithar.org/spotigraph/internal/version.GoVersion": runtime.Version(),
 	}
@@ -228,8 +224,15 @@ func branch() string {
 	return hash
 }
 
-// packageName returns the package version
-func packageVersion(packageName string) string {
-	v, _ := sh.Output("go", "list", "-f", "{{.Version}}", "-m", packageName)
-	return v
+func mustStr(r string, err error) string {
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
+// normalizePath turns a path into an absolute path and removes symlinks
+func normalizePath(name string) string {
+	absPath := mustStr(filepath.Abs(name))
+	return absPath
 }

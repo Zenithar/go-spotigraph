@@ -1,0 +1,43 @@
+excludes:
+    - ./vendor
+
+protoc:
+  version: 3.7.1
+
+  # Additional paths to include with -I to protoc.
+  # By default, the directory of the config file is included,
+  # or the current directory if there is no config file.
+  includes:
+    - .
+    - ./vendor
+
+  # If not set, compile will fail if there are unused imports.
+  # Setting this will ignore unused imports.
+  allow_unused_imports: false
+
+lint:
+  group: google
+  file_header:
+    path: LICENSE
+
+generate:
+  go_options:
+    import_path: go.zenithar.org/spotigraph
+    extra_modifiers:
+      google/protobuf/any.proto: github.com/gogo/protobuf/types
+      google/protobuf/duration.proto: github.com/gogo/protobuf/types
+      google/protobuf/struct.proto: github.com/gogo/protobuf/types
+      google/protobuf/timestamp.proto: github.com/gogo/protobuf/types
+      google/protobuf/wrappers.proto: github.com/gogo/protobuf/types
+  plugins:
+    - name: gogo
+      type: gogo
+      flags: plugins=grpc
+      output: .
+    - name: validate
+      type: gogo
+      flags: lang=gogo
+      output: .
+    - name: cobra
+      type: gogo
+      output: .
