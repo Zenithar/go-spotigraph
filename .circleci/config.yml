@@ -28,7 +28,7 @@ jobs:
           command: go run mage.go build
 
       - store_test_results:
-          path: /tmp/test-results
+          path: unit-tests.xml
 
 workflows:
   version: 2
