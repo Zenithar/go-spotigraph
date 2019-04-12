@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -11,6 +10,7 @@ import (
 
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
+	"go.zenithar.org/spotigraph/pkg/request"
 	"go.zenithar.org/spotigraph/pkg/respond"
 )
 
@@ -47,7 +47,7 @@ func UserRoutes(users services.User) http.Handler {
 
 func (c *userCtrl) create() http.HandlerFunc {
 	// Request type
-	var request spotigraph.UserCreateReq
+	var req spotigraph.UserCreateReq
 
 	// Response type
 	type response struct {
@@ -60,20 +60,15 @@ func (c *userCtrl) create() http.HandlerFunc {
 		// Prepare context
 		ctx := r.Context()
 
-		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		// Decode request
+		if err := request.Parse(r, &req); err != nil {
 			respond.WithError(w, r, http.StatusBadRequest, err)
 			return
 		}
 
 		// Delegate to service
-		res, err := c.users.Create(ctx, &request)
-		if res != nil && res.Error != nil {
-			respond.WithError(w, r, int(res.Error.Code), res.Error.Message)
-			return
-		}
-		if err != nil {
-			respond.WithError(w, r, http.StatusInternalServerError, err)
+		res, err := c.users.Create(ctx, &req)
+		if publicError(w, r, res, err) {
 			return
 		}
 
@@ -105,12 +100,7 @@ func (c *userCtrl) read() http.HandlerFunc {
 		res, err := c.users.Get(ctx, &spotigraph.UserGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
-		if res != nil && res.Error != nil {
-			respond.WithError(w, r, int(res.Error.Code), res.Error.Message)
-			return
-		}
-		if err != nil {
-			respond.WithError(w, r, http.StatusInternalServerError, err)
+		if publicError(w, r, res, err) {
 			return
 		}
 
@@ -128,7 +118,7 @@ func (c *userCtrl) read() http.HandlerFunc {
 
 func (c *userCtrl) update() http.HandlerFunc {
 	// Request type
-	var request spotigraph.UserUpdateReq
+	var req spotigraph.UserUpdateReq
 
 	// Response type
 	type response struct {
@@ -142,19 +132,14 @@ func (c *userCtrl) update() http.HandlerFunc {
 		ctx := r.Context()
 
 		// Decode request as json
-		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		if err := request.Parse(r, &req); err != nil {
 			respond.WithError(w, r, http.StatusBadRequest, err)
 			return
 		}
 
 		// Delegate to service
-		res, err := c.users.Update(ctx, &request)
-		if res != nil && res.Error != nil {
-			respond.WithError(w, r, int(res.Error.Code), res.Error.Message)
-			return
-		}
-		if err != nil {
-			respond.WithError(w, r, http.StatusInternalServerError, err)
+		res, err := c.users.Update(ctx, &req)
+		if publicError(w, r, res, err) {
 			return
 		}
 
@@ -184,12 +169,7 @@ func (c *userCtrl) delete() http.HandlerFunc {
 		res, err := c.users.Delete(ctx, &spotigraph.UserGetReq{
 			Id: chi.URLParamFromCtx(ctx, "id"),
 		})
-		if res != nil && res.Error != nil {
-			respond.WithError(w, r, int(res.Error.Code), res.Error.Message)
-			return
-		}
-		if err != nil {
-			respond.WithError(w, r, http.StatusInternalServerError, err)
+		if publicError(w, r, res, err) {
 			return
 		}
 
@@ -237,12 +217,7 @@ func (c *userCtrl) search() http.HandlerFunc {
 
 		// Delegate to service
 		res, err := c.users.Search(ctx, req)
-		if res != nil && res.Error != nil {
-			respond.WithError(w, r, int(res.Error.Code), res.Error.Message)
-			return
-		}
-		if err != nil {
-			respond.WithError(w, r, http.StatusInternalServerError, err)
+		if publicError(w, r, res, err) {
 			return
 		}
 

@@ -24,6 +24,7 @@ require (
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
+	github.com/gorilla/schema v1.1.0
 	github.com/gosimple/slug v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0

@@ -74,17 +74,23 @@ func TestCreateUserHandler(t *testing.T) {
 	// Testcase list
 	testCases := []*TestCase{
 		{
-			name:           "blank body request",
-			requestMethod:  "POST",
-			requestURL:     "/",
+			name:          "blank body request",
+			requestMethod: "POST",
+			requestURL:    "/",
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
 			requestBody:    bytes.NewBuffer([]byte("")),
 			expectedStatus: http.StatusBadRequest,
 			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
 		},
 		{
-			name:           "invalid json request",
-			requestMethod:  "POST",
-			requestURL:     "/",
+			name:          "invalid json request",
+			requestMethod: "POST",
+			requestURL:    "/",
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
 			requestBody:    bytes.NewBuffer([]byte("a]))")),
 			expectedStatus: http.StatusBadRequest,
 			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
@@ -93,7 +99,10 @@ func TestCreateUserHandler(t *testing.T) {
 			name:          "valid payload",
 			requestMethod: "POST",
 			requestURL:    "/",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				res := &spotigraph.SingleUserRes{
 					Entity: &spotigraph.Domain_User{
@@ -109,7 +118,10 @@ func TestCreateUserHandler(t *testing.T) {
 			name:          "principal conflict",
 			requestMethod: "POST",
 			requestURL:    "/",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				res := &spotigraph.SingleUserRes{
 					Error: &spotigraph.Error{
@@ -125,7 +137,10 @@ func TestCreateUserHandler(t *testing.T) {
 			name:          "service error",
 			requestMethod: "POST",
 			requestURL:    "/",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Create(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
@@ -147,7 +162,7 @@ func TestReadUserHandler(t *testing.T) {
 			name:          "valid payload",
 			requestMethod: "GET",
 			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestBody:   nil,
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				res := &spotigraph.SingleUserRes{
 					Entity: &spotigraph.Domain_User{
@@ -202,7 +217,10 @@ func TestUpdateUserHandler(t *testing.T) {
 			name:          "valid payload",
 			requestMethod: "POST",
 			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				res := &spotigraph.SingleUserRes{
 					Entity: &spotigraph.Domain_User{
@@ -215,9 +233,12 @@ func TestUpdateUserHandler(t *testing.T) {
 			expectedBody:   []byte(`{"@context":"https://go.zenithar.org/spotigraph/v1","@type":"User","@id":"/api/v1/users/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al","id":"0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"}`),
 		},
 		{
-			name:           "invalid payload",
-			requestMethod:  "POST",
-			requestURL:     "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			name:          "invalid payload",
+			requestMethod: "POST",
+			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
 			requestBody:    bytes.NewBuffer([]byte("{aa")),
 			expectedStatus: http.StatusBadRequest,
 			expectedBody:   []byte(`{"@type":"Error","code":400,"message":"Unable to process this request"}`),
@@ -226,7 +247,10 @@ func TestUpdateUserHandler(t *testing.T) {
 			name:          "service error",
 			requestMethod: "POST",
 			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				users.EXPECT().Update(gomock.Any(), gomock.Any()).Times(1).Return(&spotigraph.SingleUserRes{}, db.ErrTooManyResults)
 			},
@@ -237,7 +261,10 @@ func TestUpdateUserHandler(t *testing.T) {
 			name:          "entity not found",
 			requestMethod: "POST",
 			requestURL:    "/0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
-			requestBody:   bytes.NewBuffer([]byte("{}")),
+			requestParams: func(r *http.Request) {
+				r.Header.Set("Content-Type", "application/json")
+			},
+			requestBody: bytes.NewBuffer([]byte("{}")),
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				res := &spotigraph.SingleUserRes{
 					Error: &spotigraph.Error{
