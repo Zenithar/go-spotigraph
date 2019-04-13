@@ -22,7 +22,7 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
-	github.com/golangci/golangci-lint v1.16.0
+	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
@@ -58,7 +58,7 @@ require (
 	go.zenithar.org/pkg v0.0.11
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a
-	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3 // indirect
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	golang.org/x/tools v0.0.0-20190411180116-681f9ce8ac52
 	google.golang.org/grpc v1.20.0
