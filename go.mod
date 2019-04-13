@@ -2,6 +2,8 @@ module go.zenithar.org/spotigraph
 
 go 1.12
 
+replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2
+
 require (
 	github.com/99designs/gqlgen v0.8.3
 	github.com/CircleCI-Public/circleci-cli v0.1.5546
@@ -20,7 +22,7 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
-	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
+	github.com/golangci/golangci-lint v1.16.0
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
@@ -30,7 +32,6 @@ require (
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
-	github.com/izumin5210/gex v0.4.5 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
@@ -40,7 +41,6 @@ require (
 	github.com/oklog/run v1.0.0
 	github.com/onsi/gomega v1.5.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
-	github.com/opentracing/opentracing-go v1.1.0 // indirect
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
@@ -58,6 +58,7 @@ require (
 	go.zenithar.org/pkg v0.0.11
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	golang.org/x/tools v0.0.0-20190411180116-681f9ce8ac52
 	google.golang.org/grpc v1.20.0
@@ -67,5 +68,3 @@ require (
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 	mvdan.cc/gofumpt v0.0.0-20190412003831-ee4f2e251cdf
 )
-
-replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2

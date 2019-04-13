@@ -8,7 +8,6 @@ protoc:
   # By default, the directory of the config file is included,
   # or the current directory if there is no config file.
   includes:
-    - .
     - ./vendor
 
   # If not set, compile will fail if there are unused imports.
@@ -23,12 +22,6 @@ lint:
 generate:
   go_options:
     import_path: go.zenithar.org/spotigraph
-    extra_modifiers:
-      google/protobuf/any.proto: github.com/gogo/protobuf/types
-      google/protobuf/duration.proto: github.com/gogo/protobuf/types
-      google/protobuf/struct.proto: github.com/gogo/protobuf/types
-      google/protobuf/timestamp.proto: github.com/gogo/protobuf/types
-      google/protobuf/wrappers.proto: github.com/gogo/protobuf/types
   plugins:
     - name: gogo
       type: gogo

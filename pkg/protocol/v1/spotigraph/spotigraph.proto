@@ -23,19 +23,19 @@
 syntax = "proto3";
 
 package spotigraph.v1;
+
+option (gogoproto.benchgen_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.testgen_all) = true;
+option (gogoproto.unmarshaler_all) = true;
 option go_package = "pkg/protocol/v1/spotigraph";
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/lyft/protoc-gen-validate/validate/validate.proto";
 import "google/protobuf/wrappers.proto";
-
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
-option (gogoproto.sizer_all) = true;
-option (gogoproto.populate_all) = true;
-option (gogoproto.equal_all) = true;
-option (gogoproto.testgen_all) = true;
-option (gogoproto.benchgen_all) = true;
 
 message Error {
   uint32 code = 1;
@@ -49,92 +49,72 @@ message EmptyRes {
 // -----------------------------------------------------------------------------
 
 message Domain {
-
   message User {
     string id = 1;
     string principal = 2;
     string urn = 3;
   }
-
   message Squad {
     string id = 1;
     string name = 2;
     string urn = 3;
   }
-
   message Chapter {
     string id = 1;
     string name = 2;
     string urn = 3;
   }
-
   message Guild {
     string id = 1;
     string name = 2;
     string urn = 3;
   }
-
   message Tribe {
     string id = 1;
     string name = 2;
     string urn = 3;
   }
-
 }
 
 message Graph {
-
   message Node {
-
     // Type of Node supported
     enum Type {
-        UNDEFINED = 0;
-        USER = 1;
-        CHAPTER = 2;
-        GUILD = 3;
-        SQUAD = 4;
-        TRIBE = 5;
+      UNDEFINED = 0;
+      USER = 1;
+      CHAPTER = 2;
+      GUILD = 3;
+      SQUAD = 4;
+      TRIBE = 5;
     }
-
     // URN exported from the entity
     string urn = 1;
-
     // Type of the node
     Type type = 2;
-
     // Hold entity according previous type
     oneof entity {
-        option (validate.required) = true;
-
-        Domain.User user = 3;
-        Domain.Chapter chapter = 4;
-        Domain.Guild guild = 5;
-        Domain.Squad squad = 6;
-        Domain.Tribe tribe = 7;
+      option (validate.required) = true;
+      Domain.User user = 3;
+      Domain.Chapter chapter = 4;
+      Domain.Guild guild = 5;
+      Domain.Squad squad = 6;
+      Domain.Tribe tribe = 7;
     }
-
     // Additional properties
     map<string, string> properties = 8;
-
   }
-
   message Edge {
     // Source URN
     string source = 1;
-
     // Destination URN
     string destination = 2;
-
     // Additional properties
     map<string, string> properties = 3;
   }
-
   // Nodes of the graph
   repeated Node nodes = 1;
-
   // Edges of the graph
   repeated Edge edges = 2;
-
   // Additional properties
   map<string, string> properties = 3;
 }
@@ -146,19 +126,22 @@ message UserCreateReq {
 }
 
 message UserGetReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message UserUpdateReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
   google.protobuf.StringValue principal = 2;
-
 }
 
 message SingleUserRes {
@@ -186,27 +169,32 @@ message UserSearchReq {
 // -----------------------------------------------------------------------------
 
 message SquadCreateReq {
-  string name = 1 [(validate.rules).string = {
-    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
-    min_bytes: 3,
-    max_bytes: 50,
-  }];
+  string name = 1 [
+    (validate.rules).string = {
+      pattern: "^[A-Za-z]+([ 0-9A-Za-z]+)*$"
+      min_bytes: 3
+      max_bytes: 50
+    }
+  ];
 }
 
 message SquadGetReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message SquadUpdateReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
   google.protobuf.StringValue name = 2;
-
 }
 
 message SingleSquadRes {
@@ -235,27 +223,32 @@ message SquadSearchReq {
 // -----------------------------------------------------------------------------
 
 message ChapterCreateReq {
-  string name = 1 [(validate.rules).string = {
-    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
-    min_bytes: 3,
-    max_bytes: 50,
-  }];
+  string name = 1 [
+    (validate.rules).string = {
+      pattern: "^[A-Za-z]+([ 0-9A-Za-z]+)*$"
+      min_bytes: 3
+      max_bytes: 50
+    }
+  ];
 }
 
 message ChapterGetReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message ChapterUpdateReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
   google.protobuf.StringValue name = 2;
-
 }
 
 message SingleChapterRes {
@@ -284,27 +277,32 @@ message ChapterSearchReq {
 // -----------------------------------------------------------------------------
 
 message GuildCreateReq {
-  string name = 1 [(validate.rules).string = {
-    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
-    min_bytes: 3,
-    max_bytes: 50,
-  }];
+  string name = 1 [
+    (validate.rules).string = {
+      pattern: "^[A-Za-z]+([ 0-9A-Za-z]+)*$"
+      min_bytes: 3
+      max_bytes: 50
+    }
+  ];
 }
 
 message GuildGetReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message GuildUpdateReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
   google.protobuf.StringValue name = 2;
-
 }
 
 message SingleGuildRes {
@@ -333,27 +331,32 @@ message GuildSearchReq {
 // -----------------------------------------------------------------------------
 
 message TribeCreateReq {
-  string name = 1 [(validate.rules).string = {
-    pattern:   "^[A-Za-z]+([ 0-9A-Za-z]+)*$",
-    min_bytes: 3,
-    max_bytes: 50,
-  }];
+  string name = 1 [
+    (validate.rules).string = {
+      pattern: "^[A-Za-z]+([ 0-9A-Za-z]+)*$"
+      min_bytes: 3
+      max_bytes: 50
+    }
+  ];
 }
 
 message TribeGetReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message TribeUpdateReq {
-  string id = 1 [(validate.rules).string = {
-    pattern: "^[0-9A-Za-z]+$",
-    len: 64,
-  }];
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
   google.protobuf.StringValue name = 2;
-
 }
 
 message SingleTribeRes {
