@@ -342,7 +342,11 @@ func Test_Chapter_Update(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
+			underTest := chapter.NewWithDecorators(chapters,
+				chapter.WithLogger(log.Default()),
+				chapter.WithTracer(),
+				chapter.WithMetric(),
+			)
 
 			// Do the query
 			got, err := underTest.Update(ctx, tt.req)

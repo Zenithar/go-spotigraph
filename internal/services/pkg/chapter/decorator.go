@@ -1,9 +1,12 @@
 package chapter
 
 import (
+    "time"
+
 	"go.uber.org/zap"
 
-	"go.zenithar.org/pkg/log"
+    "go.zenithar.org/pkg/log"
+    "go.zenithar.org/spotigraph/pkg/cache"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter/internal"
@@ -45,5 +48,21 @@ func WithTracer() Decorator {
 			s,
 			"core.spotigraph",
 		)
+	}
+}
+
+// WithMetric initialize the chapter service metric decorator
+func WithMetric() Decorator {
+	return func(s services.Chapter) services.Chapter {
+		// Initialize the decorator
+		return internal.NewChapterWithMetrics(s)
+	}
+}
+
+// WithCache initialize the chapter service cache decorator
+func WithCache(storage cache.Storage, ttl time.Duration) Decorator {
+	return func(s services.Chapter) services.Chapter {
+		// Initialize the decorator
+		return internal.NewChapterWithCache(s, storage, ttl)
 	}
 }

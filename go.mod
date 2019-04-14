@@ -23,7 +23,7 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
-	github.com/golang/snappy v0.0.1 // indirect
+	github.com/golang/snappy v0.0.1
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
@@ -34,6 +34,7 @@ require (
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
+	github.com/izumin5210/gex v0.4.5 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0

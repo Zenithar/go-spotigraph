@@ -61,12 +61,14 @@ Spotify Agile model mapping microservice
 ### Decorators
 
 - [x] Code generation
-- [ ] Cache support
-- [ ] Logger support
+- [x] Cache support
+- [x] Logger support
 - [x] Tracing support
-- [x] Prometheus support
+- [x] Metric support
 - [x] OpenCensus support
-- [ ] Instrumented service providers for wire
+- [x] Instrumented service providers for wire
+- [ ] Circuit breaker
+- [ ] Authorization
 
 ### Tests
 
