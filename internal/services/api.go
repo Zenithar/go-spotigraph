@@ -21,11 +21,11 @@ type User interface {
 
 // Squad defines squad service contract
 type Squad interface {
-	Create(ctx context.Context, req *spotigraph.SquadCreateReq) (*spotigraph.SingleSquadRes, error)
-	Get(ctx context.Context, req *spotigraph.SquadGetReq) (*spotigraph.SingleSquadRes, error)
-	Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (*spotigraph.SingleSquadRes, error)
-	Delete(ctx context.Context, req *spotigraph.SquadGetReq) (*spotigraph.EmptyRes, error)
-	Search(ctx context.Context, req *spotigraph.SquadSearchReq) (*spotigraph.PaginatedSquadRes, error)
+	Create(ctx context.Context, req *spotigraph.SquadCreateReq) (res *spotigraph.SingleSquadRes, err error)
+	Get(ctx context.Context, req *spotigraph.SquadGetReq) (res *spotigraph.SingleSquadRes, err error)
+	Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (res *spotigraph.SingleSquadRes, err error)
+	Delete(ctx context.Context, req *spotigraph.SquadGetReq) (res *spotigraph.EmptyRes, err error)
+	Search(ctx context.Context, req *spotigraph.SquadSearchReq) (res *spotigraph.PaginatedSquadRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/services Chapter
@@ -43,27 +43,27 @@ type Chapter interface {
 
 // Guild defines guild service contract
 type Guild interface {
-	Create(ctx context.Context, req *spotigraph.GuildCreateReq) (*spotigraph.SingleGuildRes, error)
-	Get(ctx context.Context, req *spotigraph.GuildGetReq) (*spotigraph.SingleGuildRes, error)
-	Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*spotigraph.SingleGuildRes, error)
-	Delete(ctx context.Context, req *spotigraph.GuildGetReq) (*spotigraph.EmptyRes, error)
-	Search(ctx context.Context, req *spotigraph.GuildSearchReq) (*spotigraph.PaginatedGuildRes, error)
+	Create(ctx context.Context, req *spotigraph.GuildCreateReq) (res *spotigraph.SingleGuildRes, err error)
+	Get(ctx context.Context, req *spotigraph.GuildGetReq) (res *spotigraph.SingleGuildRes, err error)
+	Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (res *spotigraph.SingleGuildRes, err error)
+	Delete(ctx context.Context, req *spotigraph.GuildGetReq) (res *spotigraph.EmptyRes, err error)
+	Search(ctx context.Context, req *spotigraph.GuildSearchReq) (res *spotigraph.PaginatedGuildRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/tribe.gen.go -package mock go.zenithar.org/spotigraph/internal/services Tribe
 
 // Tribe defines tribe service contract
 type Tribe interface {
-	Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*spotigraph.SingleTribeRes, error)
-	Get(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.SingleTribeRes, error)
-	Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*spotigraph.SingleTribeRes, error)
-	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spotigraph.EmptyRes, error)
-	Search(ctx context.Context, req *spotigraph.TribeSearchReq) (*spotigraph.PaginatedTribeRes, error)
+	Create(ctx context.Context, req *spotigraph.TribeCreateReq) (res *spotigraph.SingleTribeRes, err error)
+	Get(ctx context.Context, req *spotigraph.TribeGetReq) (res *spotigraph.SingleTribeRes, err error)
+	Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (res *spotigraph.SingleTribeRes, err error)
+	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (res *spotigraph.EmptyRes, err error)
+	Search(ctx context.Context, req *spotigraph.TribeSearchReq) (res *spotigraph.PaginatedTribeRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/graph.gen.go -package mock go.zenithar.org/spotigraph/internal/services Graph
 
 // Graph defines graph service contract
 type Graph interface {
-	Expand(cx context.Context, req *spotigraph.NodeInfoReq) (*spotigraph.GraphRes, error)
+	Expand(cx context.Context, req *spotigraph.NodeInfoReq) (res *spotigraph.GraphRes, err error)
 }

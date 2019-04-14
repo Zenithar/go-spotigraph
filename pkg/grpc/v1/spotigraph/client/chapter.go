@@ -2,7 +2,7 @@ package client
 
 // DO NOT EDIT!
 // This code is generated with http://github.com/hexdigest/gowrap tool
-// using ../../../../../tools/templates/services/grpc/service.txt template
+// using ../../../../../tools/templates/services/grpc/client.txt template
 
 //go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Chapter -t ../../../../../tools/templates/services/grpc/client.txt -o chapter.go
 
@@ -31,7 +31,7 @@ func NewChapterClient(factory ConnectionFactory) services.Chapter {
 
 // -----------------------------------------------------------------------------
 
-func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (res *spotigraph.SingleChapterRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Create")
 	defer span.End()
 
@@ -47,9 +47,9 @@ func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterC
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	res, err := cli.Create(ctx, req)
+	res, err = cli.Create(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Create"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Create"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -57,7 +57,7 @@ func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterC
 	return res, err
 }
 
-func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (ep1 *spotigraph.EmptyRes, err error) {
+func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.EmptyRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Delete")
 	defer span.End()
 
@@ -73,9 +73,9 @@ func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterG
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	res, err := cli.Delete(ctx, req)
+	res, err = cli.Delete(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Delete"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Delete"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -83,7 +83,7 @@ func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterG
 	return res, err
 }
 
-func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.SingleChapterRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Get")
 	defer span.End()
 
@@ -99,9 +99,9 @@ func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetR
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	res, err := cli.Get(ctx, req)
+	res, err = cli.Get(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Get"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Get"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -109,7 +109,7 @@ func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetR
 	return res, err
 }
 
-func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (pp1 *spotigraph.PaginatedChapterRes, err error) {
+func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (res *spotigraph.PaginatedChapterRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Search")
 	defer span.End()
 
@@ -125,9 +125,9 @@ func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterS
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	res, err := cli.Search(ctx, req)
+	res, err = cli.Search(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Search"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Search"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -135,7 +135,7 @@ func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterS
 	return res, err
 }
 
-func (c *grpcChapterClient) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+func (c *grpcChapterClient) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (res *spotigraph.SingleChapterRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Update")
 	defer span.End()
 
@@ -151,9 +151,9 @@ func (c *grpcChapterClient) Update(ctx context.Context, req *spotigraph.ChapterU
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	res, err := cli.Update(ctx, req)
+	res, err = cli.Update(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Update"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Update"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 

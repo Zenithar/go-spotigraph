@@ -43,7 +43,7 @@ func (c *grpc{{$decorator}}) {{$method.Declaration}} {
 	cli := pb.New{{ $itf.Name }}Client(conn)
 
 	// Call remote service
-	res, err := cli.{{ $method.Name }}(ctx, req)
+	res, err = cli.{{ $method.Name }}(ctx, req)
 	if err != nil {
 		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.{{ $itf.Name }}Client.{{ $method.Name }}"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})

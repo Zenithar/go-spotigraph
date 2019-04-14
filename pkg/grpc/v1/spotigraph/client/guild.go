@@ -2,7 +2,7 @@ package client
 
 // DO NOT EDIT!
 // This code is generated with http://github.com/hexdigest/gowrap tool
-// using ../../../../../tools/templates/services/grpc/service.txt template
+// using ../../../../../tools/templates/services/grpc/client.txt template
 
 //go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Guild -t ../../../../../tools/templates/services/grpc/client.txt -o guild.go
 
@@ -31,7 +31,7 @@ func NewGuildClient(factory ConnectionFactory) services.Guild {
 
 // -----------------------------------------------------------------------------
 
-func (c *grpcGuildClient) Create(ctx context.Context, req *spotigraph.GuildCreateReq) (sp1 *spotigraph.SingleGuildRes, err error) {
+func (c *grpcGuildClient) Create(ctx context.Context, req *spotigraph.GuildCreateReq) (res *spotigraph.SingleGuildRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.GuildClient.Create")
 	defer span.End()
 
@@ -47,9 +47,9 @@ func (c *grpcGuildClient) Create(ctx context.Context, req *spotigraph.GuildCreat
 	cli := pb.NewGuildClient(conn)
 
 	// Call remote service
-	res, err := cli.Create(ctx, req)
+	res, err = cli.Create(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Create"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Create"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -57,7 +57,7 @@ func (c *grpcGuildClient) Create(ctx context.Context, req *spotigraph.GuildCreat
 	return res, err
 }
 
-func (c *grpcGuildClient) Delete(ctx context.Context, req *spotigraph.GuildGetReq) (ep1 *spotigraph.EmptyRes, err error) {
+func (c *grpcGuildClient) Delete(ctx context.Context, req *spotigraph.GuildGetReq) (res *spotigraph.EmptyRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.GuildClient.Delete")
 	defer span.End()
 
@@ -73,9 +73,9 @@ func (c *grpcGuildClient) Delete(ctx context.Context, req *spotigraph.GuildGetRe
 	cli := pb.NewGuildClient(conn)
 
 	// Call remote service
-	res, err := cli.Delete(ctx, req)
+	res, err = cli.Delete(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Delete"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Delete"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -83,7 +83,7 @@ func (c *grpcGuildClient) Delete(ctx context.Context, req *spotigraph.GuildGetRe
 	return res, err
 }
 
-func (c *grpcGuildClient) Get(ctx context.Context, req *spotigraph.GuildGetReq) (sp1 *spotigraph.SingleGuildRes, err error) {
+func (c *grpcGuildClient) Get(ctx context.Context, req *spotigraph.GuildGetReq) (res *spotigraph.SingleGuildRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.GuildClient.Get")
 	defer span.End()
 
@@ -99,9 +99,9 @@ func (c *grpcGuildClient) Get(ctx context.Context, req *spotigraph.GuildGetReq) 
 	cli := pb.NewGuildClient(conn)
 
 	// Call remote service
-	res, err := cli.Get(ctx, req)
+	res, err = cli.Get(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Get"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Get"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -109,7 +109,7 @@ func (c *grpcGuildClient) Get(ctx context.Context, req *spotigraph.GuildGetReq) 
 	return res, err
 }
 
-func (c *grpcGuildClient) Search(ctx context.Context, req *spotigraph.GuildSearchReq) (pp1 *spotigraph.PaginatedGuildRes, err error) {
+func (c *grpcGuildClient) Search(ctx context.Context, req *spotigraph.GuildSearchReq) (res *spotigraph.PaginatedGuildRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.GuildClient.Search")
 	defer span.End()
 
@@ -125,9 +125,9 @@ func (c *grpcGuildClient) Search(ctx context.Context, req *spotigraph.GuildSearc
 	cli := pb.NewGuildClient(conn)
 
 	// Call remote service
-	res, err := cli.Search(ctx, req)
+	res, err = cli.Search(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Search"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Search"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
@@ -135,7 +135,7 @@ func (c *grpcGuildClient) Search(ctx context.Context, req *spotigraph.GuildSearc
 	return res, err
 }
 
-func (c *grpcGuildClient) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (sp1 *spotigraph.SingleGuildRes, err error) {
+func (c *grpcGuildClient) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (res *spotigraph.SingleGuildRes, err error) {
 	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.GuildClient.Update")
 	defer span.End()
 
@@ -151,9 +151,9 @@ func (c *grpcGuildClient) Update(ctx context.Context, req *spotigraph.GuildUpdat
 	cli := pb.NewGuildClient(conn)
 
 	// Call remote service
-	res, err := cli.Update(ctx, req)
+	res, err = cli.Update(ctx, req)
 	if err != nil {
-		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Update"))
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.GuildClient.Update"))
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 	}
 
