@@ -1,0 +1,60 @@
+# Tribe describe group of squad working together
+type Tribe {
+  # Internal identifier
+  id:   ID!
+  # Node identifier
+  urn: String!
+  # Tribe name
+  name: String!
+
+  # Squad collection member of this tribe
+  squads(paging: PagingRequest): SquadPagingConnection
+}
+
+# --------------------------------------------------------
+
+# Query extension
+extend type Query {
+  # List all tribes
+  searchForTribes(paging: PagingRequest): TribePagingConnection
+  # Retrieve a tribe by id
+  getTribe(id: ID!): Tribe
+  # Retrieve multiple tribes by id
+  getTribes(ids: [ID!]): [Tribe]
+}
+
+# --------------------------------------------------------
+
+# PagingConnection for tribe pagination
+type TribePagingConnection {
+  items: [Tribe]
+  nextToken: String
+}
+
+# Input object for tribe creation
+input TribeCreateInput {
+  # Tribe name
+  name: String!
+}
+
+# Input object for tribe update
+input TribeUpdateInput {
+  # User identifier
+  id: ID!
+  # Name
+  name: String
+}
+
+# Mutation extension
+extend type Mutation {
+  # Create a new tribe
+  createTribe(input: TribeCreateInput): Tribe
+  # Update the tribe informations
+  updateTribe(input: TribeUpdateInput): Tribe
+  # Delete a tribe
+  deleteTribe(id: ID): Tribe
+  # Assign squads to tribe
+  addTribeSquads(id: ID!, squads: [ID]): Tribe
+  # Remove squads from tribe
+  removeTribeSquads(id: ID!, squads: [ID]): Tribe
+}

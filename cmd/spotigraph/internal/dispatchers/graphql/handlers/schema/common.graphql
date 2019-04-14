@@ -1,0 +1,15 @@
+# Business error return by backend
+type Error {
+  # Error code as HTTP status
+  code: Int!
+  # Error message attached to event
+  message: String!
+}
+
+# PagingRequest for paginable collection
+input PagingRequest {
+  # Item limit
+  limit: Int
+  # Next page token
+  nextToken: String
+}
