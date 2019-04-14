@@ -15,6 +15,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	"go.opencensus.io/plugin/ocgrpc"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
@@ -43,7 +44,9 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 				grpc_recovery.UnaryServerInterceptor(),
 				grpc_zap.UnaryServerInterceptor(zap.L()),
 			),
-		))
+		),
+		grpc.StatsHandler(&ocgrpc.ServerHandler{}),
+	)
 
 	// Enable TLS if requested
 	if cfg.Server.GRPC.UseTLS {

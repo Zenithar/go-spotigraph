@@ -4,12 +4,15 @@ package client
 // This code is generated with http://github.com/hexdigest/gowrap tool
 // using ../../../../../tools/templates/services/grpc/service.txt template
 
-//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i User -t ../../../../../tools/templates/services/grpc/service.txt -o user.go
+//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i User -t ../../../../../tools/templates/services/grpc/client.txt -o user.go
 
 import (
 	"context"
 
 	"github.com/pkg/errors"
+	"go.opencensus.io/trace"
+	"go.uber.org/zap"
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
@@ -29,9 +32,13 @@ func NewUserClient(factory ConnectionFactory) services.User {
 // -----------------------------------------------------------------------------
 
 func (c *grpcUserClient) Create(ctx context.Context, req *spotigraph.UserCreateReq) (sp1 *spotigraph.SingleUserRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.UserClient.Create")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -40,13 +47,24 @@ func (c *grpcUserClient) Create(ctx context.Context, req *spotigraph.UserCreateR
 	cli := pb.NewUserClient(conn)
 
 	// Call remote service
-	return cli.Create(ctx, req)
+	res, err := cli.Create(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.UserClient.Create"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcUserClient) Delete(ctx context.Context, req *spotigraph.UserGetReq) (ep1 *spotigraph.EmptyRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.UserClient.Delete")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -55,13 +73,24 @@ func (c *grpcUserClient) Delete(ctx context.Context, req *spotigraph.UserGetReq)
 	cli := pb.NewUserClient(conn)
 
 	// Call remote service
-	return cli.Delete(ctx, req)
+	res, err := cli.Delete(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.UserClient.Delete"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcUserClient) Get(ctx context.Context, req *spotigraph.UserGetReq) (sp1 *spotigraph.SingleUserRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.UserClient.Get")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -70,13 +99,24 @@ func (c *grpcUserClient) Get(ctx context.Context, req *spotigraph.UserGetReq) (s
 	cli := pb.NewUserClient(conn)
 
 	// Call remote service
-	return cli.Get(ctx, req)
+	res, err := cli.Get(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.UserClient.Get"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcUserClient) Search(ctx context.Context, req *spotigraph.UserSearchReq) (pp1 *spotigraph.PaginatedUserRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.UserClient.Search")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -85,13 +125,24 @@ func (c *grpcUserClient) Search(ctx context.Context, req *spotigraph.UserSearchR
 	cli := pb.NewUserClient(conn)
 
 	// Call remote service
-	return cli.Search(ctx, req)
+	res, err := cli.Search(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.UserClient.Search"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcUserClient) Update(ctx context.Context, req *spotigraph.UserUpdateReq) (sp1 *spotigraph.SingleUserRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.UserClient.Update")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -100,5 +151,12 @@ func (c *grpcUserClient) Update(ctx context.Context, req *spotigraph.UserUpdateR
 	cli := pb.NewUserClient(conn)
 
 	// Call remote service
-	return cli.Update(ctx, req)
+	res, err := cli.Update(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.UserClient.Update"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }

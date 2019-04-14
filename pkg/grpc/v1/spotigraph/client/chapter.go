@@ -4,12 +4,15 @@ package client
 // This code is generated with http://github.com/hexdigest/gowrap tool
 // using ../../../../../tools/templates/services/grpc/service.txt template
 
-//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Chapter -t ../../../../../tools/templates/services/grpc/service.txt -o chapter.go
+//go:generate gowrap gen -p go.zenithar.org/spotigraph/internal/services -i Chapter -t ../../../../../tools/templates/services/grpc/client.txt -o chapter.go
 
 import (
 	"context"
 
 	"github.com/pkg/errors"
+	"go.opencensus.io/trace"
+	"go.uber.org/zap"
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
@@ -29,9 +32,13 @@ func NewChapterClient(factory ConnectionFactory) services.Chapter {
 // -----------------------------------------------------------------------------
 
 func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Create")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -40,13 +47,24 @@ func (c *grpcChapterClient) Create(ctx context.Context, req *spotigraph.ChapterC
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	return cli.Create(ctx, req)
+	res, err := cli.Create(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Create"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (ep1 *spotigraph.EmptyRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Delete")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -55,13 +73,24 @@ func (c *grpcChapterClient) Delete(ctx context.Context, req *spotigraph.ChapterG
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	return cli.Delete(ctx, req)
+	res, err := cli.Delete(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Delete"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Get")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -70,13 +99,24 @@ func (c *grpcChapterClient) Get(ctx context.Context, req *spotigraph.ChapterGetR
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	return cli.Get(ctx, req)
+	res, err := cli.Get(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Get"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (pp1 *spotigraph.PaginatedChapterRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Search")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -85,13 +125,24 @@ func (c *grpcChapterClient) Search(ctx context.Context, req *spotigraph.ChapterS
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	return cli.Search(ctx, req)
+	res, err := cli.Search(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Search"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 
 func (c *grpcChapterClient) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (sp1 *spotigraph.SingleChapterRes, err error) {
+	ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.ChapterClient.Update")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -100,5 +151,12 @@ func (c *grpcChapterClient) Update(ctx context.Context, req *spotigraph.ChapterU
 	cli := pb.NewChapterClient(conn)
 
 	// Call remote service
-	return cli.Update(ctx, req)
+	res, err := cli.Update(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("Remote call go error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.ChapterClient.Update"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }

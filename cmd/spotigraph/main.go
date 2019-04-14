@@ -6,6 +6,7 @@ import (
 
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/cmd"
+	_ "go.zenithar.org/spotigraph/cmd/spotigraph/internal/features"
 )
 
 // -----------------------------------------------------------------------------

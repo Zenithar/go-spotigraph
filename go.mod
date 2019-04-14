@@ -7,9 +7,7 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 require (
 	github.com/99designs/gqlgen v0.8.3
 	github.com/CircleCI-Public/circleci-cli v0.1.5546
-	github.com/DataDog/zstd v1.3.8 // indirect
 	github.com/Masterminds/squirrel v1.1.0
-	github.com/Shopify/sarama v1.22.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
 	github.com/beorn7/perks v0.0.0-20190413114025-234731a4f016 // indirect
 	github.com/chzyer/logex v1.1.10 // indirect
@@ -17,27 +15,21 @@ require (
 	github.com/cloudflare/tableflip v0.0.0-20190329062924-8392f1641731
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
-	github.com/envoyproxy/go-control-plane v0.7.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.0.14
 	github.com/frapposelli/wwhrd v0.2.1
 	github.com/go-chi/chi v4.0.2+incompatible
-	github.com/go-logfmt/logfmt v0.4.0 // indirect
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/gobuffalo/packr v1.24.1
-	github.com/gogo/googleapis v1.2.0 // indirect
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
+	github.com/golang/snappy v0.0.1 // indirect
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
-	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
-	github.com/google/pprof v0.0.0-20190404155422-f8f10df84213 // indirect
 	github.com/google/wire v0.2.1
-	github.com/gorilla/mux v1.7.1 // indirect
 	github.com/gosimple/slug v1.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
-	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
@@ -45,7 +37,6 @@ require (
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
-	github.com/kisielk/errcheck v1.2.0 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
 	github.com/mcuadros/go-defaults v1.1.0
@@ -66,28 +57,22 @@ require (
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/uber/prototool v1.6.0
-	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.20.2
 	go.uber.org/zap v1.9.1
 	go.zenithar.org/pkg v0.0.11
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a
-	golang.org/x/exp v0.0.0-20190413192849-7f338f571082 // indirect
-	golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f // indirect
-	golang.org/x/lint v0.0.0-20190409202823-959b441ac422 // indirect
-	golang.org/x/mobile v0.0.0-20190412202009-28c689b77b5f // indirect
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3 // indirect
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	golang.org/x/sync v0.0.0-20190412183630-56d357773e84 // indirect
 	golang.org/x/sys v0.0.0-20190412213103-97732733099d // indirect
-	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	golang.org/x/tools v0.0.0-20190411180116-681f9ce8ac52
 	google.golang.org/appengine v1.5.0 // indirect
 	google.golang.org/grpc v1.20.0
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 	gotest.tools/gotestsum v0.3.4
-	honnef.co/go/tools v0.0.0-20190412205916-e87e8279b4cd // indirect
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 	mvdan.cc/gofumpt v0.0.0-20190412003831-ee4f2e251cdf
 )

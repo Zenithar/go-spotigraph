@@ -11,6 +11,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	"go.opencensus.io/plugin/ocgrpc"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/db/adapter/mongodb"
 	"go.zenithar.org/pkg/db/adapter/postgresql"
@@ -114,10 +115,13 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 // wire.go:
 
 func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph2 services.Graph) (*grpc.Server, error) {
+
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
-	sopts = append(sopts, grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(grpc_zap.StreamServerInterceptor(zap.L()), grpc_recovery.StreamServerInterceptor())), grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(grpc_recovery.UnaryServerInterceptor(), grpc_zap.UnaryServerInterceptor(zap.L()))))
+	sopts = append(sopts, grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(grpc_zap.StreamServerInterceptor(zap.L()), grpc_recovery.StreamServerInterceptor())), grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(grpc_recovery.UnaryServerInterceptor(), grpc_zap.UnaryServerInterceptor(zap.L())),
+	), grpc.StatsHandler(&ocgrpc.ServerHandler{}),
+	)
 
 	if cfg.Server.GRPC.UseTLS {
 

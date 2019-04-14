@@ -6,13 +6,13 @@ import (
 )
 
 const (
-	// OpenTracingDecorator controls repository layer to add or remove
+	// TracingDecorator controls repository layer to add or remove
 	// tracing feature
-	OpenTracingDecorator feature.Feature = "OpenTracingDecorator"
+	TracingDecorator feature.Feature = "TracingDecorator"
 
-	// PrometheusDecorator controls repositroy layer to add or remove
+	// MetricDecorator controls repositroy layer to add or remove
 	// metric feature
-	PrometheusDecorator feature.Feature = "PrometheusDecorator"
+	MetricDecorator feature.Feature = "MetricDecorator"
 
 	// LoggerDecorator controls repositroy layer to add or remove
 	// logging feature
@@ -31,9 +31,9 @@ func init() {
 
 // defaultKubernetesFeatureGates consists of all known Spotigraph-specific feature keys.
 var defaultSpotigraphFeatureGates = map[feature.Feature]feature.Spec{
-	OpenTracingDecorator: {Default: false, PreRelease: feature.GA},
-	PrometheusDecorator:  {Default: false, PreRelease: feature.GA},
-	LoggerDecorator:      {Default: false, PreRelease: feature.GA},
-	RESTv1:               {Default: true, PreRelease: feature.GA},
-	GraphQLv1:            {Default: false, PreRelease: feature.Alpha},
+	TracingDecorator: {Default: false, PreRelease: feature.GA},
+	MetricDecorator:  {Default: false, PreRelease: feature.GA},
+	LoggerDecorator:  {Default: false, PreRelease: feature.GA},
+	RESTv1:           {Default: true, PreRelease: feature.GA},
+	GraphQLv1:        {Default: false, PreRelease: feature.Alpha},
 }

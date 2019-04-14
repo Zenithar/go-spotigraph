@@ -2,6 +2,9 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
+	"go.opencensus.io/trace"
+	"go.uber.org/zap"
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
@@ -25,9 +28,13 @@ func New{{$decorator}}(factory ConnectionFactory) {{.Interface.Type}} {
 {{ $itf := .Interface }}
 {{range $method := .Interface.Methods}}
 func (c *grpc{{$decorator}}) {{$method.Declaration}} {
+    ctx, span := trace.StartSpan(ctx, "grpc.spotigraph.v1.{{ $itf.Name }}Client.{{ $method.Name }}")
+	defer span.End()
+
 	// Retrieve a connection from factory
 	conn, releaser, err := c.factory(ctx)
 	if err != nil {
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, errors.Wrap(err, "unable to initialize gRPC connection")
 	}
 	defer releaser()
@@ -36,6 +43,13 @@ func (c *grpc{{$decorator}}) {{$method.Declaration}} {
 	cli := pb.New{{ $itf.Name }}Client(conn)
 
 	// Call remote service
-	{{ $method.Pass "cli." }}
+	res, err := cli.{{ $method.Name }}(ctx, req)
+	if err != nil {
+		log.For(ctx).Error("gRPC remote call raised an error", zap.Error(err), zap.String("service", "grpc.spotigraph.v1.{{ $itf.Name }}Client.{{ $method.Name }}"))
+		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	}
+
+	// Return result
+	return res, err
 }
 {{end}}

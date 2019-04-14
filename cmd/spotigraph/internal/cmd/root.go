@@ -27,8 +27,6 @@ var mainCmd = &cobra.Command{
 func init() {
 	mainCmd.AddCommand(versionCmd)
 	mainCmd.AddCommand(configCmd)
-	feature.DefaultMutableGate.AddFlag(mainCmd.Flags())
-
 	mainCmd.AddCommand(serverCmd)
 	mainCmd.AddCommand(clientCmd)
 }
@@ -37,6 +35,7 @@ func init() {
 
 // Execute main command
 func Execute() error {
+	feature.DefaultMutableGate.AddFlag(mainCmd.Flags())
 	return mainCmd.Execute()
 }
 
