@@ -8,13 +8,12 @@ import (
 	"syscall"
 	"time"
 
-	"go.opencensus.io/plugin/ochttp"
-
 	"github.com/cloudflare/tableflip"
 	"github.com/dchest/uniuri"
 	"github.com/google/gops/agent"
 	"github.com/oklog/run"
 	"github.com/spf13/cobra"
+	"go.opencensus.io/plugin/ocgrpc"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/trace"
 	"go.uber.org/zap"
@@ -22,15 +21,15 @@ import (
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/platform/jaeger"
 	"go.zenithar.org/pkg/platform/prometheus"
-	httpServer "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http"
+	grpcServer "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc"
 	"go.zenithar.org/spotigraph/internal/version"
 )
 
 // -----------------------------------------------------------------------------
 
-var httpCmd = &cobra.Command{
-	Use:   "http",
-	Short: "Starts the spotigraph HTTP server",
+var grpcCmd = &cobra.Command{
+	Use:   "grpc",
+	Short: "Starts the spotigraph gRPC server",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
@@ -44,7 +43,7 @@ var httpCmd = &cobra.Command{
 		// Prepare logger
 		log.Setup(ctx, &log.Options{
 			Debug:     conf.Debug.Enable,
-			AppName:   "spotigraph-http",
+			AppName:   "spotigraph-grpc",
 			AppID:     appID,
 			Version:   version.Version,
 			Revision:  version.Revision,
@@ -52,7 +51,7 @@ var httpCmd = &cobra.Command{
 		})
 
 		// Starting banner
-		log.For(ctx).Info("Starting spotigraph HTTP server ...")
+		log.For(ctx).Info("Starting spotigraph gRPC server ...")
 
 		// gops debug
 		if conf.Debug.Enable {
@@ -151,43 +150,36 @@ var httpCmd = &cobra.Command{
 
 		// Register stat views
 		err = view.Register(
-			// HTTP
-			ochttp.ServerRequestCountView,
-			ochttp.ServerRequestBytesView,
-			ochttp.ServerResponseBytesView,
-			ochttp.ServerLatencyView,
-			ochttp.ServerRequestCountByMethod,
-			ochttp.ServerResponseCountByStatusCode,
+			// GRPC
+			ocgrpc.ServerReceivedBytesPerRPCView,
+			ocgrpc.ServerSentBytesPerRPCView,
+			ocgrpc.ServerLatencyView,
+			ocgrpc.ServerCompletedRPCsView,
 		)
 		if err != nil {
 			log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
 		}
 
-		// HTTP server
+		// gRPC server
 		{
-			ln, err := upg.Fds.Listen(conf.Server.HTTP.Network, conf.Server.HTTP.Listen)
+			ln, err := upg.Fds.Listen(conf.Server.GRPC.Network, conf.Server.HTTP.Listen)
 			if err != nil {
-				log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
+				log.For(ctx).Fatal("Unable to start gRPC server", zap.Error(err))
 			}
 
-			server, err := httpServer.New(ctx, conf)
+			server, err := grpcServer.New(ctx, conf)
 			if err != nil {
-				log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
+				log.For(ctx).Fatal("Unable to start gRPC server", zap.Error(err))
 			}
 
 			group.Add(
 				func() error {
-					log.For(ctx).Info("Starting HTTP server", zap.Stringer("address", ln.Addr()))
+					log.For(ctx).Info("Starting gRPC server", zap.Stringer("address", ln.Addr()))
 					return server.Serve(ln)
 				},
 				func(e error) {
-					log.For(ctx).Info("Shutting HTTP server down")
-
-					ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-					defer cancel()
-
-					log.CheckErrCtx(ctx, "Error raised while shutting down the server", server.Shutdown(ctx))
-					log.SafeClose(server, "Unable to close instrumentation server")
+					log.For(ctx).Info("Shutting gRPC server down")
+					server.GracefulStop()
 				},
 			)
 		}

@@ -3,12 +3,12 @@ package grpc
 import (
 	"context"
 	"fmt"
-	"net"
+	"sync"
 
 	"go.uber.org/zap"
-	"go.zenithar.org/pkg/log"
 	"google.golang.org/grpc"
 
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 )
 
@@ -17,31 +17,44 @@ type application struct {
 	server *grpc.Server
 }
 
+var (
+	app  *application
+	once sync.Once
+)
+
 // -----------------------------------------------------------------------------
 
-// WaitForShutdown starts the server and wait for shutdown signal
-func WaitForShutdown(ctx context.Context, cfg *config.Configuration) {
-	// Initialize application
-	app := &application{}
+// New initialize the application
+func New(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
+	var err error
 
-	// Apply configuration
-	if err := app.ApplyConfiguration(cfg); err != nil {
-		log.For(ctx).Fatal("Unable to initialize server settings", zap.Error(err))
-	}
+	once.Do(func() {
+		// Initialize application
+		app = &application{}
 
-	// Fork the cancellation handler
-	go func() {
-		<-ctx.Done()
-		err := app.Shutdown(context.Background())
-		if err != nil {
-			log.For(ctx).Error("Unable to shutdown spotigraph service", zap.Error(err))
+		// Apply configuration
+		if err := app.ApplyConfiguration(cfg); err != nil {
+			log.For(ctx).Fatal("Unable to initialize server settings", zap.Error(err))
 		}
-	}()
 
-	// Start the server
-	if err := app.Serve(ctx); err != nil {
-		log.For(ctx).Fatal("Unable to start server", zap.Error(err))
-	}
+		// Initialize Core components
+		switch cfg.Core.Mode {
+		case "local":
+			switch cfg.Core.Local.Type {
+			case "mongodb":
+				app.server, err = setupLocalMongoDB(ctx, cfg)
+			case "rethinkdb":
+				app.server, err = setupLocalRethinkDB(ctx, cfg)
+			case "postgresql":
+				app.server, err = setupLocalPostgreSQL(ctx, cfg)
+			}
+		default:
+			log.For(ctx).Fatal("Invalid core mode, use 'local' only.")
+		}
+	})
+
+	// Return server
+	return app.server, err
 }
 
 // -----------------------------------------------------------------------------
@@ -57,36 +70,6 @@ func (s *application) ApplyConfiguration(cfg interface{}) error {
 	s.cfg, _ = cfg.(*config.Configuration)
 
 	// No error
-	return nil
-}
-
-// Serve starts the component
-func (s *application) Serve(ctx context.Context) error {
-	log.For(ctx).Info("Starting spotigraph service ...", zap.String("backend", s.cfg.Core.Mode))
-
-	// Setup the gRPC server
-	if err := s.setup(ctx); err != nil {
-		log.For(ctx).Error("Unable to initialize spotigraph service", zap.Error(err))
-		return err
-	}
-
-	// Initialize a listener
-	lis, err := net.Listen(s.cfg.Server.GRPC.Network, s.cfg.Server.GRPC.Listen)
-	if err != nil {
-		return err
-	}
-
-	// Return no error
-	log.For(ctx).Info("Spotigraph service listening ...", zap.String("listen", s.cfg.Server.GRPC.Listen))
-	return s.server.Serve(lis)
-}
-
-// Shutdown the component
-func (s *application) Shutdown(ctx context.Context) error {
-	log.For(ctx).Info("Try to gracefully shutdown spotigraph ...")
-	if s.server != nil {
-		s.server.GracefulStop()
-	}
 	return nil
 }
 
@@ -123,29 +106,4 @@ func (s *application) checkConfiguration(cfg interface{}) error {
 
 	// No error
 	return nil
-}
-
-func (s *application) setup(ctx context.Context) error {
-	var err error
-
-	switch s.cfg.Core.Mode {
-	case "local":
-		switch s.cfg.Core.Local.Type {
-		case "mongodb":
-			s.server, err = setupLocalMongoDB(ctx, s.cfg)
-		case "rethinkdb":
-			s.server, err = setupLocalRethinkDB(ctx, s.cfg)
-		case "postgresql":
-			s.server, err = setupLocalPostgreSQL(ctx, s.cfg)
-		default:
-
-		}
-	case "remote":
-		log.For(ctx).Fatal("Invalid core mode, use 'local' only for gRPC service.")
-	default:
-		log.For(ctx).Fatal("Invalid core mode, use 'remote' or 'local'.")
-	}
-
-	// Return wired context
-	return err
 }

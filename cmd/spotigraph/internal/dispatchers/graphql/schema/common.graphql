@@ -1,4 +1,0 @@
-type Error {
-    code: Int!
-    message: String!
-}

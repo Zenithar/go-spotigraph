@@ -17,6 +17,12 @@ const (
 	// LoggerDecorator controls repositroy layer to add or remove
 	// logging feature
 	LoggerDecorator feature.Feature = "LoggerDecorator"
+
+	// RESTv1 controls HTTP REST v1 API exposure from server
+	RESTv1 feature.Feature = "RESTv1"
+
+	// GraphQLv1 controls GraphQL v1 API exposure from server
+	GraphQLv1 feature.Feature = "GraphQLv1"
 )
 
 func init() {
@@ -28,4 +34,6 @@ var defaultSpotigraphFeatureGates = map[feature.Feature]feature.Spec{
 	OpenTracingDecorator: {Default: false, PreRelease: feature.GA},
 	PrometheusDecorator:  {Default: false, PreRelease: feature.GA},
 	LoggerDecorator:      {Default: false, PreRelease: feature.GA},
+	RESTv1:               {Default: true, PreRelease: feature.GA},
+	GraphQLv1:            {Default: false, PreRelease: feature.Alpha},
 }

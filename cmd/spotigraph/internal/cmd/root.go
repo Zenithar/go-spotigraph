@@ -27,10 +27,9 @@ var mainCmd = &cobra.Command{
 func init() {
 	mainCmd.AddCommand(versionCmd)
 	mainCmd.AddCommand(configCmd)
+	feature.DefaultMutableGate.AddFlag(mainCmd.Flags())
 
-	feature.DefaultMutableGate.AddFlag(grpcCmd.Flags())
-	mainCmd.AddCommand(httpCmd)
-	mainCmd.AddCommand(grpcCmd)
+	mainCmd.AddCommand(serverCmd)
 	mainCmd.AddCommand(clientCmd)
 }
 

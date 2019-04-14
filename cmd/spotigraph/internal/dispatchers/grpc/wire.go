@@ -15,7 +15,6 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
@@ -36,14 +35,12 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 	// gRPC middlewares
 	sopts = append(sopts, grpc.StreamInterceptor(
 		grpc_middleware.ChainStreamServer(
-			grpc_prometheus.StreamServerInterceptor,
 			grpc_zap.StreamServerInterceptor(zap.L()),
 			grpc_recovery.StreamServerInterceptor(),
 		)),
 		grpc.UnaryInterceptor(
 			grpc_middleware.ChainUnaryServer(
 				grpc_recovery.UnaryServerInterceptor(),
-				grpc_prometheus.UnaryServerInterceptor,
 				grpc_zap.UnaryServerInterceptor(zap.L()),
 			),
 		))
