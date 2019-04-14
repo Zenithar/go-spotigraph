@@ -6,15 +6,15 @@ import (
 
 // {{$decorator}} implements {{.Interface.Type}} interface instrumented with opentracing spans
 type {{$decorator}} struct {
-  {{.Interface.Type}}
-  _instance string
+  next      {{.Interface.Type}}
+  instance  string
 }
 
 // New{{$decorator}} returns {{$decorator}}
-func New{{$decorator}} (base {{.Interface.Type}}, instance string) {{$decorator}} {
+func New{{$decorator}} (base {{.Interface.Type}}, instance string) {{.Interface.Type}} {
   d := {{$decorator}} {
-    {{.Interface.Name}}: base,
-    _instance: instance,
+    next:       base,
+    instance:   instance,
   }
 
   return d
@@ -23,10 +23,16 @@ func New{{$decorator}} (base {{.Interface.Type}}, instance string) {{$decorator}
 {{range $method := .Interface.Methods}}
   {{if $method.AcceptsContext}}
     // {{$method.Name}} implements {{$.Interface.Type}}
-    func (_d {{$decorator}}) {{$method.Declaration}} {
-      ctx, _span := trace.StartSpan(ctx, _d._instance + ".{{$.Interface.Type}}.{{$method.Name}}")
-      defer _span.End()
-      {{$method.Pass (printf "_d.%s." $.Interface.Name) }}
+    func (d {{$decorator}}) {{$method.Declaration}} {
+        ctx, span := trace.StartSpan(ctx, fmt.Sprintf("%s.{{$.Interface.Type}}.{{$method.Name}}", d.instance))
+        defer span.End()
+
+        res, err = d.next.{{ $method.Name }}(ctx, req)
+        if err != nil {
+		    span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
+	    }
+
+        return res, err
     }
   {{end}}
 {{end}}

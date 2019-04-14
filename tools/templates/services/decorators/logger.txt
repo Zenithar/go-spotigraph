@@ -9,41 +9,41 @@ import (
 
 // {{$decorator}} implements {{.Interface.Type}} that is instrumented with logger
 type {{$decorator}} struct {
-  _log log.Logger
-  _base {{.Interface.Type}}
+  next {{.Interface.Type}}
+  logger log.LoggerFactory
 }
 
 // New{{$decorator}} instruments an implementation of the {{.Interface.Type}} with simple logging
-func New{{$decorator}}(base {{.Interface.Type}}, logger log.Logger) {{$decorator}} {
+func New{{$decorator}}(base {{.Interface.Type}}, logger log.LoggerFactory) {{.Interface.Type}} {
   return {{$decorator}}{
-    _base: base,
-    _log: logger.With(zap.String("decorator", "logger")),
+    next: base,
+    logger: logger,
   }
 }
 
 {{range $method := .Interface.Methods}}
   // {{$method.Name}} implements {{$.Interface.Type}}
-  func (_d {{$decorator}}) {{$method.Declaration}} {
+  func (d {{$decorator}}) {{$method.Declaration}} {
       {{- if $method.HasParams}}
-        _d._log.Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
+        d.logger.For(ctx).Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
       {{else}}
-        _d._log.Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
+        d.logger.For(ctx).Debug("{{$decorator}}: calling {{$method.Name}}", zap.String("method", "{{$method.Name}}"))
       {{end -}}
       defer func() {
         {{- if $method.HasResults}}
           {{- if $method.ReturnsError}}
             if err != nil {
-              _d._log.Error("{{$decorator}}: method {{$method.Name}} returned an error", zap.String("method", "{{$method.Name}}"), zap.Error(err), zap.Any("result", {{$method.ResultsMap}}))
+              d.logger.For(ctx).Error("{{$decorator}}: method {{$method.Name}} returned an error", zap.String("method", "{{$method.Name}}"), zap.Error(err), zap.Any("result", {{$method.ResultsMap}}))
             } else {
-              _d._log.Error("{{$decorator}}: method {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"), zap.Any("result", {{$method.ResultsMap}}))
+              d.logger.For(ctx).Error("{{$decorator}}: method {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"), zap.Any("result", {{$method.ResultsMap}}))
             }
           {{else}}
-            _d._log.Debug("{{$decorator}}: calling {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
+            d.logger.For(ctx).Debug("{{$decorator}}: calling {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
           {{end -}}
         {{else}}
-          _d._log.Debug("{{$decorator}}: {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
+          d.logger.For(ctx).Debug("{{$decorator}}: {{$method.Name}} finished", zap.String("method", "{{$method.Name}}"))
         {{end -}}
       }()
-      {{ $method.Pass "_d._base." }}
+      {{ $method.Pass "d.next." }}
   }
 {{end}}

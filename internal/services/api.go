@@ -10,11 +10,11 @@ import (
 
 // User defines user service contract
 type User interface {
-	Create(ctx context.Context, req *spotigraph.UserCreateReq) (*spotigraph.SingleUserRes, error)
-	Get(ctx context.Context, req *spotigraph.UserGetReq) (*spotigraph.SingleUserRes, error)
-	Update(ctx context.Context, req *spotigraph.UserUpdateReq) (*spotigraph.SingleUserRes, error)
-	Delete(ctx context.Context, req *spotigraph.UserGetReq) (*spotigraph.EmptyRes, error)
-	Search(ctx context.Context, req *spotigraph.UserSearchReq) (*spotigraph.PaginatedUserRes, error)
+	Create(ctx context.Context, req *spotigraph.UserCreateReq) (res *spotigraph.SingleUserRes, err error)
+	Get(ctx context.Context, req *spotigraph.UserGetReq) (res *spotigraph.SingleUserRes, err error)
+	Update(ctx context.Context, req *spotigraph.UserUpdateReq) (res *spotigraph.SingleUserRes, err error)
+	Delete(ctx context.Context, req *spotigraph.UserGetReq) (res *spotigraph.EmptyRes, err error)
+	Search(ctx context.Context, req *spotigraph.UserSearchReq) (res *spotigraph.PaginatedUserRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/squad.gen.go -package mock go.zenithar.org/spotigraph/internal/services Squad
@@ -32,11 +32,11 @@ type Squad interface {
 
 // Chapter defines chapter service contract
 type Chapter interface {
-	Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (*spotigraph.SingleChapterRes, error)
-	Get(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.SingleChapterRes, error)
-	Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (*spotigraph.SingleChapterRes, error)
-	Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error)
-	Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (*spotigraph.PaginatedChapterRes, error)
+	Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (res *spotigraph.SingleChapterRes, err error)
+	Get(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.SingleChapterRes, err error)
+	Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (res *spotigraph.SingleChapterRes, err error)
+	Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.EmptyRes, err error)
+	Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (res *spotigraph.PaginatedChapterRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/guild.gen.go -package mock go.zenithar.org/spotigraph/internal/services Guild

@@ -9,6 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 
 	"go.zenithar.org/pkg/db"
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories/test/mock"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
@@ -55,7 +56,7 @@ func Test_Chapter_Creation(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				t1 := models.NewChapter("Foo")
-				chapters.EXPECT().FindByName(ctx, "Foo").Return(t1, nil).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Foo").Return(t1, nil).Times(1)
 			},
 			wantErr: true,
 		},
@@ -66,8 +67,8 @@ func Test_Chapter_Creation(t *testing.T) {
 				Name: "Foo",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().FindByName(ctx, "Foo").Return(nil, db.ErrNoResult).Times(1)
-				chapters.EXPECT().Create(ctx, gomock.Any()).Return(nil).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Foo").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Create(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		},
@@ -78,8 +79,8 @@ func Test_Chapter_Creation(t *testing.T) {
 				Name: "Foo",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().FindByName(ctx, "Foo").Return(nil, db.ErrNoResult).Times(1)
-				chapters.EXPECT().Create(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Foo").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Create(gomock.Any(), gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
@@ -103,7 +104,7 @@ func Test_Chapter_Creation(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.New(chapters)
+			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
 
 			// Do the query
 			got, err := underTest.Create(ctx, tt.req)
@@ -166,7 +167,7 @@ func Test_Chapter_Get(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
@@ -176,7 +177,7 @@ func Test_Chapter_Get(t *testing.T) {
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
@@ -186,7 +187,7 @@ func Test_Chapter_Get(t *testing.T) {
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -210,7 +211,7 @@ func Test_Chapter_Get(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.New(chapters)
+			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
 
 			// Do the query
 			got, err := underTest.Get(ctx, tt.req)
@@ -269,7 +270,7 @@ func Test_Chapter_Update(t *testing.T) {
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
@@ -279,7 +280,7 @@ func Test_Chapter_Update(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
@@ -290,9 +291,9 @@ func Test_Chapter_Update(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("toto@foo.org")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
-				chapters.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
-				chapters.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
@@ -303,8 +304,8 @@ func Test_Chapter_Update(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
-				chapters.EXPECT().FindByName(ctx, "Fuu").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
@@ -315,9 +316,9 @@ func Test_Chapter_Update(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
-				chapters.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
-				chapters.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Update(gomock.Any(), gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
@@ -341,7 +342,7 @@ func Test_Chapter_Update(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.New(chapters)
+			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
 
 			// Do the query
 			got, err := underTest.Update(ctx, tt.req)
@@ -400,7 +401,7 @@ func Test_Chapter_Delete(t *testing.T) {
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
@@ -410,8 +411,8 @@ func Test_Chapter_Delete(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
-				chapters.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Delete(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
@@ -421,8 +422,8 @@ func Test_Chapter_Delete(t *testing.T) {
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
-				chapters.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Delete(gomock.Any(), gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -446,7 +447,7 @@ func Test_Chapter_Delete(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.New(chapters)
+			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
 
 			// Do the query
 			got, err := underTest.Delete(ctx, tt.req)
@@ -482,14 +483,14 @@ func Test_Chapter_Search(t *testing.T) {
 			req:     &spotigraph.ChapterSearchReq{},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
+				chapters.EXPECT().Search(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
 			},
 		}, {
 			name:    "Database error",
 			req:     &spotigraph.ChapterSearchReq{},
 			wantErr: true,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, db.ErrNoModification).Times(1)
+				chapters.EXPECT().Search(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, db.ErrNoModification).Times(1)
 			},
 		}, {
 			name: "Filter by name",
@@ -498,7 +499,7 @@ func Test_Chapter_Search(t *testing.T) {
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
+				chapters.EXPECT().Search(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
 			},
 		}, {
 			name: "Filter by ChapterID",
@@ -507,7 +508,7 @@ func Test_Chapter_Search(t *testing.T) {
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Search(ctx, gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
+				chapters.EXPECT().Search(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return([]*models.Chapter{}, 0, nil).Times(1)
 			},
 		},
 	}
@@ -530,7 +531,7 @@ func Test_Chapter_Search(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.New(chapters)
+			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
 
 			// Do the query
 			got, err := underTest.Search(ctx, tt.req)

@@ -15,13 +15,13 @@ import (
 )
 
 type service struct {
-	Chapters repositories.Chapter
+	chapters repositories.Chapter
 }
 
 // New returns a service instance
-func New(Chapters repositories.Chapter) services.Chapter {
+func New(chapters repositories.Chapter) services.Chapter {
 	return &service{
-		Chapters: Chapters,
+		chapters: chapters,
 	}
 }
 
@@ -44,7 +44,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) 
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Name must be unique
-		constraints.ChapterNameMustBeUnique(s.Chapters, req.Name),
+		constraints.ChapterNameMustBeUnique(s.chapters, req.Name),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -57,7 +57,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) 
 	entity := models.NewChapter(req.Name)
 
 	// Create use in database
-	if err := s.Chapters.Create(ctx, entity); err != nil {
+	if err := s.chapters.Create(ctx, entity); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to create Chapter",
@@ -97,7 +97,7 @@ func (s *service) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (*spot
 	}
 
 	// Retrieve Chapter from database
-	entity, err := s.Chapters.Get(ctx, req.Id)
+	entity, err := s.chapters.Get(ctx, req.Id)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
@@ -141,7 +141,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Chapter must exists
-		constraints.ChapterMustExists(s.Chapters, req.Id, &entity),
+		constraints.ChapterMustExists(s.chapters, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -157,7 +157,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 			// Check acceptable name value
 			constraints.MustBeAName(req.Name.Value),
 			// Is already used ?
-			constraints.ChapterNameMustBeUnique(s.Chapters, req.Name.Value),
+			constraints.ChapterNameMustBeUnique(s.chapters, req.Name.Value),
 		); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusConflict,
@@ -172,7 +172,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) 
 	// Skip operation when no updates
 	if updated {
 		// Create account in database
-		if err := s.Chapters.Update(ctx, &entity); err != nil {
+		if err := s.chapters.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusInternalServerError,
 				Message: "Unable to update Chapter object",
@@ -209,7 +209,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*s
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Chapter must exists
-		constraints.ChapterMustExists(s.Chapters, req.Id, &entity),
+		constraints.ChapterMustExists(s.chapters, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -218,7 +218,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*s
 		return res, err
 	}
 
-	if err := s.Chapters.Delete(ctx, req.Id); err != nil {
+	if err := s.chapters.Delete(ctx, req.Id); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to delete Chapter object",
@@ -261,7 +261,7 @@ func (s *service) Search(ctx context.Context, req *spotigraph.ChapterSearchReq) 
 	}
 
 	// Do the search
-	entities, total, err := s.Chapters.Search(ctx, filter, pagination, sortParams)
+	entities, total, err := s.chapters.Search(ctx, filter, pagination, sortParams)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
