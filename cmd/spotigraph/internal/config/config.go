@@ -74,5 +74,16 @@ type Configuration struct {
 				ClientAuthenticationRequired bool   `toml:"clientAuthenticationRequired" default:"false" comment:"Force client authentication"`
 			} `toml:"TLS" comment:"TLS Socket settings"`
 		} `toml:"HTTP" comment:"###############################\n HTTP Settings \n##############################"`
+		GraphQL struct {
+			Network string `toml:"network" default:"tcp" comment:"Network class used for listen (tcp, tcp4, tcp6, unixsocket)"`
+			Listen  string `toml:"listen" default:":8080" comment:"Listen address for HTTP server"`
+			UseTLS  bool   `toml:"useTLS" default:"false" comment:"Enable TLS listener"`
+			TLS     struct {
+				CertificatePath              string `toml:"certificatePath" default:"" comment:"Certificate path"`
+				PrivateKeyPath               string `toml:"privateKeyPath" default:"" comment:"Private Key path"`
+				CACertificatePath            string `toml:"caCertificatePath" default:"" comment:"CA Certificate Path"`
+				ClientAuthenticationRequired bool   `toml:"clientAuthenticationRequired" default:"false" comment:"Force client authentication"`
+			} `toml:"TLS" comment:"TLS Socket settings"`
+		} `toml:"GraphQL" comment:"###############################\n GraphQL Settings \n##############################"`
 	}
 }

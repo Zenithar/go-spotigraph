@@ -1095,6 +1095,24 @@ func (m *SquadUpdateReq) Validate() error {
 		}
 	}
 
+	if wrapper := m.GetProductOwnerId(); wrapper != nil {
+
+		if utf8.RuneCountInString(wrapper.GetValue()) != 64 {
+			return SquadUpdateReqValidationError{
+				field:  "ProductOwnerId",
+				reason: "value length must be 64 runes",
+			}
+		}
+
+		if !_SquadUpdateReq_ProductOwnerId_Pattern.MatchString(wrapper.GetValue()) {
+			return SquadUpdateReqValidationError{
+				field:  "ProductOwnerId",
+				reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1153,6 +1171,8 @@ var _ interface {
 } = SquadUpdateReqValidationError{}
 
 var _SquadUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _SquadUpdateReq_ProductOwnerId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 // Validate checks the field values on SingleSquadRes with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1632,6 +1652,24 @@ func (m *ChapterUpdateReq) Validate() error {
 		}
 	}
 
+	if wrapper := m.GetLeaderId(); wrapper != nil {
+
+		if utf8.RuneCountInString(wrapper.GetValue()) != 64 {
+			return ChapterUpdateReqValidationError{
+				field:  "LeaderId",
+				reason: "value length must be 64 runes",
+			}
+		}
+
+		if !_ChapterUpdateReq_LeaderId_Pattern.MatchString(wrapper.GetValue()) {
+			return ChapterUpdateReqValidationError{
+				field:  "LeaderId",
+				reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1690,6 +1728,8 @@ var _ interface {
 } = ChapterUpdateReqValidationError{}
 
 var _ChapterUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _ChapterUpdateReq_LeaderId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 // Validate checks the field values on SingleChapterRes with the rules defined
 // in the proto definition for this message. If any rules are violated, an

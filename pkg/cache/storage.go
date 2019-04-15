@@ -6,10 +6,8 @@ import (
 	"time"
 )
 
-var (
-	// ErrCacheMiss is raised when item is not found in cache
-	ErrCacheMiss = errors.New("cache: item not found")
-)
+// ErrCacheMiss is raised when item is not found in cache
+var ErrCacheMiss = errors.New("cache: item not found")
 
 //go:generate mockgen -destination mock/storage.gen.go -package mock go.zenithar.org/spotigraph/pkg/cache Storage
 

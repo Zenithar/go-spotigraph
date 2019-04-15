@@ -1,15 +1,15 @@
 package chapter
 
 import (
-    "time"
+	"time"
 
 	"go.uber.org/zap"
 
-    "go.zenithar.org/pkg/log"
-    "go.zenithar.org/spotigraph/pkg/cache"
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter/internal"
+	"go.zenithar.org/spotigraph/pkg/cache"
 )
 
 // Decorator represents service decorator builder

@@ -75,7 +75,6 @@ func (d chapterWithMetrics) Update(ctx context.Context, req *spotigraph.ChapterU
 // -----------------------------------------------------------------------------
 
 func (d chapterWithMetrics) enableViews() error {
-
 	createdChapterCountView := &view.View{
 		Name:        "chapter_created_count",
 		Description: "Count of chapters created",

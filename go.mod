@@ -23,7 +23,7 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
 	github.com/golang/protobuf v1.3.1
-	github.com/golang/snappy v0.0.1
+	github.com/golang/snappy v0.0.1 // indirect
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
 	github.com/google/go-cmp v0.2.0
 	github.com/google/gops v0.3.6
@@ -44,8 +44,10 @@ require (
 	github.com/oklog/run v1.0.0
 	github.com/onsi/gomega v1.5.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
+	github.com/opentracing/opentracing-go v1.0.2
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
+	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829
 	github.com/prometheus/common v0.3.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190412120340-e22ddced7142 // indirect
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
@@ -58,6 +60,7 @@ require (
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/uber/prototool v1.6.0
+	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.20.2
 	go.uber.org/zap v1.9.1

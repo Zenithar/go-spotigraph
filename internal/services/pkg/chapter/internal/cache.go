@@ -63,9 +63,7 @@ func (d chapterWithCache) Delete(ctx context.Context, req *spotigraph.ChapterGet
 
 // Get implements services.Chapter
 func (d chapterWithCache) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.SingleChapterRes, err error) {
-	var (
-		k = d.key(req.Id)
-	)
+	var k = d.key(req.Id)
 
 	// Check from cache
 	payload, err := d.mgr.Get(ctx, k)
@@ -145,7 +143,6 @@ func (d *chapterWithCache) key(id string) string {
 }
 
 func (d *chapterWithCache) enableViews() error {
-
 	cacheHitChapterCountView := &view.View{
 		Name:        "chapter_cache_hit_count",
 		Description: "Count of chapters cache hits",

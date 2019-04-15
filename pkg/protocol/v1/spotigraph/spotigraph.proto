@@ -195,6 +195,12 @@ message SquadUpdateReq {
     }
   ];
   google.protobuf.StringValue name = 2;
+  google.protobuf.StringValue product_owner_id = 3[
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message SingleSquadRes {
@@ -249,6 +255,12 @@ message ChapterUpdateReq {
     }
   ];
   google.protobuf.StringValue name = 2;
+  google.protobuf.StringValue leader_id = 3[
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 64
+    }
+  ];
 }
 
 message SingleChapterRes {
