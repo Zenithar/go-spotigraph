@@ -42,13 +42,24 @@ func (r *resolver) Guild() generated.GuildResolver {
 }
 
 func (r *resolver) Mutation() generated.MutationResolver {
-	return &mutationResolver{r}
+	return &mutationResolver{
+		root:     r,
+		users:    r.users,
+		squads:   r.squads,
+		chapters: r.chapters,
+		guilds:   r.guilds,
+		tribes:   r.tribes,
+	}
 }
 
 func (r *resolver) Query() generated.QueryResolver {
 	return &queryResolver{
-		root:  r,
-		users: r.users,
+		root:     r,
+		users:    r.users,
+		squads:   r.squads,
+		chapters: r.chapters,
+		guilds:   r.guilds,
+		tribes:   r.tribes,
 	}
 }
 
