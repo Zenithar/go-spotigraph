@@ -465,10 +465,10 @@ func (m *UserGetReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return UserGetReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -546,10 +546,10 @@ func (m *UserUpdateReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return UserUpdateReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -990,10 +990,10 @@ func (m *SquadGetReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return SquadGetReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -1071,10 +1071,10 @@ func (m *SquadUpdateReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return SquadUpdateReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -1097,10 +1097,10 @@ func (m *SquadUpdateReq) Validate() error {
 
 	if wrapper := m.GetProductOwnerId(); wrapper != nil {
 
-		if utf8.RuneCountInString(wrapper.GetValue()) != 64 {
+		if utf8.RuneCountInString(wrapper.GetValue()) != 32 {
 			return SquadUpdateReqValidationError{
 				field:  "ProductOwnerId",
-				reason: "value length must be 64 runes",
+				reason: "value length must be 32 runes",
 			}
 		}
 
@@ -1547,10 +1547,10 @@ func (m *ChapterGetReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return ChapterGetReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -1628,10 +1628,10 @@ func (m *ChapterUpdateReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return ChapterUpdateReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -1654,10 +1654,10 @@ func (m *ChapterUpdateReq) Validate() error {
 
 	if wrapper := m.GetLeaderId(); wrapper != nil {
 
-		if utf8.RuneCountInString(wrapper.GetValue()) != 64 {
+		if utf8.RuneCountInString(wrapper.GetValue()) != 32 {
 			return ChapterUpdateReqValidationError{
 				field:  "LeaderId",
-				reason: "value length must be 64 runes",
+				reason: "value length must be 32 runes",
 			}
 		}
 
@@ -2104,10 +2104,10 @@ func (m *GuildGetReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return GuildGetReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -2185,10 +2185,10 @@ func (m *GuildUpdateReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return GuildUpdateReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -2641,10 +2641,10 @@ func (m *TribeGetReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return TribeGetReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 
@@ -2722,10 +2722,10 @@ func (m *TribeUpdateReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetId()) != 64 {
+	if utf8.RuneCountInString(m.GetId()) != 32 {
 		return TribeUpdateReqValidationError{
 			field:  "Id",
-			reason: "value length must be 64 runes",
+			reason: "value length must be 32 runes",
 		}
 	}
 

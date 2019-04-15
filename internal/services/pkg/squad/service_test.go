@@ -162,31 +162,31 @@ func Test_Squad_Get(t *testing.T) {
 		{
 			name: "Existing entity",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
 		{
 			name: "Database error",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
 		{
 			name: "Non-Existing entity",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -266,31 +266,31 @@ func Test_Squad_Update(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.SquadUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity without update",
 			req: &spotigraph.SquadUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with principal update",
 			req: &spotigraph.SquadUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("toto@foo.org")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				squads.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				squads.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
 			},
@@ -298,24 +298,24 @@ func Test_Squad_Update(t *testing.T) {
 		}, {
 			name: "Existent entity with conflict name",
 			req: &spotigraph.SquadUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				squads.EXPECT().FindByName(ctx, "Fuu").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity with error during update",
 			req: &spotigraph.SquadUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				squads.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				squads.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
@@ -397,31 +397,31 @@ func Test_Squad_Delete(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				squads.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with database error",
 			req: &spotigraph.SquadGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {
 				u1 := models.NewSquad("Foo")
-				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				squads.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				squads.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -503,7 +503,7 @@ func Test_Squad_Search(t *testing.T) {
 		}, {
 			name: "Filter by SquadID",
 			req: &spotigraph.SquadSearchReq{
-				SquadId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+				SquadId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, squads *mock.MockSquad) {

@@ -41,7 +41,7 @@ func init() {
 
 func Build() {
 	fmt.Println("# Core packages")
-	mg.SerialDeps(Prototool.Generate, Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
+	mg.SerialDeps(Prototool.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
 	fmt.Println("# Artifacts")

@@ -164,31 +164,31 @@ func Test_User_Get(t *testing.T) {
 		{
 			name: "Existing entity",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
 		{
 			name: "Database error",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
 		{
 			name: "Non-Existing entity",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -268,31 +268,31 @@ func Test_User_Update(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.UserUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity without update",
 			req: &spotigraph.UserUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with principal update",
 			req: &spotigraph.UserUpdateReq{
-				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Principal: &types.StringValue{Value: "tutu@foo.org"},
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(nil, db.ErrNoResult).Times(1)
 				users.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
 			},
@@ -300,24 +300,24 @@ func Test_User_Update(t *testing.T) {
 		}, {
 			name: "Existent entity with conflict principal",
 			req: &spotigraph.UserUpdateReq{
-				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Principal: &types.StringValue{Value: "tutu@foo.org"},
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity with error during update",
 			req: &spotigraph.UserUpdateReq{
-				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:        "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Principal: &types.StringValue{Value: "tutu@foo.org"},
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				users.EXPECT().FindByPrincipal(ctx, "pXnkeYbv1Pm5lZH5Pb5ygBi2B2ev3AUthrhHMFYGLkObUaX7Pm4xvV/LieNHQiZXa8pWUhgkm+S/Qk1ZIkDX5A").Return(nil, db.ErrNoResult).Times(1)
 				users.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
@@ -399,31 +399,31 @@ func Test_User_Delete(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				users.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with database error",
 			req: &spotigraph.UserGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, users *mock.MockUser) {
 				u1 := models.NewUser("toto@foo.org")
-				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				users.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				users.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -505,7 +505,7 @@ func Test_User_Search(t *testing.T) {
 		}, {
 			name: "Filter by UserID",
 			req: &spotigraph.UserSearchReq{
-				UserId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+				UserId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, users *mock.MockUser) {

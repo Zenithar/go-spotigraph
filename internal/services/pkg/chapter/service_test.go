@@ -163,31 +163,31 @@ func Test_Chapter_Get(t *testing.T) {
 		{
 			name: "Existing entity",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
 		{
 			name: "Database error",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
 		{
 			name: "Non-Existing entity",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -267,31 +267,31 @@ func Test_Chapter_Update(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.ChapterUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity without update",
 			req: &spotigraph.ChapterUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with principal update",
 			req: &spotigraph.ChapterUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("toto@foo.org")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				chapters.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
@@ -299,24 +299,24 @@ func Test_Chapter_Update(t *testing.T) {
 		}, {
 			name: "Existent entity with conflict name",
 			req: &spotigraph.ChapterUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity with error during update",
 			req: &spotigraph.ChapterUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByName(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				chapters.EXPECT().Update(gomock.Any(), gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
@@ -402,31 +402,31 @@ func Test_Chapter_Delete(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().Delete(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with database error",
 			req: &spotigraph.ChapterGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
 				u1 := models.NewChapter("Foo")
-				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().Delete(gomock.Any(), gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -508,7 +508,7 @@ func Test_Chapter_Search(t *testing.T) {
 		}, {
 			name: "Filter by ChapterID",
 			req: &spotigraph.ChapterSearchReq{
-				ChapterId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+				ChapterId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {

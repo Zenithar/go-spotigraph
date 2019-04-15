@@ -46,7 +46,10 @@ func (r *resolver) Mutation() generated.MutationResolver {
 }
 
 func (r *resolver) Query() generated.QueryResolver {
-	return &queryResolver{r}
+	return &queryResolver{
+		root:  r,
+		users: r.users,
+	}
 }
 
 func (r *resolver) Squad() generated.SquadResolver {

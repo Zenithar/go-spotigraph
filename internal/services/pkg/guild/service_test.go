@@ -162,31 +162,31 @@ func Test_Guild_Get(t *testing.T) {
 		{
 			name: "Existing entity",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
 		{
 			name: "Database error",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
 		{
 			name: "Non-Existing entity",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -266,31 +266,31 @@ func Test_Guild_Update(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.GuildUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity without update",
 			req: &spotigraph.GuildUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with principal update",
 			req: &spotigraph.GuildUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("toto@foo.org")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				guilds.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				guilds.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
 			},
@@ -298,24 +298,24 @@ func Test_Guild_Update(t *testing.T) {
 		}, {
 			name: "Existent entity with conflict name",
 			req: &spotigraph.GuildUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				guilds.EXPECT().FindByName(ctx, "Fuu").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity with error during update",
 			req: &spotigraph.GuildUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				guilds.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				guilds.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
@@ -397,31 +397,31 @@ func Test_Guild_Delete(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				guilds.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with database error",
 			req: &spotigraph.GuildGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {
 				u1 := models.NewGuild("Foo")
-				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				guilds.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				guilds.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -503,7 +503,7 @@ func Test_Guild_Search(t *testing.T) {
 		}, {
 			name: "Filter by GuildID",
 			req: &spotigraph.GuildSearchReq{
-				GuildId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+				GuildId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, guilds *mock.MockGuild) {

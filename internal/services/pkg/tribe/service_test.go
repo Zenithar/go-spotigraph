@@ -162,31 +162,31 @@ func Test_Tribe_Get(t *testing.T) {
 		{
 			name: "Existing entity",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		},
 		{
 			name: "Database error",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoModification).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
 		},
 		{
 			name: "Non-Existing entity",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -266,31 +266,31 @@ func Test_Tribe_Update(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.TribeUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity without update",
 			req: &spotigraph.TribeUpdateReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with principal update",
 			req: &spotigraph.TribeUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("toto@foo.org")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				tribes.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				tribes.EXPECT().Update(ctx, gomock.Any()).Return(nil).Times(1)
 			},
@@ -298,24 +298,24 @@ func Test_Tribe_Update(t *testing.T) {
 		}, {
 			name: "Existent entity with conflict name",
 			req: &spotigraph.TribeUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				tribes.EXPECT().FindByName(ctx, "Fuu").Return(u1, nil).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity with error during update",
 			req: &spotigraph.TribeUpdateReq{
-				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id:   "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Name: &types.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				tribes.EXPECT().FindByName(ctx, "Fuu").Return(nil, db.ErrNoResult).Times(1)
 				tribes.EXPECT().Update(ctx, gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
@@ -397,31 +397,31 @@ func Test_Tribe_Delete(t *testing.T) {
 		{
 			name: "Non-Existent entity",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(nil, db.ErrNoResult).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
 			name: "Existent entity",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				tribes.EXPECT().Delete(ctx, gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
 		}, {
 			name: "Existent entity with database error",
 			req: &spotigraph.TribeGetReq{
-				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al",
+				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {
 				u1 := models.NewTribe("Foo")
-				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al").Return(u1, nil).Times(1)
+				tribes.EXPECT().Get(ctx, "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				tribes.EXPECT().Delete(ctx, gomock.Any()).Return(db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -503,7 +503,7 @@ func Test_Tribe_Search(t *testing.T) {
 		}, {
 			name: "Filter by TribeID",
 			req: &spotigraph.TribeSearchReq{
-				TribeId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e9HublDYim7SpJNu6j8IP7d6erd2i36Al"},
+				TribeId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, tribes *mock.MockTribe) {

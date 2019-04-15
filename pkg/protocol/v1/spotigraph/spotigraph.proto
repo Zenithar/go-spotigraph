@@ -129,7 +129,7 @@ message UserGetReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -138,7 +138,7 @@ message UserUpdateReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
   google.protobuf.StringValue principal = 2;
@@ -182,7 +182,7 @@ message SquadGetReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -191,14 +191,14 @@ message SquadUpdateReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
   google.protobuf.StringValue name = 2;
   google.protobuf.StringValue product_owner_id = 3[
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -242,7 +242,7 @@ message ChapterGetReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -251,14 +251,14 @@ message ChapterUpdateReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
   google.protobuf.StringValue name = 2;
   google.protobuf.StringValue leader_id = 3[
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -302,7 +302,7 @@ message GuildGetReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -311,7 +311,7 @@ message GuildUpdateReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
   google.protobuf.StringValue name = 2;
@@ -356,7 +356,7 @@ message TribeGetReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
 }
@@ -365,7 +365,7 @@ message TribeUpdateReq {
   string id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
-      len: 64
+      len: 32
     }
   ];
   google.protobuf.StringValue name = 2;

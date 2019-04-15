@@ -2,19 +2,37 @@ package resolvers
 
 import (
 	"context"
+	"encoding/base64"
 
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql/handlers/generated"
+	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
-type queryResolver struct{ *resolver }
+type queryResolver struct {
+	root  *resolver
+	users services.User
+}
 
 func (r *queryResolver) Me(ctx context.Context) (*spotigraph.Domain_User, error) {
 	panic("not implemented")
 }
 
 func (r *queryResolver) SearchForUsers(ctx context.Context, paging *generated.PagingRequest) (*generated.UserPagingConnection, error) {
-	panic("not implemented")
+	// Do service request
+	res, err := r.users.Search(ctx, &spotigraph.UserSearchReq{})
+	if err != nil {
+		return nil, err
+	}
+
+	// Retrieve last element
+	nextToken := base64.URLEncoding.EncodeToString([]byte(res.Members[len(res.Members)-1].GetId()))
+
+	// Format result
+	return &generated.UserPagingConnection{
+		Items:     res.Members,
+		NextToken: &nextToken,
+	}, nil
 }
 
 func (r *queryResolver) GetUser(ctx context.Context, id string) (*spotigraph.Domain_User, error) {

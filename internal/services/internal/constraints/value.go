@@ -10,7 +10,7 @@ import (
 // MustBeAnIdentifier returns a ID contraint validator
 func MustBeAnIdentifier(value string) func(context.Context) error {
 	return func(ctx context.Context) error {
-		return validation.Validate(value, validation.Required, is.PrintableASCII, validation.Length(64, 64))
+		return validation.Validate(value, validation.Required, is.PrintableASCII, validation.Length(32, 32))
 	}
 }
 
