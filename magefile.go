@@ -27,7 +27,7 @@ var curDir = func() string {
 }()
 
 // Calculate file paths
-var toolsBinDir = normalizePath(path.Join(curDir, "bin"))
+var toolsBinDir = normalizePath(path.Join(curDir, "tools", "bin"))
 
 func init() {
 	time.Local = time.UTC
@@ -70,10 +70,6 @@ func (ci CI) localExecute(job string) error {
 
 type Go mg.Namespace
 
-var deps = []string{
-	"github.com/izumin5210/gex/cmd/gex",
-}
-
 // Generate go code
 func (Go) Generate() error {
 	fmt.Println("## Generate code")
@@ -94,15 +90,8 @@ func (Go) Tidy() error {
 
 // Deps install dependency tools.
 func (Go) Deps() error {
-	fmt.Println("## Intalling dependencies")
-	sh.RunV("go", "mod", "vendor")
-
-	for _, dep := range deps {
-		fmt.Printf(" > %s\n", dep)
-		sh.RunV("go", "install", dep)
-	}
-
-	return sh.RunV("gex", "--build")
+	fmt.Println("## Vendoring dependencies")
+	return sh.RunV("go", "mod", "vendor")
 }
 
 // Format runs gofmt on everything

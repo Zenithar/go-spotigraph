@@ -1,2 +1,4 @@
 bin
 vendor
+tools/bin
+tools/vendor

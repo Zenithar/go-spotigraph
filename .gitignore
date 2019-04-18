@@ -14,3 +14,4 @@
 bin
 vendor
 unit-tests.xml
+tools/bin

@@ -14,6 +14,10 @@ jobs:
           key: mod-{{ "go.sum" }}
 
       - run:
+          name: install tools
+          command: go run mage.go -d tools go:tools
+
+      - run:
           name: install module
           command: go run mage.go go:deps
 
