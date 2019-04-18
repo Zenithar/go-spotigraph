@@ -16,6 +16,8 @@ import (
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"go.opencensus.io/plugin/ocgrpc"
+	"go.opencensus.io/plugin/ochttp"
+	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
@@ -91,6 +93,25 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	// Reflection
 	reflection.Register(server)
+
+	// Register stat views
+	err := view.Register(
+		// HTTP
+		ochttp.ServerRequestCountView,
+		ochttp.ServerRequestBytesView,
+		ochttp.ServerResponseBytesView,
+		ochttp.ServerLatencyView,
+		ochttp.ServerRequestCountByMethod,
+		ochttp.ServerResponseCountByStatusCode,
+	)
+	if err != nil {
+		log.For(ctx).Fatal("Unable to register HTTP stat views", zap.Error(err))
+	}
+
+	err = view.Register(ocgrpc.DefaultServerViews...)
+	if err != nil {
+		log.For(ctx).Fatal("Unable to register gRPC stat views", zap.Error(err))
+	}
 
 	// Return no error
 	return server, nil

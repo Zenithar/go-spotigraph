@@ -13,6 +13,7 @@ import (
 	"github.com/google/wire"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
+	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
 
 	"go.zenithar.org/pkg/log"
@@ -72,6 +73,20 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 		server.TLSConfig = tlsConfig
 	} else {
 		log.For(ctx).Info("No transport encryption enabled for HTTP server")
+	}
+
+	// Register stat views
+	err := view.Register(
+		// HTTP
+		ochttp.ServerRequestCountView,
+		ochttp.ServerRequestBytesView,
+		ochttp.ServerResponseBytesView,
+		ochttp.ServerLatencyView,
+		ochttp.ServerRequestCountByMethod,
+		ochttp.ServerResponseCountByStatusCode,
+	)
+	if err != nil {
+		log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
 	}
 
 	// Return result

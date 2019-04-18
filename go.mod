@@ -26,6 +26,8 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/golangci/golangci-lint v1.16.1-0.20190402065613-de1d1ad903cd
 	github.com/google/go-cmp v0.2.0
+	github.com/google/go-github v17.0.0+incompatible // indirect
+	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/gops v0.3.6
 	github.com/google/wire v0.2.1
 	github.com/gosimple/slug v1.5.0
@@ -34,7 +36,6 @@ require (
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
-	github.com/izumin5210/gex v0.4.5 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.3.0
@@ -44,10 +45,8 @@ require (
 	github.com/oklog/run v1.0.0
 	github.com/onsi/gomega v1.5.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
-	github.com/opentracing/opentracing-go v1.0.2
 	github.com/pelletier/go-toml v1.3.0
 	github.com/pkg/errors v0.8.1
-	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829
 	github.com/prometheus/common v0.3.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190412120340-e22ddced7142 // indirect
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect

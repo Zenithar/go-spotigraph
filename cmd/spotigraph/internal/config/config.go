@@ -8,14 +8,17 @@ import (
 // Configuration contains spotigraph settings
 type Configuration struct {
 	Debug struct {
-		Enable    bool   `toml:"enable" default:"false" comment:"allow debugging with gops"`
-		RemoteURL string `toml:"remoteDebugURL" comment:"start a gops agent on specified URL. Ex: localhost:9999"`
+		Enable bool `toml:"enable" default:"false" comment:"allow debug mode"`
 	} `toml:"Debug" comment:"###############################\n Debug with gops \n##############################"`
 
 	Instrumentation struct {
-		Network string `toml:"network" default:"tcp" comment:"Network class used for listen (tcp, tcp4, tcp6, unixsocket)"`
-		Listen  string `toml:"listen" default:":5556" comment:"Listen address for instrumentation server"`
-		Logs    struct {
+		Network    string `toml:"network" default:"tcp" comment:"Network class used for listen (tcp, tcp4, tcp6, unixsocket)"`
+		Listen     string `toml:"listen" default:":5556" comment:"Listen address for instrumentation server"`
+		Diagnostic struct {
+			Enabled   bool   `toml:"enabled" default:"true" comment:"Enable diagnostic handlers"`
+			RemoteURL string `toml:"remoteDebugURL" comment:"start a gops agent on specified URL. Ex: localhost:9999"`
+		} `toml:"Diagnostic" comment:"###############################\n Diagnotic Settings \n##############################"`
+		Logs struct {
 			Level     string `toml:"level" default:"warn" comment:"Log level: debug, info, warn, error, dpanic, panic, and fatal"`
 			SentryDSN string `toml:"sentryDSN" comment:"Sentry DSN"`
 		} `toml:"Logs" comment:"###############################\n Logs Settings \n##############################"`

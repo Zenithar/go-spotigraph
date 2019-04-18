@@ -13,6 +13,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
+	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/db/adapter/mongodb"
 	"go.zenithar.org/pkg/db/adapter/postgresql"
@@ -150,6 +151,11 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 		server.TLSConfig = tlsConfig
 	} else {
 		log.For(ctx).Info("No transport encryption enabled for GraphQL server")
+	}
+
+	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)
+	if err != nil {
+		log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
 	}
 
 	return server, nil
