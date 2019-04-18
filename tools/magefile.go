@@ -18,11 +18,5 @@ var deps = []string{
 // Tools updates tools from package
 func (Go) Tools() error {
 	fmt.Println("## Intalling tools")
-
-	for _, dep := range deps {
-		fmt.Printf(" > %s\n", dep)
-		sh.RunV("go", "install", dep)
-	}
-
-	return sh.RunV("gex", "--build")
+	return sh.RunV("go", "run", "github.com/izumin5210/gex/cmd/gex", "--build")
 }
