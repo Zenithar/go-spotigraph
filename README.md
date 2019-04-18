@@ -2,8 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Zenithar/go-spotigraph)](https://goreportcard.com/report/github.com/Zenithar/go-spotigraph)
 [![CircleCI](https://circleci.com/gh/Zenithar/go-spotigraph.svg?style=svg)](https://circleci.com/gh/Zenithar/go-spotigraph)
-https://img.shields.io/github/license/Zenithar/go-spotigraph.svg
-[![LICENSE](https://circleci.com/gh/Zenithar/go-spotigraph.svg?style=svg)](https://github.com/Zenithar/go-spotigraph/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/github/license/Zenithar/go-spotigraph.svg)](https://github.com/Zenithar/go-spotigraph/blob/master/LICENSE)
 
 Spotify Agile model mapping microservice
 
