@@ -13,7 +13,7 @@ require (
 	github.com/gobuffalo/packr v1.25.0
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.2.0
-	github.com/golangci/golangci-lint v1.16.0
+	github.com/golangci/golangci-lint v1.16.1-0.20190421084833-39f46be46090
 	github.com/google/wire v0.2.1
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
