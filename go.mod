@@ -45,7 +45,7 @@ require (
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.20.2
 	go.uber.org/zap v1.9.1
-	go.zenithar.org/pkg v0.0.11
+	go.zenithar.org/pkg v0.0.12
 	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480
 	golang.org/x/net v0.0.0-20190420063019-afa5a82059c6
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a

@@ -56,7 +56,7 @@ Spotify Agile model mapping microservice
 ### Dispatchers
 
 - [x] gRPC Server
-- [ ] GraphQL Server
+- [x] GraphQL Server
 - [x] REST Api
 
 ### Decorators

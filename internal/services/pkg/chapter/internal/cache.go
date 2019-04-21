@@ -10,9 +10,9 @@ import (
 	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
 
+	"go.zenithar.org/pkg/cache"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/internal/services"
-	"go.zenithar.org/spotigraph/pkg/cache"
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
 )
 
