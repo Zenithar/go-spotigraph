@@ -11,7 +11,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key:
+          keys:
             - mod-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "go.sum" }}-{{ checksum "tools/go.sum" }}
             - mod-cache-v1-{{ arch }}-{{ .Branch }}
             - mod-cache-v1
