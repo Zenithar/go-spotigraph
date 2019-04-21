@@ -41,7 +41,7 @@ func init() {
 
 func Build() {
 	fmt.Println("# Core packages")
-	mg.SerialDeps(Prototool.Generate, Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
+	mg.SerialDeps(Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
 	fmt.Println("# Artifacts")
@@ -68,17 +68,69 @@ func (ci CI) localExecute(job string) error {
 
 // -----------------------------------------------------------------------------
 
+type Gen mg.Namespace
+
+// Generate initializers
+func (Gen) Wire() error {
+	fmt.Println("### Wiring dispatchers")
+	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/...")
+}
+
+// Generate mocks for tests
+func (Gen) Mocks() error {
+	fmt.Println("### Mocks")
+
+	fmt.Println("- Repositories")
+	err := sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories")
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("- Services")
+	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/services")
+}
+
+// Generate initializers
+func (Gen) Migrations() error {
+	fmt.Println("### Database migrations")
+	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql")
+}
+
+func (Gen) Protobuf() error {
+	fmt.Println("### Protobuf")
+	mg.SerialDeps(Prototool.Lint)
+
+	return sh.RunV("prototool", "generate")
+}
+
+// -----------------------------------------------------------------------------
+
+type Prototool mg.Namespace
+
+func (Prototool) Lint() error {
+	fmt.Println("#### Lint protobuf")
+	return sh.RunV("prototool", "lint")
+}
+
+func (Prototool) Format() error {
+	fmt.Println("#### Format protobuf")
+	return sh.RunV("prototool", "format")
+}
+
+// -----------------------------------------------------------------------------
+
 type Go mg.Namespace
 
 // Generate go code
 func (Go) Generate() error {
 	fmt.Println("## Generate code")
-	return sh.RunV("go", "generate", "./...")
+	mg.SerialDeps(Gen.Protobuf, Gen.Wire, Gen.Mocks, Gen.Migrations)
+	return nil
 }
 
 // Test run go test
 func (Go) Test() error {
-	fmt.Println("## Running tests")
+	fmt.Println("## Running unit tests")
 	return sh.RunV("gotestsum", "--junitfile", "unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
 }
 
@@ -115,21 +167,6 @@ func (Go) Lint() error {
 	mg.Deps(Go.Format)
 	fmt.Println("## Lint go code")
 	return sh.RunV("golangci-lint", "run")
-}
-
-// -----------------------------------------------------------------------------
-
-type Prototool mg.Namespace
-
-func (Prototool) Lint() error {
-	fmt.Println("## Protobuf lint")
-	return sh.RunV("prototool", "generate")
-}
-
-func (Prototool) Generate() error {
-	mg.Deps(Prototool.Lint)
-	fmt.Println("## Protobuf code generation")
-	return sh.RunV("prototool", "generate")
 }
 
 // -----------------------------------------------------------------------------

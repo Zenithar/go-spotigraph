@@ -37,6 +37,8 @@ var RepositorySet = wire.NewSet(
 
 // ----------------------------------------------------------
 
+//go:generate packr
+
 // Migrations contains all schema migrations
 var Migrations = &migrate.PackrMigrationSource{
 	Box: packr.NewBox("./migrations"),
