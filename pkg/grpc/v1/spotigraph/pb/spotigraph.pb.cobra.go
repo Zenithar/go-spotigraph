@@ -72,6 +72,7 @@ func (o *ClientCommandConfig) AddFlags(fs *pflag.FlagSet) {
 // -----------------------------------------------------------------------------
 
 func dial(cfg *ClientCommandConfig) (*grpc.ClientConn, error) {
+
 	// Default client connection options
 	opts := []grpc.DialOption{
 		grpc.WithBlock(),
@@ -118,7 +119,7 @@ func dial(cfg *ClientCommandConfig) (*grpc.ClientConn, error) {
 			tlsConfig.ServerName = addr
 		}
 
-		// tlsConfig.BuildNameToCertificate()
+		//tlsConfig.BuildNameToCertificate()
 		cred := credentials.NewTLS(tlsConfig)
 		opts = append(opts, grpc.WithTransportCredentials(cred))
 	} else {

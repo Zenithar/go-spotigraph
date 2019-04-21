@@ -42,6 +42,10 @@ func init() {
 func Build() {
 	fmt.Println("# Build Info --------------------------------------------------")
 	fmt.Printf("Go version : %s\n", runtime.Version())
+	fmt.Printf("Git revision : %s\n", hash())
+	fmt.Printf("Git branch : %s\n", branch())
+	fmt.Printf("Tag : %s\n", tag())
+
 	fmt.Println("")
 
 	fmt.Println("# Core packages -----------------------------------------------")

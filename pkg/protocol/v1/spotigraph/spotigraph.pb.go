@@ -45,7 +45,6 @@ var Graph_Node_Type_name = map[int32]string{
 	4: "SQUAD",
 	5: "TRIBE",
 }
-
 var Graph_Node_Type_value = map[string]int32{
 	"UNDEFINED": 0,
 	"USER":      1,
@@ -58,7 +57,6 @@ var Graph_Node_Type_value = map[string]int32{
 func (x Graph_Node_Type) String() string {
 	return proto.EnumName(Graph_Node_Type_name, int32(x))
 }
-
 func (Graph_Node_Type) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{3, 0, 0}
 }
@@ -77,11 +75,9 @@ func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{0}
 }
-
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
@@ -94,15 +90,12 @@ func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *Error) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Error.Merge(dst, src)
 }
-
 func (m *Error) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Error) XXX_DiscardUnknown() {
 	xxx_messageInfo_Error.DiscardUnknown(m)
 }
@@ -136,11 +129,9 @@ func (*EmptyRes) ProtoMessage()    {}
 func (*EmptyRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{1}
 }
-
 func (m *EmptyRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *EmptyRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_EmptyRes.Marshal(b, m, deterministic)
@@ -153,15 +144,12 @@ func (m *EmptyRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *EmptyRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_EmptyRes.Merge(dst, src)
 }
-
 func (m *EmptyRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *EmptyRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_EmptyRes.DiscardUnknown(m)
 }
@@ -187,11 +175,9 @@ func (*Domain) ProtoMessage()    {}
 func (*Domain) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2}
 }
-
 func (m *Domain) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain.Marshal(b, m, deterministic)
@@ -204,15 +190,12 @@ func (m *Domain) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain.Merge(dst, src)
 }
-
 func (m *Domain) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain.DiscardUnknown(m)
 }
@@ -234,11 +217,9 @@ func (*Domain_User) ProtoMessage()    {}
 func (*Domain_User) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2, 0}
 }
-
 func (m *Domain_User) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain_User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain_User.Marshal(b, m, deterministic)
@@ -251,15 +232,12 @@ func (m *Domain_User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain_User) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain_User.Merge(dst, src)
 }
-
 func (m *Domain_User) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain_User) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain_User.DiscardUnknown(m)
 }
@@ -302,11 +280,9 @@ func (*Domain_Squad) ProtoMessage()    {}
 func (*Domain_Squad) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2, 1}
 }
-
 func (m *Domain_Squad) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain_Squad) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain_Squad.Marshal(b, m, deterministic)
@@ -319,15 +295,12 @@ func (m *Domain_Squad) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain_Squad) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain_Squad.Merge(dst, src)
 }
-
 func (m *Domain_Squad) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain_Squad) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain_Squad.DiscardUnknown(m)
 }
@@ -370,11 +343,9 @@ func (*Domain_Chapter) ProtoMessage()    {}
 func (*Domain_Chapter) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2, 2}
 }
-
 func (m *Domain_Chapter) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain_Chapter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain_Chapter.Marshal(b, m, deterministic)
@@ -387,15 +358,12 @@ func (m *Domain_Chapter) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain_Chapter) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain_Chapter.Merge(dst, src)
 }
-
 func (m *Domain_Chapter) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain_Chapter) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain_Chapter.DiscardUnknown(m)
 }
@@ -438,11 +406,9 @@ func (*Domain_Guild) ProtoMessage()    {}
 func (*Domain_Guild) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2, 3}
 }
-
 func (m *Domain_Guild) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain_Guild) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain_Guild.Marshal(b, m, deterministic)
@@ -455,15 +421,12 @@ func (m *Domain_Guild) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain_Guild) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain_Guild.Merge(dst, src)
 }
-
 func (m *Domain_Guild) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain_Guild) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain_Guild.DiscardUnknown(m)
 }
@@ -506,11 +469,9 @@ func (*Domain_Tribe) ProtoMessage()    {}
 func (*Domain_Tribe) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{2, 4}
 }
-
 func (m *Domain_Tribe) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Domain_Tribe) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Domain_Tribe.Marshal(b, m, deterministic)
@@ -523,15 +484,12 @@ func (m *Domain_Tribe) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-
 func (dst *Domain_Tribe) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Domain_Tribe.Merge(dst, src)
 }
-
 func (m *Domain_Tribe) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Domain_Tribe) XXX_DiscardUnknown() {
 	xxx_messageInfo_Domain_Tribe.DiscardUnknown(m)
 }
@@ -577,11 +535,9 @@ func (*Graph) ProtoMessage()    {}
 func (*Graph) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{3}
 }
-
 func (m *Graph) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Graph) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Graph.Marshal(b, m, deterministic)
@@ -594,15 +550,12 @@ func (m *Graph) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *Graph) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Graph.Merge(dst, src)
 }
-
 func (m *Graph) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Graph) XXX_DiscardUnknown() {
 	xxx_messageInfo_Graph.DiscardUnknown(m)
 }
@@ -657,11 +610,9 @@ func (*Graph_Node) ProtoMessage()    {}
 func (*Graph_Node) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{3, 0}
 }
-
 func (m *Graph_Node) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Graph_Node) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Graph_Node.Marshal(b, m, deterministic)
@@ -674,15 +625,12 @@ func (m *Graph_Node) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *Graph_Node) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Graph_Node.Merge(dst, src)
 }
-
 func (m *Graph_Node) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Graph_Node) XXX_DiscardUnknown() {
 	xxx_messageInfo_Graph_Node.DiscardUnknown(m)
 }
@@ -699,19 +647,15 @@ type isGraph_Node_Entity interface {
 type Graph_Node_User struct {
 	User *Domain_User `protobuf:"bytes,3,opt,name=user,oneof"`
 }
-
 type Graph_Node_Chapter struct {
 	Chapter *Domain_Chapter `protobuf:"bytes,4,opt,name=chapter,oneof"`
 }
-
 type Graph_Node_Guild struct {
 	Guild *Domain_Guild `protobuf:"bytes,5,opt,name=guild,oneof"`
 }
-
 type Graph_Node_Squad struct {
 	Squad *Domain_Squad `protobuf:"bytes,6,opt,name=squad,oneof"`
 }
-
 type Graph_Node_Tribe struct {
 	Tribe *Domain_Tribe `protobuf:"bytes,7,opt,name=tribe,oneof"`
 }
@@ -934,11 +878,9 @@ func (*Graph_Edge) ProtoMessage()    {}
 func (*Graph_Edge) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{3, 1}
 }
-
 func (m *Graph_Edge) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *Graph_Edge) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Graph_Edge.Marshal(b, m, deterministic)
@@ -951,15 +893,12 @@ func (m *Graph_Edge) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *Graph_Edge) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Graph_Edge.Merge(dst, src)
 }
-
 func (m *Graph_Edge) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *Graph_Edge) XXX_DiscardUnknown() {
 	xxx_messageInfo_Graph_Edge.DiscardUnknown(m)
 }
@@ -1000,11 +939,9 @@ func (*UserCreateReq) ProtoMessage()    {}
 func (*UserCreateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{4}
 }
-
 func (m *UserCreateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *UserCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UserCreateReq.Marshal(b, m, deterministic)
@@ -1017,15 +954,12 @@ func (m *UserCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-
 func (dst *UserCreateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UserCreateReq.Merge(dst, src)
 }
-
 func (m *UserCreateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *UserCreateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_UserCreateReq.DiscardUnknown(m)
 }
@@ -1052,11 +986,9 @@ func (*UserGetReq) ProtoMessage()    {}
 func (*UserGetReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{5}
 }
-
 func (m *UserGetReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *UserGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UserGetReq.Marshal(b, m, deterministic)
@@ -1069,15 +1001,12 @@ func (m *UserGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *UserGetReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UserGetReq.Merge(dst, src)
 }
-
 func (m *UserGetReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *UserGetReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_UserGetReq.DiscardUnknown(m)
 }
@@ -1105,11 +1034,9 @@ func (*UserUpdateReq) ProtoMessage()    {}
 func (*UserUpdateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{6}
 }
-
 func (m *UserUpdateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *UserUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UserUpdateReq.Marshal(b, m, deterministic)
@@ -1122,15 +1049,12 @@ func (m *UserUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-
 func (dst *UserUpdateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UserUpdateReq.Merge(dst, src)
 }
-
 func (m *UserUpdateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *UserUpdateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_UserUpdateReq.DiscardUnknown(m)
 }
@@ -1165,11 +1089,9 @@ func (*SingleUserRes) ProtoMessage()    {}
 func (*SingleUserRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{7}
 }
-
 func (m *SingleUserRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SingleUserRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SingleUserRes.Marshal(b, m, deterministic)
@@ -1182,15 +1104,12 @@ func (m *SingleUserRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-
 func (dst *SingleUserRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SingleUserRes.Merge(dst, src)
 }
-
 func (m *SingleUserRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SingleUserRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_SingleUserRes.DiscardUnknown(m)
 }
@@ -1229,11 +1148,9 @@ func (*PaginatedUserRes) ProtoMessage()    {}
 func (*PaginatedUserRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{8}
 }
-
 func (m *PaginatedUserRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *PaginatedUserRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_PaginatedUserRes.Marshal(b, m, deterministic)
@@ -1246,15 +1163,12 @@ func (m *PaginatedUserRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-
 func (dst *PaginatedUserRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_PaginatedUserRes.Merge(dst, src)
 }
-
 func (m *PaginatedUserRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *PaginatedUserRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_PaginatedUserRes.DiscardUnknown(m)
 }
@@ -1320,11 +1234,9 @@ func (*UserSearchReq) ProtoMessage()    {}
 func (*UserSearchReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{9}
 }
-
 func (m *UserSearchReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *UserSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UserSearchReq.Marshal(b, m, deterministic)
@@ -1337,15 +1249,12 @@ func (m *UserSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-
 func (dst *UserSearchReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UserSearchReq.Merge(dst, src)
 }
-
 func (m *UserSearchReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *UserSearchReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_UserSearchReq.DiscardUnknown(m)
 }
@@ -1400,11 +1309,9 @@ func (*SquadCreateReq) ProtoMessage()    {}
 func (*SquadCreateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{10}
 }
-
 func (m *SquadCreateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SquadCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SquadCreateReq.Marshal(b, m, deterministic)
@@ -1417,15 +1324,12 @@ func (m *SquadCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SquadCreateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SquadCreateReq.Merge(dst, src)
 }
-
 func (m *SquadCreateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SquadCreateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_SquadCreateReq.DiscardUnknown(m)
 }
@@ -1452,11 +1356,9 @@ func (*SquadGetReq) ProtoMessage()    {}
 func (*SquadGetReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{11}
 }
-
 func (m *SquadGetReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SquadGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SquadGetReq.Marshal(b, m, deterministic)
@@ -1469,15 +1371,12 @@ func (m *SquadGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-
 func (dst *SquadGetReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SquadGetReq.Merge(dst, src)
 }
-
 func (m *SquadGetReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SquadGetReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_SquadGetReq.DiscardUnknown(m)
 }
@@ -1506,11 +1405,9 @@ func (*SquadUpdateReq) ProtoMessage()    {}
 func (*SquadUpdateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{12}
 }
-
 func (m *SquadUpdateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SquadUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SquadUpdateReq.Marshal(b, m, deterministic)
@@ -1523,15 +1420,12 @@ func (m *SquadUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SquadUpdateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SquadUpdateReq.Merge(dst, src)
 }
-
 func (m *SquadUpdateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SquadUpdateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_SquadUpdateReq.DiscardUnknown(m)
 }
@@ -1573,11 +1467,9 @@ func (*SingleSquadRes) ProtoMessage()    {}
 func (*SingleSquadRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{13}
 }
-
 func (m *SingleSquadRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SingleSquadRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SingleSquadRes.Marshal(b, m, deterministic)
@@ -1590,15 +1482,12 @@ func (m *SingleSquadRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SingleSquadRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SingleSquadRes.Merge(dst, src)
 }
-
 func (m *SingleSquadRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SingleSquadRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_SingleSquadRes.DiscardUnknown(m)
 }
@@ -1637,11 +1526,9 @@ func (*PaginatedSquadRes) ProtoMessage()    {}
 func (*PaginatedSquadRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{14}
 }
-
 func (m *PaginatedSquadRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *PaginatedSquadRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_PaginatedSquadRes.Marshal(b, m, deterministic)
@@ -1654,15 +1541,12 @@ func (m *PaginatedSquadRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-
 func (dst *PaginatedSquadRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_PaginatedSquadRes.Merge(dst, src)
 }
-
 func (m *PaginatedSquadRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *PaginatedSquadRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_PaginatedSquadRes.DiscardUnknown(m)
 }
@@ -1729,11 +1613,9 @@ func (*SquadSearchReq) ProtoMessage()    {}
 func (*SquadSearchReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{15}
 }
-
 func (m *SquadSearchReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SquadSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SquadSearchReq.Marshal(b, m, deterministic)
@@ -1746,15 +1628,12 @@ func (m *SquadSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SquadSearchReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SquadSearchReq.Merge(dst, src)
 }
-
 func (m *SquadSearchReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SquadSearchReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_SquadSearchReq.DiscardUnknown(m)
 }
@@ -1816,11 +1695,9 @@ func (*ChapterCreateReq) ProtoMessage()    {}
 func (*ChapterCreateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{16}
 }
-
 func (m *ChapterCreateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *ChapterCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterCreateReq.Marshal(b, m, deterministic)
@@ -1833,15 +1710,12 @@ func (m *ChapterCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-
 func (dst *ChapterCreateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterCreateReq.Merge(dst, src)
 }
-
 func (m *ChapterCreateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *ChapterCreateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterCreateReq.DiscardUnknown(m)
 }
@@ -1868,11 +1742,9 @@ func (*ChapterGetReq) ProtoMessage()    {}
 func (*ChapterGetReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{17}
 }
-
 func (m *ChapterGetReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *ChapterGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterGetReq.Marshal(b, m, deterministic)
@@ -1885,15 +1757,12 @@ func (m *ChapterGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-
 func (dst *ChapterGetReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterGetReq.Merge(dst, src)
 }
-
 func (m *ChapterGetReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *ChapterGetReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterGetReq.DiscardUnknown(m)
 }
@@ -1922,11 +1791,9 @@ func (*ChapterUpdateReq) ProtoMessage()    {}
 func (*ChapterUpdateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{18}
 }
-
 func (m *ChapterUpdateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *ChapterUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterUpdateReq.Marshal(b, m, deterministic)
@@ -1939,15 +1806,12 @@ func (m *ChapterUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-
 func (dst *ChapterUpdateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterUpdateReq.Merge(dst, src)
 }
-
 func (m *ChapterUpdateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *ChapterUpdateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterUpdateReq.DiscardUnknown(m)
 }
@@ -1989,11 +1853,9 @@ func (*SingleChapterRes) ProtoMessage()    {}
 func (*SingleChapterRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{19}
 }
-
 func (m *SingleChapterRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SingleChapterRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SingleChapterRes.Marshal(b, m, deterministic)
@@ -2006,15 +1868,12 @@ func (m *SingleChapterRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-
 func (dst *SingleChapterRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SingleChapterRes.Merge(dst, src)
 }
-
 func (m *SingleChapterRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SingleChapterRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_SingleChapterRes.DiscardUnknown(m)
 }
@@ -2053,11 +1912,9 @@ func (*PaginatedChapterRes) ProtoMessage()    {}
 func (*PaginatedChapterRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{20}
 }
-
 func (m *PaginatedChapterRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *PaginatedChapterRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_PaginatedChapterRes.Marshal(b, m, deterministic)
@@ -2070,15 +1927,12 @@ func (m *PaginatedChapterRes) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return b[:n], nil
 	}
 }
-
 func (dst *PaginatedChapterRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_PaginatedChapterRes.Merge(dst, src)
 }
-
 func (m *PaginatedChapterRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *PaginatedChapterRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_PaginatedChapterRes.DiscardUnknown(m)
 }
@@ -2145,11 +1999,9 @@ func (*ChapterSearchReq) ProtoMessage()    {}
 func (*ChapterSearchReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{21}
 }
-
 func (m *ChapterSearchReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *ChapterSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterSearchReq.Marshal(b, m, deterministic)
@@ -2162,15 +2014,12 @@ func (m *ChapterSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-
 func (dst *ChapterSearchReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterSearchReq.Merge(dst, src)
 }
-
 func (m *ChapterSearchReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *ChapterSearchReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterSearchReq.DiscardUnknown(m)
 }
@@ -2232,11 +2081,9 @@ func (*GuildCreateReq) ProtoMessage()    {}
 func (*GuildCreateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{22}
 }
-
 func (m *GuildCreateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *GuildCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GuildCreateReq.Marshal(b, m, deterministic)
@@ -2249,15 +2096,12 @@ func (m *GuildCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *GuildCreateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GuildCreateReq.Merge(dst, src)
 }
-
 func (m *GuildCreateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *GuildCreateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_GuildCreateReq.DiscardUnknown(m)
 }
@@ -2284,11 +2128,9 @@ func (*GuildGetReq) ProtoMessage()    {}
 func (*GuildGetReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{23}
 }
-
 func (m *GuildGetReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *GuildGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GuildGetReq.Marshal(b, m, deterministic)
@@ -2301,15 +2143,12 @@ func (m *GuildGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-
 func (dst *GuildGetReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GuildGetReq.Merge(dst, src)
 }
-
 func (m *GuildGetReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *GuildGetReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_GuildGetReq.DiscardUnknown(m)
 }
@@ -2337,11 +2176,9 @@ func (*GuildUpdateReq) ProtoMessage()    {}
 func (*GuildUpdateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{24}
 }
-
 func (m *GuildUpdateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *GuildUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GuildUpdateReq.Marshal(b, m, deterministic)
@@ -2354,15 +2191,12 @@ func (m *GuildUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *GuildUpdateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GuildUpdateReq.Merge(dst, src)
 }
-
 func (m *GuildUpdateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *GuildUpdateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_GuildUpdateReq.DiscardUnknown(m)
 }
@@ -2397,11 +2231,9 @@ func (*SingleGuildRes) ProtoMessage()    {}
 func (*SingleGuildRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{25}
 }
-
 func (m *SingleGuildRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SingleGuildRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SingleGuildRes.Marshal(b, m, deterministic)
@@ -2414,15 +2246,12 @@ func (m *SingleGuildRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SingleGuildRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SingleGuildRes.Merge(dst, src)
 }
-
 func (m *SingleGuildRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SingleGuildRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_SingleGuildRes.DiscardUnknown(m)
 }
@@ -2461,11 +2290,9 @@ func (*PaginatedGuildRes) ProtoMessage()    {}
 func (*PaginatedGuildRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{26}
 }
-
 func (m *PaginatedGuildRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *PaginatedGuildRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_PaginatedGuildRes.Marshal(b, m, deterministic)
@@ -2478,15 +2305,12 @@ func (m *PaginatedGuildRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-
 func (dst *PaginatedGuildRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_PaginatedGuildRes.Merge(dst, src)
 }
-
 func (m *PaginatedGuildRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *PaginatedGuildRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_PaginatedGuildRes.DiscardUnknown(m)
 }
@@ -2553,11 +2377,9 @@ func (*GuildSearchReq) ProtoMessage()    {}
 func (*GuildSearchReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{27}
 }
-
 func (m *GuildSearchReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *GuildSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GuildSearchReq.Marshal(b, m, deterministic)
@@ -2570,15 +2392,12 @@ func (m *GuildSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *GuildSearchReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GuildSearchReq.Merge(dst, src)
 }
-
 func (m *GuildSearchReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *GuildSearchReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_GuildSearchReq.DiscardUnknown(m)
 }
@@ -2640,11 +2459,9 @@ func (*TribeCreateReq) ProtoMessage()    {}
 func (*TribeCreateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{28}
 }
-
 func (m *TribeCreateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *TribeCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_TribeCreateReq.Marshal(b, m, deterministic)
@@ -2657,15 +2474,12 @@ func (m *TribeCreateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *TribeCreateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_TribeCreateReq.Merge(dst, src)
 }
-
 func (m *TribeCreateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *TribeCreateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_TribeCreateReq.DiscardUnknown(m)
 }
@@ -2692,11 +2506,9 @@ func (*TribeGetReq) ProtoMessage()    {}
 func (*TribeGetReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{29}
 }
-
 func (m *TribeGetReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *TribeGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_TribeGetReq.Marshal(b, m, deterministic)
@@ -2709,15 +2521,12 @@ func (m *TribeGetReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-
 func (dst *TribeGetReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_TribeGetReq.Merge(dst, src)
 }
-
 func (m *TribeGetReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *TribeGetReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_TribeGetReq.DiscardUnknown(m)
 }
@@ -2745,11 +2554,9 @@ func (*TribeUpdateReq) ProtoMessage()    {}
 func (*TribeUpdateReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{30}
 }
-
 func (m *TribeUpdateReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *TribeUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_TribeUpdateReq.Marshal(b, m, deterministic)
@@ -2762,15 +2569,12 @@ func (m *TribeUpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *TribeUpdateReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_TribeUpdateReq.Merge(dst, src)
 }
-
 func (m *TribeUpdateReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *TribeUpdateReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_TribeUpdateReq.DiscardUnknown(m)
 }
@@ -2805,11 +2609,9 @@ func (*SingleTribeRes) ProtoMessage()    {}
 func (*SingleTribeRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{31}
 }
-
 func (m *SingleTribeRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *SingleTribeRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SingleTribeRes.Marshal(b, m, deterministic)
@@ -2822,15 +2624,12 @@ func (m *SingleTribeRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *SingleTribeRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SingleTribeRes.Merge(dst, src)
 }
-
 func (m *SingleTribeRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *SingleTribeRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_SingleTribeRes.DiscardUnknown(m)
 }
@@ -2869,11 +2668,9 @@ func (*PaginatedTribeRes) ProtoMessage()    {}
 func (*PaginatedTribeRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{32}
 }
-
 func (m *PaginatedTribeRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *PaginatedTribeRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_PaginatedTribeRes.Marshal(b, m, deterministic)
@@ -2886,15 +2683,12 @@ func (m *PaginatedTribeRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-
 func (dst *PaginatedTribeRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_PaginatedTribeRes.Merge(dst, src)
 }
-
 func (m *PaginatedTribeRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *PaginatedTribeRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_PaginatedTribeRes.DiscardUnknown(m)
 }
@@ -2961,11 +2755,9 @@ func (*TribeSearchReq) ProtoMessage()    {}
 func (*TribeSearchReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{33}
 }
-
 func (m *TribeSearchReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *TribeSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_TribeSearchReq.Marshal(b, m, deterministic)
@@ -2978,15 +2770,12 @@ func (m *TribeSearchReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-
 func (dst *TribeSearchReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_TribeSearchReq.Merge(dst, src)
 }
-
 func (m *TribeSearchReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *TribeSearchReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_TribeSearchReq.DiscardUnknown(m)
 }
@@ -3048,11 +2837,9 @@ func (*NodeInfoReq) ProtoMessage()    {}
 func (*NodeInfoReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{34}
 }
-
 func (m *NodeInfoReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *NodeInfoReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_NodeInfoReq.Marshal(b, m, deterministic)
@@ -3065,15 +2852,12 @@ func (m *NodeInfoReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-
 func (dst *NodeInfoReq) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_NodeInfoReq.Merge(dst, src)
 }
-
 func (m *NodeInfoReq) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *NodeInfoReq) XXX_DiscardUnknown() {
 	xxx_messageInfo_NodeInfoReq.DiscardUnknown(m)
 }
@@ -3101,11 +2885,9 @@ func (*GraphRes) ProtoMessage()    {}
 func (*GraphRes) Descriptor() ([]byte, []int) {
 	return fileDescriptor_spotigraph_ff04991e18278b8c, []int{35}
 }
-
 func (m *GraphRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-
 func (m *GraphRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GraphRes.Marshal(b, m, deterministic)
@@ -3118,15 +2900,12 @@ func (m *GraphRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-
 func (dst *GraphRes) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GraphRes.Merge(dst, src)
 }
-
 func (m *GraphRes) XXX_Size() int {
 	return m.Size()
 }
-
 func (m *GraphRes) XXX_DiscardUnknown() {
 	xxx_messageInfo_GraphRes.DiscardUnknown(m)
 }
@@ -3196,7 +2975,6 @@ func init() {
 	proto.RegisterType((*GraphRes)(nil), "spotigraph.v1.GraphRes")
 	proto.RegisterEnum("spotigraph.v1.Graph_Node_Type", Graph_Node_Type_name, Graph_Node_Type_value)
 }
-
 func (this *Error) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3227,7 +3005,6 @@ func (this *Error) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *EmptyRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3255,7 +3032,6 @@ func (this *EmptyRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3280,7 +3056,6 @@ func (this *Domain) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain_User) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3314,7 +3089,6 @@ func (this *Domain_User) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain_Squad) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3348,7 +3122,6 @@ func (this *Domain_Squad) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain_Chapter) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3382,7 +3155,6 @@ func (this *Domain_Chapter) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain_Guild) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3416,7 +3188,6 @@ func (this *Domain_Guild) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Domain_Tribe) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3450,7 +3221,6 @@ func (this *Domain_Tribe) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3499,7 +3269,6 @@ func (this *Graph) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3547,7 +3316,6 @@ func (this *Graph_Node) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node_User) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3572,7 +3340,6 @@ func (this *Graph_Node_User) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node_Chapter) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3597,7 +3364,6 @@ func (this *Graph_Node_Chapter) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node_Guild) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3622,7 +3388,6 @@ func (this *Graph_Node_Guild) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node_Squad) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3647,7 +3412,6 @@ func (this *Graph_Node_Squad) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Node_Tribe) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3672,7 +3436,6 @@ func (this *Graph_Node_Tribe) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *Graph_Edge) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3711,7 +3474,6 @@ func (this *Graph_Edge) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *UserCreateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3739,7 +3501,6 @@ func (this *UserCreateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *UserGetReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3767,7 +3528,6 @@ func (this *UserGetReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *UserUpdateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3798,7 +3558,6 @@ func (this *UserUpdateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SingleUserRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3829,7 +3588,6 @@ func (this *SingleUserRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *PaginatedUserRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3877,7 +3635,6 @@ func (this *PaginatedUserRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *UserSearchReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3922,7 +3679,6 @@ func (this *UserSearchReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SquadCreateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3950,7 +3706,6 @@ func (this *SquadCreateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SquadGetReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -3978,7 +3733,6 @@ func (this *SquadGetReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SquadUpdateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4012,7 +3766,6 @@ func (this *SquadUpdateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SingleSquadRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4043,7 +3796,6 @@ func (this *SingleSquadRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *PaginatedSquadRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4091,7 +3843,6 @@ func (this *PaginatedSquadRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SquadSearchReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4139,7 +3890,6 @@ func (this *SquadSearchReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *ChapterCreateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4167,7 +3917,6 @@ func (this *ChapterCreateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *ChapterGetReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4195,7 +3944,6 @@ func (this *ChapterGetReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *ChapterUpdateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4229,7 +3977,6 @@ func (this *ChapterUpdateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SingleChapterRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4260,7 +4007,6 @@ func (this *SingleChapterRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *PaginatedChapterRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4308,7 +4054,6 @@ func (this *PaginatedChapterRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *ChapterSearchReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4356,7 +4101,6 @@ func (this *ChapterSearchReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *GuildCreateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4384,7 +4128,6 @@ func (this *GuildCreateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *GuildGetReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4412,7 +4155,6 @@ func (this *GuildGetReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *GuildUpdateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4443,7 +4185,6 @@ func (this *GuildUpdateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SingleGuildRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4474,7 +4215,6 @@ func (this *SingleGuildRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *PaginatedGuildRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4522,7 +4262,6 @@ func (this *PaginatedGuildRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *GuildSearchReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4570,7 +4309,6 @@ func (this *GuildSearchReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *TribeCreateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4598,7 +4336,6 @@ func (this *TribeCreateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *TribeGetReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4626,7 +4363,6 @@ func (this *TribeGetReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *TribeUpdateReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4657,7 +4393,6 @@ func (this *TribeUpdateReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *SingleTribeRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4688,7 +4423,6 @@ func (this *SingleTribeRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *PaginatedTribeRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4736,7 +4470,6 @@ func (this *PaginatedTribeRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *TribeSearchReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4784,7 +4517,6 @@ func (this *TribeSearchReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *NodeInfoReq) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4812,7 +4544,6 @@ func (this *NodeInfoReq) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (this *GraphRes) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -4843,7 +4574,6 @@ func (this *GraphRes) Equal(that interface{}) bool {
 	}
 	return true
 }
-
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -5163,7 +4893,7 @@ func (m *Graph) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if len(m.Properties) > 0 {
-		for k := range m.Properties {
+		for k, _ := range m.Properties {
 			dAtA[i] = 0x1a
 			i++
 			v := m.Properties[k]
@@ -5219,7 +4949,7 @@ func (m *Graph_Node) MarshalTo(dAtA []byte) (int, error) {
 		i += nn2
 	}
 	if len(m.Properties) > 0 {
-		for k := range m.Properties {
+		for k, _ := range m.Properties {
 			dAtA[i] = 0x42
 			i++
 			v := m.Properties[k]
@@ -5255,7 +4985,6 @@ func (m *Graph_Node_User) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
 func (m *Graph_Node_Chapter) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Chapter != nil {
@@ -5270,7 +4999,6 @@ func (m *Graph_Node_Chapter) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
 func (m *Graph_Node_Guild) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Guild != nil {
@@ -5285,7 +5013,6 @@ func (m *Graph_Node_Guild) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
 func (m *Graph_Node_Squad) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Squad != nil {
@@ -5300,7 +5027,6 @@ func (m *Graph_Node_Squad) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
 func (m *Graph_Node_Tribe) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Tribe != nil {
@@ -5315,7 +5041,6 @@ func (m *Graph_Node_Tribe) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-
 func (m *Graph_Edge) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -5344,7 +5069,7 @@ func (m *Graph_Edge) MarshalTo(dAtA []byte) (int, error) {
 		i += copy(dAtA[i:], m.Destination)
 	}
 	if len(m.Properties) > 0 {
-		for k := range m.Properties {
+		for k, _ := range m.Properties {
 			dAtA[i] = 0x1a
 			i++
 			v := m.Properties[k]
@@ -6808,7 +6533,6 @@ func encodeVarintSpotigraph(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-
 func NewPopulatedError(r randySpotigraph, easy bool) *Error {
 	this := &Error{}
 	this.Code = uint32(r.Uint32())
@@ -6957,31 +6681,26 @@ func NewPopulatedGraph_Node_User(r randySpotigraph, easy bool) *Graph_Node_User 
 	this.User = NewPopulatedDomain_User(r, easy)
 	return this
 }
-
 func NewPopulatedGraph_Node_Chapter(r randySpotigraph, easy bool) *Graph_Node_Chapter {
 	this := &Graph_Node_Chapter{}
 	this.Chapter = NewPopulatedDomain_Chapter(r, easy)
 	return this
 }
-
 func NewPopulatedGraph_Node_Guild(r randySpotigraph, easy bool) *Graph_Node_Guild {
 	this := &Graph_Node_Guild{}
 	this.Guild = NewPopulatedDomain_Guild(r, easy)
 	return this
 }
-
 func NewPopulatedGraph_Node_Squad(r randySpotigraph, easy bool) *Graph_Node_Squad {
 	this := &Graph_Node_Squad{}
 	this.Squad = NewPopulatedDomain_Squad(r, easy)
 	return this
 }
-
 func NewPopulatedGraph_Node_Tribe(r randySpotigraph, easy bool) *Graph_Node_Tribe {
 	this := &Graph_Node_Tribe{}
 	this.Tribe = NewPopulatedDomain_Tribe(r, easy)
 	return this
 }
-
 func NewPopulatedGraph_Edge(r randySpotigraph, easy bool) *Graph_Edge {
 	this := &Graph_Edge{}
 	this.Source = string(randStringSpotigraph(r))
@@ -7493,7 +7212,6 @@ func randUTF8RuneSpotigraph(r randySpotigraph) rune {
 	}
 	return rune(ru + 61)
 }
-
 func randStringSpotigraph(r randySpotigraph) string {
 	v16 := r.Intn(100)
 	tmps := make([]rune, v16)
@@ -7502,7 +7220,6 @@ func randStringSpotigraph(r randySpotigraph) string {
 	}
 	return string(tmps)
 }
-
 func randUnrecognizedSpotigraph(r randySpotigraph, maxFieldNumber int) (dAtA []byte) {
 	l := r.Intn(5)
 	for i := 0; i < l; i++ {
@@ -7515,7 +7232,6 @@ func randUnrecognizedSpotigraph(r randySpotigraph, maxFieldNumber int) (dAtA []b
 	}
 	return dAtA
 }
-
 func randFieldSpotigraph(dAtA []byte, r randySpotigraph, fieldNumber int, wire int) []byte {
 	key := uint32(fieldNumber)<<3 | uint32(wire)
 	switch wire {
@@ -7542,7 +7258,6 @@ func randFieldSpotigraph(dAtA []byte, r randySpotigraph, fieldNumber int, wire i
 	}
 	return dAtA
 }
-
 func encodeVarintPopulateSpotigraph(dAtA []byte, v uint64) []byte {
 	for v >= 1<<7 {
 		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
@@ -7551,7 +7266,6 @@ func encodeVarintPopulateSpotigraph(dAtA []byte, v uint64) []byte {
 	dAtA = append(dAtA, uint8(v))
 	return dAtA
 }
-
 func (m *Error) Size() (n int) {
 	var l int
 	_ = l
@@ -7760,7 +7474,6 @@ func (m *Graph_Node_User) Size() (n int) {
 	}
 	return n
 }
-
 func (m *Graph_Node_Chapter) Size() (n int) {
 	var l int
 	_ = l
@@ -7770,7 +7483,6 @@ func (m *Graph_Node_Chapter) Size() (n int) {
 	}
 	return n
 }
-
 func (m *Graph_Node_Guild) Size() (n int) {
 	var l int
 	_ = l
@@ -7780,7 +7492,6 @@ func (m *Graph_Node_Guild) Size() (n int) {
 	}
 	return n
 }
-
 func (m *Graph_Node_Squad) Size() (n int) {
 	var l int
 	_ = l
@@ -7790,7 +7501,6 @@ func (m *Graph_Node_Squad) Size() (n int) {
 	}
 	return n
 }
-
 func (m *Graph_Node_Tribe) Size() (n int) {
 	var l int
 	_ = l
@@ -7800,7 +7510,6 @@ func (m *Graph_Node_Tribe) Size() (n int) {
 	}
 	return n
 }
-
 func (m *Graph_Edge) Size() (n int) {
 	var l int
 	_ = l
@@ -8490,11 +8199,9 @@ func sovSpotigraph(x uint64) (n int) {
 	}
 	return n
 }
-
 func sozSpotigraph(x uint64) (n int) {
 	return sovSpotigraph(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-
 func (m *Error) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -8594,7 +8301,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *EmptyRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -8679,7 +8385,6 @@ func (m *EmptyRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -8731,7 +8436,6 @@ func (m *Domain) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain_User) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -8870,7 +8574,6 @@ func (m *Domain_User) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain_Squad) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -9009,7 +8712,6 @@ func (m *Domain_Squad) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain_Chapter) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -9148,7 +8850,6 @@ func (m *Domain_Chapter) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain_Guild) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -9287,7 +8988,6 @@ func (m *Domain_Guild) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Domain_Tribe) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -9426,7 +9126,6 @@ func (m *Domain_Tribe) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Graph) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -9658,7 +9357,6 @@ func (m *Graph) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Graph_Node) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10036,7 +9734,6 @@ func (m *Graph_Node) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *Graph_Edge) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10264,7 +9961,6 @@ func (m *Graph_Edge) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *UserCreateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10345,7 +10041,6 @@ func (m *UserCreateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *UserGetReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10426,7 +10121,6 @@ func (m *UserGetReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *UserUpdateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10540,7 +10234,6 @@ func (m *UserUpdateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SingleUserRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10658,7 +10351,6 @@ func (m *SingleUserRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *PaginatedUserRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -10850,7 +10542,6 @@ func (m *PaginatedUserRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *UserSearchReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11035,7 +10726,6 @@ func (m *UserSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SquadCreateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11116,7 +10806,6 @@ func (m *SquadCreateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SquadGetReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11197,7 +10886,6 @@ func (m *SquadGetReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SquadUpdateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11344,7 +11032,6 @@ func (m *SquadUpdateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SingleSquadRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11462,7 +11149,6 @@ func (m *SingleSquadRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *PaginatedSquadRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11654,7 +11340,6 @@ func (m *PaginatedSquadRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SquadSearchReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11872,7 +11557,6 @@ func (m *SquadSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *ChapterCreateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -11953,7 +11637,6 @@ func (m *ChapterCreateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *ChapterGetReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12034,7 +11717,6 @@ func (m *ChapterGetReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *ChapterUpdateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12181,7 +11863,6 @@ func (m *ChapterUpdateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SingleChapterRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12299,7 +11980,6 @@ func (m *SingleChapterRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *PaginatedChapterRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12491,7 +12171,6 @@ func (m *PaginatedChapterRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *ChapterSearchReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12709,7 +12388,6 @@ func (m *ChapterSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *GuildCreateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12790,7 +12468,6 @@ func (m *GuildCreateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *GuildGetReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12871,7 +12548,6 @@ func (m *GuildGetReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *GuildUpdateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -12985,7 +12661,6 @@ func (m *GuildUpdateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SingleGuildRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13103,7 +12778,6 @@ func (m *SingleGuildRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *PaginatedGuildRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13295,7 +12969,6 @@ func (m *PaginatedGuildRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *GuildSearchReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13513,7 +13186,6 @@ func (m *GuildSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *TribeCreateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13594,7 +13266,6 @@ func (m *TribeCreateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *TribeGetReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13675,7 +13346,6 @@ func (m *TribeGetReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *TribeUpdateReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13789,7 +13459,6 @@ func (m *TribeUpdateReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *SingleTribeRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -13907,7 +13576,6 @@ func (m *SingleTribeRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *PaginatedTribeRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -14099,7 +13767,6 @@ func (m *PaginatedTribeRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *TribeSearchReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -14317,7 +13984,6 @@ func (m *TribeSearchReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *NodeInfoReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -14398,7 +14064,6 @@ func (m *NodeInfoReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func (m *GraphRes) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -14516,7 +14181,6 @@ func (m *GraphRes) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-
 func skipSpotigraph(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
