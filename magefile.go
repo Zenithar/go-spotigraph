@@ -90,6 +90,20 @@ func (Gen) Mocks() error {
 	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/services")
 }
 
+// Generate mocks for tests
+func (Gen) Decorators() error {
+	fmt.Println("### Decorators")
+
+	fmt.Println("- Repositories")
+	err := sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories/pkg/...")
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("- Services")
+	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/services/pkg/...")
+}
+
 // Generate initializers
 func (Gen) Migrations() error {
 	fmt.Println("### Database migrations")
@@ -124,7 +138,7 @@ type Go mg.Namespace
 // Generate go code
 func (Go) Generate() error {
 	fmt.Println("## Generate code")
-	mg.SerialDeps(Gen.Protobuf, Gen.Wire, Gen.Mocks, Gen.Migrations)
+	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Wire)
 	return nil
 }
 
