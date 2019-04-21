@@ -151,7 +151,8 @@ func (Go) Generate() error {
 // Test run go test
 func (Go) Test() error {
 	fmt.Println("## Running unit tests")
-	return sh.RunV("gotestsum", "--junitfile", "unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
+	sh.Run("mkdir", "-p", "test-results/junit")
+	return sh.RunV("gotestsum", "--junitfile", "test-results/junit/unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
 }
 
 // Tidy add/remove depenedencies.
