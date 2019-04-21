@@ -11,7 +11,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: mod-{{ "go.sum" }}
+          key: mod-{{ checksum "go.sum" }}-{{ checksum "tools/go.sum" }}
 
       - run:
           name: install tools
@@ -22,7 +22,7 @@ jobs:
           command: go run mage.go go:deps
 
       - save_cache:
-          key: mod-{{ "go.sum" }}
+          key: mod-{{ checksum "go.sum" }}-{{ checksum "tools/go.sum" }}
           paths:
             - /go/pkg/mod
           when: always

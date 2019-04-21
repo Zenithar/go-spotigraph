@@ -40,11 +40,15 @@ func init() {
 }
 
 func Build() {
-	fmt.Println("# Core packages")
-	mg.SerialDeps(Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
+	fmt.Println("# Build Info --------------------------------------------------")
+	fmt.Printf("Go version : %s\n", runtime.Version())
+	fmt.Println("")
+
+	fmt.Println("# Core packages -----------------------------------------------")
+	mg.SerialDeps(Go.Deps, Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
-	fmt.Println("# Artifacts")
+	fmt.Println("# Artifacts ---------------------------------------------------")
 	mg.Deps(Bin.Spotigraph)
 }
 
@@ -71,45 +75,38 @@ func (ci CI) localExecute(job string) error {
 type Gen mg.Namespace
 
 // Generate initializers
-func (Gen) Wire() error {
+func (Gen) Wire() {
 	fmt.Println("### Wiring dispatchers")
-	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/...")
+
+	mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql")
+	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http")
+	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc")
 }
 
 // Generate mocks for tests
-func (Gen) Mocks() error {
+func (Gen) Mocks() {
 	fmt.Println("### Mocks")
 
-	fmt.Println("- Repositories")
-	err := sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories")
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("- Services")
-	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/services")
+	mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories")
+	mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services")
 }
 
 // Generate mocks for tests
-func (Gen) Decorators() error {
+func (Gen) Decorators() {
 	fmt.Println("### Decorators")
 
-	fmt.Println("- Repositories")
-	err := sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories/pkg/...")
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("- Services")
-	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/services/pkg/...")
+	mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories/pkg/...")
+	mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services/pkg/...")
 }
 
 // Generate initializers
-func (Gen) Migrations() error {
+func (Gen) Migrations() {
 	fmt.Println("### Database migrations")
-	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql")
+
+	mustGoGenerate("PostgreSQL", "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql")
 }
 
+// Generate protobuf
 func (Gen) Protobuf() error {
 	fmt.Println("### Protobuf")
 	mg.SerialDeps(Prototool.Lint)
@@ -117,9 +114,9 @@ func (Gen) Protobuf() error {
 	return sh.RunV("prototool", "generate")
 }
 
-func (Gen) GRPCClient() error {
-	fmt.Println("### gRPC Client adapter")
-	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/client")
+func (Gen) Adapters() {
+	fmt.Println("### Remote Service Adapters")
+	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/client")
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +140,7 @@ type Go mg.Namespace
 // Generate go code
 func (Go) Generate() error {
 	fmt.Println("## Generate code")
-	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.GRPCClient, Gen.Wire)
+	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Adapters, Gen.Wire)
 	return nil
 }
 
@@ -274,6 +271,14 @@ func mustStr(r string, err error) string {
 		panic(err)
 	}
 	return r
+}
+
+func mustGoGenerate(txt, name string) {
+	fmt.Printf(" > %s [%s]\n", txt, name)
+	err := sh.RunV("go", "generate", name)
+	if err != nil {
+		panic(err)
+	}
 }
 
 // normalizePath turns a path into an absolute path and removes symlinks
