@@ -25,3 +25,12 @@ var PrincipalHashFunc = func(principal string) string {
 	// Return base64 hash value of the principal hash
 	return base64.RawStdEncoding.EncodeToString(hasher.Sum(nil))
 }
+
+// SetPrincipalHashKey used to set the key of hash function
+func SetPrincipalHashKey(key []byte) {
+	if len(key) != 64 {
+		panic("Principal hash key length must be 64bytes long.")
+	}
+
+	principalHashKey = key
+}

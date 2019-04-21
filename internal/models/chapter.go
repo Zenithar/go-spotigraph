@@ -33,7 +33,7 @@ func NewChapter(name string) *Chapter {
 // Validate entity contraints
 func (c *Chapter) Validate() error {
 	return validation.ValidateStruct(c,
-		validation.Field(&c.ID, validation.Required, is.Alphanumeric),
+		validation.Field(&c.ID, append(helpers.IDValidationRules, validation.Required)...),
 		validation.Field(&c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
 	)
 }
