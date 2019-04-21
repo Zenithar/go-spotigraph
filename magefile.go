@@ -117,6 +117,11 @@ func (Gen) Protobuf() error {
 	return sh.RunV("prototool", "generate")
 }
 
+func (Gen) GRPCClient() error {
+	fmt.Println("### gRPC Client adapter")
+	return sh.RunV("go", "generate", "go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/client")
+}
+
 // -----------------------------------------------------------------------------
 
 type Prototool mg.Namespace
@@ -138,7 +143,7 @@ type Go mg.Namespace
 // Generate go code
 func (Go) Generate() error {
 	fmt.Println("## Generate code")
-	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Wire)
+	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.GRPCClient, Gen.Wire)
 	return nil
 }
 
