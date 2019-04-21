@@ -11,6 +11,7 @@ require (
 	github.com/cloudflare/tableflip v0.0.0-20190329062924-8392f1641731
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/fatih/color v1.7.0 // indirect
+	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/gobuffalo/packr v1.25.0
@@ -45,7 +46,16 @@ require (
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.20.2
 	go.uber.org/zap v1.9.1
-	go.zenithar.org/pkg v0.0.12
+	go.zenithar.org/pkg/cache v0.0.1
+	go.zenithar.org/pkg/db v0.0.2
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.1
+	go.zenithar.org/pkg/db/adapter/postgresql v0.0.1
+	go.zenithar.org/pkg/db/adapter/rethinkdb v0.0.1
+	go.zenithar.org/pkg/flags v0.0.1
+	go.zenithar.org/pkg/log v0.0.1
+	go.zenithar.org/pkg/platform v0.0.1
+	go.zenithar.org/pkg/tlsconfig v0.0.1
+	go.zenithar.org/pkg/web v0.0.1
 	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480
 	golang.org/x/net v0.0.0-20190420063019-afa5a82059c6
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
