@@ -155,6 +155,13 @@ func (Go) Test() error {
 	return sh.RunV("gotestsum", "--junitfile", "test-results/junit/unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
 }
 
+// Test run go test
+func (Go) IntegrationTest() error {
+	fmt.Println("## Running integration tests")
+	sh.Run("mkdir", "-p", "test-results/junit")
+	return sh.RunV("gotestsum", "--junitfile", "test-results/junit/integration.xml", "--", "-tags=integration", "-race", "-cover", "./...")
+}
+
 // Tidy add/remove depenedencies.
 func (Go) Tidy() error {
 	fmt.Println("## Cleaning go modules")
