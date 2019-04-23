@@ -43,6 +43,6 @@ func postgreSQLConnection(ctx context.Context) (func(), error) {
 
 	// Return result
 	return func() {
-        log.SafeClose(conn, "unable to close connection")
-    }, nil
+		log.SafeClose(conn, "unable to close connection")
+	}, nil
 }

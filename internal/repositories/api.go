@@ -80,6 +80,9 @@ type Squad interface {
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *SquadSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Squad, int, error)
 	FindByName(ctx context.Context, name string) (*models.Squad, error)
+
+	AddMembers(ctx context.Context, id string, users ...*models.User) error
+	RemoveMembers(ctx context.Context, id string, users ...*models.User) error
 }
 
 // TribeSearchFilter represents tribe entity collection search criteria

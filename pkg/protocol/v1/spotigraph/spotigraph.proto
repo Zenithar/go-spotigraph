@@ -203,6 +203,17 @@ message SquadUpdateReq {
   ];
 }
 
+message SquadMemberReq {
+  string squad_id = 1 [(validate.rules).string = {
+    pattern: "^[0-9A-Za-z]+$"
+    len: 32
+  }];
+  repeated string user_ids = 2 [(validate.rules).repeated.items.string = {
+    pattern: "^[0-9A-Za-z]+$"
+    len: 32
+  }];
+}
+
 message SingleSquadRes {
   Error error = 1;
   Domain.Squad entity = 2;

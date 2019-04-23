@@ -96,6 +96,7 @@ func Test_Squad_Creation(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
+			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
 			if tt.prepare != nil {
@@ -103,7 +104,7 @@ func Test_Squad_Creation(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads)
+			underTest := squad.New(squads, users)
 
 			// Do the query
 			got, err := underTest.Create(ctx, tt.req)
@@ -203,6 +204,7 @@ func Test_Squad_Get(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
+			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
 			if tt.prepare != nil {
@@ -210,7 +212,7 @@ func Test_Squad_Get(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads)
+			underTest := squad.New(squads, users)
 
 			// Do the query
 			got, err := underTest.Get(ctx, tt.req)
@@ -334,6 +336,7 @@ func Test_Squad_Update(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
+			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
 			if tt.prepare != nil {
@@ -341,7 +344,7 @@ func Test_Squad_Update(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads)
+			underTest := squad.New(squads, users)
 
 			// Do the query
 			got, err := underTest.Update(ctx, tt.req)
@@ -439,6 +442,7 @@ func Test_Squad_Delete(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
+			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
 			if tt.prepare != nil {
@@ -446,7 +450,7 @@ func Test_Squad_Delete(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads)
+			underTest := squad.New(squads, users)
 
 			// Do the query
 			got, err := underTest.Delete(ctx, tt.req)
@@ -523,6 +527,7 @@ func Test_Squad_Search(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
+			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
 			if tt.prepare != nil {
@@ -530,7 +535,7 @@ func Test_Squad_Search(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads)
+			underTest := squad.New(squads, users)
 
 			// Do the query
 			got, err := underTest.Search(ctx, tt.req)

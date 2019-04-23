@@ -79,3 +79,43 @@ func (r *mgoSquadRepository) FindByName(ctx context.Context, name string) (*mode
 
 	return &entity, nil
 }
+
+func (r *mgoSquadRepository) AddMembers(ctx context.Context, id string, users ...*models.User) error {
+	// Retrieve squad entity
+	entity, err := r.Get(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	// Add user as members
+	for _, u := range users {
+		entity.AddMember(u)
+	}
+
+	// Update members
+	return r.adapter.Update(ctx, map[string]interface{}{
+		"member_ids": entity.MemberIDs,
+	}, map[string]interface{}{
+		"id": entity.ID,
+	})
+}
+
+func (r *mgoSquadRepository) RemoveMembers(ctx context.Context, id string, users ...*models.User) error {
+	// Retrieve squad entity
+	entity, err := r.Get(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	// Remove user from members
+	for _, u := range users {
+		entity.RemoveMember(u)
+	}
+
+	// Update members
+	return r.adapter.Update(ctx, map[string]interface{}{
+		"member_ids": entity.MemberIDs,
+	}, map[string]interface{}{
+		"id": entity.ID,
+	})
+}

@@ -45,6 +45,8 @@ service Squad {
   rpc Update(.spotigraph.v1.SquadUpdateReq) returns (.spotigraph.v1.SingleSquadRes);
   rpc Delete(.spotigraph.v1.SquadGetReq) returns (.spotigraph.v1.EmptyRes);
   rpc Search(.spotigraph.v1.SquadSearchReq) returns (.spotigraph.v1.PaginatedSquadRes);
+  rpc AddMembers(.spotigraph.v1.SquadMemberReq) returns (.spotigraph.v1.EmptyRes);
+  rpc RemoveMembers(.spotigraph.v1.SquadMemberReq) returns (.spotigraph.v1.EmptyRes);
 }
 
 service Chapter {

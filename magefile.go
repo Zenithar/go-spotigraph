@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/common-nighthawk/go-figure"
+	"github.com/fatih/color"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 )
@@ -40,7 +42,11 @@ func init() {
 }
 
 func Build() {
-	fmt.Println("# Build Info --------------------------------------------------")
+	banner := figure.NewFigure("SpotiGraph", "", true)
+	banner.Print()
+
+	fmt.Println("")
+	color.Red("# Build Info ---------------------------------------------------------------")
 	fmt.Printf("Go version : %s\n", runtime.Version())
 	fmt.Printf("Git revision : %s\n", hash())
 	fmt.Printf("Git branch : %s\n", branch())
@@ -48,11 +54,11 @@ func Build() {
 
 	fmt.Println("")
 
-	fmt.Println("# Core packages -----------------------------------------------")
+	color.Red("# Core packages ------------------------------------------------------------")
 	mg.SerialDeps(Go.Deps, Go.Generate, Go.Format, Go.Import, Go.Lint, Go.Test)
 
 	fmt.Println("")
-	fmt.Println("# Artifacts ---------------------------------------------------")
+	color.Red("# Artifacts ----------------------------------------------------------------")
 	mg.Deps(Bin.Spotigraph)
 }
 
@@ -80,7 +86,7 @@ type Gen mg.Namespace
 
 // Generate initializers
 func (Gen) Wire() {
-	fmt.Println("### Wiring dispatchers")
+	color.Blue("### Wiring dispatchers")
 
 	mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql")
 	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http")
@@ -89,7 +95,7 @@ func (Gen) Wire() {
 
 // Generate mocks for tests
 func (Gen) Mocks() {
-	fmt.Println("### Mocks")
+	color.Blue("### Mocks")
 
 	mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories")
 	mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services")
@@ -97,7 +103,7 @@ func (Gen) Mocks() {
 
 // Generate mocks for tests
 func (Gen) Decorators() {
-	fmt.Println("### Decorators")
+	color.Blue("### Decorators")
 
 	mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories/pkg/...")
 	mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services/pkg/...")
@@ -105,21 +111,21 @@ func (Gen) Decorators() {
 
 // Generate initializers
 func (Gen) Migrations() {
-	fmt.Println("### Database migrations")
+	color.Blue("### Database migrations")
 
 	mustGoGenerate("PostgreSQL", "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql")
 }
 
 // Generate protobuf
 func (Gen) Protobuf() error {
-	fmt.Println("### Protobuf")
+	color.Blue("### Protobuf")
 	mg.SerialDeps(Prototool.Lint)
 
 	return sh.RunV("prototool", "generate")
 }
 
 func (Gen) Adapters() {
-	fmt.Println("### Remote Service Adapters")
+	color.Blue("### Remote Service Adapters")
 	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/client")
 }
 
@@ -143,21 +149,21 @@ type Go mg.Namespace
 
 // Generate go code
 func (Go) Generate() error {
-	fmt.Println("## Generate code")
+	color.Cyan("## Generate code")
 	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Adapters, Gen.Wire)
 	return nil
 }
 
 // Test run go test
 func (Go) Test() error {
-	fmt.Println("## Running unit tests")
+	color.Cyan("## Running unit tests")
 	sh.Run("mkdir", "-p", "test-results/junit")
 	return sh.RunV("gotestsum", "--junitfile", "test-results/junit/unit-tests.xml", "--", "-short", "-race", "-cover", "./...")
 }
 
 // Test run go test
 func (Go) IntegrationTest() {
-	fmt.Println("## Running integration tests")
+	color.Cyan("## Running integration tests")
 	sh.Run("mkdir", "-p", "test-results/junit")
 
 	runIntegrationTest("Repositories", "go.zenithar.org/spotigraph/internal/repositories/test/integration")
@@ -171,13 +177,13 @@ func (Go) Tidy() error {
 
 // Deps install dependency tools.
 func (Go) Deps() error {
-	fmt.Println("## Vendoring dependencies")
+	color.Cyan("## Vendoring dependencies")
 	return sh.RunV("go", "mod", "vendor")
 }
 
 // Format runs gofmt on everything
 func (Go) Format() error {
-	fmt.Println("## Format everything")
+	color.Cyan("## Format everything")
 	args := []string{"-s", "-w"}
 	args = append(args, goFiles...)
 	return sh.RunV("gofumpt", args...)
@@ -185,7 +191,7 @@ func (Go) Format() error {
 
 // Import runs goimports on everything
 func (Go) Import() error {
-	fmt.Println("## Process imports")
+	color.Cyan("## Process imports")
 	args := []string{"-w"}
 	args = append(args, goSrcFiles...)
 	return sh.RunV("goreturns", args...)
@@ -194,7 +200,7 @@ func (Go) Import() error {
 // Lint run linter.
 func (Go) Lint() error {
 	mg.Deps(Go.Format)
-	fmt.Println("## Lint go code")
+	color.Cyan("## Lint go code")
 	return sh.RunV("golangci-lint", "run")
 }
 

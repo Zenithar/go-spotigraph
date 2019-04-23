@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"go.uber.org/zap"
 	"go.zenithar.org/pkg/db"
+	"go.zenithar.org/pkg/log"
 
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
@@ -16,12 +18,14 @@ import (
 
 type service struct {
 	squads repositories.Squad
+	users  repositories.User
 }
 
 // New returns a service instance
-func New(squads repositories.Squad) services.Squad {
+func New(squads repositories.Squad, users repositories.User) services.Squad {
 	return &service{
 		squads: squads,
+		users:  users,
 	}
 }
 
@@ -276,5 +280,121 @@ func (s *service) Search(ctx context.Context, req *spotigraph.SquadSearchReq) (*
 	}
 
 	// Return results
+	return res, nil
+}
+
+func (s *service) AddMembers(ctx context.Context, req *spotigraph.SquadMemberReq) (*spotigraph.EmptyRes, error) {
+	res := &spotigraph.EmptyRes{}
+
+	// Prepare expected results
+
+	var entity models.Squad
+
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
+	// Validate service constraints
+	if err := constraints.Validate(ctx,
+		// Request must be syntaxically valid
+		constraints.MustBeValid(req),
+		// Squad must exists
+		constraints.SquadMustExists(s.squads, req.SquadId, &entity),
+	); err != nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusPreconditionFailed,
+			Message: "Unable to validate request",
+		}
+		return res, err
+	}
+
+	// Check user existence
+	valid := []*models.User{}
+	for _, uid := range req.UserIds {
+		user, err := s.users.Get(ctx, uid)
+		if err != nil {
+			log.For(ctx).Error("Invalid user, ignored", zap.Error(err))
+			continue
+		}
+
+		// Add to valid users
+		valid = append(valid, user)
+	}
+
+	if len(valid) > 0 {
+		// Create account in database
+		if err := s.squads.AddMembers(ctx, entity.ID, valid...); err != nil {
+			res.Error = &spotigraph.Error{
+				Code:    http.StatusInternalServerError,
+				Message: "Unable to add squad members",
+			}
+			return res, err
+		}
+	}
+
+	// Return expected result
+	return res, nil
+}
+
+func (s *service) RemoveMembers(ctx context.Context, req *spotigraph.SquadMemberReq) (*spotigraph.EmptyRes, error) {
+	res := &spotigraph.EmptyRes{}
+
+	// Prepare expected results
+
+	var entity models.Squad
+
+	// Check request
+	if req == nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusBadRequest,
+			Message: "request must not be nil",
+		}
+		return res, fmt.Errorf("request must not be nil")
+	}
+
+	// Validate service constraints
+	if err := constraints.Validate(ctx,
+		// Request must be syntaxically valid
+		constraints.MustBeValid(req),
+		// Squad must exists
+		constraints.SquadMustExists(s.squads, req.SquadId, &entity),
+	); err != nil {
+		res.Error = &spotigraph.Error{
+			Code:    http.StatusPreconditionFailed,
+			Message: "Unable to validate request",
+		}
+		return res, err
+	}
+
+	// Check user existence
+	valid := []*models.User{}
+	for _, uid := range req.UserIds {
+		user, err := s.users.Get(ctx, uid)
+		if err != nil {
+			log.For(ctx).Error("Invalid user, ignored", zap.Error(err))
+			continue
+		}
+
+		// Add to valid users
+		valid = append(valid, user)
+	}
+
+	if len(valid) > 0 {
+		// Create account in database
+		if err := s.squads.RemoveMembers(ctx, entity.ID, valid...); err != nil {
+			res.Error = &spotigraph.Error{
+				Code:    http.StatusInternalServerError,
+				Message: "Unable to remove squad members",
+			}
+			return res, err
+		}
+	}
+
+	// Return expected result
 	return res, nil
 }

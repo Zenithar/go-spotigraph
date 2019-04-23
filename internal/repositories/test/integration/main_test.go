@@ -58,21 +58,21 @@ func testMainWrapper(m *testing.M) int {
 		switch back {
 		case "postgresql":
 			// Initialize postgresql
-            cancel, err := postgreSQLConnection(ctx)
-            if err != nil {
-                log.Bg().Fatal("Unable to initialize repositories", zap.Error(err))
-            }
+			cancel, err := postgreSQLConnection(ctx)
+			if err != nil {
+				log.Bg().Fatal("Unable to initialize repositories", zap.Error(err))
+			}
 			defer func() {
-                cancel()
+				cancel()
 			}()
 		default:
 			log.Bg().Fatal("Unsupported backend", zap.String("backend", back))
 		}
-    }
+	}
 
-    defer func() {
-        database.KillAll(ctx)
-    }()
+	defer func() {
+		database.KillAll(ctx)
+	}()
 
 	return m.Run()
 }

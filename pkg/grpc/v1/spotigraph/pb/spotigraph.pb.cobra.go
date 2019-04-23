@@ -725,6 +725,110 @@ func init() {
 	DefaultClientCommandConfig.AddFlags(squad_SearchClientCommand.Flags())
 }
 
+var squad_AddMembersClientCommand = &cobra.Command{
+	Use:  "addMembers",
+	Long: "AddMembers client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	addMembers -p > req.json
+Submit request using file:
+	addMembers -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | addMembers --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.SquadMemberReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewSquadClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.AddMembers(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	SquadClientCommand.AddCommand(squad_AddMembersClientCommand)
+	DefaultClientCommandConfig.AddFlags(squad_AddMembersClientCommand.Flags())
+}
+
+var squad_RemoveMembersClientCommand = &cobra.Command{
+	Use:  "removeMembers",
+	Long: "RemoveMembers client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	removeMembers -p > req.json
+Submit request using file:
+	removeMembers -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | removeMembers --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req spotigraph.SquadMemberReq
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewSquadClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.RemoveMembers(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	SquadClientCommand.AddCommand(squad_RemoveMembersClientCommand)
+	DefaultClientCommandConfig.AddFlags(squad_RemoveMembersClientCommand.Flags())
+}
+
 var ChapterClientCommand = &cobra.Command{
 	Use: "chapter",
 }

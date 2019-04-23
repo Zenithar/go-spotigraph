@@ -14,10 +14,11 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf // indirect
 	github.com/beorn7/perks v1.0.0 // indirect
 	github.com/cloudflare/tableflip v0.0.0-20190329062924-8392f1641731
+	github.com/common-nighthawk/go-figure v0.0.0-20180619031829-18b2b544842c
 	github.com/coreos/etcd v3.3.12+incompatible // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
-	github.com/fatih/color v1.7.0 // indirect
+	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/go-logfmt/logfmt v0.4.0 // indirect

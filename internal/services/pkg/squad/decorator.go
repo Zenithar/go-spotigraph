@@ -13,9 +13,9 @@ import (
 type Decorator func(s services.Squad) services.Squad
 
 // NewWithDecorators returns a service instance with decorators
-func NewWithDecorators(squads repositories.Squad, decorators ...Decorator) services.Squad {
+func NewWithDecorators(squads repositories.Squad, users repositories.User, decorators ...Decorator) services.Squad {
 	// Initialize base
-	s := New(squads)
+	s := New(squads, users)
 
 	// Add decorators
 	for _, wrapper := range decorators {

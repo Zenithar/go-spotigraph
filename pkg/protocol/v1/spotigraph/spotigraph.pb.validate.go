@@ -1174,6 +1174,108 @@ var _SquadUpdateReq_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 var _SquadUpdateReq_ProductOwnerId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
+// Validate checks the field values on SquadMemberReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *SquadMemberReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetSquadId()) != 32 {
+		return SquadMemberReqValidationError{
+			field:  "SquadId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_SquadMemberReq_SquadId_Pattern.MatchString(m.GetSquadId()) {
+		return SquadMemberReqValidationError{
+			field:  "SquadId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	for idx, item := range m.GetUserIds() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) != 32 {
+			return SquadMemberReqValidationError{
+				field:  fmt.Sprintf("UserIds[%v]", idx),
+				reason: "value length must be 32 runes",
+			}
+		}
+
+		if !_SquadMemberReq_UserIds_Pattern.MatchString(item) {
+			return SquadMemberReqValidationError{
+				field:  fmt.Sprintf("UserIds[%v]", idx),
+				reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// SquadMemberReqValidationError is the validation error returned by
+// SquadMemberReq.Validate if the designated constraints aren't met.
+type SquadMemberReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SquadMemberReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SquadMemberReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SquadMemberReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SquadMemberReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SquadMemberReqValidationError) ErrorName() string { return "SquadMemberReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SquadMemberReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSquadMemberReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SquadMemberReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SquadMemberReqValidationError{}
+
+var _SquadMemberReq_SquadId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _SquadMemberReq_UserIds_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
 // Validate checks the field values on SingleSquadRes with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.

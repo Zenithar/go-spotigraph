@@ -175,6 +175,58 @@ func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*model
 	return entity.ToEntity()
 }
 
+func (r *pgSquadRepository) AddMembers(ctx context.Context, id string, users ...*models.User) error {
+	// Retrieve squad entity
+	entity, err := r.Get(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	// Add user as members
+	for _, u := range users {
+		entity.AddMember(u)
+	}
+
+	// Intermediary DTO
+	obj, err := toSquadSQL(entity)
+	if err != nil {
+		return err
+	}
+
+	// Update members
+	return r.adapter.Update(ctx, map[string]interface{}{
+		"member_ids": obj.MemberIDs,
+	}, map[string]interface{}{
+		"id": entity.ID,
+	})
+}
+
+func (r *pgSquadRepository) RemoveMembers(ctx context.Context, id string, users ...*models.User) error {
+	// Retrieve squad entity
+	entity, err := r.Get(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	// Remove user from members
+	for _, u := range users {
+		entity.RemoveMember(u)
+	}
+
+	// Intermediary DTO
+	obj, err := toSquadSQL(entity)
+	if err != nil {
+		return err
+	}
+
+	// Update members
+	return r.adapter.Update(ctx, map[string]interface{}{
+		"member_ids": obj.MemberIDs,
+	}, map[string]interface{}{
+		"id": entity.ID,
+	})
+}
+
 // -----------------------------------------------------------------------------
 
 func (r *pgSquadRepository) buildFilter(filter *repositories.SquadSearchFilter) interface{} {

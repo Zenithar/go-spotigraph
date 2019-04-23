@@ -26,6 +26,9 @@ type Squad interface {
 	Update(ctx context.Context, req *spotigraph.SquadUpdateReq) (res *spotigraph.SingleSquadRes, err error)
 	Delete(ctx context.Context, req *spotigraph.SquadGetReq) (res *spotigraph.EmptyRes, err error)
 	Search(ctx context.Context, req *spotigraph.SquadSearchReq) (res *spotigraph.PaginatedSquadRes, err error)
+
+	AddMembers(ctx context.Context, req *spotigraph.SquadMemberReq) (res *spotigraph.EmptyRes, err error)
+	RemoveMembers(ctx context.Context, req *spotigraph.SquadMemberReq) (res *spotigraph.EmptyRes, err error)
 }
 
 //go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/services Chapter
