@@ -53,8 +53,8 @@ func (r *mgoChapterRepository) Update(ctx context.Context, entity *models.Chapte
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":       entity.Name,
 		"meta":       entity.Meta,
-		"leader_id":  entity.Leader,
-		"member_ids": entity.Members,
+		"leader_id":  entity.LeaderID,
+		"member_ids": entity.MemberIDs,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

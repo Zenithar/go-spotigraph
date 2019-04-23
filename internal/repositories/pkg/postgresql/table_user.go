@@ -23,12 +23,12 @@ type pgUserRepository struct {
 func NewUserRepository(cfg *db.Configuration, session *sqlx.DB) repositories.User {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "prn", "meta",
+		"id", "principal", "meta",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"prn",
+		"principal",
 	}
 
 	return &pgUserRepository{
@@ -40,7 +40,7 @@ func NewUserRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Use
 
 type sqlUser struct {
 	ID        string `db:"id"`
-	Principal string `db:"name"`
+	Principal string `db:"principal"`
 	Meta      string `db:"meta"`
 }
 
@@ -148,7 +148,7 @@ func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string
 	var entity sqlUser
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"prn": principal,
+		"principal": principal,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -165,10 +165,10 @@ func (r *pgUserRepository) buildFilter(filter *repositories.UserSearchFilter) in
 		}
 
 		if len(strings.TrimSpace(filter.UserID)) > 0 {
-			clauses["user_id"] = filter.UserID
+			clauses["id"] = filter.UserID
 		}
 		if len(strings.TrimSpace(filter.Principal)) > 0 {
-			clauses["prn"] = filter.Principal
+			clauses["principal"] = filter.Principal
 		}
 
 		return clauses

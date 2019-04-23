@@ -55,8 +55,8 @@ func (r *rdbChapterRepository) Update(ctx context.Context, entity *models.Chapte
 
 	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
 		"name":       entity.Name,
-		"leader_id":  entity.Leader,
-		"member_ids": entity.Members,
+		"leader_id":  entity.LeaderID,
+		"member_ids": entity.MemberIDs,
 		"meta":       entity.Meta,
 	})
 }

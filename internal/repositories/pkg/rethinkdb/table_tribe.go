@@ -55,8 +55,9 @@ func (r *rdbTribeRepository) Update(ctx context.Context, entity *models.Tribe) e
 
 	return r.adapter.Update(ctx, entity.ID, map[string]interface{}{
 		"name":      entity.Name,
-		"squad_ids": entity.Squads,
+		"squad_ids": entity.SquadIDs,
 		"meta":      entity.Meta,
+		"leader_id": entity.LeaderID,
 	})
 }
 

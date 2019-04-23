@@ -39,11 +39,11 @@ func NewSquadRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Sq
 // ------------------------------------------------------------
 
 type sqlSquad struct {
-	ID           string `db:"id"`
-	Name         string `db:"name"`
-	Meta         string `db:"meta"`
-	ProductOwner string `json:"product_owner_id"`
-	Members      string `db:"member_ids"`
+	ID             string `db:"id"`
+	Name           string `db:"name"`
+	Meta           string `db:"meta"`
+	ProductOwnerID string `db:"product_owner_id"`
+	MemberIDs      string `db:"member_ids"`
 }
 
 func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
@@ -52,25 +52,25 @@ func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	members, err := json.Marshal(entity.Members)
+	members, err := json.Marshal(entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
 	return &sqlSquad{
-		ID:           entity.ID,
-		Name:         entity.Name,
-		Meta:         string(meta),
-		Members:      string(members),
-		ProductOwner: entity.ProductOwner,
+		ID:             entity.ID,
+		Name:           entity.Name,
+		Meta:           string(meta),
+		MemberIDs:      string(members),
+		ProductOwnerID: entity.ProductOwnerID,
 	}, nil
 }
 
 func (dto *sqlSquad) ToEntity() (*models.Squad, error) {
 	entity := &models.Squad{
-		ID:           dto.ID,
-		Name:         dto.Name,
-		ProductOwner: dto.ProductOwner,
+		ID:             dto.ID,
+		Name:           dto.Name,
+		ProductOwnerID: dto.ProductOwnerID,
 	}
 
 	// Decode JSON columns
@@ -82,7 +82,7 @@ func (dto *sqlSquad) ToEntity() (*models.Squad, error) {
 	}
 
 	// Membership
-	err = json.Unmarshal([]byte(dto.Members), &entity.Members)
+	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -111,7 +111,7 @@ func (r *pgSquadRepository) Get(ctx context.Context, id string) (*models.Squad, 
 	var entity sqlSquad
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"squad_id": id,
+		"id": id,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -134,16 +134,16 @@ func (r *pgSquadRepository) Update(ctx context.Context, entity *models.Squad) er
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":             obj.Name,
 		"meta":             obj.Meta,
-		"product_owner_id": obj.ProductOwner,
-		"member_ids":       obj.Members,
+		"product_owner_id": obj.ProductOwnerID,
+		"member_ids":       obj.MemberIDs,
 	}, map[string]interface{}{
-		"squad_id": entity.ID,
+		"id": entity.ID,
 	})
 }
 
 func (r *pgSquadRepository) Delete(ctx context.Context, id string) error {
 	return r.adapter.RemoveOne(ctx, map[string]interface{}{
-		"squad_id": id,
+		"id": id,
 	})
 }
 
@@ -184,7 +184,7 @@ func (r *pgSquadRepository) buildFilter(filter *repositories.SquadSearchFilter) 
 		}
 
 		if len(strings.TrimSpace(filter.SquadID)) > 0 {
-			clauses["squad_id"] = filter.SquadID
+			clauses["id"] = filter.SquadID
 		}
 		if len(strings.TrimSpace(filter.Name)) > 0 {
 			clauses["name"] = filter.Name

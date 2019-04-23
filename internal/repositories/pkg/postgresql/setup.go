@@ -44,13 +44,13 @@ var RepositorySet = wire.NewSet(
 // migrations contains all schema migrations
 var migrations = &migrate.PackrMigrationSource{
 	Box: packr.NewBox("./migrations"),
-	Dir: "./migrations",
 }
 
 // CreateSchemas create or updates the current database schema
 func CreateSchemas(conn *sqlx.DB) (int, error) {
 	// Migrate schema
 	migrate.SetTable("schema_migration")
+
 	n, err := migrate.Exec(conn.DB, conn.DriverName(), migrations, migrate.Up)
 	if err != nil {
 		return 0, errors.Wrapf(err, "Could not migrate sql schema, applied %d migrations", n)

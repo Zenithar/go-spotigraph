@@ -16,16 +16,16 @@ type Squad struct {
 	Name string   `json:"name" bson:"name" rethinkdb:"name"`
 	Meta Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 
-	ProductOwner string      `json:"product_owner_id" bson:"product_owner_id" rethinkdb:"product_owner_id"`
-	Members      StringArray `json:"member_ids" bson:"member_ids" rethinkdb:"member_ids"`
+	ProductOwnerID string      `json:"product_owner_id" bson:"product_owner_id" rethinkdb:"product_owner_id"`
+	MemberIDs      StringArray `json:"member_ids" bson:"member_ids" rethinkdb:"member_ids"`
 }
 
 // NewSquad returns a squad instance
 func NewSquad(name string) *Squad {
 	return &Squad{
-		ID:      helpers.IDGeneratorFunc(),
-		Name:    name,
-		Members: make([]string, 0),
+		ID:        helpers.IDGeneratorFunc(),
+		Name:      name,
+		MemberIDs: make([]string, 0),
 	}
 }
 
@@ -41,12 +41,17 @@ func (c *Squad) Validate() error {
 
 // AddMember adds the given user as member of squad
 func (c *Squad) AddMember(u *User) {
-	c.Members.AddIfNotContains(u.ID)
+	c.MemberIDs.AddIfNotContains(u.ID)
 }
 
 // RemoveMember removes the given user as member of squad
 func (c *Squad) RemoveMember(u *User) {
-	c.Members.Remove(u.ID)
+	c.MemberIDs.Remove(u.ID)
+}
+
+// SetProductOwner defines the squad product owner
+func (c *Squad) SetProductOwner(u *User) {
+	c.ProductOwnerID = u.ID
 }
 
 // URN returns an uniform resource name for external linking

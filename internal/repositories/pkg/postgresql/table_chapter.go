@@ -39,11 +39,11 @@ func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.
 // ------------------------------------------------------------
 
 type sqlChapter struct {
-	ID      string `db:"id"`
-	Name    string `db:"name"`
-	Meta    string `db:"meta"`
-	Leader  string `db:"leader_id"`
-	Members string `db:"member_ids"`
+	ID        string `db:"id"`
+	Name      string `db:"name"`
+	Meta      string `db:"meta"`
+	LeaderID  string `db:"leader_id"`
+	MemberIDs string `db:"member_ids"`
 }
 
 func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
@@ -52,25 +52,25 @@ func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	members, err := json.Marshal(entity.Members)
+	members, err := json.Marshal(entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
 	return &sqlChapter{
-		ID:      entity.ID,
-		Name:    entity.Name,
-		Meta:    string(meta),
-		Leader:  entity.Leader,
-		Members: string(members),
+		ID:        entity.ID,
+		Name:      entity.Name,
+		Meta:      string(meta),
+		LeaderID:  entity.LeaderID,
+		MemberIDs: string(members),
 	}, nil
 }
 
 func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
 	entity := &models.Chapter{
-		ID:     dto.ID,
-		Name:   dto.Name,
-		Leader: dto.Leader,
+		ID:       dto.ID,
+		Name:     dto.Name,
+		LeaderID: dto.LeaderID,
 	}
 
 	// Decode JSON columns
@@ -82,7 +82,7 @@ func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
 	}
 
 	// Membership
-	err = json.Unmarshal([]byte(dto.Members), &entity.Members)
+	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -134,8 +134,8 @@ func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":       obj.Name,
 		"meta":       obj.Meta,
-		"leader_id":  obj.Leader,
-		"member_ids": obj.Members,
+		"leader_id":  obj.LeaderID,
+		"member_ids": obj.MemberIDs,
 	}, sq.Eq{
 		"id": entity.ID,
 	})

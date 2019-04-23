@@ -53,8 +53,8 @@ func (r *mgoSquadRepository) Update(ctx context.Context, entity *models.Squad) e
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":             entity.Name,
 		"meta":             entity.Meta,
-		"product_owner_id": entity.ProductOwner,
-		"member_ids":       entity.Members,
+		"product_owner_id": entity.ProductOwnerID,
+		"member_ids":       entity.MemberIDs,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

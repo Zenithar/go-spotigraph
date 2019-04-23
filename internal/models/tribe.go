@@ -16,7 +16,8 @@ type Tribe struct {
 	Name string   `json:"name" bson:"name" rethinkdb:"name"`
 	Meta Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 
-	Squads StringArray `json:"squad_ids" bson:"squad_ids" rethinkdb:"squad_ids"`
+	LeaderID string      `json:"leader_id" bson:"leader_id" rethinkdb:"leader_id"`
+	SquadIDs StringArray `json:"squad_ids" bson:"squad_ids" rethinkdb:"squad_ids"`
 }
 
 // NewTribe returns a tribe instance
@@ -39,12 +40,17 @@ func (c *Tribe) Validate() error {
 
 // AddSquad adds the given squad as member of tribe
 func (c *Tribe) AddSquad(s *Squad) {
-	c.Squads.AddIfNotContains(s.ID)
+	c.SquadIDs.AddIfNotContains(s.ID)
 }
 
 // RemoveSquad removes the given squad as member of tribe
 func (c *Tribe) RemoveSquad(s *Squad) {
-	c.Squads.Remove(s.ID)
+	c.SquadIDs.Remove(s.ID)
+}
+
+// SetLeader defines the chapter leader
+func (c *Tribe) SetLeader(u *User) {
+	c.LeaderID = u.ID
 }
 
 // URN returns an uniform resource name for external linking

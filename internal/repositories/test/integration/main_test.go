@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"go.zenithar.org/pkg/testing/containers"
+	"go.zenithar.org/pkg/testing/containers/database"
 
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
@@ -49,17 +49,19 @@ func testMainWrapper(m *testing.M) int {
 		return 0
 	}
 
-	fmt.Println("Initializing test DB for integration test (disable with `go test -short`)")
+	log.Bg().Info("Initializing test DB for integration test (disable with `go test -short`)")
 
+	ctx := context.Background()
 	var err error
 	backends := strings.Split(strings.ToLower(*databases), ",")
+
 	for _, back := range backends {
 		switch back {
 		case "postgresql":
 			// Initialize postgresql
-			err = setupPostgreSQL()
+			err = postgreSQLConnection(ctx)
 			defer func() {
-				containers.KillAll()
+				database.KillAll(ctx)
 			}()
 		default:
 			log.Bg().Fatal("Unsupported backend", zap.String("backend", back))

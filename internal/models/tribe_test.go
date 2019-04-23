@@ -51,35 +51,41 @@ func TestTribeMembership(t *testing.T) {
 
 	obj := models.NewTribe("foo")
 	g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
-	g.Expect(obj.Squads).To(BeEmpty(), "Members should be empty")
+	g.Expect(obj.SquadIDs).To(BeEmpty(), "Members should be empty")
 
 	u1 := models.NewSquad("squad-1")
 	obj.AddSquad(u1)
 
-	g.Expect(obj.Squads).ToNot(BeEmpty(), "Members should not be empty")
-	g.Expect(len(obj.Squads)).To(Equal(1), "Members length should be 1")
-	g.Expect(obj.Squads[0]).To(Equal(u1.ID), "First element should match squad id")
+	l1 := models.NewUser("toto@foo.com")
+	obj.SetLeader(l1)
+
+	g.Expect(obj.LeaderID).ToNot(BeEmpty(), "LeaderID should not be empty")
+	g.Expect(obj.LeaderID).To(Equal(l1.ID), "Leader should match user id")
+
+	g.Expect(obj.SquadIDs).ToNot(BeEmpty(), "Members should not be empty")
+	g.Expect(len(obj.SquadIDs)).To(Equal(1), "Members length should be 1")
+	g.Expect(obj.SquadIDs[0]).To(Equal(u1.ID), "First element should match squad id")
 
 	obj.AddSquad(u1)
 
-	g.Expect(obj.Squads).ToNot(BeEmpty(), "Members should not be empty")
-	g.Expect(len(obj.Squads)).To(Equal(1), "Members length should be 1")
-	g.Expect(obj.Squads.Contains(u1.ID)).To(BeTrue(), "Members should contains u1")
+	g.Expect(obj.SquadIDs).ToNot(BeEmpty(), "Members should not be empty")
+	g.Expect(len(obj.SquadIDs)).To(Equal(1), "Members length should be 1")
+	g.Expect(obj.SquadIDs.Contains(u1.ID)).To(BeTrue(), "Members should contains u1")
 
 	u2 := models.NewSquad("squad-2")
 	obj.AddSquad(u2)
-	g.Expect(len(obj.Squads)).To(Equal(2), "Members length should be 2")
-	g.Expect(obj.Squads.Contains(u2.ID)).To(BeTrue(), "Members should contains u2")
+	g.Expect(len(obj.SquadIDs)).To(Equal(2), "Members length should be 2")
+	g.Expect(obj.SquadIDs.Contains(u2.ID)).To(BeTrue(), "Members should contains u2")
 
 	obj.RemoveSquad(u2)
-	g.Expect(len(obj.Squads)).To(Equal(1), "Members length should be 1")
-	g.Expect(obj.Squads.Contains(u2.ID)).To(BeFalse(), "Members should not contains u2")
+	g.Expect(len(obj.SquadIDs)).To(Equal(1), "Members length should be 1")
+	g.Expect(obj.SquadIDs.Contains(u2.ID)).To(BeFalse(), "Members should not contains u2")
 
 	obj.RemoveSquad(u1)
-	g.Expect(obj.Squads.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
-	g.Expect(obj.Squads).To(BeEmpty(), "Members should be empty")
+	g.Expect(obj.SquadIDs.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
+	g.Expect(obj.SquadIDs).To(BeEmpty(), "Members should be empty")
 
 	obj.RemoveSquad(u1)
-	g.Expect(obj.Squads.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
-	g.Expect(obj.Squads).To(BeEmpty(), "Members should be empty")
+	g.Expect(obj.SquadIDs.Contains(u1.ID)).To(BeFalse(), "Members should not contains u1")
+	g.Expect(obj.SquadIDs).To(BeEmpty(), "Members should be empty")
 }

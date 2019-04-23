@@ -23,7 +23,7 @@ type pgGuildRepository struct {
 func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Guild {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label", "meta", "member_ids",
+		"id", "name", "meta", "member_ids", "leader_id",
 	}
 
 	// Sortable columns
@@ -39,10 +39,11 @@ func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Gu
 // ------------------------------------------------------------
 
 type sqlGuild struct {
-	ID      string `db:"id"`
-	Name    string `db:"name"`
-	Meta    string `db:"meta"`
-	Members string `db:"member_ids"`
+	ID        string `db:"id"`
+	Name      string `db:"name"`
+	Meta      string `db:"meta"`
+	MemberIDs string `db:"member_ids"`
+	LeaderID  string `db:"leader_id"`
 }
 
 func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
@@ -51,23 +52,25 @@ func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	members, err := json.Marshal(entity.Members)
+	members, err := json.Marshal(entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
 	return &sqlGuild{
-		ID:      entity.ID,
-		Name:    entity.Name,
-		Meta:    string(meta),
-		Members: string(members),
+		ID:        entity.ID,
+		Name:      entity.Name,
+		Meta:      string(meta),
+		MemberIDs: string(members),
+		LeaderID:  entity.LeaderID,
 	}, nil
 }
 
 func (dto *sqlGuild) ToEntity() (*models.Guild, error) {
 	entity := &models.Guild{
-		ID:   dto.ID,
-		Name: dto.Name,
+		ID:       dto.ID,
+		Name:     dto.Name,
+		LeaderID: dto.LeaderID,
 	}
 
 	// Decode JSON columns
@@ -79,7 +82,7 @@ func (dto *sqlGuild) ToEntity() (*models.Guild, error) {
 	}
 
 	// Membership
-	err = json.Unmarshal([]byte(dto.Members), &entity.Members)
+	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -130,7 +133,8 @@ func (r *pgGuildRepository) Update(ctx context.Context, entity *models.Guild) er
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":       obj.Name,
 		"meta":       obj.Meta,
-		"member_ids": obj.Members,
+		"member_ids": obj.MemberIDs,
+		"leader_id":  obj.LeaderID,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})

@@ -23,7 +23,7 @@ type pgTribeRepository struct {
 func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tribe {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label", "meta", "squad_ids",
+		"id", "name", "meta", "squad_ids", "leader_id",
 	}
 
 	// Sortable columns
@@ -39,10 +39,11 @@ func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tr
 // ------------------------------------------------------------
 
 type sqlTribe struct {
-	ID     string `db:"id"`
-	Name   string `db:"name"`
-	Meta   string `db:"meta"`
-	Squads string `db:"squad_ids"`
+	ID       string `db:"id"`
+	Name     string `db:"name"`
+	Meta     string `db:"meta"`
+	SquadIDs string `db:"squad_ids"`
+	LeaderID string `db:"leader_id"`
 }
 
 func toTribeSQL(entity *models.Tribe) (*sqlTribe, error) {
@@ -51,16 +52,16 @@ func toTribeSQL(entity *models.Tribe) (*sqlTribe, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	squads, err := json.Marshal(entity.Squads)
+	squads, err := json.Marshal(entity.SquadIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
 	return &sqlTribe{
-		ID:     entity.ID,
-		Name:   entity.Name,
-		Meta:   string(meta),
-		Squads: string(squads),
+		ID:       entity.ID,
+		Name:     entity.Name,
+		Meta:     string(meta),
+		SquadIDs: string(squads),
 	}, nil
 }
 
@@ -79,7 +80,7 @@ func (dto *sqlTribe) ToEntity() (*models.Tribe, error) {
 	}
 
 	// Membership
-	err = json.Unmarshal([]byte(dto.Squads), &entity.Squads)
+	err = json.Unmarshal([]byte(dto.SquadIDs), &entity.SquadIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -131,7 +132,8 @@ func (r *pgTribeRepository) Update(ctx context.Context, entity *models.Tribe) er
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"name":      obj.Name,
 		"meta":      obj.Meta,
-		"squad_ids": obj.Squads,
+		"squad_ids": obj.SquadIDs,
+		"leader_id": obj.LeaderID,
 	}, map[string]interface{}{
 		"id": obj.ID,
 	})
@@ -180,7 +182,7 @@ func (r *pgTribeRepository) buildFilter(filter *repositories.TribeSearchFilter) 
 		}
 
 		if len(strings.TrimSpace(filter.TribeID)) > 0 {
-			clauses["tribe_id"] = filter.TribeID
+			clauses["id"] = filter.TribeID
 		}
 		if len(strings.TrimSpace(filter.Name)) > 0 {
 			clauses["name"] = filter.Name

@@ -6,27 +6,33 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
+	"go.uber.org/zap"
 
+	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/testing/containers/database"
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 )
 
-func postgreSQLConnection(ctx context.Context) (func(), error) {
+func postgreSQLConnection(ctx context.Context) error {
 	// Initialize connection and/or container
-	conn, cfg, err := database.ConnectToPostgreSQL(ctx)
+	conn, _, err := database.ConnectToPostgreSQL(ctx)
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "unable to initialize database server")
+		return errors.Wrap(err, "unable to initialize database server")
 	}
 
 	// Try to contact server
 	if err = conn.Ping(); err != nil {
-		return nil, nil, errors.Wrap(err, "unable to contact database")
+		return errors.Wrap(err, "unable to contact database")
 	}
 
 	// Migrate schema
-	if _, err = postgresql.CreateSchemas(conn); err != nil {
-		return nil, nil, errors.Wrap(err, "unable to initialize database schema")
+	n, err := postgresql.CreateSchemas(conn)
+	if err != nil {
+		return errors.Wrap(err, "unable to initialize database schema")
 	}
+
+	// Log migration
+	log.For(ctx).Info("Applyied migrations to database", zap.Int("level", n))
 
 	// Build repositories
 	userRepositories["postgresql"] = postgresql.NewUserRepository(nil, conn)

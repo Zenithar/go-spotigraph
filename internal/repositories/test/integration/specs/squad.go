@@ -14,16 +14,18 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
 
-// Guild returns guild repository full test scenario builder
-func Guild(underTest repositories.Guild) func(*testing.T) {
+// Squad returns squad repository full test scenario builder
+func Squad(underTest repositories.Squad) func(*testing.T) {
 	return func(t *testing.T) {
+		t.Parallel()
+
 		g := NewGomegaWithT(t)
 
 		// Stub context
 		ctx := context.Background()
 
 		// Prepare a new entity
-		created := models.NewGuild("foo")
+		created := models.NewSquad("foo")
 		g.Expect(created).ToNot(BeNil(), "Newly created entity should not be nil")
 
 		// Create the entity using repository
@@ -82,6 +84,6 @@ func Guild(underTest repositories.Guild) func(*testing.T) {
 		// Remove a non-existent entity
 		err = underTest.Delete(ctx, "non-existent-id")
 		g.Expect(err).ToNot(BeNil(), "Removal error should not be nil")
-		g.Expect(err).To(Equal(db.ErrNoResult), "Error ErrNoResult should be raised")
+		g.Expect(err).To(Equal(db.ErrNoModification), "Error ErrNoModification should be raised")
 	}
 }

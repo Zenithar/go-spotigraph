@@ -14,16 +14,18 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
 
-// Tribe returns tribe repository full test scenario builder
-func Tribe(underTest repositories.Tribe) func(*testing.T) {
+// Chapter returns chapter repository full test scenario builder
+func Chapter(underTest repositories.Chapter) func(*testing.T) {
 	return func(t *testing.T) {
+		t.Parallel()
+
 		g := NewGomegaWithT(t)
 
 		// Stub context
 		ctx := context.Background()
 
 		// Prepare a new entity
-		created := models.NewTribe("foo")
+		created := models.NewChapter("foo")
 		g.Expect(created).ToNot(BeNil(), "Newly created entity should not be nil")
 
 		// Create the entity using repository
@@ -82,6 +84,6 @@ func Tribe(underTest repositories.Tribe) func(*testing.T) {
 		// Remove a non-existent entity
 		err = underTest.Delete(ctx, "non-existent-id")
 		g.Expect(err).ToNot(BeNil(), "Removal error should not be nil")
-		g.Expect(err).To(Equal(db.ErrNoResult), "Error ErrNoResult should be raised")
+		g.Expect(err).To(Equal(db.ErrNoModification), "Error ErrNoModification should be raised")
 	}
 }

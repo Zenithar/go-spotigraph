@@ -14,16 +14,18 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
 
-// User returns user repositories full test scenario builder
-func User(underTest repositories.User) func(*testing.T) {
+// Tribe returns tribe repository full test scenario builder
+func Tribe(underTest repositories.Tribe) func(*testing.T) {
 	return func(t *testing.T) {
+		t.Parallel()
+
 		g := NewGomegaWithT(t)
 
 		// Stub context
 		ctx := context.Background()
 
 		// Prepare a new entity
-		created := models.NewUser("toto@foo.com")
+		created := models.NewTribe("foo")
 		g.Expect(created).ToNot(BeNil(), "Newly created entity should not be nil")
 
 		// Create the entity using repository
@@ -45,14 +47,6 @@ func User(underTest repositories.User) func(*testing.T) {
 		g.Expect(err).ToNot(BeNil(), "Error should be raised on non-existent entity")
 		g.Expect(err).To(Equal(db.ErrNoResult), "Error ErrNoResult should be raised")
 		g.Expect(nonExistent).To(BeNil(), "Non-existent entity should be nil")
-
-		// Retrieve by principal
-		savedPrincipal, err := underTest.FindByPrincipal(ctx, created.Principal)
-		g.Expect(err).To(BeNil(), "Retrieval error should be nil")
-		g.Expect(savedPrincipal).ToNot(BeNil(), "Saved entity should not be nil")
-
-		// Compare objects
-		g.Expect(cmp.Equal(created, savedPrincipal)).To(BeTrue(), "SavedPrincipal and Created should be equals")
 
 		// -------------------------------------------------------------------------------------------------------------
 
@@ -90,6 +84,6 @@ func User(underTest repositories.User) func(*testing.T) {
 		// Remove a non-existent entity
 		err = underTest.Delete(ctx, "non-existent-id")
 		g.Expect(err).ToNot(BeNil(), "Removal error should not be nil")
-		g.Expect(err).To(Equal(db.ErrNoResult), "Error ErrNoResult should be raised")
+		g.Expect(err).To(Equal(db.ErrNoModification), "Error ErrNoModification should be raised")
 	}
 }
