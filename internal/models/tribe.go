@@ -32,7 +32,7 @@ func NewTribe(name string) *Tribe {
 // Validate entity contraints
 func (c *Tribe) Validate() error {
 	return validation.ValidateStruct(c,
-		validation.Field(&c.ID, append(helpers.IDValidationRules, validation.Required)...),
+		validation.Field(&c.ID, helpers.IDValidationRules...),
 		validation.Field(&c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
 	)
 }

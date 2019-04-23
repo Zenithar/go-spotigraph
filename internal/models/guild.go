@@ -32,7 +32,7 @@ func NewGuild(name string) *Guild {
 // Validate entity contraints
 func (c *Guild) Validate() error {
 	return validation.ValidateStruct(c,
-		validation.Field(&c.ID, append(helpers.IDValidationRules, validation.Required)...),
+		validation.Field(&c.ID, helpers.IDValidationRules...),
 		validation.Field(&c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
 	)
 }

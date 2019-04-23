@@ -29,7 +29,7 @@ func NewUser(principal string) *User {
 // Validate entity contraints
 func (u *User) Validate() error {
 	return validation.ValidateStruct(u,
-		validation.Field(&u.ID, append(helpers.IDValidationRules, validation.Required)...),
+		validation.Field(&u.ID, helpers.IDValidationRules...),
 		validation.Field(&u.Principal, validation.Required, is.PrintableASCII),
 	)
 }

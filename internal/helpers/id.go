@@ -16,6 +16,7 @@ var IDGeneratorFunc = func() string {
 
 // IDValidationRules describes identifier contract for syntaxic validation
 var IDValidationRules = []validation.Rule{
+	validation.Required,
 	validation.Length(IDGeneratedLength, IDGeneratedLength),
 	is.Alphanumeric,
 }
