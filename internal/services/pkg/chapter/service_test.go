@@ -104,7 +104,10 @@ func Test_Chapter_Creation(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := chapter.NewWithDecorators(chapters, chapter.WithLogger(log.Default()), chapter.WithTracer())
+			underTest := chapter.NewWithDecorators(chapters,
+				chapter.WithLogger(log.Default()),
+				chapter.WithTracer(),
+			)
 
 			// Do the query
 			got, err := underTest.Create(ctx, tt.req)

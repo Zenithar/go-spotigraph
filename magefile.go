@@ -58,19 +58,19 @@ func Build() {
 
 // -----------------------------------------------------------------------------
 
-type CI mg.Namespace
+type Ci mg.Namespace
 
 // Validate circleci configuration file (circleci/config.yml).
-func (CI) Validate() error {
+func (Ci) Validate() error {
 	return sh.RunV("circleci-cli", "config", "validate")
 }
 
 // execute circleci job build on local.
-func (ci CI) Build() error {
+func (ci Ci) Build() error {
 	return ci.localExecute("build")
 }
 
-func (ci CI) localExecute(job string) error {
+func (ci Ci) localExecute(job string) error {
 	return sh.RunV("circleci-cli", "local", "execute", "--job", job)
 }
 

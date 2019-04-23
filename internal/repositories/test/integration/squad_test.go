@@ -10,12 +10,9 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/test/specs"
 )
 
-var (
-	squadRepositories = map[string]repositories.Squad{}
-)
+var squadRepositories = map[string]repositories.Squad{}
 
 func TestSquadRepository(t *testing.T) {
-
 	if !*database {
 		t.Skip()
 	}

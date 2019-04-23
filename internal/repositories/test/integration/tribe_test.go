@@ -10,12 +10,9 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/test/specs"
 )
 
-var (
-	tribeRepositories = map[string]repositories.Tribe{}
-)
+var tribeRepositories = map[string]repositories.Tribe{}
 
 func TestTribeRepository(t *testing.T) {
-
 	if !*database {
 		t.Skip()
 	}
