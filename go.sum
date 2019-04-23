@@ -443,6 +443,8 @@ go.zenithar.org/pkg/testing v0.0.10 h1:YA8ncJ/+uxbgjDCB+vJgXdlyDiUELtX+/i233QECQ
 go.zenithar.org/pkg/testing v0.0.10/go.mod h1:unWerufZTWCfN8O5NVxmmh8iAlzPayo1KGv6J1iuTwk=
 go.zenithar.org/pkg/testing v0.0.11 h1:rmG/YgZ6ZmfiGJI2dYo0CNbTgtqlhAXIbNhrpPB6l3Q=
 go.zenithar.org/pkg/testing v0.0.11/go.mod h1:dXqnw6OWS9KtIdl3LmKL4R/N9aMNjMd9+GMluKR78t0=
+go.zenithar.org/pkg/testing v0.0.12 h1:aMHPalpJ6ZIudGBtQAunqgZ12Xe+gLWeTLFFmnlNt1E=
+go.zenithar.org/pkg/testing v0.0.12/go.mod h1:dXqnw6OWS9KtIdl3LmKL4R/N9aMNjMd9+GMluKR78t0=
 go.zenithar.org/pkg/tlsconfig v0.0.1 h1:mhhaljOfJyfS4Cgj7c4EDj4WtTQmVURUXV53r8olu9Y=
 go.zenithar.org/pkg/tlsconfig v0.0.1/go.mod h1:FjT05Qtjxr3DHt/5VxmtwWpWvfz7erECANT73cfgldY=
 go.zenithar.org/pkg/web v0.0.1 h1:uW233DGoUF6qJmpsl1M5X9+bNiF8GIbhpccM/mEIlsQ=

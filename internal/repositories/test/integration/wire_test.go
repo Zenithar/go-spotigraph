@@ -13,22 +13,22 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 )
 
-func postgreSQLConnection(ctx context.Context) error {
+func postgreSQLConnection(ctx context.Context) (func(), error) {
 	// Initialize connection and/or container
 	conn, _, err := database.ConnectToPostgreSQL(ctx)
 	if err != nil {
-		return errors.Wrap(err, "unable to initialize database server")
+		return nil, errors.Wrap(err, "unable to initialize database server")
 	}
 
 	// Try to contact server
 	if err = conn.Ping(); err != nil {
-		return errors.Wrap(err, "unable to contact database")
+		return nil, errors.Wrap(err, "unable to contact database")
 	}
 
 	// Migrate schema
 	n, err := postgresql.CreateSchemas(conn)
 	if err != nil {
-		return errors.Wrap(err, "unable to initialize database schema")
+		return nil, errors.Wrap(err, "unable to initialize database schema")
 	}
 
 	// Log migration
@@ -42,5 +42,7 @@ func postgreSQLConnection(ctx context.Context) error {
 	guildRepositories["postgresql"] = postgresql.NewGuildRepository(nil, conn)
 
 	// Return result
-	return nil
+	return func() {
+        log.SafeClose(conn, "unable to close connection")
+    }, nil
 }

@@ -52,25 +52,27 @@ func testMainWrapper(m *testing.M) int {
 	log.Bg().Info("Initializing test DB for integration test (disable with `go test -short`)")
 
 	ctx := context.Background()
-	var err error
 	backends := strings.Split(strings.ToLower(*databases), ",")
 
 	for _, back := range backends {
 		switch back {
 		case "postgresql":
 			// Initialize postgresql
-			err = postgreSQLConnection(ctx)
+            cancel, err := postgreSQLConnection(ctx)
+            if err != nil {
+                log.Bg().Fatal("Unable to initialize repositories", zap.Error(err))
+            }
 			defer func() {
-				database.KillAll(ctx)
+                cancel()
 			}()
 		default:
 			log.Bg().Fatal("Unsupported backend", zap.String("backend", back))
 		}
+    }
 
-		if err != nil {
-			log.Bg().Fatal("Unable to initialize repositories", zap.Error(err))
-		}
-	}
+    defer func() {
+        database.KillAll(ctx)
+    }()
 
 	return m.Run()
 }

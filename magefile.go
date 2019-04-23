@@ -156,10 +156,11 @@ func (Go) Test() error {
 }
 
 // Test run go test
-func (Go) IntegrationTest() error {
+func (Go) IntegrationTest() {
 	fmt.Println("## Running integration tests")
 	sh.Run("mkdir", "-p", "test-results/junit")
-	return sh.RunV("gotestsum", "--junitfile", "test-results/junit/integration.xml", "--", "-tags=integration", "-race", "-cover", "./...")
+
+	runIntegrationTest("Repositories", "go.zenithar.org/spotigraph/internal/repositories/test/integration")
 }
 
 // Tidy add/remove depenedencies.
@@ -288,6 +289,14 @@ func mustStr(r string, err error) string {
 func mustGoGenerate(txt, name string) {
 	fmt.Printf(" > %s [%s]\n", txt, name)
 	err := sh.RunV("go", "generate", name)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func runIntegrationTest(txt, name string) {
+	fmt.Printf(" > %s [%s]\n", txt, name)
+	err := sh.RunV("gotestsum", "--junitfile", fmt.Sprintf("test-results/junit/integration-%s.xml", strings.ToLower(txt)), name, "--", "-tags=integration", "-race")
 	if err != nil {
 		panic(err)
 	}

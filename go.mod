@@ -84,7 +84,7 @@ require (
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.1
 	go.zenithar.org/pkg/platform v0.0.1
-	go.zenithar.org/pkg/testing v0.0.11
+	go.zenithar.org/pkg/testing v0.0.12
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.1
 	golang.org/x/crypto v0.0.0-20190422183909-d864b10871cd
