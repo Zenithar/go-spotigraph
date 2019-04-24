@@ -17,6 +17,7 @@ import (
 	_ "github.com/google/wire/cmd/wire"
 	_ "github.com/hexdigest/gowrap/cmd/gowrap"
 	_ "github.com/sqs/goreturns"
+	_ "github.com/srikrsna/protoc-gen-mock"
 	_ "github.com/uber/prototool/cmd/prototool"
 	_ "go.zenithar.org/protoc-gen-cobra"
 	_ "golang.org/x/tools/cmd/goimports"

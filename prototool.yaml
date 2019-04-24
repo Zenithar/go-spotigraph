@@ -34,3 +34,6 @@ generate:
     - name: cobra
       type: gogo
       output: .
+    - name: mock
+      type: gogo
+      output: .
