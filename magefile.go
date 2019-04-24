@@ -227,9 +227,9 @@ func goBuild(packageName, out string) error {
 	for name, value := range varsSetByLinker {
 		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
 	}
-	linkerArgs = fmt.Sprintf("-s -w %s", linkerArgs)
+	linkerArgs = fmt.Sprintf("-s -w %s -extldflags=-Wl,-z,now,-z,relro", linkerArgs)
 
-	return sh.Run("go", "build", "-tags", "netgo", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
+	return sh.Run("go", "build", "-buildmode=pie", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
 }
 
 // -----------------------------------------------------------------------------
