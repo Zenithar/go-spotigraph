@@ -15,8 +15,11 @@ require (
 	github.com/golang/mock v1.2.0
 	github.com/golangci/golangci-lint v1.16.1-0.20190421084833-39f46be46090
 	github.com/google/wire v0.2.1
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/hexdigest/gowrap v1.1.3
 	github.com/iancoleman/strcase v0.0.0-20180726023541-3605ed457bf7 // indirect
+	github.com/izumin5210/gex v0.4.5 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.14 // indirect
 	github.com/magefile/mage v1.8.0
