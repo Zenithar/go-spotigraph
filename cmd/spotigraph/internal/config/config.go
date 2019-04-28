@@ -1,9 +1,6 @@
 package config
 
-import (
-	"go.zenithar.org/pkg/platform/jaeger"
-	"go.zenithar.org/pkg/platform/prometheus"
-)
+import "go.zenithar.org/pkg/platform"
 
 // Configuration contains spotigraph settings
 type Configuration struct {
@@ -11,26 +8,7 @@ type Configuration struct {
 		Enable bool `toml:"enable" default:"false" comment:"allow debug mode"`
 	} `toml:"Debug" comment:"###############################\n Debug with gops \n##############################"`
 
-	Instrumentation struct {
-		Network    string `toml:"network" default:"tcp" comment:"Network class used for listen (tcp, tcp4, tcp6, unixsocket)"`
-		Listen     string `toml:"listen" default:":5556" comment:"Listen address for instrumentation server"`
-		Diagnostic struct {
-			Enabled   bool   `toml:"enabled" default:"true" comment:"Enable diagnostic handlers"`
-			RemoteURL string `toml:"remoteDebugURL" comment:"start a gops agent on specified URL. Ex: localhost:9999"`
-		} `toml:"Diagnostic" comment:"###############################\n Diagnotic Settings \n##############################"`
-		Logs struct {
-			Level     string `toml:"level" default:"warn" comment:"Log level: debug, info, warn, error, dpanic, panic, and fatal"`
-			SentryDSN string `toml:"sentryDSN" comment:"Sentry DSN"`
-		} `toml:"Logs" comment:"###############################\n Logs Settings \n##############################"`
-		Prometheus struct {
-			Enabled bool              `toml:"enabled" default:"true" comment:"Enable metric instrumentation"`
-			Config  prometheus.Config `toml:"Config" comment:"Prometheus settings"`
-		} `toml:"Prometheus" comment:"###############################\n Prometheus exporter \n##############################"`
-		Jaeger struct {
-			Enabled bool          `toml:"enabled" default:"true" comment:"Enable trace instrumentation"`
-			Config  jaeger.Config `toml:"Config" comment:"Jaeger settings"`
-		} `toml:"Jaeger" comment:"###############################\n Jaeger exporter \n##############################"`
-	} `toml:"Instrumentation" comment:"###############################\n Instrumentation \n##############################"`
+	Instrumentation platform.InstrumentationConfig `toml:"Instrumentation" comment:"###############################\n Instrumentation \n##############################"`
 
 	Core struct {
 		Mode  string `toml:"mode" default:"local" comment:"Use remote or local as backend"`
