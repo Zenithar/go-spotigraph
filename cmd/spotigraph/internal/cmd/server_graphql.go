@@ -36,7 +36,7 @@ var graphqlCmd = &cobra.Command{
 			Version:         version.Version,
 			Revision:        version.Revision,
 			Instrumentation: conf.Instrumentation,
-			Builder: func(upg *tableflip.Upgrader, group run.Group) {
+			Builder: func(upg *tableflip.Upgrader, group *run.Group) {
 				ln, err := upg.Fds.Listen(conf.Server.GraphQL.Network, conf.Server.GraphQL.Listen)
 				if err != nil {
 					log.For(ctx).Fatal("Unable to start GraphQL server", zap.Error(err))

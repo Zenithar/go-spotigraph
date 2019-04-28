@@ -36,7 +36,7 @@ var grpcCmd = &cobra.Command{
 			Version:         version.Version,
 			Revision:        version.Revision,
 			Instrumentation: conf.Instrumentation,
-			Builder: func(upg *tableflip.Upgrader, group run.Group) {
+			Builder: func(upg *tableflip.Upgrader, group *run.Group) {
 				ln, err := upg.Fds.Listen(conf.Server.GRPC.Network, conf.Server.GRPC.Listen)
 				if err != nil {
 					log.For(ctx).Fatal("Unable to start GRPC server", zap.Error(err))

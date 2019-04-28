@@ -36,7 +36,7 @@ var httpCmd = &cobra.Command{
 			Version:         version.Version,
 			Revision:        version.Revision,
 			Instrumentation: conf.Instrumentation,
-			Builder: func(upg *tableflip.Upgrader, group run.Group) {
+			Builder: func(upg *tableflip.Upgrader, group *run.Group) {
 				ln, err := upg.Fds.Listen(conf.Server.HTTP.Network, conf.Server.HTTP.Listen)
 				if err != nil {
 					log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
