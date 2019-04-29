@@ -66,3 +66,11 @@ func WithCache(storage cache.Storage, ttl time.Duration) Decorator {
 		return internal.NewChapterWithCache(s, storage, ttl)
 	}
 }
+
+// WithBreaker initialize the chapter service circuit breaker decorator
+func WithBreaker() Decorator {
+	return func(s services.Chapter) services.Chapter {
+		// Initialize the decorator
+		return internal.NewChapterWithBreaker(s)
+	}
+}
