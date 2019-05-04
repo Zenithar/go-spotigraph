@@ -70,7 +70,7 @@ require (
 	go.zenithar.org/pkg/db/adapter/rethinkdb v0.0.2
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.2
-	go.zenithar.org/pkg/platform v0.0.11
+	go.zenithar.org/pkg/platform v0.0.13
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.1

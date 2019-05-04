@@ -476,6 +476,10 @@ go.zenithar.org/pkg/platform v0.0.10 h1:oXDwMQwv5U67rdZT4XXqtweJ2qblmVJyOSU1trbq
 go.zenithar.org/pkg/platform v0.0.10/go.mod h1:LdDaFTp0jTOytwjALlDnBTdfHYbaYJ9u8hnySRPnaMU=
 go.zenithar.org/pkg/platform v0.0.11 h1:BtLKOxgnEGDgK628pSshpNr+bRZ/ZN7vPThcXwzKhkM=
 go.zenithar.org/pkg/platform v0.0.11/go.mod h1:Sz4acmIQ+n46eUhWbyg4169Qt161CMaHzOlxTBQihAw=
+go.zenithar.org/pkg/platform v0.0.12 h1:6CqPDMv8iyWf02MJX3gECio6tmIeCP4TVjWi9reEQVo=
+go.zenithar.org/pkg/platform v0.0.12/go.mod h1:Sz4acmIQ+n46eUhWbyg4169Qt161CMaHzOlxTBQihAw=
+go.zenithar.org/pkg/platform v0.0.13 h1:7fCD4hD+DzGrXneyDowBO/g+5pxZZetPi7j5tEDZ03Q=
+go.zenithar.org/pkg/platform v0.0.13/go.mod h1:Sz4acmIQ+n46eUhWbyg4169Qt161CMaHzOlxTBQihAw=
 go.zenithar.org/pkg/testing v0.0.13 h1:tcmIR5yBbddJk6KBrT6JGOCtG+rrEA5rZ38w+c8CRjM=
 go.zenithar.org/pkg/testing v0.0.13/go.mod h1:Z27216CLWH7pGyMfkjMSqtxBzaD520mnfnShGAPRdyI=
 go.zenithar.org/pkg/tlsconfig v0.0.1 h1:mhhaljOfJyfS4Cgj7c4EDj4WtTQmVURUXV53r8olu9Y=
