@@ -63,7 +63,7 @@ func (d chapterWithCache) Delete(ctx context.Context, req *spotigraph.ChapterGet
 
 // Get implements services.Chapter
 func (d chapterWithCache) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (res *spotigraph.SingleChapterRes, err error) {
-	var k = d.key(req.Id)
+	k := d.key(req.Id)
 
 	// Check from cache
 	payload, err := d.mgr.Get(ctx, k)

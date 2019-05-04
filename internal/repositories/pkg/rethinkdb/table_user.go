@@ -67,7 +67,7 @@ func (r *rdbUserRepository) Search(ctx context.Context, filter *repositories.Use
 
 	// Build filter
 	filterFunc := func(row rdb.Term) rdb.Term {
-		var term = rdb.Expr(true)
+		term := rdb.Expr(true)
 
 		// User ID
 		if len(strings.TrimSpace(filter.UserID)) > 0 {

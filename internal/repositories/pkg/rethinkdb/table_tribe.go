@@ -70,7 +70,7 @@ func (r *rdbTribeRepository) Search(ctx context.Context, filter *repositories.Tr
 
 	// Build filter
 	filterFunc := func(row rdb.Term) rdb.Term {
-		var term = rdb.Expr(true)
+		term := rdb.Expr(true)
 
 		// Tribe ID
 		if len(strings.TrimSpace(filter.TribeID)) > 0 {

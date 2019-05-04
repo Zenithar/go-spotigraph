@@ -70,7 +70,7 @@ func (r *rdbChapterRepository) Search(ctx context.Context, filter *repositories.
 
 	// Build filter
 	filterFunc := func(row rdb.Term) rdb.Term {
-		var term = rdb.Expr(true)
+		term := rdb.Expr(true)
 
 		// Chapter ID
 		if len(strings.TrimSpace(filter.ChapterID)) > 0 {

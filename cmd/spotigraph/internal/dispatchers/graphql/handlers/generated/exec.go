@@ -5192,7 +5192,7 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 func (ec *executionContext) unmarshalInputChapterCreateInput(ctx context.Context, v interface{}) (spotigraph.ChapterCreateReq, error) {
 	var it spotigraph.ChapterCreateReq
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5210,7 +5210,7 @@ func (ec *executionContext) unmarshalInputChapterCreateInput(ctx context.Context
 
 func (ec *executionContext) unmarshalInputChapterUpdateInput(ctx context.Context, v interface{}) (ChapterUpdateInput, error) {
 	var it ChapterUpdateInput
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5240,7 +5240,7 @@ func (ec *executionContext) unmarshalInputChapterUpdateInput(ctx context.Context
 
 func (ec *executionContext) unmarshalInputGuildCreateInput(ctx context.Context, v interface{}) (spotigraph.GuildCreateReq, error) {
 	var it spotigraph.GuildCreateReq
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5258,7 +5258,7 @@ func (ec *executionContext) unmarshalInputGuildCreateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputGuildUpdateInput(ctx context.Context, v interface{}) (GuildUpdateInput, error) {
 	var it GuildUpdateInput
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5282,7 +5282,7 @@ func (ec *executionContext) unmarshalInputGuildUpdateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputPagingRequest(ctx context.Context, v interface{}) (PagingRequest, error) {
 	var it PagingRequest
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5306,7 +5306,7 @@ func (ec *executionContext) unmarshalInputPagingRequest(ctx context.Context, v i
 
 func (ec *executionContext) unmarshalInputSquadCreateInput(ctx context.Context, v interface{}) (spotigraph.SquadCreateReq, error) {
 	var it spotigraph.SquadCreateReq
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5324,7 +5324,7 @@ func (ec *executionContext) unmarshalInputSquadCreateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputSquadUpdateInput(ctx context.Context, v interface{}) (SquadUpdateInput, error) {
 	var it SquadUpdateInput
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5354,7 +5354,7 @@ func (ec *executionContext) unmarshalInputSquadUpdateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputTribeCreateInput(ctx context.Context, v interface{}) (spotigraph.TribeCreateReq, error) {
 	var it spotigraph.TribeCreateReq
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5372,7 +5372,7 @@ func (ec *executionContext) unmarshalInputTribeCreateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputTribeUpdateInput(ctx context.Context, v interface{}) (TribeUpdateInput, error) {
 	var it TribeUpdateInput
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5396,7 +5396,7 @@ func (ec *executionContext) unmarshalInputTribeUpdateInput(ctx context.Context, 
 
 func (ec *executionContext) unmarshalInputUserCreateInput(ctx context.Context, v interface{}) (spotigraph.UserCreateReq, error) {
 	var it spotigraph.UserCreateReq
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {
@@ -5414,7 +5414,7 @@ func (ec *executionContext) unmarshalInputUserCreateInput(ctx context.Context, v
 
 func (ec *executionContext) unmarshalInputUserUpdateInput(ctx context.Context, v interface{}) (UserUpdateInput, error) {
 	var it UserUpdateInput
-	var asMap = v.(map[string]interface{})
+	asMap := v.(map[string]interface{})
 
 	for k, v := range asMap {
 		switch k {

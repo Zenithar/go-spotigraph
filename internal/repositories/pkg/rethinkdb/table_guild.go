@@ -70,7 +70,7 @@ func (r *rdbGuildRepository) Search(ctx context.Context, filter *repositories.Gu
 
 	// Build filter
 	filterFunc := func(row rdb.Term) rdb.Term {
-		var term = rdb.Expr(true)
+		term := rdb.Expr(true)
 
 		// Guild ID
 		if len(strings.TrimSpace(filter.GuildID)) > 0 {

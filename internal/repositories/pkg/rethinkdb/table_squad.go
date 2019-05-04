@@ -70,7 +70,7 @@ func (r *rdbSquadRepository) Search(ctx context.Context, filter *repositories.Sq
 
 	// Build filter
 	filterFunc := func(row rdb.Term) rdb.Term {
-		var term = rdb.Expr(true)
+		term := rdb.Expr(true)
 
 		// Squad ID
 		if len(strings.TrimSpace(filter.SquadID)) > 0 {
