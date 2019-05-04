@@ -68,7 +68,7 @@ Spotify Agile model mapping microservice
 - [x] Metric support
 - [x] OpenCensus support
 - [x] Instrumented service providers for wire
-- [ ] Circuit breaker
+- [x] Circuit breaker
 - [ ] Authorization
 
 ### Tests

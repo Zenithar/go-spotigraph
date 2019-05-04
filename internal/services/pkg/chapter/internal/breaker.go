@@ -21,7 +21,6 @@ type chapterWithBreaker struct {
 
 // NewChapterWithBreaker instruments a chapter service to add circuit breaker
 func NewChapterWithBreaker(next services.Chapter) services.Chapter {
-
 	failureFunc := func(counts gobreaker.Counts) bool {
 		failureRatio := float64(counts.TotalFailures) / float64(counts.Requests)
 		return counts.Requests >= 3 && failureRatio <= 0.6
