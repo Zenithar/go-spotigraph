@@ -1,3 +1,4 @@
 {
-    "go.formatTool": "goimports"
+    "go.formatTool": "goimports",
+    "editor.rulers": [80, 120],
 }

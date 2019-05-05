@@ -18,7 +18,7 @@ jobs:
 
       - run:
           name: install tools
-          command: go run mage.go -d tools go:tools
+          command: go run mage.go -d tools
 
       - run:
           name: install module
