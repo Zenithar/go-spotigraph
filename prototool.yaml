@@ -1,5 +1,6 @@
 excludes:
     - ./vendor
+    - ./tools/vendor
 
 protoc:
   version: 3.7.1
@@ -9,6 +10,7 @@ protoc:
   # or the current directory if there is no config file.
   includes:
     - ./vendor
+    - ./tools/vendor
 
   # If not set, compile will fail if there are unused imports.
   # Setting this will ignore unused imports.

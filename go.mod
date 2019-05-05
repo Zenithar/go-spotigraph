@@ -32,8 +32,7 @@ require (
 	github.com/lib/pq v1.1.1
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
-	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/markbates/deplist v1.0.5 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/oklog/run v1.0.0
@@ -63,6 +62,7 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.1
+	go.zenithar.org/spotigraph/tools v0.0.0-20190505130510-de4db344b22f // indirect
 	golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
 	google.golang.org/grpc v1.20.1

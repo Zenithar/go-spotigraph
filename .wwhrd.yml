@@ -1,0 +1,19 @@
+---
+blacklist:
+  - GPL-2.0
+
+whitelist:
+  - Apache-2.0
+  - BSD
+  - FreeBSD
+  - CC
+  - ISC
+  - MIT
+  - MPL-2.0
+  - NewBSD
+
+exceptions:
+  - github.com/davecgh/go-spew/spew/...
+  - github.com/dchest/uniuri
+  - github.com/opencontainers/go-digest
+  - github.com/certifi/gocertifi
