@@ -24,15 +24,25 @@ syntax = "proto3";
 
 package grpc.spotigraph.v1;
 
-option go_package = "pkg/grpc/v1/spotigraph/pb";
+option go_package = "pkg/grpc/v1/spotigraph/pb;pb";
 option java_multiple_files = true;
 option java_outer_classname = "MsgProto";
 option java_package = "org.zenithar.spotigraph.protocol";
 
+import "google/api/annotations.proto";
 import "pkg/protocol/v1/spotigraph/spotigraph.proto";
 
+// User API for user identiti management
 service User {
-  rpc Create(.spotigraph.v1.UserCreateReq) returns (.spotigraph.v1.SingleUserRes);
+
+  // Create an user identity in the system
+  rpc Create(.spotigraph.v1.UserCreateReq) returns (.spotigraph.v1.SingleUserRes) {
+    option (google.api.http) = {
+      post: "/v1/users"
+      body: "user"
+    };
+  };
+
   rpc Get(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.SingleUserRes);
   rpc Update(.spotigraph.v1.UserUpdateReq) returns (.spotigraph.v1.SingleUserRes);
   rpc Delete(.spotigraph.v1.UserGetReq) returns (.spotigraph.v1.EmptyRes);

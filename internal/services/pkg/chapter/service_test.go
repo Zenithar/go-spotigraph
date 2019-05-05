@@ -107,6 +107,7 @@ func Test_Chapter_Creation(t *testing.T) {
 			underTest := chapter.NewWithDecorators(chapters,
 				chapter.WithLogger(log.Default()),
 				chapter.WithTracer(),
+				chapter.WithCache(cache.BigCache(), 5*time.Minute),
 			)
 
 			// Do the query

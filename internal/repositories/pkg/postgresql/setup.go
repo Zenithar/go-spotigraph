@@ -6,6 +6,12 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 
+	// Load postgresql drivers
+	_ "github.com/jackc/pgx"
+	_ "github.com/jackc/pgx/pgtype"
+	_ "github.com/jackc/pgx/stdlib"
+	_ "github.com/lib/pq"
+
 	migrate "github.com/rubenv/sql-migrate"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 )
