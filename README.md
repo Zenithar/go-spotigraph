@@ -3,6 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/Zenithar/go-spotigraph)](https://goreportcard.com/report/github.com/Zenithar/go-spotigraph)
 [![CircleCI](https://circleci.com/gh/Zenithar/go-spotigraph.svg?style=svg)](https://circleci.com/gh/Zenithar/go-spotigraph)
 [![LICENSE](https://img.shields.io/github/license/Zenithar/go-spotigraph.svg)](https://github.com/Zenithar/go-spotigraph/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph?ref=badge_shield)
 
 Spotify Agile model mapping microservice
 
@@ -82,3 +83,7 @@ Spotify Agile model mapping microservice
 - [x] Multi Stage Build for Docker
 - [ ] Kubernetes manifest
 - [ ] Test on K3S
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph?ref=badge_large)
