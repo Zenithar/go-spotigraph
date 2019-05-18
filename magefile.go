@@ -88,9 +88,9 @@ type Gen mg.Namespace
 func (Gen) Wire() {
 	color.Blue("### Wiring dispatchers")
 
-	mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql")
-	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/http")
-	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc")
+	mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/graphql")
+	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http")
+	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/grpc")
 }
 
 // Generate mocks for tests
@@ -215,7 +215,7 @@ func (Go) Lint() error {
 type Bin mg.Namespace
 
 func (Bin) Spotigraph() error {
-	return goBuild("go.zenithar.org/spotigraph/cmd/spotigraph", "spotigraph")
+	return goBuild("go.zenithar.org/spotigraph/cli/spotigraph", "spotigraph")
 }
 
 func goBuild(packageName, out string) error {
@@ -233,9 +233,9 @@ func goBuild(packageName, out string) error {
 	for name, value := range varsSetByLinker {
 		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
 	}
-	linkerArgs = fmt.Sprintf("-s -w %s -extldflags=-Wl,-z,now,-z,relro", linkerArgs)
+	linkerArgs = fmt.Sprintf("-s -w %s", linkerArgs)
 
-	return sh.Run("go", "build", "-buildmode=pie", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
+	return sh.Run("go", "build", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
 }
 
 // -----------------------------------------------------------------------------
