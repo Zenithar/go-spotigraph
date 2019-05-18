@@ -10,7 +10,7 @@ type StringArray []string
 // Contains checks if item is in collection
 func (s StringArray) Contains(item string) bool {
 	for _, v := range s {
-		if strings.ToLower(item) == strings.ToLower(v) {
+		if strings.EqualFold(item, v) {
 			return true
 		}
 	}
@@ -30,7 +30,7 @@ func (s *StringArray) AddIfNotContains(item string) {
 func (s *StringArray) Remove(item string) {
 	idx := -1
 	for i, v := range *s {
-		if strings.ToLower(item) == strings.ToLower(v) {
+		if strings.EqualFold(item, v) {
 			idx = i
 			break
 		}

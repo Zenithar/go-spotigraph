@@ -156,10 +156,6 @@ func (c *userCtrl) update() http.HandlerFunc {
 }
 
 func (c *userCtrl) delete() http.HandlerFunc {
-	// Response type
-	type response struct {
-	}
-
 	// Handler
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Prepare context

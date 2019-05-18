@@ -87,7 +87,10 @@ func Test_Squad_Creation(t *testing.T) {
 
 	// Subtests
 	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -99,23 +102,23 @@ func Test_Squad_Creation(t *testing.T) {
 			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
-			if tt.prepare != nil {
-				tt.prepare(ctx, squads)
+			if testCase.prepare != nil {
+				testCase.prepare(ctx, squads)
 			}
 
 			// Prepare service
 			underTest := squad.New(squads, users)
 
 			// Do the query
-			got, err := underTest.Create(ctx, tt.req)
+			got, err := underTest.Create(ctx, testCase.req)
 
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
-				if tt.publicErr != nil {
-					g.Expect(got.Error).To(Equal(tt.publicErr), "Public error should be as expected")
+				if testCase.publicErr != nil {
+					g.Expect(got.Error).To(Equal(testCase.publicErr), "Public error should be as expected")
 				}
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
@@ -195,7 +198,10 @@ func Test_Squad_Get(t *testing.T) {
 
 	// Subtests
 	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -207,18 +213,18 @@ func Test_Squad_Get(t *testing.T) {
 			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
-			if tt.prepare != nil {
-				tt.prepare(ctx, squads)
+			if testCase.prepare != nil {
+				testCase.prepare(ctx, squads)
 			}
 
 			// Prepare service
 			underTest := squad.New(squads, users)
 
 			// Do the query
-			got, err := underTest.Get(ctx, tt.req)
+			got, err := underTest.Get(ctx, testCase.req)
 
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
@@ -327,7 +333,10 @@ func Test_Squad_Update(t *testing.T) {
 
 	// Subtests
 	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -339,18 +348,18 @@ func Test_Squad_Update(t *testing.T) {
 			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
-			if tt.prepare != nil {
-				tt.prepare(ctx, squads)
+			if testCase.prepare != nil {
+				testCase.prepare(ctx, squads)
 			}
 
 			// Prepare service
 			underTest := squad.New(squads, users)
 
 			// Do the query
-			got, err := underTest.Update(ctx, tt.req)
+			got, err := underTest.Update(ctx, testCase.req)
 
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
@@ -433,7 +442,10 @@ func Test_Squad_Delete(t *testing.T) {
 
 	// Subtests
 	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -445,18 +457,18 @@ func Test_Squad_Delete(t *testing.T) {
 			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
-			if tt.prepare != nil {
-				tt.prepare(ctx, squads)
+			if testCase.prepare != nil {
+				testCase.prepare(ctx, squads)
 			}
 
 			// Prepare service
 			underTest := squad.New(squads, users)
 
 			// Do the query
-			got, err := underTest.Delete(ctx, tt.req)
+			got, err := underTest.Delete(ctx, testCase.req)
 
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")
@@ -518,7 +530,10 @@ func Test_Squad_Search(t *testing.T) {
 
 	// Subtests
 	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 
 			ctrl := gomock.NewController(t)
@@ -530,18 +545,18 @@ func Test_Squad_Search(t *testing.T) {
 			users := mock.NewMockUser(ctrl)
 
 			// Prepare the mocks:
-			if tt.prepare != nil {
-				tt.prepare(ctx, squads)
+			if testCase.prepare != nil {
+				testCase.prepare(ctx, squads)
 			}
 
 			// Prepare service
 			underTest := squad.New(squads, users)
 
 			// Do the query
-			got, err := underTest.Search(ctx, tt.req)
+			got, err := underTest.Search(ctx, testCase.req)
 
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
 				g.Expect(got.Error).ToNot(BeNil(), "Public error should be set")

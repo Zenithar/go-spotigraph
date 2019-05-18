@@ -15,13 +15,13 @@ import (
 )
 
 type service struct {
-	Tribes repositories.Tribe
+	tribes repositories.Tribe
 }
 
 // New returns a service instance
-func New(Tribes repositories.Tribe) services.Tribe {
+func New(tribes repositories.Tribe) services.Tribe {
 	return &service{
-		Tribes: Tribes,
+		tribes: tribes,
 	}
 }
 
@@ -44,7 +44,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Name must be unique
-		constraints.TribeNameMustBeUnique(s.Tribes, req.Name),
+		constraints.TribeNameMustBeUnique(s.tribes, req.Name),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -57,7 +57,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.TribeCreateReq) (*
 	entity := models.NewTribe(req.Name)
 
 	// Create use in database
-	if err := s.Tribes.Create(ctx, entity); err != nil {
+	if err := s.tribes.Create(ctx, entity); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to create Tribe",
@@ -90,7 +90,7 @@ func (s *service) Get(ctx context.Context, req *spotigraph.TribeGetReq) (*spotig
 	}
 
 	// Retrieve Tribe from database
-	entity, err := s.Tribes.Get(ctx, req.Id)
+	entity, err := s.tribes.Get(ctx, req.Id)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
@@ -134,7 +134,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Tribe must exists
-		constraints.TribeMustExists(s.Tribes, req.Id, &entity),
+		constraints.TribeMustExists(s.tribes, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -150,7 +150,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*
 			// Check acceptable name value
 			constraints.MustBeAName(req.Name.Value),
 			// Is already used ?
-			constraints.TribeNameMustBeUnique(s.Tribes, req.Name.Value),
+			constraints.TribeNameMustBeUnique(s.tribes, req.Name.Value),
 		); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusConflict,
@@ -165,7 +165,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.TribeUpdateReq) (*
 	// Skip operation when no updates
 	if updated {
 		// Create account in database
-		if err := s.Tribes.Update(ctx, &entity); err != nil {
+		if err := s.tribes.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusInternalServerError,
 				Message: "Unable to update Tribe object",
@@ -202,7 +202,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spo
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Tribe must exists
-		constraints.TribeMustExists(s.Tribes, req.Id, &entity),
+		constraints.TribeMustExists(s.tribes, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -211,7 +211,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.TribeGetReq) (*spo
 		return res, err
 	}
 
-	if err := s.Tribes.Delete(ctx, req.Id); err != nil {
+	if err := s.tribes.Delete(ctx, req.Id); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to delete Tribe object",
@@ -254,7 +254,7 @@ func (s *service) Search(ctx context.Context, req *spotigraph.TribeSearchReq) (*
 	}
 
 	// Do the search
-	entities, total, err := s.Tribes.Search(ctx, filter, pagination, sortParams)
+	entities, total, err := s.tribes.Search(ctx, filter, pagination, sortParams)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,

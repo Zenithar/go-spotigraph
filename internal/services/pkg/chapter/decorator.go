@@ -53,10 +53,7 @@ func WithTracer() Decorator {
 
 // WithMetric initialize the chapter service metric decorator
 func WithMetric() Decorator {
-	return func(s services.Chapter) services.Chapter {
-		// Initialize the decorator
-		return internal.NewChapterWithMetrics(s)
-	}
+	return internal.NewChapterWithMetrics
 }
 
 // WithCache initialize the chapter service cache decorator
@@ -69,8 +66,5 @@ func WithCache(storage cache.Storage, ttl time.Duration) Decorator {
 
 // WithBreaker initialize the chapter service circuit breaker decorator
 func WithBreaker() Decorator {
-	return func(s services.Chapter) services.Chapter {
-		// Initialize the decorator
-		return internal.NewChapterWithBreaker(s)
-	}
+	return internal.NewChapterWithBreaker
 }

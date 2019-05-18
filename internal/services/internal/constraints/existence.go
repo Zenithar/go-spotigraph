@@ -18,7 +18,7 @@ func mustExists(finder EntityRetrieverFunc) func(ctx context.Context) error {
 			return err
 		}
 		if isNil(object) {
-			return errors.New("Object not found")
+			return errors.New("object not found")
 		}
 		return nil
 	}

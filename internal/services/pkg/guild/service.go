@@ -15,13 +15,13 @@ import (
 )
 
 type service struct {
-	Guilds repositories.Guild
+	guilds repositories.Guild
 }
 
 // New returns a service instance
-func New(Guilds repositories.Guild) services.Guild {
+func New(guilds repositories.Guild) services.Guild {
 	return &service{
-		Guilds: Guilds,
+		guilds: guilds,
 	}
 }
 
@@ -44,7 +44,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.GuildCreateReq) (*
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Name must be unique
-		constraints.GuildNameMustBeUnique(s.Guilds, req.Name),
+		constraints.GuildNameMustBeUnique(s.guilds, req.Name),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -57,7 +57,7 @@ func (s *service) Create(ctx context.Context, req *spotigraph.GuildCreateReq) (*
 	entity := models.NewGuild(req.Name)
 
 	// Create use in database
-	if err := s.Guilds.Create(ctx, entity); err != nil {
+	if err := s.guilds.Create(ctx, entity); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to create Guild",
@@ -90,7 +90,7 @@ func (s *service) Get(ctx context.Context, req *spotigraph.GuildGetReq) (*spotig
 	}
 
 	// Retrieve Guild from database
-	entity, err := s.Guilds.Get(ctx, req.Id)
+	entity, err := s.guilds.Get(ctx, req.Id)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
@@ -134,7 +134,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Guild must exists
-		constraints.GuildMustExists(s.Guilds, req.Id, &entity),
+		constraints.GuildMustExists(s.guilds, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -150,7 +150,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 			// Check acceptable name value
 			constraints.MustBeAName(req.Name.Value),
 			// Is already used ?
-			constraints.GuildNameMustBeUnique(s.Guilds, req.Name.Value),
+			constraints.GuildNameMustBeUnique(s.guilds, req.Name.Value),
 		); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusConflict,
@@ -165,7 +165,7 @@ func (s *service) Update(ctx context.Context, req *spotigraph.GuildUpdateReq) (*
 	// Skip operation when no updates
 	if updated {
 		// Create account in database
-		if err := s.Guilds.Update(ctx, &entity); err != nil {
+		if err := s.guilds.Update(ctx, &entity); err != nil {
 			res.Error = &spotigraph.Error{
 				Code:    http.StatusInternalServerError,
 				Message: "Unable to update Guild object",
@@ -202,7 +202,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.GuildGetReq) (*spo
 		// Request must be syntaxically valid
 		constraints.MustBeValid(req),
 		// Guild must exists
-		constraints.GuildMustExists(s.Guilds, req.Id, &entity),
+		constraints.GuildMustExists(s.guilds, req.Id, &entity),
 	); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusPreconditionFailed,
@@ -211,7 +211,7 @@ func (s *service) Delete(ctx context.Context, req *spotigraph.GuildGetReq) (*spo
 		return res, err
 	}
 
-	if err := s.Guilds.Delete(ctx, req.Id); err != nil {
+	if err := s.guilds.Delete(ctx, req.Id); err != nil {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unable to delete Guild object",
@@ -254,7 +254,7 @@ func (s *service) Search(ctx context.Context, req *spotigraph.GuildSearchReq) (*
 	}
 
 	// Do the search
-	entities, total, err := s.Guilds.Search(ctx, filter, pagination, sortParams)
+	entities, total, err := s.guilds.Search(ctx, filter, pagination, sortParams)
 	if err != nil && err != db.ErrNoResult {
 		res.Error = &spotigraph.Error{
 			Code:    http.StatusInternalServerError,

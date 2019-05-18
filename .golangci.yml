@@ -10,34 +10,12 @@ run:
     - "mock_.*\\.go"
 
 linters:
-  enable:
-    - govet       # check standard vet rules
-    - golint      # check standard linting rules
-    - staticcheck # comprehensive checks
-    - errcheck    # find unchecked errors
-    - ineffassign # find ineffective assignments
-    - varcheck    # find unused global variables and constants
-    - structcheck # check for unused struct parameters
-    - deadcode    # find code that is not used
-    #TODO#- unparam     # check for unused parameters
-    - nakedret    # check for naked returns
-    - goimports   # fix import order
-    - misspell    # check spelling
-    - unconvert   # remove unnecessary conversions
-    - maligned    # check for better memory usage
-    #TODO#- prealloc    # easy optimizations
+  enable-all: true
   disable:
-    - goconst     # check for things that could be replaced by constants
-    - gocyclo     # needs tweaking
-    - depguard    # unused
-    - gosec       # needs tweaking
-    - dupl        # slow
-    - interfacer  # not that useful
-    - gosimple    # part of staticcheck
-    - unused      # part of staticcheck
-    - megacheck   # part of staticcheck
     - lll
-  fast: false
+    - gochecknoglobals
+    - gochecknoinits
+    - dupl
 
 output:
   format: colored-line-number
@@ -72,7 +50,7 @@ linters-settings:
   gofmt:
     simplify: true
   gocyclo:
-    min-complexity: 10
+    min-complexity: 12
   maligned:
     suggest-new: true
   dupl:
@@ -110,7 +88,15 @@ linters-settings:
     simple: true
     range-loops: true # Report preallocation suggestions on range loops, true by default
     for-loops: false # Report preallocation suggestions on for loops, false by default
-
+  gocritic:
+    enabled-tags:
+      - performance
+      - style
+      - experimental
+    disabled-checks:
+      - wrapperFunc
+      - rangeValCopy
+      - hugeParam
 
 issues:
   max-per-linter: 0

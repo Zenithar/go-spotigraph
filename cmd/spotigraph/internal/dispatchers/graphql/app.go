@@ -76,26 +76,26 @@ func (s *application) ApplyConfiguration(cfg interface{}) error {
 
 // -----------------------------------------------------------------------------
 
-func (s *application) checkConfiguration(cfg interface{}) error {
+func (s *application) checkConfiguration(obj interface{}) error {
 	// Check via type assertion
-	config, ok := cfg.(*config.Configuration)
+	cfg, ok := obj.(*config.Configuration)
 	if !ok {
 		return fmt.Errorf("server: invalid configuration")
 	}
 
-	switch config.Core.Mode {
+	switch cfg.Core.Mode {
 	case "local":
-		switch config.Core.Local.Type {
+		switch cfg.Core.Local.Type {
 		case "rethinkdb":
-			if config.Core.Local.Hosts == "" {
+			if cfg.Core.Local.Hosts == "" {
 				return fmt.Errorf("server: database hosts list is mandatory")
 			}
 		case "mongodb":
-			if config.Core.Local.Hosts == "" {
+			if cfg.Core.Local.Hosts == "" {
 				return fmt.Errorf("server: database hosts list is mandatory")
 			}
 		case "postgresql":
-			if config.Core.Local.Hosts == "" {
+			if cfg.Core.Local.Hosts == "" {
 				return fmt.Errorf("server: database hosts list is mandatory")
 			}
 		default:

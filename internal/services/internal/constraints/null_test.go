@@ -33,13 +33,16 @@ func TestNullConstraint(t *testing.T) {
 
 	// Run as subtests
 	for _, tt := range tc {
-		t.Run(tt.name, func(t *testing.T) {
+		testCase := tt
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
 			g := NewGomegaWithT(t)
 			ctx := context.Background()
 
-			err := constraints.Validate(ctx, constraints.MustNotBeNil(tt.input, "Property"))
+			err := constraints.Validate(ctx, constraints.MustNotBeNil(testCase.input, "Property"))
 			// assert results expectations
-			if tt.wantErr {
+			if testCase.wantErr {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 			} else {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
