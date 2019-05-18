@@ -270,6 +270,9 @@ func getGoFiles() []string {
 		if strings.Contains(path, "vendor/") {
 			return filepath.SkipDir
 		}
+		if strings.Contains(path, "tools/") {
+			return filepath.SkipDir
+		}
 
 		if !strings.HasSuffix(path, ".go") {
 			return nil
