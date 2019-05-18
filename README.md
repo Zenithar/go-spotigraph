@@ -3,7 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/Zenithar/go-spotigraph)](https://goreportcard.com/report/github.com/Zenithar/go-spotigraph)
 [![CircleCI](https://circleci.com/gh/Zenithar/go-spotigraph.svg?style=svg)](https://circleci.com/gh/Zenithar/go-spotigraph)
 [![LICENSE](https://img.shields.io/github/license/Zenithar/go-spotigraph.svg)](https://github.com/Zenithar/go-spotigraph/blob/master/LICENSE)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph?ref=badge_small)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FZenithar%2Fgo-spotigraph?ref=badge_shield)
 
 Spotify Agile model mapping microservice
 
