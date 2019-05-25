@@ -30,12 +30,22 @@ RUN set -eux; \
 
 # Drop privileges to build
 USER golang
-COPY --chown=golang:golang . .
+COPY --chown=golang:golang mage.go .
+COPY --chown=golang:golang tools tools/
+
+# Install tools
+RUN set -eux; \
+    go run mage.go -d tools 
+
+# Copy project go module
+COPY --chown=golang:golang magefile.go go.mod ./
 
 # Install dependencies
 RUN set -eux; \
-    go run mage.go -d tools && \
     go run mage.go go:deps
+
+# Copy all sources
+COPY --chown=golang:golang . .
 
 # Build final target
 RUN set -eux; \
@@ -77,3 +87,4 @@ WORKDIR /
 
 ENTRYPOINT [ "/usr/bin/spotigraph" ]
 CMD ["--help"]
+

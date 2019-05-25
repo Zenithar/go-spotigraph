@@ -32,10 +32,12 @@ require (
 	github.com/lib/pq v1.1.1
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
-	github.com/markbates/deplist v1.0.5 // indirect
+	github.com/mattn/go-colorable v0.1.1 // indirect
+	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/oklog/run v1.0.0
+	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/pelletier/go-toml v1.4.0
@@ -43,6 +45,7 @@ require (
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190327083759-54bad0a9b051
 	github.com/sony/gobreaker v0.0.0-20190329013020-a9b2a3fc7395
+	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
@@ -61,7 +64,6 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
-	go.zenithar.org/spotigraph/tools v0.0.0-20190518165850-2fe82ef594ea // indirect
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f
 	golang.org/x/oauth2 v0.0.0-20190517181255-950ef44c6e07
 	google.golang.org/grpc v1.20.1

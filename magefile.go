@@ -224,7 +224,7 @@ func (Docker) Build() error {
 	fmt.Printf(" > Production image\n")
 	return sh.RunV("docker", "build",
 		"-f", "deployment/docker/Dockerfile",
-		"--build-arg", fmt.Sprintf("BUILD_DATE=%s"),
+		"--build-arg", fmt.Sprintf("BUILD_DATE=%s", time.Now().Format(time.RFC3339)),
 		"--build-arg", fmt.Sprintf("VERSION=%s", tag()),
 		"--build-arg", fmt.Sprintf("VCS_REF=%s", hash()),
 		"-t", "spotigraph:latest",
@@ -258,7 +258,7 @@ func goBuild(packageName, out string) error {
 
 	return sh.RunWith(map[string]string{
 		"CGO_ENABLED": "0",
-	}, "go", "build", "-ldflags", strings.Join(linkerArgs, " "), "-o", fmt.Sprintf("bin/%s", out), packageName)
+	}, "go", "build", "-ldflags", strings.Join(linkerArgs, " "), "-mod=vendor", "-o", fmt.Sprintf("bin/%s", out), packageName)
 }
 
 // -----------------------------------------------------------------------------
