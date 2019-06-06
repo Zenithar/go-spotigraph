@@ -9,8 +9,8 @@ require (
 	github.com/Masterminds/squirrel v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
 	github.com/bxcodec/faker v2.0.1+incompatible
-	github.com/cloudflare/tableflip v0.0.0-20190517141608-9f08cabcabc4
-	github.com/common-nighthawk/go-figure v0.0.0-20180619031829-18b2b544842c
+	github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e
+	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0 // indirect
@@ -28,30 +28,27 @@ require (
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/jackc/pgx v3.4.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
-	github.com/kelseyhightower/envconfig v1.3.0
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.1.1
 	github.com/lyft/protoc-gen-validate v0.0.14
 	github.com/magefile/mage v1.8.0
-	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/pelletier/go-toml v1.4.0
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190327083759-54bad0a9b051
-	github.com/sony/gobreaker v0.0.0-20190329013020-a9b2a3fc7395
-	github.com/spf13/afero v1.2.1 // indirect
-	github.com/spf13/cobra v0.0.3
+	github.com/sony/gobreaker v0.4.1
+	github.com/spf13/cobra v0.0.4
 	github.com/spf13/pflag v1.0.3
-	github.com/spf13/viper v1.3.2
+	github.com/spf13/viper v1.4.0
 	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
-	go.opencensus.io v0.21.0
+	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/cache v0.0.5
 	go.zenithar.org/pkg/db v0.0.3
@@ -64,9 +61,9 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
-	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f
-	golang.org/x/oauth2 v0.0.0-20190517181255-950ef44c6e07
-	google.golang.org/grpc v1.20.1
+	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
+	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+	google.golang.org/grpc v1.21.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
