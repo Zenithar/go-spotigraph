@@ -25,6 +25,8 @@ var mainCmd = &cobra.Command{
 }
 
 func init() {
+	mainCmd.Flags().StringVar(&cfgFile, "config", "", "config file")
+
 	mainCmd.AddCommand(versionCmd)
 	mainCmd.AddCommand(configCmd)
 	mainCmd.AddCommand(serverCmd)
