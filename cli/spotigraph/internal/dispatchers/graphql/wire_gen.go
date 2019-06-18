@@ -8,9 +8,6 @@ package graphql
 import (
 	"context"
 	"crypto/tls"
-	"net/http"
-	"time"
-
 	"github.com/99designs/gqlgen/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -36,6 +33,8 @@ import (
 	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
+	"net/http"
+	"time"
 )
 
 // Injectors from wire.go:

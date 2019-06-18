@@ -18,6 +18,7 @@ RUN adduser --disabled-password --gecos "" -u 1000 golang && \
 
 # Force go modules
 ENV GO111MODULE=on
+ENV GOPROXY=https://proxy.golang.org/
 
 WORKDIR $GOPATH/src/workspace
 
