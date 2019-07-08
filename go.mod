@@ -59,7 +59,7 @@ require (
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/crypto v0.0.0-20190708191713-4def268fd1a4
-	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
+	golang.org/x/net v0.0.0-20190708212918-da137c7871d7
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.21.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect
