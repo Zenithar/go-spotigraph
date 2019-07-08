@@ -38,7 +38,7 @@ require (
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
-	github.com/rubenv/sql-migrate v0.0.0-20190327083759-54bad0a9b051
+	github.com/rubenv/sql-migrate v0.0.0-20190708191641-f4d34eae5a5c
 	github.com/sony/gobreaker v0.4.1
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
