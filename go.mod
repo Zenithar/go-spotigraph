@@ -8,7 +8,7 @@ require (
 	github.com/99designs/gqlgen v0.9.0
 	github.com/Masterminds/squirrel v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
-	github.com/bxcodec/faker v2.0.1+incompatible
+	github.com/bxcodec/faker v3.1.0+incompatible
 	github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
