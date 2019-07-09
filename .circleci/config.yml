@@ -10,28 +10,13 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            - mod-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "go.sum" }}-{{ checksum "tools/go.sum" }}
-            - mod-cache-v1-{{ arch }}-{{ .Branch }}
-            - mod-cache-v1
-
       - run:
           name: install tools
           command: go run mage.go -d tools
 
       - run:
-          name: install module
-          command: go run mage.go go:deps
-
-      - save_cache:
-          key: mod-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "go.sum" }}-{{ checksum "tools/go.sum" }}
-          paths:
-            - /go/pkg/mod
-
-      - run:
           name: build
-          command: go run mage.go build
+          command: go run mage.go
 
       - store_artifacts:
           path: bin
