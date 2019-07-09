@@ -62,6 +62,6 @@ require (
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.21.1
-	gopkg.in/gorp.v1 v1.7.2 // indirect
+	gopkg.in/gorp.v2 v2.0.0 // indirect
 	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 )
