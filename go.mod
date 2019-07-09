@@ -25,7 +25,7 @@ require (
 	github.com/gosimple/slug v1.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
-	github.com/jackc/pgx v3.4.0+incompatible
+	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.1.1
