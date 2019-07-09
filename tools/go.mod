@@ -27,7 +27,7 @@ require (
 	github.com/ryanuber/go-license v0.0.0-20180405065157-c69f41c2c8d6 // indirect
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
 	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1
-	github.com/uber/prototool v1.7.0
+	github.com/uber/prototool v1.8.1
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/tools v0.0.0-20190606124116-d0a3d012864b
 	gotest.tools/gotestsum v0.3.4
