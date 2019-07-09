@@ -8,7 +8,7 @@ require (
 	github.com/chzyer/logex v1.1.10 // indirect
 	github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 // indirect
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
-	github.com/envoyproxy/protoc-gen-validate v0.0.14
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.7.0
 	github.com/frapposelli/wwhrd v0.2.1
 	github.com/gobuffalo/packr v1.25.0
