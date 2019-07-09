@@ -16,7 +16,7 @@ require (
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
-	github.com/gobuffalo/packr v1.26.0
+	github.com/gobuffalo/packr v1.30.1
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.1
