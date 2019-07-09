@@ -18,7 +18,7 @@ require (
 	github.com/golangci/golangci-lint v1.17.1
 	github.com/google/wire v0.3.0
 	github.com/gorilla/context v1.1.1 // indirect
-	github.com/gorilla/mux v1.6.2 // indirect
+	github.com/gorilla/mux v1.7.3 // indirect
 	github.com/hexdigest/gowrap v1.1.4
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
