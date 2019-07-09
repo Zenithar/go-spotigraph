@@ -21,7 +21,7 @@ require (
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.1
 	github.com/google/go-cmp v0.3.0
-	github.com/google/wire v0.2.2
+	github.com/google/wire v0.3.0
 	github.com/gosimple/slug v1.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe

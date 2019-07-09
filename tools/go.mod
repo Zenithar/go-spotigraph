@@ -15,7 +15,7 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.3.1
 	github.com/golangci/golangci-lint v1.16.1-0.20190425135923-692dacb773b7
-	github.com/google/wire v0.2.2
+	github.com/google/wire v0.3.0
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/hexdigest/gowrap v1.1.4
