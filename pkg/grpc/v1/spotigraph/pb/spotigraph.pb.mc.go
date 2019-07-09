@@ -4,6 +4,7 @@ package pb
 
 import (
 	"context"
+
 	"github.com/bxcodec/faker"
 
 	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"

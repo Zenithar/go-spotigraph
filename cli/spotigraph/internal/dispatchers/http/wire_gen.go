@@ -8,6 +8,9 @@ package http
 import (
 	"context"
 	"crypto/tls"
+	"net/http"
+	"time"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"go.opencensus.io/plugin/ochttp"
@@ -31,8 +34,6 @@ import (
 	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
-	"net/http"
-	"time"
 )
 
 // Injectors from wire.go:

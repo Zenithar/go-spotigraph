@@ -108,12 +108,16 @@ func (m *EmptyRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return EmptyResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return EmptyResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -249,12 +253,16 @@ func (m *Graph) Validate() error {
 	for idx, item := range m.GetNodes() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return GraphValidationError{
-					field:  fmt.Sprintf("Nodes[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return GraphValidationError{
+						field:  fmt.Sprintf("Nodes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -264,12 +272,16 @@ func (m *Graph) Validate() error {
 	for idx, item := range m.GetEdges() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return GraphValidationError{
-					field:  fmt.Sprintf("Edges[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return GraphValidationError{
+						field:  fmt.Sprintf("Edges[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -560,12 +572,16 @@ func (m *UserUpdateReq) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetPrincipal()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return UserUpdateReqValidationError{
-				field:  "Principal",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPrincipal()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UserUpdateReqValidationError{
+					field:  "Principal",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -637,22 +653,30 @@ func (m *SingleUserRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleUserResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleUserResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleUserResValidationError{
-				field:  "Entity",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetEntity()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleUserResValidationError{
+					field:  "Entity",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -722,12 +746,16 @@ func (m *PaginatedUserRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PaginatedUserResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedUserResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -743,12 +771,16 @@ func (m *PaginatedUserRes) Validate() error {
 	for idx, item := range m.GetMembers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PaginatedUserResValidationError{
-					field:  fmt.Sprintf("Members[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return PaginatedUserResValidationError{
+						field:  fmt.Sprintf("Members[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -824,22 +856,30 @@ func (m *UserSearchReq) Validate() error {
 
 	// no validation rules for PerPage
 
-	if v, ok := interface{}(m.GetUserId()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return UserSearchReqValidationError{
-				field:  "UserId",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetUserId()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UserSearchReqValidationError{
+					field:  "UserId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetPrincipal()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return UserSearchReqValidationError{
-				field:  "Principal",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPrincipal()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UserSearchReqValidationError{
+					field:  "Principal",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1085,12 +1125,16 @@ func (m *SquadUpdateReq) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SquadUpdateReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SquadUpdateReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1284,22 +1328,30 @@ func (m *SingleSquadRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleSquadResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleSquadResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleSquadResValidationError{
-				field:  "Entity",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetEntity()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleSquadResValidationError{
+					field:  "Entity",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1369,12 +1421,16 @@ func (m *PaginatedSquadRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PaginatedSquadResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedSquadResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1390,12 +1446,16 @@ func (m *PaginatedSquadRes) Validate() error {
 	for idx, item := range m.GetMembers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PaginatedSquadResValidationError{
-					field:  fmt.Sprintf("Members[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return PaginatedSquadResValidationError{
+						field:  fmt.Sprintf("Members[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1473,32 +1533,44 @@ func (m *SquadSearchReq) Validate() error {
 
 	// no validation rules for PerPage
 
-	if v, ok := interface{}(m.GetSquadId()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SquadSearchReqValidationError{
-				field:  "SquadId",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetSquadId()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SquadSearchReqValidationError{
+					field:  "SquadId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SquadSearchReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SquadSearchReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SquadSearchReqValidationError{
-				field:  "Slug",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetSlug()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SquadSearchReqValidationError{
+					field:  "Slug",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1744,12 +1816,16 @@ func (m *ChapterUpdateReq) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ChapterUpdateReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ChapterUpdateReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1841,22 +1917,30 @@ func (m *SingleChapterRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleChapterResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleChapterResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleChapterResValidationError{
-				field:  "Entity",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetEntity()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleChapterResValidationError{
+					field:  "Entity",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1926,12 +2010,16 @@ func (m *PaginatedChapterRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PaginatedChapterResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedChapterResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1947,12 +2035,16 @@ func (m *PaginatedChapterRes) Validate() error {
 	for idx, item := range m.GetMembers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PaginatedChapterResValidationError{
-					field:  fmt.Sprintf("Members[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return PaginatedChapterResValidationError{
+						field:  fmt.Sprintf("Members[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2030,32 +2122,44 @@ func (m *ChapterSearchReq) Validate() error {
 
 	// no validation rules for PerPage
 
-	if v, ok := interface{}(m.GetChapterId()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ChapterSearchReqValidationError{
-				field:  "ChapterId",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetChapterId()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ChapterSearchReqValidationError{
+					field:  "ChapterId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ChapterSearchReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ChapterSearchReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ChapterSearchReqValidationError{
-				field:  "Slug",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetSlug()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ChapterSearchReqValidationError{
+					field:  "Slug",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2301,12 +2405,16 @@ func (m *GuildUpdateReq) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GuildUpdateReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GuildUpdateReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2378,22 +2486,30 @@ func (m *SingleGuildRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleGuildResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleGuildResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleGuildResValidationError{
-				field:  "Entity",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetEntity()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleGuildResValidationError{
+					field:  "Entity",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2463,12 +2579,16 @@ func (m *PaginatedGuildRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PaginatedGuildResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedGuildResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2484,12 +2604,16 @@ func (m *PaginatedGuildRes) Validate() error {
 	for idx, item := range m.GetMembers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PaginatedGuildResValidationError{
-					field:  fmt.Sprintf("Members[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return PaginatedGuildResValidationError{
+						field:  fmt.Sprintf("Members[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2567,32 +2691,44 @@ func (m *GuildSearchReq) Validate() error {
 
 	// no validation rules for PerPage
 
-	if v, ok := interface{}(m.GetGuildId()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GuildSearchReqValidationError{
-				field:  "GuildId",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetGuildId()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GuildSearchReqValidationError{
+					field:  "GuildId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GuildSearchReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GuildSearchReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GuildSearchReqValidationError{
-				field:  "Slug",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetSlug()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GuildSearchReqValidationError{
+					field:  "Slug",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2838,12 +2974,16 @@ func (m *TribeUpdateReq) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TribeUpdateReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TribeUpdateReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2915,22 +3055,30 @@ func (m *SingleTribeRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleTribeResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleTribeResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SingleTribeResValidationError{
-				field:  "Entity",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetEntity()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SingleTribeResValidationError{
+					field:  "Entity",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -3000,12 +3148,16 @@ func (m *PaginatedTribeRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PaginatedTribeResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PaginatedTribeResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -3021,12 +3173,16 @@ func (m *PaginatedTribeRes) Validate() error {
 	for idx, item := range m.GetMembers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return PaginatedTribeResValidationError{
-					field:  fmt.Sprintf("Members[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return PaginatedTribeResValidationError{
+						field:  fmt.Sprintf("Members[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -3104,32 +3260,44 @@ func (m *TribeSearchReq) Validate() error {
 
 	// no validation rules for PerPage
 
-	if v, ok := interface{}(m.GetTribeId()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TribeSearchReqValidationError{
-				field:  "TribeId",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTribeId()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TribeSearchReqValidationError{
+					field:  "TribeId",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetName()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TribeSearchReqValidationError{
-				field:  "Name",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetName()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TribeSearchReqValidationError{
+					field:  "Name",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetSlug()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TribeSearchReqValidationError{
-				field:  "Slug",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetSlug()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TribeSearchReqValidationError{
+					field:  "Slug",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -3265,22 +3433,30 @@ func (m *GraphRes) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetError()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GraphResValidationError{
-				field:  "Error",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GraphResValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetGraph()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GraphResValidationError{
-				field:  "Graph",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetGraph()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GraphResValidationError{
+					field:  "Graph",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -3714,60 +3890,80 @@ func (m *Graph_Node) Validate() error {
 
 	case *Graph_Node_User:
 
-		if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return Graph_NodeValidationError{
-					field:  "User",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetUser()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return Graph_NodeValidationError{
+						field:  "User",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	case *Graph_Node_Chapter:
 
-		if v, ok := interface{}(m.GetChapter()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return Graph_NodeValidationError{
-					field:  "Chapter",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetChapter()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return Graph_NodeValidationError{
+						field:  "Chapter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	case *Graph_Node_Guild:
 
-		if v, ok := interface{}(m.GetGuild()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return Graph_NodeValidationError{
-					field:  "Guild",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetGuild()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return Graph_NodeValidationError{
+						field:  "Guild",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	case *Graph_Node_Squad:
 
-		if v, ok := interface{}(m.GetSquad()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return Graph_NodeValidationError{
-					field:  "Squad",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetSquad()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return Graph_NodeValidationError{
+						field:  "Squad",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	case *Graph_Node_Tribe:
 
-		if v, ok := interface{}(m.GetTribe()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return Graph_NodeValidationError{
-					field:  "Tribe",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetTribe()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return Graph_NodeValidationError{
+						field:  "Tribe",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
