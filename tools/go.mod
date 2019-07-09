@@ -30,6 +30,6 @@ require (
 	github.com/uber/prototool v1.7.0
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/tools v0.0.0-20190606124116-d0a3d012864b
-	gotest.tools/gotestsum v0.3.4
+	gotest.tools/gotestsum v0.3.5
 	mvdan.cc/gofumpt v0.0.0-20190523101110-582c384fada0
 )
