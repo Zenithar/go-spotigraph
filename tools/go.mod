@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/99designs/gqlgen v0.9.0
-	github.com/CircleCI-Public/circleci-cli v0.1.5607
+	github.com/CircleCI-Public/circleci-cli v0.1.5705
 	github.com/chzyer/logex v1.1.10 // indirect
 	github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 // indirect
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
