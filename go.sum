@@ -72,6 +72,7 @@ github.com/cheekybits/is v0.0.0-20150225183255-68e9c0620927/go.mod h1:h/aW8ynjgk
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e h1:hvxVrfDrDCo+sjMcxXKynZP85y2IJR810yVL/qjOGxs=
 github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e/go.mod h1:erh4dYezoMVbIa52pi7i1Du7+cXOgqNuTamt10qvMoA=
+github.com/cloudflare/tableflip v0.0.0-20190716105417-ac9d683a1add/go.mod h1:JxQ7OEXHm5lWh7l4QwFvp6d1aLGGxqPV/thmggcYqjw=
 github.com/cockroachdb/apd v1.1.0 h1:3LFP3629v+1aKXU5Q37mxmRxX/pIu1nijXydLShEq5I=
 github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMeY4+DwBQ=
 github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a h1:kTv7wPomOuRf17BKQKO5Y6GrKsYC52XHrjf26H6FdQU=
