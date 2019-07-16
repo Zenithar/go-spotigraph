@@ -29,7 +29,7 @@ require (
 	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/lib/pq v1.1.1
+	github.com/lib/pq v1.2.0
 	github.com/lyft/protoc-gen-validate v0.1.0
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
