@@ -23,7 +23,7 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.3.0
 	github.com/google/wire v0.3.0
-	github.com/gosimple/slug v1.5.0
+	github.com/gosimple/slug v1.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/jackc/pgx v3.5.0+incompatible
