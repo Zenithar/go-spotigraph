@@ -30,5 +30,5 @@ require (
 	go.zenithar.org/protoc-gen-cobra v0.0.3
 	golang.org/x/tools v0.0.0-20190715052553-607ca053a137
 	gotest.tools/gotestsum v0.3.5
-	mvdan.cc/gofumpt v0.0.0-20190629185957-5c4608766f49
+	mvdan.cc/gofumpt v0.0.0-20190729094848-96300e3d49fb
 )
