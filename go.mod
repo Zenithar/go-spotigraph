@@ -14,7 +14,7 @@ require (
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/fatih/color v1.7.0
 	github.com/go-chi/chi v4.0.2+incompatible
-	github.com/go-ozzo/ozzo-validation v3.5.0+incompatible
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gobuffalo/packr v1.30.1
 	github.com/gogo/protobuf v1.2.1
