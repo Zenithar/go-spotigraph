@@ -5,7 +5,7 @@ go 1.12
 replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2
 
 require (
-	github.com/99designs/gqlgen v0.9.1
+	github.com/99designs/gqlgen v0.9.2
 	github.com/Masterminds/squirrel v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a // indirect
 	github.com/bxcodec/faker v2.0.1+incompatible
