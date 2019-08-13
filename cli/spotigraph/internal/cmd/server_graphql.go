@@ -30,7 +30,7 @@ var graphqlCmd = &cobra.Command{
 		log.For(ctx).Info("Starting spotigraph GraphQL server ...")
 
 		// Start goroutine group
-		err := platform.Run(ctx, &platform.Application{
+		err := platform.Serve(ctx, &platform.Server{
 			Debug:           conf.Debug.Enable,
 			Name:            "spotigraph-graphql",
 			Version:         version.Version,

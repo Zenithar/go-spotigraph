@@ -30,7 +30,7 @@ var httpCmd = &cobra.Command{
 		log.For(ctx).Info("Starting spotigraph HTTP server ...")
 
 		// Start goroutine group
-		err := platform.Run(ctx, &platform.Application{
+		err := platform.Serve(ctx, &platform.Server{
 			Debug:           conf.Debug.Enable,
 			Name:            "spotigraph-http",
 			Version:         version.Version,

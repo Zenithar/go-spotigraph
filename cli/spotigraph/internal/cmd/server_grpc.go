@@ -30,7 +30,7 @@ var grpcCmd = &cobra.Command{
 		log.For(ctx).Info("Starting spotigraph gRPC server ...")
 
 		// Start goroutine group
-		err := platform.Run(ctx, &platform.Application{
+		err := platform.Serve(ctx, &platform.Server{
 			Debug:           conf.Debug.Enable,
 			Name:            "spotigraph-grpc",
 			Version:         version.Version,

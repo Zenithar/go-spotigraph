@@ -7,7 +7,6 @@ package tools
 // tool dependencies
 import (
 	_ "github.com/99designs/gqlgen"
-	_ "github.com/CircleCI-Public/circleci-cli"
 	_ "github.com/envoyproxy/protoc-gen-validate"
 	_ "github.com/frapposelli/wwhrd"
 	_ "github.com/gobuffalo/packr/packr"
