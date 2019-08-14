@@ -30,6 +30,18 @@ func NewChapter(name string) *Chapter {
 
 // ------------------------------------------------------------------
 
+// GetGroupType returns user group type
+func (c *Chapter) GetGroupType() string {
+	return "chapter"
+}
+
+// GetGroupID returns user group type
+func (c *Chapter) GetGroupID() string {
+	return c.ID
+}
+
+// ------------------------------------------------------------------
+
 // Validate entity contraints
 func (c *Chapter) Validate() error {
 	return validation.ValidateStruct(c,
@@ -55,5 +67,5 @@ func (c *Chapter) SetLeader(u *User) {
 
 // URN returns an uniform resource name for external linking
 func (c *Chapter) URN() string {
-	return fmt.Sprintf("urn:spfg:v1:chapter:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::chapter:%s:%s", c.ID, slug.Make(c.Name))
 }

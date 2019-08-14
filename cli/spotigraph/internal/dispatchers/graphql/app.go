@@ -38,16 +38,10 @@ func New(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 		}
 
 		// Initialize Core components
+		// nolint
 		switch cfg.Core.Mode {
 		case "local":
-			switch cfg.Core.Local.Type {
-			case "mongodb":
-				app.server, err = setupLocalMongoDB(ctx, cfg)
-			case "rethinkdb":
-				app.server, err = setupLocalRethinkDB(ctx, cfg)
-			case "postgresql":
-				app.server, err = setupLocalPostgreSQL(ctx, cfg)
-			}
+			app.server, err = setupLocalPostgreSQL(ctx, cfg)
 		case "remote":
 		default:
 			log.For(ctx).Fatal("Invalid core mode, use 'remote' or 'local'.")
@@ -85,22 +79,10 @@ func (s *application) checkConfiguration(obj interface{}) error {
 
 	switch cfg.Core.Mode {
 	case "local":
-		switch cfg.Core.Local.Type {
-		case "rethinkdb":
-			if cfg.Core.Local.Hosts == "" {
-				return fmt.Errorf("server: database hosts list is mandatory")
-			}
-		case "mongodb":
-			if cfg.Core.Local.Hosts == "" {
-				return fmt.Errorf("server: database hosts list is mandatory")
-			}
-		case "postgresql":
-			if cfg.Core.Local.Hosts == "" {
-				return fmt.Errorf("server: database hosts list is mandatory")
-			}
-		default:
-			return fmt.Errorf("server: invalid type (mongodb/rethinkdb/postgresql)")
+		if cfg.Core.Local.Hosts == "" {
+			return fmt.Errorf("server: database hosts list is mandatory")
 		}
+	case "remote":
 	default:
 		return fmt.Errorf("server: invalid core mode, grpc only support 'local'")
 	}

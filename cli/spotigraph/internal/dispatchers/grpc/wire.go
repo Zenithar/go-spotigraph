@@ -28,7 +28,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe, graph services.Graph) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -89,7 +89,6 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 	pb.RegisterGuildServer(server, guilds)
 	pb.RegisterSquadServer(server, squads)
 	pb.RegisterTribeServer(server, tribes)
-	pb.RegisterGraphServer(server, graph)
 
 	// Reflection
 	reflection.Register(server)
@@ -118,22 +117,6 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 }
 
 // -----------------------------------------------------------------------------
-
-func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-	wire.Build(
-		core.LocalMongoDBSet,
-		grpcServer,
-	)
-	return &grpc.Server{}, nil
-}
-
-func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-	wire.Build(
-		core.LocalRethinkDBSet,
-		grpcServer,
-	)
-	return &grpc.Server{}, nil
-}
 
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(

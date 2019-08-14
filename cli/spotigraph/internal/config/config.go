@@ -14,11 +14,11 @@ type Configuration struct {
 		Mode  string `toml:"mode" default:"local" comment:"Use remote or local as backend"`
 		Local struct {
 			AutoMigrate bool   `toml:"-" default:"false"`
-			Type        string `toml:"type" default:"rethinkdb" comment:"Database connector to use: rethinkdb."`
-			Hosts       string `toml:"hosts" default:"127.0.0.1:28015" comment:"Database hosts (comma separated)"`
+			Type        string `toml:"type" default:"postgresql" comment:"Database connector to use: rethinkdb."`
+			Hosts       string `toml:"hosts" default:"postgresql://spotigraph:changeme@localhost:5432/spotigraph?driver=pgx" comment:"Database hosts (comma separated)"`
 			Database    string `toml:"database" default:"spotigraph" comment:"Database namespace"`
-			Username    string `toml:"username" default:"" comment:"Database connection username"`
-			Password    string `toml:"password" default:"" comment:"Database connection password"`
+			Username    string `toml:"username" default:"spotigraph" comment:"Database connection username"`
+			Password    string `toml:"password" default:"changeme" comment:"Database connection password"`
 		} `toml:"Local" comment:"###############################\n Local Settings \n##############################"`
 		Remote struct {
 			Address string `toml:"address" default:"" comment:"Remote gRPC service address"`

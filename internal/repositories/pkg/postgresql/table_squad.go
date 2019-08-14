@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 
+	"go.opencensus.io/trace"
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
@@ -93,6 +94,9 @@ func (dto *sqlSquad) ToEntity() (*models.Squad, error) {
 // ------------------------------------------------------------
 
 func (r *pgSquadRepository) Create(ctx context.Context, entity *models.Squad) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.Create")
+	defer span.End()
+
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -108,6 +112,9 @@ func (r *pgSquadRepository) Create(ctx context.Context, entity *models.Squad) er
 }
 
 func (r *pgSquadRepository) Get(ctx context.Context, id string) (*models.Squad, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.Get")
+	defer span.End()
+
 	var entity sqlSquad
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
@@ -120,6 +127,9 @@ func (r *pgSquadRepository) Get(ctx context.Context, id string) (*models.Squad, 
 }
 
 func (r *pgSquadRepository) Update(ctx context.Context, entity *models.Squad) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.Update")
+	defer span.End()
+
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -135,35 +145,52 @@ func (r *pgSquadRepository) Update(ctx context.Context, entity *models.Squad) er
 		"name":             obj.Name,
 		"meta":             obj.Meta,
 		"product_owner_id": obj.ProductOwnerID,
-		"member_ids":       obj.MemberIDs,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})
 }
 
 func (r *pgSquadRepository) Delete(ctx context.Context, id string) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.Delete")
+	defer span.End()
+
 	return r.adapter.RemoveOne(ctx, map[string]interface{}{
 		"id": id,
 	})
 }
 
 func (r *pgSquadRepository) Search(ctx context.Context, filter *repositories.SquadSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Squad, int, error) {
-	var results []*models.Squad
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.Search")
+	defer span.End()
+
+	var results []sqlSquad
 
 	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
 	if err != nil {
 		return nil, count, err
 	}
 
+	entities := make([]*models.Squad, len(results))
 	if len(results) == 0 {
-		return results, count, api.ErrNoResult
+		return entities, count, api.ErrNoResult
+	}
+
+	for i, entity := range results {
+		e, err := entity.ToEntity()
+		if err != nil {
+			continue
+		}
+		entities[i] = e
 	}
 
 	// Return results and total count
-	return results, count, nil
+	return entities, count, nil
 }
 
 func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*models.Squad, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.FindByName")
+	defer span.End()
+
 	var entity sqlSquad
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
@@ -173,58 +200,6 @@ func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*model
 	}
 
 	return entity.ToEntity()
-}
-
-func (r *pgSquadRepository) AddMembers(ctx context.Context, id string, users ...*models.User) error {
-	// Retrieve squad entity
-	entity, err := r.Get(ctx, id)
-	if err != nil {
-		return err
-	}
-
-	// Add user as members
-	for _, u := range users {
-		entity.AddMember(u)
-	}
-
-	// Intermediary DTO
-	obj, err := toSquadSQL(entity)
-	if err != nil {
-		return err
-	}
-
-	// Update members
-	return r.adapter.Update(ctx, map[string]interface{}{
-		"member_ids": obj.MemberIDs,
-	}, map[string]interface{}{
-		"id": entity.ID,
-	})
-}
-
-func (r *pgSquadRepository) RemoveMembers(ctx context.Context, id string, users ...*models.User) error {
-	// Retrieve squad entity
-	entity, err := r.Get(ctx, id)
-	if err != nil {
-		return err
-	}
-
-	// Remove user from members
-	for _, u := range users {
-		entity.RemoveMember(u)
-	}
-
-	// Intermediary DTO
-	obj, err := toSquadSQL(entity)
-	if err != nil {
-		return err
-	}
-
-	// Update members
-	return r.adapter.Update(ctx, map[string]interface{}{
-		"member_ids": obj.MemberIDs,
-	}, map[string]interface{}{
-		"id": entity.ID,
-	})
 }
 
 // -----------------------------------------------------------------------------

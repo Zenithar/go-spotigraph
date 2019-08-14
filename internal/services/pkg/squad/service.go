@@ -17,15 +17,17 @@ import (
 )
 
 type service struct {
-	squads repositories.Squad
-	users  repositories.User
+	squads      repositories.Squad
+	users       repositories.User
+	memberships repositories.Membership
 }
 
 // New returns a service instance
-func New(squads repositories.Squad, users repositories.User) services.Squad {
+func New(squads repositories.Squad, users repositories.User, memberships repositories.Membership) services.Squad {
 	return &service{
-		squads: squads,
-		users:  users,
+		squads:      squads,
+		users:       users,
+		memberships: memberships,
 	}
 }
 
@@ -327,13 +329,11 @@ func (s *service) AddMembers(ctx context.Context, req *spotigraph.SquadMemberReq
 	}
 
 	if len(valid) > 0 {
-		// Create account in database
-		if err := s.squads.AddMembers(ctx, entity.ID, valid...); err != nil {
-			res.Error = &spotigraph.Error{
-				Code:    http.StatusInternalServerError,
-				Message: "Unable to add squad members",
+		for _, u := range valid {
+			if err := s.memberships.Join(ctx, u, &entity); err != nil {
+				log.For(ctx).Error("Invalid user, ignored", zap.Error(err))
+				continue
 			}
-			return res, err
 		}
 	}
 
@@ -385,13 +385,11 @@ func (s *service) RemoveMembers(ctx context.Context, req *spotigraph.SquadMember
 	}
 
 	if len(valid) > 0 {
-		// Create account in database
-		if err := s.squads.RemoveMembers(ctx, entity.ID, valid...); err != nil {
-			res.Error = &spotigraph.Error{
-				Code:    http.StatusInternalServerError,
-				Message: "Unable to remove squad members",
+		for _, u := range valid {
+			if err := s.memberships.Leave(ctx, u, &entity); err != nil {
+				log.For(ctx).Error("Invalid user, ignored", zap.Error(err))
+				continue
 			}
-			return res, err
 		}
 	}
 

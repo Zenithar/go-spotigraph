@@ -17,88 +17,37 @@ import (
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
-	"go.zenithar.org/pkg/db/adapter/mongodb"
-	"go.zenithar.org/pkg/db/adapter/postgresql"
-	"go.zenithar.org/pkg/db/adapter/rethinkdb"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http/handlers/v1"
-	mongodb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/mongodb"
-	postgresql2 "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
-	rethinkdb2 "go.zenithar.org/spotigraph/internal/repositories/pkg/rethinkdb"
+	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
 	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
 	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 )
 
 // Injectors from wire.go:
 
-func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
-	configuration := core.MongoDBConfig(cfg)
-	wrappedClient, err := mongodb.Connection(ctx, configuration)
-	if err != nil {
-		return nil, err
-	}
-	repositoriesUser := mongodb2.NewUserRepository(configuration, wrappedClient)
-	servicesUser := user.New(repositoriesUser)
-	repositoriesSquad := mongodb2.NewSquadRepository(configuration, wrappedClient)
-	servicesSquad := squad.New(repositoriesSquad, repositoriesUser)
-	repositoriesChapter := mongodb2.NewChapterRepository(configuration, wrappedClient)
-	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := mongodb2.NewGuildRepository(configuration, wrappedClient)
-	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesTribe := mongodb2.NewTribeRepository(configuration, wrappedClient)
-	servicesTribe := tribe.New(repositoriesTribe)
-	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
-	if err != nil {
-		return nil, err
-	}
-	return server, nil
-}
-
-func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
-	configuration := core.RethinkDBConfig(cfg)
-	session, err := rethinkdb.Connection(ctx, configuration)
-	if err != nil {
-		return nil, err
-	}
-	repositoriesUser := rethinkdb2.NewUserRepository(configuration, session)
-	servicesUser := user.New(repositoriesUser)
-	repositoriesSquad := rethinkdb2.NewSquadRepository(configuration, session)
-	servicesSquad := squad.New(repositoriesSquad, repositoriesUser)
-	repositoriesChapter := rethinkdb2.NewChapterRepository(configuration, session)
-	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := rethinkdb2.NewGuildRepository(configuration, session)
-	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesTribe := rethinkdb2.NewTribeRepository(configuration, session)
-	servicesTribe := tribe.New(repositoriesTribe)
-	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
-	if err != nil {
-		return nil, err
-	}
-	return server, nil
-}
-
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 	configuration := core.PosgreSQLConfig(cfg)
-	db, err := postgresql.Connection(ctx, configuration)
+	db, err := postgresql.AutoMigrate(ctx, configuration)
 	if err != nil {
 		return nil, err
 	}
-	repositoriesUser := postgresql2.NewUserRepository(configuration, db)
+	repositoriesUser := postgresql.NewUserRepository(configuration, db)
 	servicesUser := user.New(repositoriesUser)
-	repositoriesSquad := postgresql2.NewSquadRepository(configuration, db)
-	servicesSquad := squad.New(repositoriesSquad, repositoriesUser)
-	repositoriesChapter := postgresql2.NewChapterRepository(configuration, db)
+	squad := postgresql.NewSquadRepository(configuration, db)
+	membership := postgresql.NewMembershipRepository(configuration, db)
+	servicesSquad := core.Squad(squad, repositoriesUser, membership)
+	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
 	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := postgresql2.NewGuildRepository(configuration, db)
+	repositoriesGuild := postgresql.NewGuildRepository(configuration, db)
 	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesTribe := postgresql2.NewTribeRepository(configuration, db)
+	repositoriesTribe := postgresql.NewTribeRepository(configuration, db)
 	servicesTribe := tribe.New(repositoriesTribe)
 	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
 	if err != nil {

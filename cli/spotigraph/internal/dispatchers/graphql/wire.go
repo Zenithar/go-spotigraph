@@ -97,22 +97,6 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 // -----------------------------------------------------------------------------
 
-func setupLocalMongoDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
-	wire.Build(
-		core.LocalMongoDBSet,
-		httpServer,
-	)
-	return &http.Server{}, nil
-}
-
-func setupLocalRethinkDB(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
-	wire.Build(
-		core.LocalRethinkDBSet,
-		httpServer,
-	)
-	return &http.Server{}, nil
-}
-
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 	wire.Build(
 		core.LocalPostgreSQLSet,

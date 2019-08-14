@@ -30,6 +30,18 @@ func NewTribe(name string) *Tribe {
 
 // ------------------------------------------------------------------
 
+// GetGroupType returns user group type
+func (c *Tribe) GetGroupType() string {
+	return "tribe"
+}
+
+// GetGroupID returns user group type
+func (c *Tribe) GetGroupID() string {
+	return c.ID
+}
+
+// ------------------------------------------------------------------
+
 // Validate entity contraints
 func (c *Tribe) Validate() error {
 	return validation.ValidateStruct(c,
@@ -55,5 +67,5 @@ func (c *Tribe) SetLeader(u *User) {
 
 // URN returns an uniform resource name for external linking
 func (c *Tribe) URN() string {
-	return fmt.Sprintf("urn:spfg:v1:tribe:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::tribe:%s:%s", c.ID, slug.Make(c.Name))
 }

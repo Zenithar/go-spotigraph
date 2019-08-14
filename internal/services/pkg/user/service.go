@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"go.zenithar.org/spotigraph/internal/helpers"
-
 	"go.zenithar.org/pkg/db"
 
+	"go.zenithar.org/spotigraph/internal/helpers"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services"

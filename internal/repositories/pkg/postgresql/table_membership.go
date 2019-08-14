@@ -1,0 +1,78 @@
+package postgresql
+
+import (
+	"context"
+
+	"go.opencensus.io/trace"
+	db "go.zenithar.org/pkg/db/adapter/postgresql"
+	"go.zenithar.org/spotigraph/internal/helpers"
+	"go.zenithar.org/spotigraph/internal/models"
+	"go.zenithar.org/spotigraph/internal/repositories"
+
+	"github.com/jmoiron/sqlx"
+)
+
+type pgMembershipRepository struct {
+	adapter *db.Default
+}
+
+// NewMembershipRepository returns an initialized PostgreSQL repository for memberships
+func NewMembershipRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Membership {
+	// Defines allowed columns
+	defaultColumns := []string{
+		"id", "user_id", "group_id", "group_type",
+	}
+
+	// Sortable columns
+	sortableColumns := []string{
+		"id", "user_id", "group_id", "group_type",
+	}
+
+	return &pgMembershipRepository{
+		adapter: db.NewCRUDTable(session, "", MembershipTableName, defaultColumns, sortableColumns),
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+type sqlMembership struct {
+	ID        string `db:"id"`
+	UserID    string `db:"user_id"`
+	GroupID   string `db:"group_id"`
+	GroupType string `db:"group_type"`
+}
+
+// -----------------------------------------------------------------------------
+
+func (r *pgMembershipRepository) Join(ctx context.Context, entity *models.User, ug models.UserGroup) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.membership.Join")
+	span.AddAttributes(
+		trace.StringAttribute("user_id", entity.ID),
+		trace.StringAttribute("group_type", ug.GetGroupType()),
+		trace.StringAttribute("group_id", ug.GetGroupID()),
+	)
+	defer span.End()
+
+	return r.adapter.Create(ctx, &sqlMembership{
+		ID:        helpers.IDGeneratorFunc(),
+		UserID:    entity.ID,
+		GroupID:   ug.GetGroupID(),
+		GroupType: ug.GetGroupType(),
+	})
+}
+
+func (r *pgMembershipRepository) Leave(ctx context.Context, entity *models.User, ug models.UserGroup) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.membership.Leave")
+	span.AddAttributes(
+		trace.StringAttribute("user_id", entity.ID),
+		trace.StringAttribute("group_type", ug.GetGroupType()),
+		trace.StringAttribute("group_id", ug.GetGroupID()),
+	)
+	defer span.End()
+
+	return r.adapter.RemoveOne(ctx, &map[string]interface{}{
+		"user_id":    entity.ID,
+		"group_type": ug.GetGroupType(),
+		"group_id":   ug.GetGroupID(),
+	})
+}

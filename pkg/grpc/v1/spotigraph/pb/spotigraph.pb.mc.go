@@ -272,16 +272,3 @@ func (MockTribeServer) Search(context.Context, *spotigraph.TribeSearchReq) (*spo
 	}
 	return &res, nil
 }
-
-// MockGraphServer is the mock implementation of the GraphServer. Use this to create mock services that
-// return random data. Useful in UI Testing.
-type MockGraphServer struct{}
-
-// Expand is mock implementation of the method Expand
-func (MockGraphServer) Expand(context.Context, *spotigraph.NodeInfoReq) (*spotigraph.GraphRes, error) {
-	var res spotigraph.GraphRes
-	if err := faker.FakeData(&res); err != nil {
-		return nil, err
-	}
-	return &res, nil
-}

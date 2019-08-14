@@ -31,6 +31,18 @@ func NewSquad(name string) *Squad {
 
 // ------------------------------------------------------------------
 
+// GetGroupType returns user group type
+func (c *Squad) GetGroupType() string {
+	return "squad"
+}
+
+// GetGroupID returns user group type
+func (c *Squad) GetGroupID() string {
+	return c.ID
+}
+
+// ------------------------------------------------------------------
+
 // Validate entity contraints
 func (c *Squad) Validate() error {
 	return validation.ValidateStruct(c,
@@ -56,5 +68,5 @@ func (c *Squad) SetProductOwner(u *User) {
 
 // URN returns an uniform resource name for external linking
 func (c *Squad) URN() string {
-	return fmt.Sprintf("urn:spfg:v1:squad:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::squad:%s:%s", c.ID, slug.Make(c.Name))
 }

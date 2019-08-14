@@ -148,19 +148,28 @@ func (r *pgChapterRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgChapterRepository) Search(ctx context.Context, filter *repositories.ChapterSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Chapter, int, error) {
-	var results []*models.Chapter
+	var results []sqlChapter
 
 	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
 	if err != nil {
 		return nil, count, err
 	}
 
+	entities := make([]*models.Chapter, len(results))
 	if len(results) == 0 {
-		return results, count, api.ErrNoResult
+		return entities, count, api.ErrNoResult
+	}
+
+	for i, entity := range results {
+		e, err := entity.ToEntity()
+		if err != nil {
+			continue
+		}
+		entities[i] = e
 	}
 
 	// Return results and total count
-	return results, count, nil
+	return entities, count, nil
 }
 
 func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {

@@ -146,19 +146,28 @@ func (r *pgTribeRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *pgTribeRepository) Search(ctx context.Context, filter *repositories.TribeSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Tribe, int, error) {
-	var results []*models.Tribe
+	var results []sqlTribe
 
 	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
 	if err != nil {
 		return nil, count, err
 	}
 
+	entities := make([]*models.Tribe, len(results))
 	if len(results) == 0 {
-		return results, count, api.ErrNoResult
+		return entities, count, api.ErrNoResult
+	}
+
+	for i, entity := range results {
+		e, err := entity.ToEntity()
+		if err != nil {
+			continue
+		}
+		entities[i] = e
 	}
 
 	// Return results and total count
-	return results, count, nil
+	return entities, count, nil
 }
 
 func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {

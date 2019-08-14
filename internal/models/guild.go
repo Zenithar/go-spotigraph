@@ -30,6 +30,18 @@ func NewGuild(name string) *Guild {
 
 // ------------------------------------------------------------------
 
+// GetGroupType returns user group type
+func (c *Guild) GetGroupType() string {
+	return "guild"
+}
+
+// GetGroupID returns user group type
+func (c *Guild) GetGroupID() string {
+	return c.ID
+}
+
+// ------------------------------------------------------------------
+
 // Validate entity contraints
 func (c *Guild) Validate() error {
 	return validation.ValidateStruct(c,
@@ -55,5 +67,5 @@ func (c *Guild) SetLeader(u *User) {
 
 // URN returns an uniform resource name for external linking
 func (c *Guild) URN() string {
-	return fmt.Sprintf("urn:spfg:v1:guild:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::guild:%s:%s", c.ID, slug.Make(c.Name))
 }

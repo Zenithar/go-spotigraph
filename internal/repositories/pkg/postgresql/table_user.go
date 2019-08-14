@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 
+	"go.opencensus.io/trace"
 	api "go.zenithar.org/pkg/db"
 	db "go.zenithar.org/pkg/db/adapter/postgresql"
 	"go.zenithar.org/spotigraph/internal/models"
@@ -77,6 +78,9 @@ func (dto *sqlUser) ToEntity() (*models.User, error) {
 // ------------------------------------------------------------
 
 func (r *pgUserRepository) Create(ctx context.Context, entity *models.User) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.Create")
+	defer span.End()
+
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -92,6 +96,9 @@ func (r *pgUserRepository) Create(ctx context.Context, entity *models.User) erro
 }
 
 func (r *pgUserRepository) Get(ctx context.Context, id string) (*models.User, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.Get")
+	defer span.End()
+
 	var entity sqlUser
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
@@ -104,6 +111,9 @@ func (r *pgUserRepository) Get(ctx context.Context, id string) (*models.User, er
 }
 
 func (r *pgUserRepository) Update(ctx context.Context, entity *models.User) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.Update")
+	defer span.End()
+
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
@@ -123,28 +133,46 @@ func (r *pgUserRepository) Update(ctx context.Context, entity *models.User) erro
 }
 
 func (r *pgUserRepository) Delete(ctx context.Context, id string) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.Delete")
+	defer span.End()
+
 	return r.adapter.RemoveOne(ctx, map[string]interface{}{
 		"id": id,
 	})
 }
 
 func (r *pgUserRepository) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.User, int, error) {
-	var results []*models.User
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.Search")
+	defer span.End()
+
+	var results []sqlUser
 
 	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
 	if err != nil {
 		return nil, count, err
 	}
 
+	entities := make([]*models.User, len(results))
 	if len(results) == 0 {
-		return results, count, api.ErrNoResult
+		return entities, count, api.ErrNoResult
+	}
+
+	for i, entity := range results {
+		e, err := entity.ToEntity()
+		if err != nil {
+			continue
+		}
+		entities[i] = e
 	}
 
 	// Return results and total count
-	return results, count, nil
+	return entities, count, nil
 }
 
 func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string) (*models.User, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.user.FindByPrincipal")
+	defer span.End()
+
 	var entity sqlUser
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{

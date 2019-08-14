@@ -63,10 +63,3 @@ type Tribe interface {
 	Delete(ctx context.Context, req *spotigraph.TribeGetReq) (res *spotigraph.EmptyRes, err error)
 	Search(ctx context.Context, req *spotigraph.TribeSearchReq) (res *spotigraph.PaginatedTribeRes, err error)
 }
-
-//go:generate mockgen -destination test/mock/graph.gen.go -package mock go.zenithar.org/spotigraph/internal/services Graph
-
-// Graph defines graph service contract
-type Graph interface {
-	Expand(cx context.Context, req *spotigraph.NodeInfoReq) (res *spotigraph.GraphRes, err error)
-}

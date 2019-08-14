@@ -80,9 +80,6 @@ type Squad interface {
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *SquadSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Squad, int, error)
 	FindByName(ctx context.Context, name string) (*models.Squad, error)
-
-	AddMembers(ctx context.Context, id string, users ...*models.User) error
-	RemoveMembers(ctx context.Context, id string, users ...*models.User) error
 }
 
 // TribeSearchFilter represents tribe entity collection search criteria
@@ -102,4 +99,12 @@ type Tribe interface {
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *TribeSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Tribe, int, error)
 	FindByName(ctx context.Context, name string) (*models.Tribe, error)
+}
+
+//go:generate mockgen -destination test/mock/membership.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Membership
+
+// Membership describes membership repository contract
+type Membership interface {
+	Join(ctx context.Context, entity *models.User, ug models.UserGroup) error
+	Leave(ctx context.Context, entity *models.User, ug models.UserGroup) error
 }

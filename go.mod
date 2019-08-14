@@ -25,11 +25,14 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.3.1
 	github.com/google/wire v0.3.0
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gosimple/slug v1.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
+	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.2.0
 	github.com/magefile/mage v1.8.0
@@ -37,7 +40,6 @@ require (
 	github.com/oklog/run v1.0.0
 	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0
-	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190717103323-87ce952f7079
@@ -52,9 +54,9 @@ require (
 	go.zenithar.org/pkg/cache v0.0.5
 	go.zenithar.org/pkg/config v0.0.6
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.12
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.12 // indirect
 	go.zenithar.org/pkg/db/adapter/postgresql v0.0.6
-	go.zenithar.org/pkg/db/adapter/rethinkdb v0.0.3
+	go.zenithar.org/pkg/db/adapter/rethinkdb v0.0.3 // indirect
 	go.zenithar.org/pkg/flags v0.0.2
 	go.zenithar.org/pkg/log v0.2.0
 	go.zenithar.org/pkg/platform v0.1.4
@@ -65,5 +67,4 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.22.1
 	gopkg.in/gorp.v1 v1.7.2 // indirect
-	gopkg.in/rethinkdb/rethinkdb-go.v5 v5.0.1
 )

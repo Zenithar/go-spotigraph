@@ -21,6 +21,5 @@ func init() {
 		pb.GuildClientCommand,
 		pb.ChapterClientCommand,
 		pb.TribeClientCommand,
-		pb.GraphClientCommand,
 	)
 }

@@ -100,6 +100,7 @@ func Test_Squad_Creation(t *testing.T) {
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
 			users := mock.NewMockUser(ctrl)
+			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
@@ -107,7 +108,7 @@ func Test_Squad_Creation(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads, users)
+			underTest := squad.New(squads, users, memberships)
 
 			// Do the query
 			got, err := underTest.Create(ctx, testCase.req)
@@ -211,6 +212,7 @@ func Test_Squad_Get(t *testing.T) {
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
 			users := mock.NewMockUser(ctrl)
+			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
@@ -218,7 +220,7 @@ func Test_Squad_Get(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads, users)
+			underTest := squad.New(squads, users, memberships)
 
 			// Do the query
 			got, err := underTest.Get(ctx, testCase.req)
@@ -346,6 +348,7 @@ func Test_Squad_Update(t *testing.T) {
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
 			users := mock.NewMockUser(ctrl)
+			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
@@ -353,7 +356,7 @@ func Test_Squad_Update(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads, users)
+			underTest := squad.New(squads, users, memberships)
 
 			// Do the query
 			got, err := underTest.Update(ctx, testCase.req)
@@ -455,6 +458,7 @@ func Test_Squad_Delete(t *testing.T) {
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
 			users := mock.NewMockUser(ctrl)
+			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
@@ -462,7 +466,7 @@ func Test_Squad_Delete(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads, users)
+			underTest := squad.New(squads, users, memberships)
 
 			// Do the query
 			got, err := underTest.Delete(ctx, testCase.req)
@@ -543,6 +547,7 @@ func Test_Squad_Search(t *testing.T) {
 			ctx := context.Background()
 			squads := mock.NewMockSquad(ctrl)
 			users := mock.NewMockUser(ctrl)
+			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
@@ -550,7 +555,7 @@ func Test_Squad_Search(t *testing.T) {
 			}
 
 			// Prepare service
-			underTest := squad.New(squads, users)
+			underTest := squad.New(squads, users, memberships)
 
 			// Do the query
 			got, err := underTest.Search(ctx, testCase.req)
