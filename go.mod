@@ -65,6 +65,6 @@ require (
 	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	google.golang.org/grpc v1.22.1
+	google.golang.org/grpc v1.23.0
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 )
