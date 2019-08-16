@@ -23,10 +23,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
-	"go.zenithar.org/spotigraph/internal/services/pkg/user"
-	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
+	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
@@ -42,18 +39,9 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 	if err != nil {
 		return nil, err
 	}
-	repositoriesUser := postgresql.NewUserRepository(configuration, db)
-	servicesUser := user.New(repositoriesUser)
 	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
 	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := postgresql.NewGuildRepository(configuration, db)
-	servicesGuild := guild.New(repositoriesGuild)
-	squad := postgresql.NewSquadRepository(configuration, db)
-	membership := postgresql.NewMembershipRepository(configuration, db)
-	servicesSquad := core.Squad(squad, repositoriesUser, membership)
-	repositoriesTribe := postgresql.NewTribeRepository(configuration, db)
-	servicesTribe := tribe.New(repositoriesTribe)
-	server, err := grpcServer(ctx, cfg, servicesUser, servicesChapter, servicesGuild, servicesSquad, servicesTribe)
+	server, err := grpcServer(ctx, cfg, servicesChapter)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +50,7 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*grpc.Server, error) {
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
@@ -96,11 +84,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(server, healthServer)
-	pb.RegisterUserServer(server, users)
-	pb.RegisterChapterServer(server, chapters)
-	pb.RegisterGuildServer(server, guilds)
-	pb.RegisterSquadServer(server, squads)
-	pb.RegisterTribeServer(server, tribes)
+	chapterv1.RegisterChapterAPIServer(server, chapters)
 	reflection.Register(server)
 
 	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)

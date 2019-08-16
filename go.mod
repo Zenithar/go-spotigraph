@@ -7,9 +7,7 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
 
 require (
-	github.com/99designs/gqlgen v0.9.2
 	github.com/Masterminds/squirrel v1.1.0
-	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
@@ -25,8 +23,7 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.3.1
 	github.com/google/wire v0.3.0
-	github.com/gorilla/context v1.1.1 // indirect
-	github.com/gorilla/mux v1.6.2 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20190411002643-bd77b112433e // indirect
 	github.com/gosimple/slug v1.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
@@ -43,20 +40,17 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/rubenv/sql-migrate v0.0.0-20190717103323-87ce952f7079
-	github.com/sony/gobreaker v0.4.1
+	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
 	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
-	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
-	go.zenithar.org/pkg/cache v0.0.5
 	go.zenithar.org/pkg/config v0.0.6
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.12 // indirect
 	go.zenithar.org/pkg/db/adapter/postgresql v0.0.6
-	go.zenithar.org/pkg/db/adapter/rethinkdb v0.0.3 // indirect
+	go.zenithar.org/pkg/errors v0.0.1
 	go.zenithar.org/pkg/flags v0.0.2
 	go.zenithar.org/pkg/log v0.2.0
 	go.zenithar.org/pkg/platform v0.1.4

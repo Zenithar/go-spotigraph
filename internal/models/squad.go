@@ -12,19 +12,19 @@ import (
 
 // Squad describes squad attributes holder
 type Squad struct {
-	ID   string   `json:"id" bson:"_id" rethinkdb:"id"`
-	Name string   `json:"name" bson:"name" rethinkdb:"name"`
-	Meta Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
+	ID    string   `json:"id" bson:"_id" rethinkdb:"id"`
+	Label string   `json:"label" bson:"label" rethinkdb:"label"`
+	Meta  Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 
 	ProductOwnerID string      `json:"product_owner_id" bson:"product_owner_id" rethinkdb:"product_owner_id"`
 	MemberIDs      StringArray `json:"member_ids" bson:"member_ids" rethinkdb:"member_ids"`
 }
 
 // NewSquad returns a squad instance
-func NewSquad(name string) *Squad {
+func NewSquad(label string) *Squad {
 	return &Squad{
 		ID:        helpers.IDGeneratorFunc(),
-		Name:      name,
+		Label:     label,
 		MemberIDs: make([]string, 0),
 	}
 }
@@ -47,7 +47,7 @@ func (c *Squad) GetGroupID() string {
 func (c *Squad) Validate() error {
 	return validation.ValidateStruct(c,
 		validation.Field(&c.ID, helpers.IDValidationRules...),
-		validation.Field(&c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
+		validation.Field(&c.Label, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
 	)
 }
 
@@ -66,7 +66,7 @@ func (c *Squad) SetProductOwner(u *User) {
 	c.ProductOwnerID = u.ID
 }
 
-// URN returns an uniform resource name for external linking
+// URN returns an uniform resource label for external linking
 func (c *Squad) URN() string {
-	return fmt.Sprintf("spfg:v1::squad:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::squad:%s:%s", c.ID, slug.Make(c.Label))
 }

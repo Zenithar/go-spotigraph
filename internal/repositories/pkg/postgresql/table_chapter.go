@@ -23,12 +23,12 @@ type pgChapterRepository struct {
 func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Chapter {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "name", "meta", "leader_id", "member_ids",
+		"id", "label", "meta", "leader_id", "member_ids",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"name", "leader_id",
+		"label", "leader_id",
 	}
 
 	return &pgChapterRepository{
@@ -40,7 +40,7 @@ func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.
 
 type sqlChapter struct {
 	ID        string `db:"id"`
-	Name      string `db:"name"`
+	Label     string `db:"label"`
 	Meta      string `db:"meta"`
 	LeaderID  string `db:"leader_id"`
 	MemberIDs string `db:"member_ids"`
@@ -59,7 +59,7 @@ func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
 
 	return &sqlChapter{
 		ID:        entity.ID,
-		Name:      entity.Name,
+		Label:     entity.Label,
 		Meta:      string(meta),
 		LeaderID:  entity.LeaderID,
 		MemberIDs: string(members),
@@ -69,7 +69,7 @@ func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
 func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
 	entity := &models.Chapter{
 		ID:       dto.ID,
-		Name:     dto.Name,
+		Label:    dto.Label,
 		LeaderID: dto.LeaderID,
 	}
 
@@ -132,7 +132,7 @@ func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name":       obj.Name,
+		"label":      obj.Label,
 		"meta":       obj.Meta,
 		"leader_id":  obj.LeaderID,
 		"member_ids": obj.MemberIDs,
@@ -172,11 +172,11 @@ func (r *pgChapterRepository) Search(ctx context.Context, filter *repositories.C
 	return entities, count, nil
 }
 
-func (r *pgChapterRepository) FindByName(ctx context.Context, name string) (*models.Chapter, error) {
+func (r *pgChapterRepository) FindByLabel(ctx context.Context, label string) (*models.Chapter, error) {
 	var entity sqlChapter
 
 	if err := r.adapter.WhereAndFetchOne(ctx, sq.Eq{
-		"name": name,
+		"label": label,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -195,8 +195,8 @@ func (r *pgChapterRepository) buildFilter(filter *repositories.ChapterSearchFilt
 		if len(strings.TrimSpace(filter.ChapterID)) > 0 {
 			clauses["chapter_id"] = filter.ChapterID
 		}
-		if len(strings.TrimSpace(filter.Name)) > 0 {
-			clauses["name"] = filter.Name
+		if len(strings.TrimSpace(filter.Label)) > 0 {
+			clauses["label"] = filter.Label
 		}
 
 		return clauses

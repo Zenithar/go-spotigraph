@@ -33,34 +33,34 @@ func UserPrincipalMustBeUnique(users repositories.User, principal string) func(c
 		}, "User principal")
 }
 
-// SquadNameMustBeUnique returns specification for squad name uniqueness
-func SquadNameMustBeUnique(squads repositories.Squad, name string) func(ctx context.Context) error {
+// SquadLabelMustBeUnique returns specification for squad name uniqueness
+func SquadLabelMustBeUnique(squads repositories.Squad, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
-			return squads.FindByName(ctx, name)
+			return squads.FindByLabel(ctx, name)
 		}, "Squad name")
 }
 
-// GuildNameMustBeUnique returns specification for chapter name uniqueness
-func GuildNameMustBeUnique(guilds repositories.Guild, name string) func(ctx context.Context) error {
+// GuildLabelMustBeUnique returns specification for chapter name uniqueness
+func GuildLabelMustBeUnique(guilds repositories.Guild, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
-			return guilds.FindByName(ctx, name)
+			return guilds.FindByLabel(ctx, name)
 		}, "Guild name")
 }
 
-// ChapterNameMustBeUnique returns specification for chapter name uniqueness
-func ChapterNameMustBeUnique(chapters repositories.Chapter, name string) func(ctx context.Context) error {
+// ChapterLabelMustBeUnique returns specification for chapter name uniqueness
+func ChapterLabelMustBeUnique(chapters repositories.Chapter, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
-			return chapters.FindByName(ctx, name)
+			return chapters.FindByLabel(ctx, name)
 		}, "Chapter name")
 }
 
-// TribeNameMustBeUnique returns specification for tribe name uniqueness
-func TribeNameMustBeUnique(tribes repositories.Tribe, name string) func(ctx context.Context) error {
+// TribeLabelMustBeUnique returns specification for tribe name uniqueness
+func TribeLabelMustBeUnique(tribes repositories.Tribe, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
-			return tribes.FindByName(ctx, name)
+			return tribes.FindByLabel(ctx, name)
 		}, "Tribe name")
 }

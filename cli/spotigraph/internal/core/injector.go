@@ -5,14 +5,8 @@ import (
 	pgdb "go.zenithar.org/pkg/db/adapter/postgresql"
 
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
-	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
-	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
-	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
-	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 )
 
 // -----------------------------------------------------------------------------
@@ -34,17 +28,8 @@ var pgRepositorySet = wire.NewSet(
 
 // -----------------------------------------------------------------------------
 
-// Squad builder provider for wire
-func Squad(squads repositories.Squad, users repositories.User, memberships repositories.Membership) services.Squad {
-	return squad.NewWithDecorators(squads, users, memberships, squad.WithTracer())
-}
-
 var localServiceSet = wire.NewSet(
-	user.New,
 	chapter.New,
-	Squad,
-	guild.New,
-	tribe.New,
 )
 
 // -----------------------------------------------------------------------------

@@ -12,19 +12,19 @@ import (
 
 // Chapter describes chapter attributes holder
 type Chapter struct {
-	ID   string   `json:"id" bson:"_id" rethinkdb:"id"`
-	Name string   `json:"name" bson:"name" rethinkdb:"name"`
-	Meta Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
+	ID    string   `json:"id" bson:"_id" rethinkdb:"id"`
+	Label string   `json:"label" bson:"label" rethinkdb:"label"`
+	Meta  Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 
 	LeaderID  string      `json:"leader_id" bson:"leader_id" rethinkdb:"leader_id"`
 	MemberIDs StringArray `json:"member_ids" bson:"member_ids" rethinkdb:"member_ids"`
 }
 
 // NewChapter returns a chapter instance
-func NewChapter(name string) *Chapter {
+func NewChapter(label string) *Chapter {
 	return &Chapter{
-		ID:   helpers.IDGeneratorFunc(),
-		Name: name,
+		ID:    helpers.IDGeneratorFunc(),
+		Label: label,
 	}
 }
 
@@ -46,7 +46,7 @@ func (c *Chapter) GetGroupID() string {
 func (c *Chapter) Validate() error {
 	return validation.ValidateStruct(c,
 		validation.Field(&c.ID, helpers.IDValidationRules...),
-		validation.Field(&c.Name, validation.Required, is.PrintableASCII, validation.Length(3, 50)),
+		validation.Field(&c.Label, validation.Required, is.PrintableASCII, validation.Length(2, 50)),
 	)
 }
 
@@ -67,5 +67,5 @@ func (c *Chapter) SetLeader(u *User) {
 
 // URN returns an uniform resource name for external linking
 func (c *Chapter) URN() string {
-	return fmt.Sprintf("spfg:v1::chapter:%s:%s", c.ID, slug.Make(c.Name))
+	return fmt.Sprintf("spfg:v1::chapter:%s:%s", c.ID, slug.Make(c.Label))
 }

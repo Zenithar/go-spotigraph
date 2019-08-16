@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"go.uber.org/zap"
-	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
+	systemv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"
 
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/web/respond"
@@ -23,7 +23,7 @@ func toUint32(value string, fallback uint32) uint32 {
 
 // Error describes the spotigraph error getter
 type Error interface {
-	GetError() *spotigraph.Error
+	GetError() *systemv1.Error
 }
 
 func publicError(w http.ResponseWriter, r *http.Request, res Error, err error) bool {

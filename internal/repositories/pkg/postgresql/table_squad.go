@@ -24,12 +24,12 @@ type pgSquadRepository struct {
 func NewSquadRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Squad {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "name", "meta", "product_owner_id", "member_ids",
+		"id", "label", "meta", "product_owner_id", "member_ids",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"name", "product_owner_id",
+		"label", "product_owner_id",
 	}
 
 	return &pgSquadRepository{
@@ -41,7 +41,7 @@ func NewSquadRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Sq
 
 type sqlSquad struct {
 	ID             string `db:"id"`
-	Name           string `db:"name"`
+	Label          string `db:"label"`
 	Meta           string `db:"meta"`
 	ProductOwnerID string `db:"product_owner_id"`
 	MemberIDs      string `db:"member_ids"`
@@ -60,7 +60,7 @@ func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
 
 	return &sqlSquad{
 		ID:             entity.ID,
-		Name:           entity.Name,
+		Label:          entity.Label,
 		Meta:           string(meta),
 		MemberIDs:      string(members),
 		ProductOwnerID: entity.ProductOwnerID,
@@ -70,7 +70,7 @@ func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
 func (dto *sqlSquad) ToEntity() (*models.Squad, error) {
 	entity := &models.Squad{
 		ID:             dto.ID,
-		Name:           dto.Name,
+		Label:          dto.Label,
 		ProductOwnerID: dto.ProductOwnerID,
 	}
 
@@ -142,7 +142,7 @@ func (r *pgSquadRepository) Update(ctx context.Context, entity *models.Squad) er
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name":             obj.Name,
+		"label":            obj.Label,
 		"meta":             obj.Meta,
 		"product_owner_id": obj.ProductOwnerID,
 	}, map[string]interface{}{
@@ -187,14 +187,14 @@ func (r *pgSquadRepository) Search(ctx context.Context, filter *repositories.Squ
 	return entities, count, nil
 }
 
-func (r *pgSquadRepository) FindByName(ctx context.Context, name string) (*models.Squad, error) {
-	ctx, span := trace.StartSpan(ctx, "postgresql.squad.FindByName")
+func (r *pgSquadRepository) FindByLabel(ctx context.Context, label string) (*models.Squad, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.squad.FindByLabel")
 	defer span.End()
 
 	var entity sqlSquad
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"name": name,
+		"label": label,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -213,8 +213,8 @@ func (r *pgSquadRepository) buildFilter(filter *repositories.SquadSearchFilter) 
 		if len(strings.TrimSpace(filter.SquadID)) > 0 {
 			clauses["id"] = filter.SquadID
 		}
-		if len(strings.TrimSpace(filter.Name)) > 0 {
-			clauses["name"] = filter.Name
+		if len(strings.TrimSpace(filter.Label)) > 0 {
+			clauses["label"] = filter.Label
 		}
 
 		return clauses

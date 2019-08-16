@@ -2,286 +2,76 @@ package chapter
 
 import (
 	"context"
-	"fmt"
-	"net/http"
 
-	"go.zenithar.org/pkg/db"
+	"go.zenithar.org/pkg/errors"
 
-	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services"
-	"go.zenithar.org/spotigraph/internal/services/internal/constraints"
-	"go.zenithar.org/spotigraph/pkg/protocol/v1/spotigraph"
+	"go.zenithar.org/spotigraph/internal/services/pkg/chapter/internal/commands"
+	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 )
 
 type service struct {
-	chapters repositories.Chapter
+	createCmd commands.Handler
+	getCmd    commands.Handler
+	updateCmd commands.Handler
+	deleteCmd commands.Handler
+	searchCmd commands.Handler
 }
 
 // New returns a service instance
 func New(chapters repositories.Chapter) services.Chapter {
 	return &service{
-		chapters: chapters,
+		createCmd: commands.CreateHandler(chapters),
+		getCmd:    commands.GetHandler(chapters),
+		updateCmd: commands.UpdateHandler(chapters),
+		deleteCmd: commands.DeleteHandler(chapters),
+		searchCmd: commands.SearchHandler(chapters),
 	}
 }
 
 // -----------------------------------------------------------------------------
 
-func (s *service) Create(ctx context.Context, req *spotigraph.ChapterCreateReq) (*spotigraph.SingleChapterRes, error) {
-	res := &spotigraph.SingleChapterRes{}
-
-	// Check request
-	if req == nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "request must not be nil",
-		}
-		return res, fmt.Errorf("request must not be nil")
+func (s *service) Do(ctx context.Context, req interface{}) (interface{}, error) {
+	switch req.(type) {
+	case *chapterv1.CreateRequest:
+		return s.createCmd.Handle(ctx, req)
+	case *chapterv1.GetRequest:
+		return s.getCmd.Handle(ctx, req)
+	case *chapterv1.UpdateRequest:
+		return s.updateCmd.Handle(ctx, req)
+	case *chapterv1.DeleteRequest:
+		return s.deleteCmd.Handle(ctx, req)
+	case *chapterv1.SearchRequest:
+		return s.searchCmd.Handle(ctx, req)
+	default:
+		return nil, errors.Newf(errors.Internal, nil, "unhandled command received (%T)", req)
 	}
-
-	// Validate service constraints
-	if err := constraints.Validate(ctx,
-		// Request must be syntaxically valid
-		constraints.MustBeValid(req),
-		// Name must be unique
-		constraints.ChapterNameMustBeUnique(s.chapters, req.Name),
-	); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusPreconditionFailed,
-			Message: err.Error(),
-		}
-		return res, err
-	}
-
-	// Prepare Chapter creation
-	entity := models.NewChapter(req.Name)
-
-	// Create use in database
-	if err := s.chapters.Create(ctx, entity); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unable to create Chapter",
-		}
-		return res, err
-	}
-
-	// Prepare response
-	res.Entity = spotigraph.FromChapter(entity)
-
-	// Return result
-	return res, nil
 }
 
-func (s *service) Get(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.SingleChapterRes, error) {
-	res := &spotigraph.SingleChapterRes{}
+// -----------------------------------------------------------------------------
 
-	// Check request
-	if req == nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "request must not be nil",
-		}
-		return res, fmt.Errorf("request must not be nil")
-	}
-
-	// Validate service constraints
-	if err := constraints.Validate(ctx,
-		// Request must be syntaxically valid
-		constraints.MustBeValid(req),
-	); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusPreconditionFailed,
-			Message: "Unable to validate request",
-		}
-		return res, err
-	}
-
-	// Retrieve Chapter from database
-	entity, err := s.chapters.Get(ctx, req.Id)
-	if err != nil && err != db.ErrNoResult {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unable to retrieve Chapter",
-		}
-		return res, err
-	}
-	if entity == nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusNotFound,
-			Message: "Chapter not found",
-		}
-		return res, db.ErrNoResult
-	}
-
-	// Prepare response
-	res.Entity = spotigraph.FromChapter(entity)
-
-	// Return result
-	return res, nil
+func (s *service) Create(ctx context.Context, req *chapterv1.CreateRequest) (*chapterv1.CreateResponse, error) {
+	res, err := s.createCmd.Handle(ctx, req)
+	return res.(*chapterv1.CreateResponse), err
 }
 
-func (s *service) Update(ctx context.Context, req *spotigraph.ChapterUpdateReq) (*spotigraph.SingleChapterRes, error) {
-	res := &spotigraph.SingleChapterRes{}
-
-	// Prepare expected results
-
-	var entity models.Chapter
-
-	// Check request
-	if req == nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "request must not be nil",
-		}
-		return res, fmt.Errorf("request must not be nil")
-	}
-
-	// Validate service constraints
-	if err := constraints.Validate(ctx,
-		// Request must be syntaxically valid
-		constraints.MustBeValid(req),
-		// Chapter must exists
-		constraints.ChapterMustExists(s.chapters, req.Id, &entity),
-	); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusPreconditionFailed,
-			Message: err.Error(),
-		}
-		return res, err
-	}
-
-	updated := false
-
-	if req.Name != nil {
-		if err := constraints.Validate(ctx,
-			// Check acceptable name value
-			constraints.MustBeAName(req.Name.Value),
-			// Is already used ?
-			constraints.ChapterNameMustBeUnique(s.chapters, req.Name.Value),
-		); err != nil {
-			res.Error = &spotigraph.Error{
-				Code:    http.StatusConflict,
-				Message: err.Error(),
-			}
-			return res, err
-		}
-		entity.Name = req.Name.Value
-		updated = true
-	}
-
-	// Skip operation when no updates
-	if updated {
-		// Create account in database
-		if err := s.chapters.Update(ctx, &entity); err != nil {
-			res.Error = &spotigraph.Error{
-				Code:    http.StatusInternalServerError,
-				Message: "Unable to update Chapter object",
-			}
-			return res, err
-		}
-	}
-
-	// Prepare response
-	res.Entity = spotigraph.FromChapter(&entity)
-
-	// Return expected result
-	return res, nil
+func (s *service) Get(ctx context.Context, req *chapterv1.GetRequest) (*chapterv1.GetResponse, error) {
+	res, err := s.getCmd.Handle(ctx, req)
+	return res.(*chapterv1.GetResponse), err
 }
 
-func (s *service) Delete(ctx context.Context, req *spotigraph.ChapterGetReq) (*spotigraph.EmptyRes, error) {
-	res := &spotigraph.EmptyRes{}
-
-	// Prepare expected results
-
-	var entity models.Chapter
-
-	// Check request
-	if req == nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusBadRequest,
-			Message: "request must not be nil",
-		}
-		return res, fmt.Errorf("request must not be nil")
-	}
-
-	// Validate service constraints
-	if err := constraints.Validate(ctx,
-		// Request must be syntaxically valid
-		constraints.MustBeValid(req),
-		// Chapter must exists
-		constraints.ChapterMustExists(s.chapters, req.Id, &entity),
-	); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusPreconditionFailed,
-			Message: err.Error(),
-		}
-		return res, err
-	}
-
-	if err := s.chapters.Delete(ctx, req.Id); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unable to delete Chapter object",
-		}
-		return res, err
-	}
-
-	// Return expected result
-	return res, nil
+func (s *service) Update(ctx context.Context, req *chapterv1.UpdateRequest) (*chapterv1.UpdateResponse, error) {
+	res, err := s.updateCmd.Handle(ctx, req)
+	return res.(*chapterv1.UpdateResponse), err
 }
 
-func (s *service) Search(ctx context.Context, req *spotigraph.ChapterSearchReq) (*spotigraph.PaginatedChapterRes, error) {
-	res := &spotigraph.PaginatedChapterRes{}
+func (s *service) Delete(ctx context.Context, req *chapterv1.DeleteRequest) (*chapterv1.DeleteResponse, error) {
+	res, err := s.deleteCmd.Handle(ctx, req)
+	return res.(*chapterv1.DeleteResponse), err
+}
 
-	// Validate service constraints
-	if err := constraints.Validate(ctx,
-		// Request must not be nil
-		constraints.MustNotBeNil(req, "Request must not be nil"),
-		// Request must be syntaxically valid
-		constraints.MustBeValid(req),
-	); err != nil {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusPreconditionFailed,
-			Message: "Unable to validate request",
-		}
-		return res, err
-	}
-
-	// Prepare request parameters
-	sortParams := db.SortConverter(req.Sorts)
-	pagination := db.NewPaginator(uint(req.Page), uint(req.PerPage))
-
-	// Build search filter
-	filter := &repositories.ChapterSearchFilter{}
-	if req.ChapterId != nil {
-		filter.ChapterID = req.ChapterId.Value
-	}
-	if req.Name != nil {
-		filter.Name = req.Name.Value
-	}
-
-	// Do the search
-	entities, total, err := s.chapters.Search(ctx, filter, pagination, sortParams)
-	if err != nil && err != db.ErrNoResult {
-		res.Error = &spotigraph.Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unable to process request",
-		}
-		return res, err
-	}
-
-	// Set pagination total for paging calcul
-	pagination.SetTotal(uint(total))
-	res.Total = uint32(pagination.Total())
-	res.Count = uint32(pagination.CurrentPageCount())
-	res.PerPage = uint32(pagination.PerPage)
-	res.CurrentPage = uint32(pagination.Page)
-
-	// If no result back to first page
-	if err != db.ErrNoResult {
-		res.Members = spotigraph.FromChapters(entities)
-	}
-
-	// Return results
-	return res, nil
+func (s *service) Search(ctx context.Context, req *chapterv1.SearchRequest) (*chapterv1.SearchResponse, error) {
+	res, err := s.searchCmd.Handle(ctx, req)
+	return res.(*chapterv1.SearchResponse), err
 }

@@ -9,7 +9,7 @@ import (
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
 	"go.zenithar.org/spotigraph/internal/services"
-	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
+	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 
 	"github.com/google/wire"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -28,7 +28,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, users services.User, chapters services.Chapter, guilds services.Guild, squads services.Squad, tribes services.Tribe) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -84,11 +84,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, users services.U
 	healthpb.RegisterHealthServer(server, healthServer)
 
 	// Register services
-	pb.RegisterUserServer(server, users)
-	pb.RegisterChapterServer(server, chapters)
-	pb.RegisterGuildServer(server, guilds)
-	pb.RegisterSquadServer(server, squads)
-	pb.RegisterTribeServer(server, tribes)
+	chapterv1.RegisterChapterAPIServer(server, chapters)
 
 	// Reflection
 	reflection.Register(server)

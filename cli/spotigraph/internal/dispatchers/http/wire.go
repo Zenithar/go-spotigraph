@@ -20,11 +20,10 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
-	v1 "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http/handlers/v1"
 	"go.zenithar.org/spotigraph/internal/services"
 )
 
-func httpServer(ctx context.Context, cfg *config.Configuration, users services.User, squads services.Squad, chapters services.Chapter, guilds services.Guild, tribes services.Tribe) (*http.Server, error) {
+func httpServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*http.Server, error) {
 	r := chi.NewRouter()
 
 	// middleware stack
@@ -35,11 +34,6 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 
 	// timeout before request cancelation
 	r.Use(middleware.Timeout(60 * time.Second))
-
-	// API endpoint
-	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("/users", ochttp.WithRouteTag(v1.UserRoutes(users), "/api/v1/users"))
-	})
 
 	// Assign router to server
 	server := &http.Server{

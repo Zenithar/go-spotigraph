@@ -28,7 +28,7 @@ type User interface {
 // ChapterSearchFilter represents chapter entity collection search criteria
 type ChapterSearchFilter struct {
 	ChapterID string
-	Name      string
+	Label     string
 	Slug      string
 }
 
@@ -41,13 +41,13 @@ type Chapter interface {
 	Update(ctx context.Context, entity *models.Chapter) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *ChapterSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Chapter, int, error)
-	FindByName(ctx context.Context, name string) (*models.Chapter, error)
+	FindByLabel(ctx context.Context, name string) (*models.Chapter, error)
 }
 
 // GuildSearchFilter represents guild entity collection search criteria
 type GuildSearchFilter struct {
 	GuildID string
-	Name    string
+	Label   string
 	Slug    string
 }
 
@@ -60,13 +60,13 @@ type Guild interface {
 	Update(ctx context.Context, entity *models.Guild) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *GuildSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Guild, int, error)
-	FindByName(ctx context.Context, name string) (*models.Guild, error)
+	FindByLabel(ctx context.Context, name string) (*models.Guild, error)
 }
 
 // SquadSearchFilter represents squad entity collection search criteria
 type SquadSearchFilter struct {
 	SquadID string
-	Name    string
+	Label   string
 	Slug    string
 }
 
@@ -79,13 +79,13 @@ type Squad interface {
 	Update(ctx context.Context, entity *models.Squad) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *SquadSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Squad, int, error)
-	FindByName(ctx context.Context, name string) (*models.Squad, error)
+	FindByLabel(ctx context.Context, name string) (*models.Squad, error)
 }
 
 // TribeSearchFilter represents tribe entity collection search criteria
 type TribeSearchFilter struct {
 	TribeID string
-	Name    string
+	Label   string
 	Slug    string
 }
 
@@ -98,7 +98,7 @@ type Tribe interface {
 	Update(ctx context.Context, entity *models.Tribe) error
 	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *TribeSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Tribe, int, error)
-	FindByName(ctx context.Context, name string) (*models.Tribe, error)
+	FindByLabel(ctx context.Context, name string) (*models.Tribe, error)
 }
 
 //go:generate mockgen -destination test/mock/membership.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Membership

@@ -1,0 +1,137 @@
+// MIT License
+//
+// Copyright (c) 2019 Thibault NORMAND
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+syntax = "proto3";
+
+package spotigraph.chapter.v1;
+
+option csharp_namespace = "Spotigraph.Chapter.V1";
+option go_package = "chapterv1";
+option java_multiple_files = true;
+option java_outer_classname = "ChapterApiProto";
+option java_package = "org.zenithar.spotigraph.chapter.v1";
+option objc_class_prefix = "SCX";
+option php_namespace = "Spotigraph\\Chapter\\V1";
+
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "google/protobuf/wrappers.proto";
+import "spotigraph/chapter/v1/chapter.proto";
+import "spotigraph/system/v1/system.proto";
+
+// -----------------------------------------------------------------------------
+
+// ChapterAPI manage chapter objects.
+service ChapterAPI {
+  // Create a chapter.
+  rpc Create(CreateRequest) returns (CreateResponse);
+  // Get a chapter by id.
+  rpc Get(GetRequest) returns (GetResponse);
+  // Update chapter attributes.
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  // Delete a chapter by id.
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  // Search for chapters.
+  rpc Search(SearchRequest) returns (SearchResponse);
+}
+
+// -----------------------------------------------------------------------------
+
+message CreateRequest {
+  string label = 1 [
+    (validate.rules).string = {
+      pattern: "^[A-Za-z]+([ 0-9A-Za-z]+)*$"
+      min_bytes: 2
+      max_bytes: 50
+    }
+  ];
+}
+
+message GetRequest {
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+}
+
+message UpdateRequest {
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+  google.protobuf.StringValue label = 2;
+}
+
+message DeleteRequest {
+  string id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+}
+
+message SearchRequest {
+  uint32 page = 1;
+  uint32 per_page = 2;
+  repeated string sorts = 3;
+  google.protobuf.StringValue cursor = 4;
+  google.protobuf.StringValue chapter_id = 5 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+  google.protobuf.StringValue label = 6;
+}
+
+message CreateResponse {
+  .spotigraph.system.v1.Error error = 1;
+  Chapter entity = 2;
+}
+
+message GetResponse {
+  .spotigraph.system.v1.Error error = 1;
+  Chapter entity = 2;
+}
+
+message UpdateResponse {
+  .spotigraph.system.v1.Error error = 1;
+  Chapter entity = 2;
+}
+
+message DeleteResponse {
+  .spotigraph.system.v1.Error error = 1;
+}
+
+message SearchResponse {
+  .spotigraph.system.v1.Error error = 1;
+  uint32 total = 2;
+  uint32 per_page = 3;
+  uint32 count = 4;
+  uint32 current_page = 5;
+  google.protobuf.StringValue next_cursor = 6;
+  repeated Chapter members = 7;
+}

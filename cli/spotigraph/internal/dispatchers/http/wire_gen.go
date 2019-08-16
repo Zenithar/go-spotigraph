@@ -21,13 +21,9 @@ import (
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
-	"go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http/handlers/v1"
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/tribe"
-	"go.zenithar.org/spotigraph/internal/services/pkg/user"
 )
 
 // Injectors from wire.go:
@@ -38,18 +34,9 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http
 	if err != nil {
 		return nil, err
 	}
-	repositoriesUser := postgresql.NewUserRepository(configuration, db)
-	servicesUser := user.New(repositoriesUser)
-	squad := postgresql.NewSquadRepository(configuration, db)
-	membership := postgresql.NewMembershipRepository(configuration, db)
-	servicesSquad := core.Squad(squad, repositoriesUser, membership)
 	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
 	servicesChapter := chapter.New(repositoriesChapter)
-	repositoriesGuild := postgresql.NewGuildRepository(configuration, db)
-	servicesGuild := guild.New(repositoriesGuild)
-	repositoriesTribe := postgresql.NewTribeRepository(configuration, db)
-	servicesTribe := tribe.New(repositoriesTribe)
-	server, err := httpServer(ctx, cfg, servicesUser, servicesSquad, servicesChapter, servicesGuild, servicesTribe)
+	server, err := httpServer(ctx, cfg, servicesChapter)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +45,7 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http
 
 // wire.go:
 
-func httpServer(ctx context.Context, cfg *config.Configuration, users services.User, squads services.Squad, chapters services.Chapter, guilds services.Guild, tribes services.Tribe) (*http.Server, error) {
+func httpServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*http.Server, error) {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -67,10 +54,6 @@ func httpServer(ctx context.Context, cfg *config.Configuration, users services.U
 	r.Use(middleware.Recoverer)
 
 	r.Use(middleware.Timeout(60 * time.Second))
-
-	r.Route("/api/v1", func(r chi.Router) {
-		r.Mount("/users", ochttp.WithRouteTag(v1.UserRoutes(users), "/api/v1/users"))
-	})
 
 	server := &http.Server{
 		Handler: &ochttp.Handler{

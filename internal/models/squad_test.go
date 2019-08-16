@@ -14,7 +14,7 @@ func TestSquadCreation(t *testing.T) {
 	obj := models.NewSquad("foo")
 	g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 	g.Expect(obj.ID).ToNot(BeEmpty(), "Entity ID should not be blank")
-	g.Expect(obj.Name).To(Equal("foo"), "Entity should have the matching name")
+	g.Expect(obj.Label).To(Equal("foo"), "Entity should have the matching label")
 	g.Expect(obj.URN()).ToNot(BeEmpty(), "Entity should have the expected urn")
 	g.Expect(obj.GetGroupType()).To(Equal("squad"), "Entity should have a valid group type")
 	g.Expect(obj.GetGroupID()).To(Equal(obj.ID), "Entity should have a valid group id")
@@ -24,7 +24,7 @@ func TestSquadValidation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	for _, f := range []struct {
-		name      string
+		label     string
 		expectErr bool
 	}{
 		{"a", true},
@@ -33,7 +33,7 @@ func TestSquadValidation(t *testing.T) {
 		{"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false},
 		{"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true},
 	} {
-		obj := models.NewSquad(f.name)
+		obj := models.NewSquad(f.label)
 		g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 
 		if err := obj.Validate(); err != nil {

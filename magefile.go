@@ -88,7 +88,6 @@ type Gen mg.Namespace
 func (Gen) Wire() {
 	color.Blue("### Wiring dispatchers")
 
-	mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/graphql")
 	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http")
 	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/grpc")
 }
@@ -119,28 +118,8 @@ func (Gen) Migrations() {
 // Generate protobuf
 func (Gen) Protobuf() error {
 	color.Blue("### Protobuf")
-	mg.SerialDeps(Prototool.Lint)
 
-	return sh.RunV("prototool", "generate")
-}
-
-func (Gen) Adapters() {
-	color.Blue("### Remote Service Adapters")
-	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/client")
-}
-
-// -----------------------------------------------------------------------------
-
-type Prototool mg.Namespace
-
-func (Prototool) Lint() error {
-	fmt.Println("#### Lint protobuf")
-	return sh.RunV("prototool", "lint")
-}
-
-func (Prototool) Format() error {
-	fmt.Println("#### Format protobuf")
-	return sh.RunV("prototool", "format")
+	return sh.RunV("prototool", "all", "--fix", "pkg/protocol")
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +129,7 @@ type Go mg.Namespace
 // Generate go code
 func (Go) Generate() error {
 	color.Cyan("## Generate code")
-	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Adapters, Gen.Wire)
+	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Wire)
 	return nil
 }
 

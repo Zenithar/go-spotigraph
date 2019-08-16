@@ -23,12 +23,12 @@ type pgGuildRepository struct {
 func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Guild {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "name", "meta", "member_ids", "leader_id",
+		"id", "label", "meta", "member_ids", "leader_id",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"name",
+		"label",
 	}
 
 	return &pgGuildRepository{
@@ -40,7 +40,7 @@ func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Gu
 
 type sqlGuild struct {
 	ID        string `db:"id"`
-	Name      string `db:"name"`
+	Label     string `db:"label"`
 	Meta      string `db:"meta"`
 	MemberIDs string `db:"member_ids"`
 	LeaderID  string `db:"leader_id"`
@@ -59,7 +59,7 @@ func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
 
 	return &sqlGuild{
 		ID:        entity.ID,
-		Name:      entity.Name,
+		Label:     entity.Label,
 		Meta:      string(meta),
 		MemberIDs: string(members),
 		LeaderID:  entity.LeaderID,
@@ -69,7 +69,7 @@ func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
 func (dto *sqlGuild) ToEntity() (*models.Guild, error) {
 	entity := &models.Guild{
 		ID:       dto.ID,
-		Name:     dto.Name,
+		Label:    dto.Label,
 		LeaderID: dto.LeaderID,
 	}
 
@@ -131,7 +131,7 @@ func (r *pgGuildRepository) Update(ctx context.Context, entity *models.Guild) er
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name":       obj.Name,
+		"label":      obj.Label,
 		"meta":       obj.Meta,
 		"member_ids": obj.MemberIDs,
 		"leader_id":  obj.LeaderID,
@@ -171,11 +171,11 @@ func (r *pgGuildRepository) Search(ctx context.Context, filter *repositories.Gui
 	return entities, count, nil
 }
 
-func (r *pgGuildRepository) FindByName(ctx context.Context, name string) (*models.Guild, error) {
+func (r *pgGuildRepository) FindByLabel(ctx context.Context, label string) (*models.Guild, error) {
 	var entity sqlGuild
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"name": name,
+		"label": label,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -194,8 +194,8 @@ func (r *pgGuildRepository) buildFilter(filter *repositories.GuildSearchFilter) 
 		if len(strings.TrimSpace(filter.GuildID)) > 0 {
 			clauses["guild_id"] = filter.GuildID
 		}
-		if len(strings.TrimSpace(filter.Name)) > 0 {
-			clauses["name"] = filter.Name
+		if len(strings.TrimSpace(filter.Label)) > 0 {
+			clauses["label"] = filter.Label
 		}
 
 		return clauses

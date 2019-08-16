@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"go.zenithar.org/spotigraph/pkg/grpc/v1/spotigraph/pb"
+	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 )
 
 // -----------------------------------------------------------------------------
@@ -16,10 +16,6 @@ var clientCmd = &cobra.Command{
 
 func init() {
 	clientCmd.AddCommand(
-		pb.UserClientCommand,
-		pb.SquadClientCommand,
-		pb.GuildClientCommand,
-		pb.ChapterClientCommand,
-		pb.TribeClientCommand,
+		chapterv1.ChapterAPIClientCommand,
 	)
 }

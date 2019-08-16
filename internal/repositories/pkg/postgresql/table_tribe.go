@@ -23,12 +23,12 @@ type pgTribeRepository struct {
 func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tribe {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "name", "meta", "squad_ids", "leader_id",
+		"id", "label", "meta", "squad_ids", "leader_id",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"name",
+		"label",
 	}
 
 	return &pgTribeRepository{
@@ -40,7 +40,7 @@ func NewTribeRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Tr
 
 type sqlTribe struct {
 	ID       string `db:"id"`
-	Name     string `db:"name"`
+	Label    string `db:"label"`
 	Meta     string `db:"meta"`
 	SquadIDs string `db:"squad_ids"`
 	LeaderID string `db:"leader_id"`
@@ -59,7 +59,7 @@ func toTribeSQL(entity *models.Tribe) (*sqlTribe, error) {
 
 	return &sqlTribe{
 		ID:       entity.ID,
-		Name:     entity.Name,
+		Label:    entity.Label,
 		Meta:     string(meta),
 		SquadIDs: string(squads),
 	}, nil
@@ -67,8 +67,8 @@ func toTribeSQL(entity *models.Tribe) (*sqlTribe, error) {
 
 func (dto *sqlTribe) ToEntity() (*models.Tribe, error) {
 	entity := &models.Tribe{
-		ID:   dto.ID,
-		Name: dto.Name,
+		ID:    dto.ID,
+		Label: dto.Label,
 	}
 
 	// Decode JSON columns
@@ -130,7 +130,7 @@ func (r *pgTribeRepository) Update(ctx context.Context, entity *models.Tribe) er
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"name":      obj.Name,
+		"label":     obj.Label,
 		"meta":      obj.Meta,
 		"squad_ids": obj.SquadIDs,
 		"leader_id": obj.LeaderID,
@@ -170,11 +170,11 @@ func (r *pgTribeRepository) Search(ctx context.Context, filter *repositories.Tri
 	return entities, count, nil
 }
 
-func (r *pgTribeRepository) FindByName(ctx context.Context, name string) (*models.Tribe, error) {
+func (r *pgTribeRepository) FindByLabel(ctx context.Context, label string) (*models.Tribe, error) {
 	var entity sqlTribe
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"name": name,
+		"label": label,
 	}, &entity); err != nil {
 		return nil, err
 	}
@@ -193,8 +193,8 @@ func (r *pgTribeRepository) buildFilter(filter *repositories.TribeSearchFilter) 
 		if len(strings.TrimSpace(filter.TribeID)) > 0 {
 			clauses["id"] = filter.TribeID
 		}
-		if len(strings.TrimSpace(filter.Name)) > 0 {
-			clauses["name"] = filter.Name
+		if len(strings.TrimSpace(filter.Label)) > 0 {
+			clauses["label"] = filter.Label
 		}
 
 		return clauses
