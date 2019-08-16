@@ -11,10 +11,6 @@ import (
 // ChapterRetriever defines read-only service methods. (ISP)
 type ChapterRetriever interface {
 	Get(ctx context.Context, req *chapterv1.GetRequest) (res *chapterv1.GetResponse, err error)
-}
-
-// ChapterSearcher defines read-only list service methods. (ISP)
-type ChapterSearcher interface {
 	Search(ctx context.Context, req *chapterv1.SearchRequest) (res *chapterv1.SearchResponse, err error)
 }
 
@@ -29,5 +25,4 @@ type ChapterModifier interface {
 type Chapter interface {
 	ChapterRetriever
 	ChapterModifier
-	ChapterSearcher
 }
