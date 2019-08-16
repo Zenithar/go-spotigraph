@@ -27,7 +27,7 @@ require (
 	github.com/google/wire v0.3.0
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2 // indirect
-	github.com/gosimple/slug v1.6.0
+	github.com/gosimple/slug v1.7.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/jackc/pgx v3.5.0+incompatible
