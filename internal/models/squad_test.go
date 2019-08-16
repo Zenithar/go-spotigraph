@@ -16,6 +16,8 @@ func TestSquadCreation(t *testing.T) {
 	g.Expect(obj.ID).ToNot(BeEmpty(), "Entity ID should not be blank")
 	g.Expect(obj.Name).To(Equal("foo"), "Entity should have the matching name")
 	g.Expect(obj.URN()).ToNot(BeEmpty(), "Entity should have the expected urn")
+	g.Expect(obj.GetGroupType()).To(Equal("squad"), "Entity should have a valid group type")
+	g.Expect(obj.GetGroupID()).To(Equal(obj.ID), "Entity should have a valid group id")
 }
 
 func TestSquadValidation(t *testing.T) {
