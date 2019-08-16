@@ -18,6 +18,6 @@ func MustBeAnIdentifier(value string) func(context.Context) error {
 // MustBeAName returns a ID contraint validator
 func MustBeAName(value string) func(context.Context) error {
 	return func(ctx context.Context) error {
-		return validation.Validate(value, validation.Required, is.PrintableASCII, validation.Length(3, 50))
+		return validation.Validate(value, validation.Required, is.PrintableASCII, validation.Length(2, 50))
 	}
 }

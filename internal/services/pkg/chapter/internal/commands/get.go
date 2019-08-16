@@ -15,7 +15,7 @@ import (
 )
 
 // GetHandler handles CreateRequest for entity
-var GetHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
+var GetHandler = func(chapters repositories.ChapterRetriever) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.GetResponse{}
 

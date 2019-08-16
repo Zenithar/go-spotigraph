@@ -15,7 +15,7 @@ import (
 )
 
 // SearchHandler handles SearchRequest for entity
-var SearchHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
+var SearchHandler = func(chapters repositories.ChapterRetriever) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.SearchResponse{}
 
