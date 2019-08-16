@@ -7,7 +7,7 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
 
 require (
-	github.com/99designs/gqlgen v0.9.2
+	github.com/99designs/gqlgen v0.9.3
 	github.com/Masterminds/squirrel v1.1.0
 	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/cloudflare/tableflip v1.0.0

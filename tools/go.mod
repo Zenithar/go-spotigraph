@@ -5,7 +5,7 @@ go 1.12
 replace github.com/envoyproxy/protoc-gen-validate => github.com/Zenithar/protoc-gen-validate v0.2.0-java.0.20190808132234-82cadd0ebcfe
 
 require (
-	github.com/99designs/gqlgen v0.9.2
+	github.com/99designs/gqlgen v0.9.3
 	github.com/cloudfoundry-incubator/candiedyaml v0.0.0-20170901234223-a41693b7b7af // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.7.0
