@@ -29,7 +29,7 @@ require (
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gosimple/slug v1.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
-	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
+	github.com/hokaccha/go-prettyjson v0.0.0-20190818125701-108c894c2c0e
 	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
