@@ -6,6 +6,7 @@ import (
 
 	"go.zenithar.org/pkg/db"
 	"go.zenithar.org/pkg/errors"
+	"go.zenithar.org/pkg/reactor"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services/internal/constraints"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter/internal/mapper"
@@ -14,7 +15,7 @@ import (
 )
 
 // GetHandler handles CreateRequest for entity
-var GetHandler = func(chapters repositories.Chapter) HandlerFunc {
+var GetHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.GetResponse{}
 

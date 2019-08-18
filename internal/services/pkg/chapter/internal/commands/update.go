@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"go.zenithar.org/pkg/errors"
+	"go.zenithar.org/pkg/reactor"
 	"go.zenithar.org/spotigraph/internal/models"
 	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/services/internal/constraints"
@@ -14,7 +15,7 @@ import (
 )
 
 // UpdateHandler handles UpdateRequest for entity
-var UpdateHandler = func(chapters repositories.Chapter) HandlerFunc {
+var UpdateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.UpdateResponse{}
 

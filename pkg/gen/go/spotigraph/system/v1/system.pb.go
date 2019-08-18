@@ -5,9 +5,8 @@ package systemv1
 
 import (
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/gogo/protobuf/proto"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -36,23 +35,18 @@ func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6d0ddd778b91fb10, []int{0}
 }
-
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Error.Unmarshal(m, b)
 }
-
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 }
-
 func (m *Error) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Error.Merge(m, src)
 }
-
 func (m *Error) XXX_Size() int {
 	return xxx_messageInfo_Error.Size(m)
 }
-
 func (m *Error) XXX_DiscardUnknown() {
 	xxx_messageInfo_Error.DiscardUnknown(m)
 }
