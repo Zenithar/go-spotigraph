@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id          VARCHAR(32) NOT NULL PRIMARY KEY,
     principal   VARCHAR(150) NOT NULL,
     meta        JSON        NOT NULL

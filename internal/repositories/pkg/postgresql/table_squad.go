@@ -24,7 +24,7 @@ type pgSquadRepository struct {
 func NewSquadRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Squad {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label", "meta", "product_owner_id", "member_ids",
+		"id", "label", "meta", "product_owner_id",
 	}
 
 	// Sortable columns
@@ -44,7 +44,6 @@ type sqlSquad struct {
 	Label          string `db:"label"`
 	Meta           string `db:"meta"`
 	ProductOwnerID string `db:"product_owner_id"`
-	MemberIDs      string `db:"member_ids"`
 }
 
 func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
@@ -52,17 +51,10 @@ func toSquadSQL(entity *models.Squad) (*sqlSquad, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-
-	members, err := json.Marshal(entity.MemberIDs)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
 	return &sqlSquad{
 		ID:             entity.ID,
 		Label:          entity.Label,
 		Meta:           string(meta),
-		MemberIDs:      string(members),
 		ProductOwnerID: entity.ProductOwnerID,
 	}, nil
 }
@@ -78,12 +70,6 @@ func (dto *sqlSquad) ToEntity() (*models.Squad, error) {
 
 	// Metadata
 	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	// Membership
-	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

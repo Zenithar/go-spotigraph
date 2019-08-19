@@ -23,7 +23,7 @@ type pgChapterRepository struct {
 func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Chapter {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "label", "meta", "leader_id", "member_ids",
+		"id", "label", "meta", "leader_id",
 	}
 
 	// Sortable columns
@@ -39,11 +39,10 @@ func NewChapterRepository(cfg *db.Configuration, session *sqlx.DB) repositories.
 // ------------------------------------------------------------
 
 type sqlChapter struct {
-	ID        string `db:"id"`
-	Label     string `db:"label"`
-	Meta      string `db:"meta"`
-	LeaderID  string `db:"leader_id"`
-	MemberIDs string `db:"member_ids"`
+	ID       string `db:"id"`
+	Label    string `db:"label"`
+	Meta     string `db:"meta"`
+	LeaderID string `db:"leader_id"`
 }
 
 func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
@@ -52,17 +51,11 @@ func toChapterSQL(entity *models.Chapter) (*sqlChapter, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	members, err := json.Marshal(entity.MemberIDs)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
 	return &sqlChapter{
-		ID:        entity.ID,
-		Label:     entity.Label,
-		Meta:      string(meta),
-		LeaderID:  entity.LeaderID,
-		MemberIDs: string(members),
+		ID:       entity.ID,
+		Label:    entity.Label,
+		Meta:     string(meta),
+		LeaderID: entity.LeaderID,
 	}, nil
 }
 
@@ -77,12 +70,6 @@ func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
 
 	// Metadata
 	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	// Membership
-	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -132,10 +119,9 @@ func (r *pgChapterRepository) Update(ctx context.Context, entity *models.Chapter
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"label":      obj.Label,
-		"meta":       obj.Meta,
-		"leader_id":  obj.LeaderID,
-		"member_ids": obj.MemberIDs,
+		"label":     obj.Label,
+		"meta":      obj.Meta,
+		"leader_id": obj.LeaderID,
 	}, sq.Eq{
 		"id": entity.ID,
 	})

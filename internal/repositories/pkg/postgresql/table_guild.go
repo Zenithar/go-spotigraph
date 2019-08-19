@@ -39,11 +39,10 @@ func NewGuildRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Gu
 // ------------------------------------------------------------
 
 type sqlGuild struct {
-	ID        string `db:"id"`
-	Label     string `db:"label"`
-	Meta      string `db:"meta"`
-	MemberIDs string `db:"member_ids"`
-	LeaderID  string `db:"leader_id"`
+	ID       string `db:"id"`
+	Label    string `db:"label"`
+	Meta     string `db:"meta"`
+	LeaderID string `db:"leader_id"`
 }
 
 func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
@@ -52,17 +51,11 @@ func toGuildSQL(entity *models.Guild) (*sqlGuild, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	members, err := json.Marshal(entity.MemberIDs)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
 	return &sqlGuild{
-		ID:        entity.ID,
-		Label:     entity.Label,
-		Meta:      string(meta),
-		MemberIDs: string(members),
-		LeaderID:  entity.LeaderID,
+		ID:       entity.ID,
+		Label:    entity.Label,
+		Meta:     string(meta),
+		LeaderID: entity.LeaderID,
 	}, nil
 }
 
@@ -77,12 +70,6 @@ func (dto *sqlGuild) ToEntity() (*models.Guild, error) {
 
 	// Metadata
 	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	// Membership
-	err = json.Unmarshal([]byte(dto.MemberIDs), &entity.MemberIDs)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -131,10 +118,9 @@ func (r *pgGuildRepository) Update(ctx context.Context, entity *models.Guild) er
 	}
 
 	return r.adapter.Update(ctx, map[string]interface{}{
-		"label":      obj.Label,
-		"meta":       obj.Meta,
-		"member_ids": obj.MemberIDs,
-		"leader_id":  obj.LeaderID,
+		"label":     obj.Label,
+		"meta":      obj.Meta,
+		"leader_id": obj.LeaderID,
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})
