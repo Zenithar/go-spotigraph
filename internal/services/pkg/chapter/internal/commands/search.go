@@ -19,15 +19,6 @@ var SearchHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.SearchResponse{}
 
-		// Check non-nil request
-		if r == nil {
-			res.Error = &systemv1.Error{
-				Code:    http.StatusBadRequest,
-				Message: "request must not be nil",
-			}
-			return res, errors.Newf(errors.InvalidArgument, nil, "request must not be nil")
-		}
-
 		// Check request type
 		req, ok := r.(*chapterv1.SearchRequest)
 		if !ok {

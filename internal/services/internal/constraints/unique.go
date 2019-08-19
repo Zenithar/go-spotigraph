@@ -26,7 +26,7 @@ func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context
 }
 
 // UserPrincipalMustBeUnique returns specification for user principal uniqueness
-func UserPrincipalMustBeUnique(users repositories.User, principal string) func(ctx context.Context) error {
+func UserPrincipalMustBeUnique(users repositories.UserRetriever, principal string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return users.FindByPrincipal(ctx, helpers.PrincipalHashFunc(principal))
@@ -34,7 +34,7 @@ func UserPrincipalMustBeUnique(users repositories.User, principal string) func(c
 }
 
 // SquadLabelMustBeUnique returns specification for squad name uniqueness
-func SquadLabelMustBeUnique(squads repositories.Squad, name string) func(ctx context.Context) error {
+func SquadLabelMustBeUnique(squads repositories.SquadRetriever, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return squads.FindByLabel(ctx, name)
@@ -42,7 +42,7 @@ func SquadLabelMustBeUnique(squads repositories.Squad, name string) func(ctx con
 }
 
 // GuildLabelMustBeUnique returns specification for chapter name uniqueness
-func GuildLabelMustBeUnique(guilds repositories.Guild, name string) func(ctx context.Context) error {
+func GuildLabelMustBeUnique(guilds repositories.GuildRetriever, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return guilds.FindByLabel(ctx, name)
@@ -50,7 +50,7 @@ func GuildLabelMustBeUnique(guilds repositories.Guild, name string) func(ctx con
 }
 
 // ChapterLabelMustBeUnique returns specification for chapter name uniqueness
-func ChapterLabelMustBeUnique(chapters repositories.Chapter, name string) func(ctx context.Context) error {
+func ChapterLabelMustBeUnique(chapters repositories.ChapterRetriever, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return chapters.FindByLabel(ctx, name)
@@ -58,7 +58,7 @@ func ChapterLabelMustBeUnique(chapters repositories.Chapter, name string) func(c
 }
 
 // TribeLabelMustBeUnique returns specification for tribe name uniqueness
-func TribeLabelMustBeUnique(tribes repositories.Tribe, name string) func(ctx context.Context) error {
+func TribeLabelMustBeUnique(tribes repositories.TribeRetriever, name string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return tribes.FindByLabel(ctx, name)

@@ -15,14 +15,20 @@ type UserSearchFilter struct {
 
 //go:generate mockgen -destination test/mock/user.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories User
 
-// User describes user repository contract
-type User interface {
-	Create(ctx context.Context, entity *models.User) error
+// UserRetriever is the user contract definition for read-only operation.
+type UserRetriever interface {
 	Get(ctx context.Context, id string) (*models.User, error)
-	Update(ctx context.Context, entity *models.User) error
-	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error)
 	FindByPrincipal(ctx context.Context, principal string) (*models.User, error)
+}
+
+// User describes user repository contract
+type User interface {
+	UserRetriever
+
+	Create(ctx context.Context, entity *models.User) error
+	Update(ctx context.Context, entity *models.User) error
+	Delete(ctx context.Context, id string) error
 }
 
 // ChapterSearchFilter represents chapter entity collection search criteria
@@ -34,14 +40,20 @@ type ChapterSearchFilter struct {
 
 //go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Chapter
 
-// Chapter describes chapter repository contract
-type Chapter interface {
-	Create(ctx context.Context, entity *models.Chapter) error
+// ChapterRetriever is the chapter contract definition for read-only operation.
+type ChapterRetriever interface {
 	Get(ctx context.Context, id string) (*models.Chapter, error)
-	Update(ctx context.Context, entity *models.Chapter) error
-	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *ChapterSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Chapter, int, error)
 	FindByLabel(ctx context.Context, name string) (*models.Chapter, error)
+}
+
+// Chapter describes chapter repository contract
+type Chapter interface {
+	ChapterRetriever
+
+	Create(ctx context.Context, entity *models.Chapter) error
+	Update(ctx context.Context, entity *models.Chapter) error
+	Delete(ctx context.Context, id string) error
 }
 
 // GuildSearchFilter represents guild entity collection search criteria
@@ -53,14 +65,20 @@ type GuildSearchFilter struct {
 
 //go:generate mockgen -destination test/mock/guild.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Guild
 
-// Guild describes guild repository contract
-type Guild interface {
-	Create(ctx context.Context, entity *models.Guild) error
+// GuildRetriever is the guild contract definition for read-only operation.
+type GuildRetriever interface {
 	Get(ctx context.Context, id string) (*models.Guild, error)
-	Update(ctx context.Context, entity *models.Guild) error
-	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *GuildSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Guild, int, error)
 	FindByLabel(ctx context.Context, name string) (*models.Guild, error)
+}
+
+// Guild describes guild repository contract
+type Guild interface {
+	GuildRetriever
+
+	Create(ctx context.Context, entity *models.Guild) error
+	Update(ctx context.Context, entity *models.Guild) error
+	Delete(ctx context.Context, id string) error
 }
 
 // SquadSearchFilter represents squad entity collection search criteria
@@ -72,14 +90,20 @@ type SquadSearchFilter struct {
 
 //go:generate mockgen -destination test/mock/squad.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Squad
 
-// Squad describes squad repository contract
-type Squad interface {
-	Create(ctx context.Context, entity *models.Squad) error
+// SquadRetriever is the squad contract definition for read-only operation.
+type SquadRetriever interface {
 	Get(ctx context.Context, id string) (*models.Squad, error)
-	Update(ctx context.Context, entity *models.Squad) error
-	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *SquadSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Squad, int, error)
 	FindByLabel(ctx context.Context, name string) (*models.Squad, error)
+}
+
+// Squad describes squad repository contract
+type Squad interface {
+	SquadRetriever
+
+	Create(ctx context.Context, entity *models.Squad) error
+	Update(ctx context.Context, entity *models.Squad) error
+	Delete(ctx context.Context, id string) error
 }
 
 // TribeSearchFilter represents tribe entity collection search criteria
@@ -91,14 +115,20 @@ type TribeSearchFilter struct {
 
 //go:generate mockgen -destination test/mock/tribe.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Tribe
 
-// Tribe describes tribe repository contract
-type Tribe interface {
-	Create(ctx context.Context, entity *models.Tribe) error
+// TribeRetriever is the tribe contract definition for read-only operation.
+type TribeRetriever interface {
 	Get(ctx context.Context, id string) (*models.Tribe, error)
-	Update(ctx context.Context, entity *models.Tribe) error
-	Delete(ctx context.Context, id string) error
 	Search(ctx context.Context, filter *TribeSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Tribe, int, error)
 	FindByLabel(ctx context.Context, name string) (*models.Tribe, error)
+}
+
+// Tribe describes tribe repository contract
+type Tribe interface {
+	TribeRetriever
+
+	Create(ctx context.Context, entity *models.Tribe) error
+	Update(ctx context.Context, entity *models.Tribe) error
+	Delete(ctx context.Context, id string) error
 }
 
 //go:generate mockgen -destination test/mock/membership.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Membership

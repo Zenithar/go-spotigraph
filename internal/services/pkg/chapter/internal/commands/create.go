@@ -19,15 +19,6 @@ var CreateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.CreateResponse{}
 
-		// Check non-nil request
-		if isNil(r) {
-			res.Error = &systemv1.Error{
-				Code:    http.StatusBadRequest,
-				Message: "request must not be nil",
-			}
-			return res, errors.Newf(errors.InvalidArgument, nil, "request must not be nil")
-		}
-
 		// Check request type
 		req, ok := r.(*chapterv1.CreateRequest)
 		if !ok {
