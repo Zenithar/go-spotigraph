@@ -35,7 +35,9 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*http
 		return nil, err
 	}
 	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
-	servicesChapter := chapter.New(repositoriesChapter)
+	user := postgresql.NewUserRepository(configuration, db)
+	membership := postgresql.NewMembershipRepository(configuration, db)
+	servicesChapter := chapter.New(repositoriesChapter, user, membership)
 	server, err := httpServer(ctx, cfg, servicesChapter)
 	if err != nil {
 		return nil, err

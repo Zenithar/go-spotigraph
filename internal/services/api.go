@@ -19,6 +19,8 @@ type ChapterModifier interface {
 	Create(ctx context.Context, req *chapterv1.CreateRequest) (res *chapterv1.CreateResponse, err error)
 	Update(ctx context.Context, req *chapterv1.UpdateRequest) (res *chapterv1.UpdateResponse, err error)
 	Delete(ctx context.Context, req *chapterv1.DeleteRequest) (res *chapterv1.DeleteResponse, err error)
+	Join(ctx context.Context, req *chapterv1.JoinRequest) (res *chapterv1.JoinResponse, err error)
+	Leave(ctx context.Context, req *chapterv1.LeaveRequest) (res *chapterv1.LeaveResponse, err error)
 }
 
 // Chapter defines chapter service contract

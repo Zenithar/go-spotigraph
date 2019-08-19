@@ -967,3 +967,355 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SearchResponseValidationError{}
+
+// Validate checks the field values on JoinRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *JoinRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUserId()) != 32 {
+		return JoinRequestValidationError{
+			field:  "UserId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_JoinRequest_UserId_Pattern.MatchString(m.GetUserId()) {
+		return JoinRequestValidationError{
+			field:  "UserId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetChapterId()) != 32 {
+		return JoinRequestValidationError{
+			field:  "ChapterId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_JoinRequest_ChapterId_Pattern.MatchString(m.GetChapterId()) {
+		return JoinRequestValidationError{
+			field:  "ChapterId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// JoinRequestValidationError is the validation error returned by
+// JoinRequest.Validate if the designated constraints aren't met.
+type JoinRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e JoinRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e JoinRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e JoinRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e JoinRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e JoinRequestValidationError) ErrorName() string { return "JoinRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e JoinRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sJoinRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = JoinRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = JoinRequestValidationError{}
+
+var _JoinRequest_UserId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _JoinRequest_ChapterId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on JoinResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *JoinResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return JoinResponseValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// JoinResponseValidationError is the validation error returned by
+// JoinResponse.Validate if the designated constraints aren't met.
+type JoinResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e JoinResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e JoinResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e JoinResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e JoinResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e JoinResponseValidationError) ErrorName() string { return "JoinResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e JoinResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sJoinResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = JoinResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = JoinResponseValidationError{}
+
+// Validate checks the field values on LeaveRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *LeaveRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUserId()) != 32 {
+		return LeaveRequestValidationError{
+			field:  "UserId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_LeaveRequest_UserId_Pattern.MatchString(m.GetUserId()) {
+		return LeaveRequestValidationError{
+			field:  "UserId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetChapterId()) != 32 {
+		return LeaveRequestValidationError{
+			field:  "ChapterId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_LeaveRequest_ChapterId_Pattern.MatchString(m.GetChapterId()) {
+		return LeaveRequestValidationError{
+			field:  "ChapterId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// LeaveRequestValidationError is the validation error returned by
+// LeaveRequest.Validate if the designated constraints aren't met.
+type LeaveRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LeaveRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LeaveRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LeaveRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LeaveRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LeaveRequestValidationError) ErrorName() string { return "LeaveRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LeaveRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLeaveRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LeaveRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LeaveRequestValidationError{}
+
+var _LeaveRequest_UserId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _LeaveRequest_ChapterId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+// Validate checks the field values on LeaveResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *LeaveResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetError()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LeaveResponseValidationError{
+					field:  "Error",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// LeaveResponseValidationError is the validation error returned by
+// LeaveResponse.Validate if the designated constraints aren't met.
+type LeaveResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LeaveResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LeaveResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LeaveResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LeaveResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LeaveResponseValidationError) ErrorName() string { return "LeaveResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LeaveResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLeaveResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LeaveResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LeaveResponseValidationError{}

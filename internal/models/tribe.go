@@ -7,17 +7,18 @@ import (
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gosimple/slug"
 
+	"go.zenithar.org/pkg/types"
 	"go.zenithar.org/spotigraph/internal/helpers"
 )
 
 // Tribe describes tribe attributes holder
 type Tribe struct {
-	ID    string   `json:"id" bson:"_id" rethinkdb:"id"`
-	Label string   `json:"label" bson:"label" rethinkdb:"label"`
-	Meta  Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
+	ID    string         `json:"id" bson:"_id" rethinkdb:"id"`
+	Label string         `json:"label" bson:"label" rethinkdb:"label"`
+	Meta  types.Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
 
-	LeaderID string      `json:"leader_id" bson:"leader_id" rethinkdb:"leader_id"`
-	SquadIDs StringArray `json:"squad_ids" bson:"squad_ids" rethinkdb:"squad_ids"`
+	LeaderID string            `json:"leader_id" bson:"leader_id" rethinkdb:"leader_id"`
+	SquadIDs types.StringArray `json:"squad_ids" bson:"squad_ids" rethinkdb:"squad_ids"`
 }
 
 // NewTribe returns a tribe instance

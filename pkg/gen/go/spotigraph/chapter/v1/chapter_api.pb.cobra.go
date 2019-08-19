@@ -458,3 +458,107 @@ func init() {
 	ChapterAPIClientCommand.AddCommand(chapterAPI_SearchClientCommand)
 	DefaultClientCommandConfig.AddFlags(chapterAPI_SearchClientCommand.Flags())
 }
+
+var chapterAPI_JoinClientCommand = &cobra.Command{
+	Use:  "join",
+	Long: "Join client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	join -p > req.json
+Submit request using file:
+	join -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | join --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req JoinRequest
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewChapterAPIClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Join(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	ChapterAPIClientCommand.AddCommand(chapterAPI_JoinClientCommand)
+	DefaultClientCommandConfig.AddFlags(chapterAPI_JoinClientCommand.Flags())
+}
+
+var chapterAPI_LeaveClientCommand = &cobra.Command{
+	Use:  "leave",
+	Long: "Leave client\n\nYou can use environment variables with the same name of the command flags.\nAll caps and s/-/_, e.g. SERVER_ADDR.",
+	Example: `
+Save a sample request to a file (or refer to your protobuf descriptor to create one):
+	leave -p > req.json
+Submit request using file:
+	leave -f req.json
+Authenticate using the Authorization header (requires transport security):
+	export AUTH_TOKEN=your_access_token
+	export SERVER_ADDR=api.example.com:443
+	echo '{json}' | leave --tls`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		var req LeaveRequest
+
+		// Get a connection
+		conn, err := dial(DefaultClientCommandConfig)
+		if err != nil {
+			return err
+		}
+		defer conn.Close()
+
+		// Initialize client wrapper
+		grpcClient := NewChapterAPIClient(conn)
+
+		// Unmarshal request
+		if err := jsonpb.Unmarshal(bufio.NewReader(os.Stdin), &req); err != nil {
+			return err
+		}
+
+		// Prepare context
+		ctx := context.Background()
+
+		// Do the call
+		res, err := grpcClient.Leave(ctx, &req)
+		if err != nil {
+			return err
+		}
+
+		// Beautify result
+		beautify(res)
+
+		// no error
+		return nil
+	},
+}
+
+func init() {
+	ChapterAPIClientCommand.AddCommand(chapterAPI_LeaveClientCommand)
+	DefaultClientCommandConfig.AddFlags(chapterAPI_LeaveClientCommand.Flags())
+}

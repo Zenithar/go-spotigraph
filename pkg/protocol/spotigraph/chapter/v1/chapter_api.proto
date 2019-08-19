@@ -51,6 +51,10 @@ service ChapterAPI {
   rpc Delete(DeleteRequest) returns (DeleteResponse);
   // Search for chapters.
   rpc Search(SearchRequest) returns (SearchResponse);
+  // Join a chapter.
+  rpc Join(JoinRequest) returns (JoinResponse);
+  // Leave a chapter.
+  rpc Leave(LeaveRequest) returns (LeaveResponse);
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +138,42 @@ message SearchResponse {
   uint32 current_page = 5;
   google.protobuf.StringValue next_cursor = 6;
   repeated Chapter members = 7;
+}
+
+message JoinRequest {
+  string user_id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+  string chapter_id = 2 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+}
+
+message JoinResponse {
+  .spotigraph.system.v1.Error error = 1;
+}
+
+message LeaveRequest {
+  string user_id = 1 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+  string chapter_id = 2 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
+}
+
+message LeaveResponse {
+  .spotigraph.system.v1.Error error = 1;
 }

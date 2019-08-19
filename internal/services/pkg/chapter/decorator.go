@@ -12,9 +12,9 @@ import (
 type Decorator func(s services.Chapter) services.Chapter
 
 // NewWithDecorators returns a service instance with decorators
-func NewWithDecorators(chapters repositories.Chapter, dcrs ...Decorator) services.Chapter {
+func NewWithDecorators(chapters repositories.Chapter, users repositories.User, memberships repositories.Membership, dcrs ...Decorator) services.Chapter {
 	// Initialize base
-	s := New(chapters)
+	s := New(chapters, users, memberships)
 
 	// Add decorators
 	for _, wrapper := range dcrs {

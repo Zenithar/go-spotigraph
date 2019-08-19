@@ -16,7 +16,7 @@ type service struct {
 }
 
 // New returns a service instance
-func New(chapters repositories.Chapter) services.Chapter {
+func New(chapters repositories.Chapter, users repositories.User, memberships repositories.Membership) services.Chapter {
 	// Initialize reactor
 	r := reactor.New("spotigraph.chapter.v1")
 
@@ -26,6 +26,8 @@ func New(chapters repositories.Chapter) services.Chapter {
 	r.RegisterHandler(&chapterv1.UpdateRequest{}, commands.UpdateHandler(chapters))
 	r.RegisterHandler(&chapterv1.DeleteRequest{}, commands.DeleteHandler(chapters))
 	r.RegisterHandler(&chapterv1.SearchRequest{}, commands.SearchHandler(chapters))
+	r.RegisterHandler(&chapterv1.JoinRequest{}, commands.JoinHandler(chapters, users, memberships))
+	r.RegisterHandler(&chapterv1.LeaveRequest{}, commands.LeaveHandler(chapters, users, memberships))
 
 	// Service instance
 	return &service{
@@ -58,4 +60,14 @@ func (s *service) Delete(ctx context.Context, req *chapterv1.DeleteRequest) (*ch
 func (s *service) Search(ctx context.Context, req *chapterv1.SearchRequest) (*chapterv1.SearchResponse, error) {
 	res, err := s.r.Do(ctx, req)
 	return res.(*chapterv1.SearchResponse), err
+}
+
+func (s *service) Join(ctx context.Context, req *chapterv1.JoinRequest) (*chapterv1.JoinResponse, error) {
+	res, err := s.r.Do(ctx, req)
+	return res.(*chapterv1.JoinResponse), err
+}
+
+func (s *service) Leave(ctx context.Context, req *chapterv1.LeaveRequest) (*chapterv1.LeaveResponse, error) {
+	res, err := s.r.Do(ctx, req)
+	return res.(*chapterv1.LeaveResponse), err
 }
