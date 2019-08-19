@@ -6,8 +6,10 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 
 replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
 
+replace go.zenithar.org/pkg/db/adapter/postgresql v0.0.6 => ../go-pkg/db/adapter/postgresql
+
 require (
-	github.com/Masterminds/squirrel v1.1.0
+	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
