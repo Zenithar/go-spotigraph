@@ -7,6 +7,7 @@ import (
 	"github.com/google/wire"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+	"go.uber.org/zap"
 
 	// Load postgresql drivers
 	_ "github.com/jackc/pgx"
@@ -22,8 +23,8 @@ import (
 // ----------------------------------------------------------
 
 var (
-	// UserTableName represents users collection name
-	UserTableName = "users"
+	// PersonTableName represents persons collection name
+	PersonTableName = "persons"
 	// ChapterTableName represents chapters collection name
 	ChapterTableName = "chapters"
 	// GuildTableName represents guilds collection name
@@ -41,7 +42,7 @@ var (
 // RepositorySet exposes Google Wire providers
 var RepositorySet = wire.NewSet(
 	AutoMigrate,
-	NewUserRepository,
+	NewPersonRepository,
 	NewChapterRepository,
 	NewGuildRepository,
 	NewSquadRepository,
@@ -82,10 +83,12 @@ func AutoMigrate(ctx context.Context, cfg *db.Configuration) (*sqlx.DB, error) {
 	if cfg.AutoMigrate {
 		log.For(ctx).Info("Migrating database schema ...")
 
-		_, err := CreateSchemas(conn)
+		n, err := CreateSchemas(conn)
 		if err != nil {
 			return nil, errors.Wrap(err, "Unable to migrate database schema")
 		}
+
+		log.For(ctx).Info("Schema migrated", zap.Int("migrations", n))
 	}
 
 	// No error

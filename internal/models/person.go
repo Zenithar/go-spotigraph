@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"go.zenithar.org/pkg/types"
 	"go.zenithar.org/spotigraph/internal/helpers"
 
@@ -10,16 +8,18 @@ import (
 	"github.com/go-ozzo/ozzo-validation/is"
 )
 
-// User describes user attributes holder
-type User struct {
+// Person describes person attributes holder
+type Person struct {
 	ID        string         `json:"id" bson:"_id" rethinkdb:"id"`
 	Principal string         `json:"principal" bson:"principal" rethinkdb:"principal"`
 	Meta      types.Metadata `json:"meta" bson:"meta" rethinkdb:"meta"`
+	FirstName string
+	LastName  string
 }
 
-// NewUser returns an user instance
-func NewUser(principal string) *User {
-	return &User{
+// NewPerson returns an person instance
+func NewPerson(principal string) *Person {
+	return &Person{
 		ID:        helpers.IDGeneratorFunc(),
 		Principal: helpers.PrincipalHashFunc(principal),
 	}
@@ -28,14 +28,9 @@ func NewUser(principal string) *User {
 // ------------------------------------------------------------------
 
 // Validate entity contraints
-func (u *User) Validate() error {
+func (u *Person) Validate() error {
 	return validation.ValidateStruct(u,
 		validation.Field(&u.ID, helpers.IDValidationRules...),
 		validation.Field(&u.Principal, validation.Required, is.PrintableASCII),
 	)
-}
-
-// URN returns an uniform resource name for external linking
-func (u *User) URN() string {
-	return fmt.Sprintf("spfg:v1::user:%s", u.ID)
 }

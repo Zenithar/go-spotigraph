@@ -8,17 +8,16 @@ import (
 	"go.zenithar.org/spotigraph/internal/models"
 )
 
-func TestUserCreation(t *testing.T) {
+func TestPersonCreation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	obj := models.NewUser("toto@foo.com")
+	obj := models.NewPerson("toto@foo.com")
 	g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 	g.Expect(obj.ID).ToNot(BeEmpty(), "Entity ID should not be blank")
 	g.Expect(obj.Principal).To(Equal("ivMCUbISUB91+FQcltrLoT2Unp+j3cnAf6vkEYUEzbM9iqyrzlStfAYr1vDbTcUmDwxpxHbDKkkj9M5zkU9MgQ"), "Entity should have the matching principal")
-	g.Expect(obj.URN()).ToNot(BeEmpty(), "Entity should have the expected urn")
 }
 
-func TestUserValidation(t *testing.T) {
+func TestPersonValidation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	for _, f := range []struct {
@@ -27,7 +26,7 @@ func TestUserValidation(t *testing.T) {
 	}{
 		{"toto@foo.com", false},
 	} {
-		obj := models.NewUser(f.name)
+		obj := models.NewPerson(f.name)
 		g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 
 		if err := obj.Validate(); err != nil {

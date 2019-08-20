@@ -1,9 +1,10 @@
 -- +migrate Up
-CREATE TABLE users (
+CREATE TABLE persons (
     id          VARCHAR(32) NOT NULL PRIMARY KEY,
     principal   VARCHAR(150) NOT NULL,
-    meta        JSON        NOT NULL
+    meta        JSON        NOT NULL,
+    UNIQUE (principal)
 );
 
 -- +migrate Down
-DROP TABLE users;
+DROP TABLE persons;

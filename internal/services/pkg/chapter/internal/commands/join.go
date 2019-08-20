@@ -14,7 +14,7 @@ import (
 )
 
 // JoinHandler handles JoinRequest for entity
-var JoinHandler = func(chapters repositories.Chapter, users repositories.User, memberships repositories.Membership) reactor.HandlerFunc {
+var JoinHandler = func(chapters repositories.Chapter, persons repositories.Person, memberships repositories.Membership) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.JoinResponse{}
 
@@ -30,7 +30,7 @@ var JoinHandler = func(chapters repositories.Chapter, users repositories.User, m
 
 		var (
 			chapter models.Chapter
-			user    models.User
+			person  models.Person
 		)
 
 		// Validate service constraints
@@ -39,8 +39,8 @@ var JoinHandler = func(chapters repositories.Chapter, users repositories.User, m
 			constraints.MustBeValid(req),
 			// Chapter must exists
 			constraints.ChapterMustExists(chapters, req.ChapterId, &chapter),
-			// User must exists
-			constraints.UserMustExists(users, req.UserId, &user),
+			// Person must exists
+			constraints.PersonMustExists(persons, req.PersonId, &person),
 		); err != nil {
 			res.Error = &systemv1.Error{
 				Code:    http.StatusPreconditionFailed,
@@ -50,7 +50,7 @@ var JoinHandler = func(chapters repositories.Chapter, users repositories.User, m
 		}
 
 		// Create use in database
-		if err := memberships.Join(ctx, &user, &chapter); err != nil {
+		if err := memberships.Join(ctx, &person, &chapter); err != nil {
 			res.Error = &systemv1.Error{
 				Code:    http.StatusInternalServerError,
 				Message: "Unable to join Chapter",

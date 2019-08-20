@@ -20,12 +20,12 @@ type pgMembershipRepository struct {
 func NewMembershipRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Membership {
 	// Defines allowed columns
 	defaultColumns := []string{
-		"id", "user_id", "group_id", "group_type",
+		"id", "person_id", "group_id", "group_type",
 	}
 
 	// Sortable columns
 	sortableColumns := []string{
-		"id", "user_id", "group_id", "group_type",
+		"id", "person_id", "group_id", "group_type",
 	}
 
 	return &pgMembershipRepository{
@@ -37,17 +37,17 @@ func NewMembershipRepository(cfg *db.Configuration, session *sqlx.DB) repositori
 
 type sqlMembership struct {
 	ID        string `db:"id"`
-	UserID    string `db:"user_id"`
+	PersonID  string `db:"person_id"`
 	GroupID   string `db:"group_id"`
 	GroupType string `db:"group_type"`
 }
 
 // -----------------------------------------------------------------------------
 
-func (r *pgMembershipRepository) Join(ctx context.Context, entity *models.User, ug models.UserGroup) error {
+func (r *pgMembershipRepository) Join(ctx context.Context, entity *models.Person, ug models.PersonGroup) error {
 	ctx, span := trace.StartSpan(ctx, "postgresql.membership.Join")
 	span.AddAttributes(
-		trace.StringAttribute("user_id", entity.ID),
+		trace.StringAttribute("person_id", entity.ID),
 		trace.StringAttribute("group_type", ug.GetGroupType()),
 		trace.StringAttribute("group_id", ug.GetGroupID()),
 	)
@@ -55,23 +55,23 @@ func (r *pgMembershipRepository) Join(ctx context.Context, entity *models.User, 
 
 	return r.adapter.Create(ctx, &sqlMembership{
 		ID:        helpers.IDGeneratorFunc(),
-		UserID:    entity.ID,
+		PersonID:  entity.ID,
 		GroupID:   ug.GetGroupID(),
 		GroupType: ug.GetGroupType(),
 	})
 }
 
-func (r *pgMembershipRepository) Leave(ctx context.Context, entity *models.User, ug models.UserGroup) error {
+func (r *pgMembershipRepository) Leave(ctx context.Context, entity *models.Person, ug models.PersonGroup) error {
 	ctx, span := trace.StartSpan(ctx, "postgresql.membership.Leave")
 	span.AddAttributes(
-		trace.StringAttribute("user_id", entity.ID),
+		trace.StringAttribute("person_id", entity.ID),
 		trace.StringAttribute("group_type", ug.GetGroupType()),
 		trace.StringAttribute("group_id", ug.GetGroupID()),
 	)
 	defer span.End()
 
 	return r.adapter.RemoveOne(ctx, &map[string]interface{}{
-		"user_id":    entity.ID,
+		"person_id":  entity.ID,
 		"group_type": ug.GetGroupType(),
 		"group_id":   ug.GetGroupID(),
 	})

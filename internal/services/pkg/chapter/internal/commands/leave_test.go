@@ -22,7 +22,7 @@ func TestChapter_Leave(t *testing.T) {
 		req     interface{}
 		want    interface{}
 		wantErr bool
-		prepare func(ctx context.Context, chapters *mock.MockChapter, users *mock.MockUser, memberships *mock.MockMembership)
+		prepare func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, memberships *mock.MockMembership)
 	}{
 		// ---------------------------------------------------------------------
 		{
@@ -47,9 +47,9 @@ func TestChapter_Leave(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Empty User ID",
+			name: "Empty Person ID",
 			req: &chapterv1.LeaveRequest{
-				UserId: "",
+				PersonId: "",
 			},
 			wantErr: true,
 		},
@@ -63,7 +63,7 @@ func TestChapter_Leave(t *testing.T) {
 		{
 			name: "Invalid Chapter ID",
 			req: &chapterv1.LeaveRequest{
-				UserId: "123456789",
+				PersonId: "123456789",
 			},
 			wantErr: true,
 		},
@@ -71,23 +71,23 @@ func TestChapter_Leave(t *testing.T) {
 			name: "Chapter not exists",
 			req: &chapterv1.LeaveRequest{
 				ChapterId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				UserId:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
+				PersonId:  "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter, users *mock.MockUser, memberships *mock.MockMembership) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, memberships *mock.MockMembership) {
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
 		{
-			name: "User not exists",
+			name: "Person not exists",
 			req: &chapterv1.LeaveRequest{
 				ChapterId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				UserId:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
+				PersonId:  "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter, users *mock.MockUser, memberships *mock.MockMembership) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, memberships *mock.MockMembership) {
 				c1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(c1, nil).Times(1)
-				users.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -96,13 +96,13 @@ func TestChapter_Leave(t *testing.T) {
 			name: "Valid request",
 			req: &chapterv1.LeaveRequest{
 				ChapterId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				UserId:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f",
+				PersonId:  "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter, users *mock.MockUser, memberships *mock.MockMembership) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, memberships *mock.MockMembership) {
 				c1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(c1, nil).Times(1)
-				u1 := models.NewUser("Foo")
-				users.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f").Return(u1, nil).Times(1)
+				u1 := models.NewPerson("Foo")
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f").Return(u1, nil).Times(1)
 				memberships.EXPECT().Leave(gomock.Any(), u1, c1).Return(nil).Times(1)
 			},
 			wantErr: false,
@@ -112,13 +112,13 @@ func TestChapter_Leave(t *testing.T) {
 			name: "Database error",
 			req: &chapterv1.LeaveRequest{
 				ChapterId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				UserId:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f",
+				PersonId:  "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter, users *mock.MockUser, memberships *mock.MockMembership) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, memberships *mock.MockMembership) {
 				c1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(c1, nil).Times(1)
-				u1 := models.NewUser("Foo")
-				users.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f").Return(u1, nil).Times(1)
+				u1 := models.NewPerson("Foo")
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55f").Return(u1, nil).Times(1)
 				memberships.EXPECT().Leave(gomock.Any(), u1, c1).Return(db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
@@ -139,16 +139,16 @@ func TestChapter_Leave(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			chapters := mock.NewMockChapter(ctrl)
-			users := mock.NewMockUser(ctrl)
+			persons := mock.NewMockPerson(ctrl)
 			memberships := mock.NewMockMembership(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
-				testCase.prepare(ctx, chapters, users, memberships)
+				testCase.prepare(ctx, chapters, persons, memberships)
 			}
 
 			// Prepare service
-			underTest := commands.LeaveHandler(chapters, users, memberships)
+			underTest := commands.LeaveHandler(chapters, persons, memberships)
 
 			// Do the query
 			got, err := underTest.Handle(ctx, testCase.req)

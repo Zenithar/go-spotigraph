@@ -141,7 +141,7 @@ message SearchResponse {
 }
 
 message JoinRequest {
-  string user_id = 1 [
+  string person_id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
       len: 32
@@ -160,7 +160,7 @@ message JoinResponse {
 }
 
 message LeaveRequest {
-  string user_id = 1 [
+  string person_id = 1 [
     (validate.rules).string = {
       pattern: "^[0-9A-Za-z]+$"
       len: 32

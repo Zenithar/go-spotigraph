@@ -115,12 +115,15 @@ func TestChapter_Create(t *testing.T) {
 			got, err := underTest.Handle(ctx, testCase.req)
 
 			// assert results expectations
-			if testCase.wantErr {
+			if testCase.wantErr && err == nil {
 				g.Expect(err).ToNot(BeNil(), "Error should be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
-			} else {
+				t.Fatal()
+			}
+			if !testCase.wantErr && err != nil {
 				g.Expect(err).To(BeNil(), "Error should not be raised")
 				g.Expect(got).ToNot(BeNil(), "Result should not be nil")
+				t.Fatal()
 			}
 		})
 	}

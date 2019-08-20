@@ -14,8 +14,8 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories"
 )
 
-// User returns user repositories full test scenario builder
-func User(underTest repositories.User) func(*testing.T) {
+// Person returns person repositories full test scenario builder
+func Person(underTest repositories.Person) func(*testing.T) {
 	return func(t *testing.T) {
 		t.Parallel()
 
@@ -25,7 +25,7 @@ func User(underTest repositories.User) func(*testing.T) {
 		ctx := context.Background()
 
 		// Prepare a new entity
-		created := models.NewUser("toto@foo.com")
+		created := models.NewPerson("toto@foo.com")
 		g.Expect(created).ToNot(BeNil(), "Newly created entity should not be nil")
 
 		// Create the entity using repository

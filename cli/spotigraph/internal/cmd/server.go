@@ -13,6 +13,5 @@ var serverCmd = &cobra.Command{
 // -----------------------------------------------------------------------------
 
 func init() {
-	serverCmd.AddCommand(httpCmd)
 	serverCmd.AddCommand(grpcCmd)
 }

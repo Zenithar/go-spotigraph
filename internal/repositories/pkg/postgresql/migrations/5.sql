@@ -4,7 +4,8 @@ CREATE TABLE tribes (
     label       VARCHAR(50) NOT NULL,
     meta        JSON        NOT NULL,
     squad_ids   JSON        NOT NULL,
-    leader_id   VARCHAR(32)
+    leader_id   VARCHAR(32),
+    UNIQUE (label)
 );
 
 -- +migrate Down

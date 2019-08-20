@@ -1,6 +1,8 @@
 package mapper
 
 import (
+	"fmt"
+
 	"go.zenithar.org/spotigraph/internal/models"
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 )
@@ -10,6 +12,7 @@ func FromEntity(entity *models.Chapter) *chapterv1.Chapter {
 	return &chapterv1.Chapter{
 		Id:    entity.ID,
 		Label: entity.Label,
+		Urn:   fmt.Sprintf("spfg:v1::chapter:%s", entity.ID),
 	}
 }
 

@@ -24,8 +24,8 @@ func mustExists(finder EntityRetrieverFunc) func(ctx context.Context) error {
 	}
 }
 
-// UserMustExists specification checks if given user exists
-func UserMustExists(users repositories.UserRetriever, id string, entity *models.User) func(ctx context.Context) error {
+// PersonMustExists specification checks if given user exists
+func PersonMustExists(users repositories.PersonRetriever, id string, entity *models.Person) func(ctx context.Context) error {
 	return mustExists(
 		func(ctx context.Context) (interface{}, error) {
 			object, err := users.Get(ctx, id)

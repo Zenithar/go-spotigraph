@@ -14,7 +14,7 @@ import (
 )
 
 // LeaveHandler handles LeaveRequest for entity
-var LeaveHandler = func(chapters repositories.ChapterRetriever, users repositories.UserRetriever, memberships repositories.Membership) reactor.HandlerFunc {
+var LeaveHandler = func(chapters repositories.ChapterRetriever, persons repositories.PersonRetriever, memberships repositories.Membership) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.LeaveResponse{}
 
@@ -30,7 +30,7 @@ var LeaveHandler = func(chapters repositories.ChapterRetriever, users repositori
 
 		var (
 			chapter models.Chapter
-			user    models.User
+			person  models.Person
 		)
 
 		// Validate service constraints
@@ -39,8 +39,8 @@ var LeaveHandler = func(chapters repositories.ChapterRetriever, users repositori
 			constraints.MustBeValid(req),
 			// Chapter must exists
 			constraints.ChapterMustExists(chapters, req.ChapterId, &chapter),
-			// User must exists
-			constraints.UserMustExists(users, req.UserId, &user),
+			// Person must exists
+			constraints.PersonMustExists(persons, req.PersonId, &person),
 		); err != nil {
 			res.Error = &systemv1.Error{
 				Code:    http.StatusPreconditionFailed,
@@ -50,7 +50,7 @@ var LeaveHandler = func(chapters repositories.ChapterRetriever, users repositori
 		}
 
 		// Create use in database
-		if err := memberships.Leave(ctx, &user, &chapter); err != nil {
+		if err := memberships.Leave(ctx, &person, &chapter); err != nil {
 			res.Error = &systemv1.Error{
 				Code:    http.StatusInternalServerError,
 				Message: "Unable to leave Chapter",

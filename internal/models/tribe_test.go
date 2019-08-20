@@ -15,7 +15,6 @@ func TestTribeCreation(t *testing.T) {
 	g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 	g.Expect(obj.ID).ToNot(BeEmpty(), "Entity ID should not be blank")
 	g.Expect(obj.Label).To(Equal("foo"), "Entity should have the matching label")
-	g.Expect(obj.URN()).ToNot(BeEmpty(), "Entity should have the expected urn")
 	g.Expect(obj.GetGroupType()).To(Equal("tribe"), "Entity should have a valid group type")
 	g.Expect(obj.GetGroupID()).To(Equal(obj.ID), "Entity should have a valid group id")
 }
@@ -58,7 +57,7 @@ func TestTribeMembership(t *testing.T) {
 	u1 := models.NewSquad("squad-1")
 	obj.AddSquad(u1)
 
-	l1 := models.NewUser("toto@foo.com")
+	l1 := models.NewPerson("toto@foo.com")
 	obj.SetLeader(l1)
 
 	g.Expect(obj.LeaderID).ToNot(BeEmpty(), "LeaderID should not be empty")

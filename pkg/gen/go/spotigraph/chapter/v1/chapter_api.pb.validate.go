@@ -976,16 +976,16 @@ func (m *JoinRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetUserId()) != 32 {
+	if utf8.RuneCountInString(m.GetPersonId()) != 32 {
 		return JoinRequestValidationError{
-			field:  "UserId",
+			field:  "PersonId",
 			reason: "value length must be 32 runes",
 		}
 	}
 
-	if !_JoinRequest_UserId_Pattern.MatchString(m.GetUserId()) {
+	if !_JoinRequest_PersonId_Pattern.MatchString(m.GetPersonId()) {
 		return JoinRequestValidationError{
-			field:  "UserId",
+			field:  "PersonId",
 			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
 		}
 	}
@@ -1061,7 +1061,7 @@ var _ interface {
 	ErrorName() string
 } = JoinRequestValidationError{}
 
-var _JoinRequest_UserId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+var _JoinRequest_PersonId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 var _JoinRequest_ChapterId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
@@ -1152,16 +1152,16 @@ func (m *LeaveRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetUserId()) != 32 {
+	if utf8.RuneCountInString(m.GetPersonId()) != 32 {
 		return LeaveRequestValidationError{
-			field:  "UserId",
+			field:  "PersonId",
 			reason: "value length must be 32 runes",
 		}
 	}
 
-	if !_LeaveRequest_UserId_Pattern.MatchString(m.GetUserId()) {
+	if !_LeaveRequest_PersonId_Pattern.MatchString(m.GetPersonId()) {
 		return LeaveRequestValidationError{
-			field:  "UserId",
+			field:  "PersonId",
 			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
 		}
 	}
@@ -1237,7 +1237,7 @@ var _ interface {
 	ErrorName() string
 } = LeaveRequestValidationError{}
 
-var _LeaveRequest_UserId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+var _LeaveRequest_PersonId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 var _LeaveRequest_ChapterId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 

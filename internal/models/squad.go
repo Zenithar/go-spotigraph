@@ -1,11 +1,8 @@
 package models
 
 import (
-	"fmt"
-
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
-	"github.com/gosimple/slug"
 
 	"go.zenithar.org/pkg/types"
 	"go.zenithar.org/spotigraph/internal/helpers"
@@ -50,11 +47,6 @@ func (c *Squad) Validate() error {
 }
 
 // SetProductOwner defines the squad product owner
-func (c *Squad) SetProductOwner(u *User) {
+func (c *Squad) SetProductOwner(u *Person) {
 	c.ProductOwnerID = u.ID
-}
-
-// URN returns an uniform resource label for external linking
-func (c *Squad) URN() string {
-	return fmt.Sprintf("spfg:v1::squad:%s:%s", c.ID, slug.Make(c.Label))
 }

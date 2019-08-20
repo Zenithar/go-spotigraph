@@ -23,7 +23,9 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
+	"go.zenithar.org/spotigraph/internal/services/pkg/person"
 	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
@@ -40,10 +42,11 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 		return nil, err
 	}
 	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
-	user := postgresql.NewUserRepository(configuration, db)
+	repositoriesPerson := postgresql.NewPersonRepository(configuration, db)
 	membership := postgresql.NewMembershipRepository(configuration, db)
-	servicesChapter := chapter.New(repositoriesChapter, user, membership)
-	server, err := grpcServer(ctx, cfg, servicesChapter)
+	servicesChapter := chapter.New(repositoriesChapter, repositoriesPerson, membership)
+	servicesPerson := person.New(repositoriesPerson)
+	server, err := grpcServer(ctx, cfg, servicesChapter, servicesPerson)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +55,7 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, persons services.Person) (*grpc.Server, error) {
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
@@ -87,6 +90,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(server, healthServer)
 	chapterv1.RegisterChapterAPIServer(server, chapters)
+	personv1.RegisterPersonAPIServer(server, persons)
 	reflection.Register(server)
 
 	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)

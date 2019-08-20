@@ -1,11 +1,8 @@
 package models
 
 import (
-	"fmt"
-
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
-	"github.com/gosimple/slug"
 
 	"go.zenithar.org/pkg/types"
 	"go.zenithar.org/spotigraph/internal/helpers"
@@ -50,11 +47,6 @@ func (c *Chapter) Validate() error {
 }
 
 // SetLeader defines the chapter leader
-func (c *Chapter) SetLeader(u *User) {
+func (c *Chapter) SetLeader(u *Person) {
 	c.LeaderID = u.ID
-}
-
-// URN returns an uniform resource name for external linking
-func (c *Chapter) URN() string {
-	return fmt.Sprintf("spfg:v1::chapter:%s:%s", c.ID, slug.Make(c.Label))
 }

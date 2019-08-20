@@ -4,6 +4,7 @@ import (
 	"context"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 )
 
 //go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/services Chapter
@@ -27,4 +28,25 @@ type ChapterModifier interface {
 type Chapter interface {
 	ChapterRetriever
 	ChapterModifier
+}
+
+//go:generate mockgen -destination test/mock/person.gen.go -package mock go.zenithar.org/spotigraph/internal/services Person
+
+// PersonRetriever defines read-only service methods. (ISP)
+type PersonRetriever interface {
+	Get(ctx context.Context, req *personv1.GetRequest) (res *personv1.GetResponse, err error)
+	Search(ctx context.Context, req *personv1.SearchRequest) (res *personv1.SearchResponse, err error)
+}
+
+// PersonModifier defines read-write service methods. (ISP)
+type PersonModifier interface {
+	Create(ctx context.Context, req *personv1.CreateRequest) (res *personv1.CreateResponse, err error)
+	Update(ctx context.Context, req *personv1.UpdateRequest) (res *personv1.UpdateResponse, err error)
+	Delete(ctx context.Context, req *personv1.DeleteRequest) (res *personv1.DeleteResponse, err error)
+}
+
+// Person defines person service contract
+type Person interface {
+	PersonModifier
+	PersonRetriever
 }

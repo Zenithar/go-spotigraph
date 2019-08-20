@@ -15,11 +15,10 @@ func TestSquadCreation(t *testing.T) {
 	g.Expect(obj).ToNot(BeNil(), "Entity should not be nil")
 	g.Expect(obj.ID).ToNot(BeEmpty(), "Entity ID should not be blank")
 	g.Expect(obj.Label).To(Equal("foo"), "Entity should have the matching label")
-	g.Expect(obj.URN()).ToNot(BeEmpty(), "Entity should have the expected urn")
 	g.Expect(obj.GetGroupType()).To(Equal("squad"), "Entity should have a valid group type")
 	g.Expect(obj.GetGroupID()).To(Equal(obj.ID), "Entity should have a valid group id")
 
-	leader := models.NewUser("toto")
+	leader := models.NewPerson("toto")
 	obj.SetProductOwner(leader)
 	g.Expect(obj.ProductOwnerID).To(Equal(leader.ID), "Entity should have a valid leader id")
 }

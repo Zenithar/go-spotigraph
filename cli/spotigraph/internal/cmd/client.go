@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 )
 
 // -----------------------------------------------------------------------------
@@ -17,5 +18,6 @@ var clientCmd = &cobra.Command{
 func init() {
 	clientCmd.AddCommand(
 		chapterv1.ChapterAPIClientCommand,
+		personv1.PersonAPIClientCommand,
 	)
 }

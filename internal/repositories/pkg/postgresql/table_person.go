@@ -16,12 +16,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-type pgUserRepository struct {
+type pgPersonRepository struct {
 	adapter *db.Default
 }
 
-// NewUserRepository returns an initialized PostgreSQL repository for users
-func NewUserRepository(cfg *db.Configuration, session *sqlx.DB) repositories.User {
+// NewPersonRepository returns an initialized PostgreSQL repository for persons
+func NewPersonRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Person {
 	// Defines allowed columns
 	defaultColumns := []string{
 		"id", "principal", "meta",
@@ -32,34 +32,34 @@ func NewUserRepository(cfg *db.Configuration, session *sqlx.DB) repositories.Use
 		"principal",
 	}
 
-	return &pgUserRepository{
-		adapter: db.NewCRUDTable(session, "", UserTableName, defaultColumns, sortableColumns),
+	return &pgPersonRepository{
+		adapter: db.NewCRUDTable(session, "", PersonTableName, defaultColumns, sortableColumns),
 	}
 }
 
 // ------------------------------------------------------------
 
-type sqlUser struct {
+type sqlPerson struct {
 	ID        string `db:"id"`
 	Principal string `db:"principal"`
 	Meta      string `db:"meta"`
 }
 
-func toUserSQL(entity *models.User) (*sqlUser, error) {
+func toPersonSQL(entity *models.Person) (*sqlPerson, error) {
 	meta, err := json.Marshal(entity.Meta)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
-	return &sqlUser{
+	return &sqlPerson{
 		ID:        entity.ID,
 		Principal: entity.Principal,
 		Meta:      string(meta),
 	}, nil
 }
 
-func (dto *sqlUser) ToEntity() (*models.User, error) {
-	entity := &models.User{
+func (dto *sqlPerson) ToEntity() (*models.Person, error) {
+	entity := &models.Person{
 		ID:        dto.ID,
 		Principal: dto.Principal,
 	}
@@ -77,8 +77,8 @@ func (dto *sqlUser) ToEntity() (*models.User, error) {
 
 // ------------------------------------------------------------
 
-func (r *pgUserRepository) Create(ctx context.Context, entity *models.User) error {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.Create")
+func (r *pgPersonRepository) Create(ctx context.Context, entity *models.Person) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.Create")
 	defer span.End()
 
 	// Validate entity first
@@ -87,7 +87,7 @@ func (r *pgUserRepository) Create(ctx context.Context, entity *models.User) erro
 	}
 
 	// Convert to DTO
-	data, err := toUserSQL(entity)
+	data, err := toPersonSQL(entity)
 	if err != nil {
 		return err
 	}
@@ -95,11 +95,11 @@ func (r *pgUserRepository) Create(ctx context.Context, entity *models.User) erro
 	return r.adapter.Create(ctx, data)
 }
 
-func (r *pgUserRepository) Get(ctx context.Context, id string) (*models.User, error) {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.Get")
+func (r *pgPersonRepository) Get(ctx context.Context, id string) (*models.Person, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.Get")
 	defer span.End()
 
-	var entity sqlUser
+	var entity sqlPerson
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
 		"id": id,
@@ -110,8 +110,8 @@ func (r *pgUserRepository) Get(ctx context.Context, id string) (*models.User, er
 	return entity.ToEntity()
 }
 
-func (r *pgUserRepository) Update(ctx context.Context, entity *models.User) error {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.Update")
+func (r *pgPersonRepository) Update(ctx context.Context, entity *models.Person) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.Update")
 	defer span.End()
 
 	// Validate entity first
@@ -120,7 +120,7 @@ func (r *pgUserRepository) Update(ctx context.Context, entity *models.User) erro
 	}
 
 	// Intermediary DTO
-	obj, err := toUserSQL(entity)
+	obj, err := toPersonSQL(entity)
 	if err != nil {
 		return err
 	}
@@ -132,8 +132,8 @@ func (r *pgUserRepository) Update(ctx context.Context, entity *models.User) erro
 	})
 }
 
-func (r *pgUserRepository) Delete(ctx context.Context, id string) error {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.Delete")
+func (r *pgPersonRepository) Delete(ctx context.Context, id string) error {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.Delete")
 	defer span.End()
 
 	return r.adapter.RemoveOne(ctx, map[string]interface{}{
@@ -141,18 +141,18 @@ func (r *pgUserRepository) Delete(ctx context.Context, id string) error {
 	})
 }
 
-func (r *pgUserRepository) Search(ctx context.Context, filter *repositories.UserSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.User, int, error) {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.Search")
+func (r *pgPersonRepository) Search(ctx context.Context, filter *repositories.PersonSearchFilter, pagination *api.Pagination, sortParams *api.SortParameters) ([]*models.Person, int, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.Search")
 	defer span.End()
 
-	var results []sqlUser
+	var results []sqlPerson
 
 	count, err := r.adapter.Search(ctx, r.buildFilter(filter), pagination, sortParams, &results)
 	if err != nil {
 		return nil, count, err
 	}
 
-	entities := make([]*models.User, len(results))
+	entities := make([]*models.Person, len(results))
 	if len(results) == 0 {
 		return entities, count, api.ErrNoResult
 	}
@@ -169,11 +169,11 @@ func (r *pgUserRepository) Search(ctx context.Context, filter *repositories.User
 	return entities, count, nil
 }
 
-func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string) (*models.User, error) {
-	ctx, span := trace.StartSpan(ctx, "postgresql.user.FindByPrincipal")
+func (r *pgPersonRepository) FindByPrincipal(ctx context.Context, principal string) (*models.Person, error) {
+	ctx, span := trace.StartSpan(ctx, "postgresql.person.FindByPrincipal")
 	defer span.End()
 
-	var entity sqlUser
+	var entity sqlPerson
 
 	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
 		"principal": principal,
@@ -186,14 +186,14 @@ func (r *pgUserRepository) FindByPrincipal(ctx context.Context, principal string
 
 // -----------------------------------------------------------------------------
 
-func (r *pgUserRepository) buildFilter(filter *repositories.UserSearchFilter) interface{} {
+func (r *pgPersonRepository) buildFilter(filter *repositories.PersonSearchFilter) interface{} {
 	if filter != nil {
 		clauses := sq.Eq{
 			"1": "1",
 		}
 
-		if len(strings.TrimSpace(filter.UserID)) > 0 {
-			clauses["id"] = filter.UserID
+		if len(strings.TrimSpace(filter.PersonID)) > 0 {
+			clauses["id"] = filter.PersonID
 		}
 		if len(strings.TrimSpace(filter.Principal)) > 0 {
 			clauses["principal"] = filter.Principal

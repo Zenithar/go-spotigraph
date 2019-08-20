@@ -16,7 +16,7 @@ type service struct {
 }
 
 // New returns a service instance
-func New(chapters repositories.Chapter, users repositories.User, memberships repositories.Membership) services.Chapter {
+func New(chapters repositories.Chapter, persons repositories.Person, memberships repositories.Membership) services.Chapter {
 	// Initialize reactor
 	r := reactor.New("spotigraph.chapter.v1")
 
@@ -26,8 +26,8 @@ func New(chapters repositories.Chapter, users repositories.User, memberships rep
 	r.RegisterHandler(&chapterv1.UpdateRequest{}, commands.UpdateHandler(chapters))
 	r.RegisterHandler(&chapterv1.DeleteRequest{}, commands.DeleteHandler(chapters))
 	r.RegisterHandler(&chapterv1.SearchRequest{}, commands.SearchHandler(chapters))
-	r.RegisterHandler(&chapterv1.JoinRequest{}, commands.JoinHandler(chapters, users, memberships))
-	r.RegisterHandler(&chapterv1.LeaveRequest{}, commands.LeaveHandler(chapters, users, memberships))
+	r.RegisterHandler(&chapterv1.JoinRequest{}, commands.JoinHandler(chapters, persons, memberships))
+	r.RegisterHandler(&chapterv1.LeaveRequest{}, commands.LeaveHandler(chapters, persons, memberships))
 
 	// Service instance
 	return &service{

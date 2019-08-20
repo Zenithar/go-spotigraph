@@ -7,6 +7,7 @@ import (
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
+	"go.zenithar.org/spotigraph/internal/services/pkg/person"
 )
 
 // -----------------------------------------------------------------------------
@@ -21,21 +22,18 @@ func PosgreSQLConfig(cfg *config.Configuration) *pgdb.Configuration {
 	}
 }
 
-var pgRepositorySet = wire.NewSet(
-	PosgreSQLConfig,
-	postgresql.RepositorySet,
-)
-
 // -----------------------------------------------------------------------------
 
 var localServiceSet = wire.NewSet(
 	chapter.New,
+	person.New,
 )
 
 // -----------------------------------------------------------------------------
 
-// LocalPostgreSQLSet initialize the PGSQL Core context
-var LocalPostgreSQLSet = wire.NewSet(
-	pgRepositorySet,
+// PostgreSQLSet initialize the PGSQL Core context
+var PostgreSQLSet = wire.NewSet(
+	PosgreSQLConfig,
+	postgresql.RepositorySet,
 	localServiceSet,
 )

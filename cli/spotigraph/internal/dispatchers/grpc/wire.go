@@ -10,6 +10,7 @@ import (
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
 	"go.zenithar.org/spotigraph/internal/services"
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 
 	"github.com/google/wire"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -28,7 +29,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, persons services.Person) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -85,6 +86,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 
 	// Register services
 	chapterv1.RegisterChapterAPIServer(server, chapters)
+	personv1.RegisterPersonAPIServer(server, persons)
 
 	// Reflection
 	reflection.Register(server)
@@ -116,7 +118,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(
-		core.LocalPostgreSQLSet,
+		core.PostgreSQLSet,
 		grpcServer,
 	)
 	return &grpc.Server{}, nil

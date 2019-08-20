@@ -25,12 +25,12 @@ func mustBeUnique(finder EntityRetrieverFunc, attribute string) func(ctx context
 	}
 }
 
-// UserPrincipalMustBeUnique returns specification for user principal uniqueness
-func UserPrincipalMustBeUnique(users repositories.UserRetriever, principal string) func(ctx context.Context) error {
+// PersonPrincipalMustBeUnique returns specification for user principal uniqueness
+func PersonPrincipalMustBeUnique(users repositories.PersonRetriever, principal string) func(ctx context.Context) error {
 	return mustBeUnique(
 		func(ctx context.Context) (interface{}, error) {
 			return users.FindByPrincipal(ctx, helpers.PrincipalHashFunc(principal))
-		}, "User principal")
+		}, "Person principal")
 }
 
 // SquadLabelMustBeUnique returns specification for squad name uniqueness

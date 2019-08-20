@@ -7,27 +7,27 @@ import (
 	"go.zenithar.org/spotigraph/internal/models"
 )
 
-// UserSearchFilter represents user entity collection search criteria
-type UserSearchFilter struct {
-	UserID    string
+// PersonSearchFilter represents person entity collection search criteria
+type PersonSearchFilter struct {
+	PersonID  string
 	Principal string
 }
 
-//go:generate mockgen -destination test/mock/user.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories User
+//go:generate mockgen -destination test/mock/person.gen.go -package mock go.zenithar.org/spotigraph/internal/repositories Person
 
-// UserRetriever is the user contract definition for read-only operation.
-type UserRetriever interface {
-	Get(ctx context.Context, id string) (*models.User, error)
-	Search(ctx context.Context, filter *UserSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.User, int, error)
-	FindByPrincipal(ctx context.Context, principal string) (*models.User, error)
+// PersonRetriever is the person contract definition for read-only operation.
+type PersonRetriever interface {
+	Get(ctx context.Context, id string) (*models.Person, error)
+	Search(ctx context.Context, filter *PersonSearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Person, int, error)
+	FindByPrincipal(ctx context.Context, principal string) (*models.Person, error)
 }
 
-// User describes user repository contract
-type User interface {
-	UserRetriever
+// Person describes person repository contract
+type Person interface {
+	PersonRetriever
 
-	Create(ctx context.Context, entity *models.User) error
-	Update(ctx context.Context, entity *models.User) error
+	Create(ctx context.Context, entity *models.Person) error
+	Update(ctx context.Context, entity *models.Person) error
 	Delete(ctx context.Context, id string) error
 }
 
@@ -135,6 +135,6 @@ type Tribe interface {
 
 // Membership describes membership repository contract
 type Membership interface {
-	Join(ctx context.Context, entity *models.User, ug models.UserGroup) error
-	Leave(ctx context.Context, entity *models.User, ug models.UserGroup) error
+	Join(ctx context.Context, entity *models.Person, ug models.PersonGroup) error
+	Leave(ctx context.Context, entity *models.Person, ug models.PersonGroup) error
 }

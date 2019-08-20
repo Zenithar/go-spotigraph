@@ -87,8 +87,6 @@ type Gen mg.Namespace
 // Generate initializers
 func (Gen) Wire() {
 	color.Blue("### Wiring dispatchers")
-
-	mustGoGenerate("HTTP", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/http")
 	mustGoGenerate("gRPC", "go.zenithar.org/spotigraph/cli/spotigraph/internal/dispatchers/grpc")
 }
 
