@@ -24,8 +24,10 @@ import (
 	"go.zenithar.org/spotigraph/internal/services"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
 	"go.zenithar.org/spotigraph/internal/services/pkg/person"
+	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
+	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
@@ -45,8 +47,10 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 	repositoriesPerson := postgresql.NewPersonRepository(configuration, db)
 	membership := postgresql.NewMembershipRepository(configuration, db)
 	servicesChapter := chapter.New(repositoriesChapter, repositoriesPerson, membership)
+	repositoriesSquad := postgresql.NewSquadRepository(configuration, db)
+	servicesSquad := squad.New(repositoriesSquad, repositoriesPerson, membership)
 	servicesPerson := person.New(repositoriesPerson)
-	server, err := grpcServer(ctx, cfg, servicesChapter, servicesPerson)
+	server, err := grpcServer(ctx, cfg, servicesChapter, servicesSquad, servicesPerson)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +59,7 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, persons services.Person) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, squads services.Squad, persons services.Person) (*grpc.Server, error) {
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
@@ -90,6 +94,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(server, healthServer)
 	chapterv1.RegisterChapterAPIServer(server, chapters)
+	squadv1.RegisterSquadAPIServer(server, squads)
 	personv1.RegisterPersonAPIServer(server, persons)
 	reflection.Register(server)
 

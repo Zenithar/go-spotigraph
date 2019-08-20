@@ -8,6 +8,7 @@ import (
 	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
 	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
 	"go.zenithar.org/spotigraph/internal/services/pkg/person"
+	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
 )
 
 // -----------------------------------------------------------------------------
@@ -26,6 +27,7 @@ func PosgreSQLConfig(cfg *config.Configuration) *pgdb.Configuration {
 
 var localServiceSet = wire.NewSet(
 	chapter.New,
+	squad.New,
 	person.New,
 )
 

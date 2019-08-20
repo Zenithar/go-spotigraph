@@ -5,6 +5,7 @@ import (
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
+	squadv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 )
 
 //go:generate mockgen -destination test/mock/chapter.gen.go -package mock go.zenithar.org/spotigraph/internal/services Chapter
@@ -28,6 +29,29 @@ type ChapterModifier interface {
 type Chapter interface {
 	ChapterRetriever
 	ChapterModifier
+}
+
+//go:generate mockgen -destination test/mock/squad.gen.go -package mock go.zenithar.org/spotigraph/internal/services Squad
+
+// SquadRetriever defines read-only service methods. (ISP)
+type SquadRetriever interface {
+	Get(ctx context.Context, req *squadv1.GetRequest) (res *squadv1.GetResponse, err error)
+	Search(ctx context.Context, req *squadv1.SearchRequest) (res *squadv1.SearchResponse, err error)
+}
+
+// SquadModifier defines read-write service methods. (ISP)
+type SquadModifier interface {
+	Create(ctx context.Context, req *squadv1.CreateRequest) (res *squadv1.CreateResponse, err error)
+	Update(ctx context.Context, req *squadv1.UpdateRequest) (res *squadv1.UpdateResponse, err error)
+	Delete(ctx context.Context, req *squadv1.DeleteRequest) (res *squadv1.DeleteResponse, err error)
+	Join(ctx context.Context, req *squadv1.JoinRequest) (res *squadv1.JoinResponse, err error)
+	Leave(ctx context.Context, req *squadv1.LeaveRequest) (res *squadv1.LeaveResponse, err error)
+}
+
+// Squad defines squad service contract
+type Squad interface {
+	SquadRetriever
+	SquadModifier
 }
 
 //go:generate mockgen -destination test/mock/person.gen.go -package mock go.zenithar.org/spotigraph/internal/services Person
