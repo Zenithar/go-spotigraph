@@ -4,6 +4,7 @@ import (
 	"context"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	guildv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/guild/v1"
 	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 	squadv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 )
@@ -52,6 +53,29 @@ type SquadModifier interface {
 type Squad interface {
 	SquadRetriever
 	SquadModifier
+}
+
+//go:generate mockgen -destination test/mock/guild.gen.go -package mock go.zenithar.org/spotigraph/internal/services Guild
+
+// GuildRetriever defines read-only service methods. (ISP)
+type GuildRetriever interface {
+	Get(ctx context.Context, req *guildv1.GetRequest) (res *guildv1.GetResponse, err error)
+	Search(ctx context.Context, req *guildv1.SearchRequest) (res *guildv1.SearchResponse, err error)
+}
+
+// GuildModifier defines read-write service methods. (ISP)
+type GuildModifier interface {
+	Create(ctx context.Context, req *guildv1.CreateRequest) (res *guildv1.CreateResponse, err error)
+	Update(ctx context.Context, req *guildv1.UpdateRequest) (res *guildv1.UpdateResponse, err error)
+	Delete(ctx context.Context, req *guildv1.DeleteRequest) (res *guildv1.DeleteResponse, err error)
+	Join(ctx context.Context, req *guildv1.JoinRequest) (res *guildv1.JoinResponse, err error)
+	Leave(ctx context.Context, req *guildv1.LeaveRequest) (res *guildv1.LeaveResponse, err error)
+}
+
+// Guild defines guild service contract
+type Guild interface {
+	GuildRetriever
+	GuildModifier
 }
 
 //go:generate mockgen -destination test/mock/person.gen.go -package mock go.zenithar.org/spotigraph/internal/services Person

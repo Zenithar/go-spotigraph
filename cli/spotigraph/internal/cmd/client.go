@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
+	guildv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/guild/v1"
 	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
 	squadv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 )
@@ -21,5 +22,6 @@ func init() {
 		chapterv1.ChapterAPIClientCommand,
 		personv1.PersonAPIClientCommand,
 		squadv1.SquadAPIClientCommand,
+		guildv1.GuildAPIClientCommand,
 	)
 }
