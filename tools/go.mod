@@ -8,7 +8,7 @@ require (
 	github.com/99designs/gqlgen v0.9.3
 	github.com/envoyproxy/protoc-gen-validate v0.0.0-00010101000000-000000000000
 	github.com/fatih/color v1.7.0
-	github.com/frapposelli/wwhrd v0.2.2
+	github.com/frapposelli/wwhrd v0.2.3
 	github.com/gobuffalo/packr v1.30.1
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/mock v1.3.1
