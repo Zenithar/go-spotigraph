@@ -8,13 +8,9 @@ replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.2019
 
 require (
 	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
-	github.com/Microsoft/go-winio v0.4.13 // indirect
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
-	github.com/containerd/continuity v0.0.0-20190426062206-aaeac12a7ffc // indirect
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
-	github.com/docker/go-units v0.4.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.7.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
@@ -36,12 +32,11 @@ require (
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.8.0 // indirect
-	github.com/onsi/gomega v1.5.0
+	github.com/onsi/ginkgo v1.7.0 // indirect
+	github.com/onsi/gomega v1.6.0
 	github.com/pkg/errors v0.8.1
 	github.com/rubenv/sql-migrate v0.0.0-20190717103323-87ce952f7079
 	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
-	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
 	github.com/ziutek/mymysql v1.5.4 // indirect
@@ -58,9 +53,8 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/types v0.0.1
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+	golang.org/x/crypto v0.0.0-20190820162420-60c769a6c586
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e // indirect
 	google.golang.org/grpc v1.23.0
 	gopkg.in/gorp.v1 v1.7.2 // indirect
 )
