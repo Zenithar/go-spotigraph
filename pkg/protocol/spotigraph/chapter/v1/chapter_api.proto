@@ -33,6 +33,7 @@ option objc_class_prefix = "SCX";
 option php_namespace = "Spotigraph\\Chapter\\V1";
 
 import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "google/protobuf/field_mask.proto";
 import "google/protobuf/wrappers.proto";
 import "spotigraph/chapter/v1/chapter.proto";
 import "spotigraph/system/v1/system.proto";
@@ -82,6 +83,7 @@ message GetRequest {
       len: 32
     }
   ];
+  google.protobuf.FieldMask fields = 2;
 }
 
 message UpdateRequest {
@@ -121,6 +123,7 @@ message SearchRequest {
     }
   ];
   google.protobuf.StringValue label = 6;
+  google.protobuf.FieldMask fields = 7;
 }
 
 message CreateResponse {

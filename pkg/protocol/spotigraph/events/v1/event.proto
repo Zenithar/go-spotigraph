@@ -1,0 +1,88 @@
+// MIT License
+//
+// Copyright (c) 2019 Thibault NORMAND
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+syntax = "proto3";
+
+package spotigraph.events.v1;
+
+option csharp_namespace = "Spotigraph.Events.V1";
+option go_package = "eventsv1";
+option java_multiple_files = true;
+option java_outer_classname = "EventProto";
+option java_package = "org.zenithar.spotigraph.events.v1";
+option objc_class_prefix = "SEX";
+option php_namespace = "Spotigraph\\Events\\V1";
+
+import "google/protobuf/any.proto";
+
+// EventType enumerates all event type values.
+enum EventType {
+  // Default value when no enumeration is specified.
+  EVENT_TYPE_INVALID = 0;
+  // Explicitly Unknown object value.
+  EVENT_TYPE_UNKNOWN = 1;
+  EVENT_TYPE_CHAPTER_CREATED = 2;
+  EVENT_TYPE_CHAPTER_DELETED = 3;
+  EVENT_TYPE_CHAPTER_LABEL_UPDATED = 4;
+  EVENT_TYPE_CHAPTER_LEADER_UPDATED = 5;
+}
+
+// Event describes event contract.
+message Event {
+  EventType event_type = 1;
+  string event_id = 2;
+  string aggregate_type = 3;
+  string aggregate_id = 4;
+  google.protobuf.Any meta = 5;
+  oneof payload {
+    ChapterCreated chapter_created = 10;
+    ChapterDeleted chapter_deleted = 11;
+    ChapterLabelUpdated chapter_label_updated = 12;
+    ChapterLeaderUpdated chapter_leader_updated = 13;
+  }
+}
+
+// ChapterCreated is raised on chapter entity creation.
+message ChapterCreated {
+  string urn = 1;
+  string label = 2;
+  string leader_id = 3;
+}
+
+// ChapterDeleted is raised on chapter entity deletion.
+message ChapterDeleted {
+  string urn = 1;
+}
+
+// ChapterLabelUpdated is raised on chapter entity label updates.
+message ChapterLabelUpdated {
+  string urn = 1;
+  string old = 2;
+  string new = 3;
+}
+
+// ChapterLeaderUpdated is raised on chapter entity leader updates.
+message ChapterLeaderUpdated {
+  string urn = 1;
+  string old = 2;
+  string new = 3;
+}

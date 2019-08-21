@@ -20,7 +20,7 @@ generate:
   go_options:
     import_path: go.zenithar.org/spotigraph/pkg/protocol
   plugins:
-    - name: gogo
+    - name: gogofast
       type: gogo
       flags: plugins=grpc
       output: ../gen/go

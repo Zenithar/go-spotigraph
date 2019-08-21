@@ -10,7 +10,7 @@ import (
 	_ "github.com/envoyproxy/protoc-gen-validate"
 	_ "github.com/frapposelli/wwhrd"
 	_ "github.com/gobuffalo/packr/packr"
-	_ "github.com/gogo/protobuf/protoc-gen-gogo"
+	_ "github.com/gogo/protobuf/protoc-gen-gogofast"
 	_ "github.com/golang/mock/mockgen"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/google/wire/cmd/wire"

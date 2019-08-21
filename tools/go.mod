@@ -16,6 +16,7 @@ require (
 	github.com/google/wire v0.3.0
 	github.com/hexdigest/gowrap v1.1.4
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
+	github.com/izumin5210/gex v0.5.0 // indirect
 	github.com/magefile/mage v1.8.0
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
 	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1

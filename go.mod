@@ -7,12 +7,14 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
 
 require (
+	github.com/99designs/gqlgen v0.9.3 // indirect
 	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.7.0
+	github.com/frapposelli/wwhrd v0.2.3 // indirect
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gobuffalo/packr v1.30.1
@@ -20,25 +22,33 @@ require (
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.2
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/golangci/golangci-lint v1.17.1 // indirect
 	github.com/google/go-cmp v0.3.1
 	github.com/google/wire v0.3.0
 	github.com/gopherjs/gopherjs v0.0.0-20190411002643-bd77b112433e // indirect
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
+	github.com/hexdigest/gowrap v1.1.4 // indirect
 	github.com/hokaccha/go-prettyjson v0.0.0-20190818114111-108c894c2c0e
+	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
 	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.2.0
+	github.com/lyft/protoc-gen-star v0.4.11 // indirect
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.6.0
 	github.com/pkg/errors v0.8.1
 	github.com/rubenv/sql-migrate v0.0.0-20190717103323-87ce952f7079
 	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
+	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518 // indirect
+	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1 // indirect
+	github.com/uber/prototool v1.8.1 // indirect
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
@@ -53,8 +63,11 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/types v0.0.1
+	go.zenithar.org/protoc-gen-cobra v0.0.3 // indirect
 	golang.org/x/crypto v0.0.0-20190820162420-60c769a6c586
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.23.0
 	gopkg.in/gorp.v1 v1.7.2 // indirect
+	gotest.tools/gotestsum v0.3.5 // indirect
+	mvdan.cc/gofumpt v0.0.0-20190729090447-96300e3d49fb // indirect
 )
