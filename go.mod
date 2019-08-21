@@ -58,7 +58,7 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/types v0.0.1
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+	golang.org/x/crypto v0.0.0-20190821070617-60c769a6c586
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e // indirect
 	google.golang.org/grpc v1.23.0
