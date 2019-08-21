@@ -10,7 +10,7 @@ import (
 	"go.zenithar.org/pkg/db"
 	"go.zenithar.org/spotigraph/internal/models"
 	bmock "go.zenithar.org/spotigraph/internal/reactor/internal/publisher/mock"
-	"go.zenithar.org/spotigraph/internal/reactor/pkg/chapter/commands"
+	"go.zenithar.org/spotigraph/internal/reactor/pkg/chapter/handlers/commands"
 	"go.zenithar.org/spotigraph/internal/repositories/test/mock"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"

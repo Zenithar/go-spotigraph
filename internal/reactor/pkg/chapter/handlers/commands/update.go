@@ -112,7 +112,13 @@ var UpdateHandler = func(chapters repositories.Chapter, persons repositories.Per
 
 			// Publish all events
 			for _, e := range eventList {
-				broker.Publish(ctx, e)
+				if err := broker.Publish(ctx, e); err != nil {
+					res.Error = &systemv1.Error{
+						Code:    http.StatusInternalServerError,
+						Message: "Unable to publish event",
+					}
+					return res, errors.Newf(errors.Internal, err, "unable to publish event")
+				}
 			}
 		}
 

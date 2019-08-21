@@ -69,7 +69,13 @@ var CreateHandler = func(chapters repositories.Chapter, persons repositories.Per
 		res.Entity = mapper.FromEntity(entity)
 
 		// Publish event
-		broker.Publish(ctx, events.ChapterCreated(res.Entity))
+		if err := broker.Publish(ctx, events.ChapterCreated(res.Entity.Urn, res.Entity.Label, res.Entity.LeaderId)); err != nil {
+			res.Error = &systemv1.Error{
+				Code:    http.StatusInternalServerError,
+				Message: "Unable to publish event",
+			}
+			return res, errors.Newf(errors.Internal, err, "unable to publish event")
+		}
 
 		// Return result
 		return res, nil

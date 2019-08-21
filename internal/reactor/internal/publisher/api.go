@@ -10,5 +10,5 @@ import (
 
 // Publisher decribes event publisher contract.
 type Publisher interface {
-	Publish(ctx context.Context, event *eventsv1.Event)
+	Publish(ctx context.Context, event *eventsv1.Event) error
 }

@@ -57,7 +57,13 @@ var DeleteHandler = func(chapters repositories.Chapter, broker publisher.Publish
 		}
 
 		// Publish event
-		broker.Publish(ctx, events.ChapterDeleted(mapper.FromEntity(&entity)))
+		if err := broker.Publish(ctx, events.ChapterDeleted(mapper.FromEntity(&entity).Urn)); err != nil {
+			res.Error = &systemv1.Error{
+				Code:    http.StatusInternalServerError,
+				Message: "Unable to publish event",
+			}
+			return res, errors.Newf(errors.Internal, err, "unable to publish event")
+		}
 
 		// Return expected result
 		return res, nil
