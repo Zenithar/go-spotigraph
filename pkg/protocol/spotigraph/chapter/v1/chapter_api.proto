@@ -67,6 +67,12 @@ message CreateRequest {
       max_bytes: 50
     }
   ];
+  string leader_id = 2 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
 }
 
 message GetRequest {
@@ -86,6 +92,12 @@ message UpdateRequest {
     }
   ];
   google.protobuf.StringValue label = 2;
+  google.protobuf.StringValue leader_id = 3 [
+    (validate.rules).string = {
+      pattern: "^[0-9A-Za-z]+$"
+      len: 32
+    }
+  ];
 }
 
 message DeleteRequest {

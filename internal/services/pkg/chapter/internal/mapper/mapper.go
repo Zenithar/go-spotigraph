@@ -10,9 +10,10 @@ import (
 // FromEntity converts entity object to service object
 func FromEntity(entity *models.Chapter) *chapterv1.Chapter {
 	return &chapterv1.Chapter{
-		Id:    entity.ID,
-		Label: entity.Label,
-		Urn:   fmt.Sprintf("spfg:v1::chapter:%s", entity.ID),
+		Id:       entity.ID,
+		Label:    entity.Label,
+		LeaderId: entity.LeaderID,
+		Urn:      fmt.Sprintf("spfg:v1::chapter:%s", entity.ID),
 	}
 }
 

@@ -1,0 +1,137 @@
+directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION 
+    | FIELD_DEFINITION
+
+schema{
+	query: SpotigraphQuery,
+	mutation: SpotigraphMutation
+}
+
+type SpotigraphQuery {
+	currentUser: CurrentUser
+	person( urn : String! ) : Person
+	squad( urn : String! ) : Squad
+	chapter( urn : String! ) : Chapter
+	guild( urn : String! ) : Guild
+	tribe( urn : String! ) : Tribe
+	node( urn : ID!	) : Node
+	persons( first : Int, last : Int, after : String, before : String ) : PersonConnection
+	squads( first : Int, last : Int, after : String, before : String ) : SquadConnection
+	chapters( first : Int, last : Int, after : String, before : String ) : ChapterConnection
+	guilds(	first : Int, last : Int, after : String, before : String ) : GuildConnection
+	tribes( first : Int, last : Int, after : String, before : String ) : TribeConnection
+}
+
+type SpotigraphMutation {
+	login(principal: String!, password: String!): CurrentUser
+  	logout: CurrentUser
+	createPerson(principal:String!): Person
+}
+
+interface Node{
+	urn : ID!
+}
+
+type CurrentUser {
+  urn: ID
+}
+
+type Person implements Node {
+	urn : ID!
+	firstName : String
+	lastName : String
+
+	squads(first : Int, last : Int, after : String, before : String) : SquadConnection @goField(forceResolver: true)
+	chapters(first : Int, last : Int, after : String,before : String) : ChapterConnection @goField(forceResolver: true)
+	guilds(first : Int, last : Int, after : String, before : String) : GuildConnection @goField(forceResolver: true)
+}
+
+type SquadConnection{
+	edges : [SquadEdge]
+	pageInfo : PageInfo!
+}
+
+type SquadEdge{
+	cursor : String!
+	node : Squad
+}
+
+type Squad implements Node {
+	urn : ID!
+	label : String!
+	productOwner : Person!
+	scrumMaster : Person
+	tribe : Tribe
+
+	members(first : Int, last : Int, after : String, before : String ) : PersonConnection @goField(forceResolver: true)
+}
+
+type PersonConnection{
+	edges : [PersonEdge]
+	pageInfo : PageInfo!
+}
+
+type PersonEdge{
+	cursor : String!
+	node : Person
+}
+
+type PageInfo{
+	hasNextPage : Boolean!
+	hasPreviousPage : Boolean!
+	startCursor : String
+	endCursor : String
+}
+
+type ChapterConnection{
+	edges : [ChapterEdge]
+	pageInfo : PageInfo!
+}
+
+type ChapterEdge{
+	cursor : String!
+	node : Chapter
+}
+
+type Chapter implements Node{
+	urn : ID!
+	label : String!
+	leader : Person
+
+	members(first : Int, last : Int, after : String, before : String) : PersonConnection @goField(forceResolver: true)
+}
+
+type GuildConnection{
+	edges : [GuildEdge]
+	pageInfo : PageInfo!
+}
+
+type GuildEdge{
+	cursor : String!
+	node : Guild
+}
+
+type Guild implements Node{
+	urn : ID!
+	label : String!
+	leader : Person
+
+	members(first : Int, last : Int, after : String, before : String) : PersonConnection @goField(forceResolver: true)
+}
+
+type TribeConnection{
+	edges : [TribeEdge]
+	pageInfo : PageInfo!
+}
+
+type TribeEdge{
+	cursor : String!
+	node : Tribe
+}
+
+type Tribe implements Node{
+	urn : ID!
+	label : String!
+	leader : Person
+
+	squads(first : Int, last : Int, after : String, before : String) : SquadConnection @goField(forceResolver: true)
+}

@@ -47,6 +47,8 @@ func (m *Chapter) Validate() error {
 
 	// no validation rules for Label
 
+	// no validation rules for LeaderId
+
 	// no validation rules for Urn
 
 	return nil

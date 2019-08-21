@@ -38,5 +38,6 @@ option php_namespace = "Spotigraph\\Chapter\\V1";
 message Chapter {
   string id = 1;
   string label = 2;
-  string urn = 3;
+  string leader_id = 3;
+  string urn = 4;
 }

@@ -20,7 +20,7 @@ func TestChapter_Create(t *testing.T) {
 		name    string
 		req     interface{}
 		wantErr bool
-		prepare func(ctx context.Context, chapters *mock.MockChapter)
+		prepare func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson)
 	}{
 		// ---------------------------------------------------------------------
 		{
@@ -40,25 +40,40 @@ func TestChapter_Create(t *testing.T) {
 		{
 			name: "Empty label",
 			req: &chapterv1.CreateRequest{
-				Label: "",
+				Label:    "",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			wantErr: true,
 		},
 		{
 			name: "Invalid name",
 			req: &chapterv1.CreateRequest{
-				Label: "&é=",
+				Label:    "&é=",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
 			wantErr: true,
 		},
 		{
 			name: "Existing chapter",
 			req: &chapterv1.CreateRequest{
-				Label: "Foo",
+				Label:    "Foo",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				t1 := models.NewChapter("Foo")
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Foo").Return(t1, nil).Times(1)
+			},
+			wantErr: true,
+		},
+		{
+			name: "Leader not found",
+			req: &chapterv1.CreateRequest{
+				Label:    "Foo",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
+			},
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
+				chapters.EXPECT().FindByLabel(gomock.Any(), "Foo").Return(nil, db.ErrNoResult).Times(1)
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		},
@@ -66,10 +81,13 @@ func TestChapter_Create(t *testing.T) {
 		{
 			name: "Non-Existing chapter",
 			req: &chapterv1.CreateRequest{
-				Label: "Foo",
+				Label:    "Foo",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Foo").Return(nil, db.ErrNoResult).Times(1)
+				u1 := models.NewPerson("toto@foo.org")
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().Create(gomock.Any(), gomock.Any()).Return(nil).Times(1)
 			},
 			wantErr: false,
@@ -78,10 +96,13 @@ func TestChapter_Create(t *testing.T) {
 		{
 			name: "Non-Existing chapter with database error",
 			req: &chapterv1.CreateRequest{
-				Label: "Foo",
+				Label:    "Foo",
+				LeaderId: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Foo").Return(nil, db.ErrNoResult).Times(1)
+				u1 := models.NewPerson("toto@foo.org")
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().Create(gomock.Any(), gomock.Any()).Return(db.ErrNoModification).Times(1)
 			},
 			wantErr: true,
@@ -102,14 +123,15 @@ func TestChapter_Create(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			chapters := mock.NewMockChapter(ctrl)
+			persons := mock.NewMockPerson(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
-				testCase.prepare(ctx, chapters)
+				testCase.prepare(ctx, chapters, persons)
 			}
 
 			// Prepare handler
-			underTest := commands.CreateHandler(chapters)
+			underTest := commands.CreateHandler(chapters, persons)
 
 			// Do the query
 			got, err := underTest.Handle(ctx, testCase.req)

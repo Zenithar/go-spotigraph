@@ -21,7 +21,7 @@ func TestChapter_Update(t *testing.T) {
 		name    string
 		req     interface{}
 		wantErr bool
-		prepare func(ctx context.Context, chapters *mock.MockChapter)
+		prepare func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson)
 	}{
 		// ---------------------------------------------------------------------
 		{
@@ -58,7 +58,7 @@ func TestChapter_Update(t *testing.T) {
 			req: &chapterv1.UpdateRequest{
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
@@ -67,7 +67,7 @@ func TestChapter_Update(t *testing.T) {
 			req: &chapterv1.UpdateRequest{
 				Id: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				u1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 			},
@@ -78,7 +78,7 @@ func TestChapter_Update(t *testing.T) {
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Label: &types.StringValue{Value: "Fuu"},
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				u1 := models.NewChapter("toto@foo.org")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
@@ -91,10 +91,36 @@ func TestChapter_Update(t *testing.T) {
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Label: &types.StringValue{Value: "Fuu"},
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				u1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Fuu").Return(u1, nil).Times(1)
+			},
+			wantErr: true,
+		}, {
+			name: "Existent entity with leader update",
+			req: &chapterv1.UpdateRequest{
+				Id:       "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
+				LeaderId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
+			},
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
+				c1 := models.NewChapter("Foo")
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(c1, nil).Times(1)
+				u1 := models.NewPerson("toto@foo.org")
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
+				chapters.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil).Times(1)
+			},
+			wantErr: false,
+		}, {
+			name: "Existent entity with leader not found",
+			req: &chapterv1.UpdateRequest{
+				Id:       "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
+				LeaderId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
+			},
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
+				c1 := models.NewChapter("Foo")
+				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(c1, nil).Times(1)
+				persons.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(nil, db.ErrNoResult).Times(1)
 			},
 			wantErr: true,
 		}, {
@@ -103,7 +129,7 @@ func TestChapter_Update(t *testing.T) {
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
 				Label: &types.StringValue{Value: "Fuu"},
 			},
-			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
+			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson) {
 				u1 := models.NewChapter("Foo")
 				chapters.EXPECT().Get(gomock.Any(), "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e").Return(u1, nil).Times(1)
 				chapters.EXPECT().FindByLabel(gomock.Any(), "Fuu").Return(nil, db.ErrNoResult).Times(1)
@@ -127,14 +153,15 @@ func TestChapter_Update(t *testing.T) {
 			// Arm mocks
 			ctx := context.Background()
 			chapters := mock.NewMockChapter(ctrl)
+			persons := mock.NewMockPerson(ctrl)
 
 			// Prepare the mocks:
 			if testCase.prepare != nil {
-				testCase.prepare(ctx, chapters)
+				testCase.prepare(ctx, chapters, persons)
 			}
 
 			// Prepare service
-			underTest := commands.UpdateHandler(chapters)
+			underTest := commands.UpdateHandler(chapters, persons)
 
 			// Do the query
 			got, err := underTest.Handle(ctx, testCase.req)

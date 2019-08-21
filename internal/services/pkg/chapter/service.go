@@ -21,9 +21,9 @@ func New(chapters repositories.Chapter, persons repositories.Person, memberships
 	r := reactor.New("spotigraph.chapter.v1")
 
 	// Register messages
-	r.RegisterHandler(&chapterv1.CreateRequest{}, commands.CreateHandler(chapters))
+	r.RegisterHandler(&chapterv1.CreateRequest{}, commands.CreateHandler(chapters, persons))
 	r.RegisterHandler(&chapterv1.GetRequest{}, commands.GetHandler(chapters))
-	r.RegisterHandler(&chapterv1.UpdateRequest{}, commands.UpdateHandler(chapters))
+	r.RegisterHandler(&chapterv1.UpdateRequest{}, commands.UpdateHandler(chapters, persons))
 	r.RegisterHandler(&chapterv1.DeleteRequest{}, commands.DeleteHandler(chapters))
 	r.RegisterHandler(&chapterv1.SearchRequest{}, commands.SearchHandler(chapters))
 	r.RegisterHandler(&chapterv1.JoinRequest{}, commands.JoinHandler(chapters, persons, memberships))

@@ -7,6 +7,7 @@ replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar
 replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
 
 require (
+	github.com/99designs/gqlgen v0.9.3
 	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
@@ -24,6 +25,8 @@ require (
 	github.com/google/go-cmp v0.3.1
 	github.com/google/wire v0.3.0
 	github.com/gopherjs/gopherjs v0.0.0-20190411002643-bd77b112433e // indirect
+	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gosimple/slug v1.7.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20190818114111-108c894c2c0e
@@ -34,7 +37,6 @@ require (
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.5.0
 	github.com/pkg/errors v0.8.1
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
@@ -42,6 +44,7 @@ require (
 	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
+	github.com/vektah/gqlparser v1.1.2
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
@@ -57,6 +60,7 @@ require (
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/types v0.0.1
 	go.zenithar.org/pkg/web v0.0.2 // indirect
+	go.zenithar.org/spotigraph/tools v0.0.0-20190814154321-a89c902a0a66 // indirect
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.23.0

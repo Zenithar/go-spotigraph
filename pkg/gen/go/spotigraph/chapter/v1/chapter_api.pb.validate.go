@@ -58,6 +58,20 @@ func (m *CreateRequest) Validate() error {
 		}
 	}
 
+	if utf8.RuneCountInString(m.GetLeaderId()) != 32 {
+		return CreateRequestValidationError{
+			field:  "LeaderId",
+			reason: "value length must be 32 runes",
+		}
+	}
+
+	if !_CreateRequest_LeaderId_Pattern.MatchString(m.GetLeaderId()) {
+		return CreateRequestValidationError{
+			field:  "LeaderId",
+			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+		}
+	}
+
 	return nil
 }
 
@@ -116,6 +130,8 @@ var _ interface {
 } = CreateRequestValidationError{}
 
 var _CreateRequest_Label_Pattern = regexp.MustCompile("^[A-Za-z]+([ 0-9A-Za-z]+)*$")
+
+var _CreateRequest_LeaderId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 // Validate checks the field values on GetRequest with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -233,6 +249,24 @@ func (m *UpdateRequest) Validate() error {
 		}
 	}
 
+	if wrapper := m.GetLeaderId(); wrapper != nil {
+
+		if utf8.RuneCountInString(wrapper.GetValue()) != 32 {
+			return UpdateRequestValidationError{
+				field:  "LeaderId",
+				reason: "value length must be 32 runes",
+			}
+		}
+
+		if !_UpdateRequest_LeaderId_Pattern.MatchString(wrapper.GetValue()) {
+			return UpdateRequestValidationError{
+				field:  "LeaderId",
+				reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -291,6 +325,8 @@ var _ interface {
 } = UpdateRequestValidationError{}
 
 var _UpdateRequest_Id_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+
+var _UpdateRequest_LeaderId_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
 
 // Validate checks the field values on DeleteRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

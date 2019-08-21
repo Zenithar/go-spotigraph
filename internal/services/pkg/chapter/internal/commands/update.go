@@ -15,7 +15,7 @@ import (
 )
 
 // UpdateHandler handles UpdateRequest for entity
-var UpdateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
+var UpdateHandler = func(chapters repositories.Chapter, persons repositories.PersonRetriever) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.UpdateResponse{}
 
@@ -62,6 +62,25 @@ var UpdateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 				return res, errors.Newf(errors.Internal, err, "unable to check label uniqueness")
 			}
 			entity.Label = req.Label.Value
+			updated = true
+		}
+
+		if req.LeaderId != nil {
+			var person models.Person
+
+			if err := constraints.Validate(ctx,
+				// Check acceptable id value
+				constraints.MustBeAnIdentifier(req.LeaderId.Value),
+				// Person exists ?
+				constraints.PersonMustExists(persons, req.LeaderId.Value, &person),
+			); err != nil {
+				res.Error = &systemv1.Error{
+					Code:    http.StatusBadRequest,
+					Message: err.Error(),
+				}
+				return res, errors.Newf(errors.InvalidArgument, nil, "person not found")
+			}
+			entity.SetLeader(&person)
 			updated = true
 		}
 

@@ -15,7 +15,7 @@ import (
 )
 
 // CreateHandler handles CreateRequest for entity
-var CreateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
+var CreateHandler = func(chapters repositories.Chapter, persons repositories.Person) reactor.HandlerFunc {
 	return func(ctx context.Context, r interface{}) (interface{}, error) {
 		res := &chapterv1.CreateResponse{}
 
@@ -29,12 +29,16 @@ var CreateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 			return res, errors.Newf(errors.InvalidArgument, nil, "request has invalid type (%T)", req)
 		}
 
+		var person models.Person
+
 		// Validate service constraints
 		if err := constraints.Validate(ctx,
 			// Request must be syntaxically valid
 			constraints.MustBeValid(req),
 			// Label must be unique
 			constraints.ChapterLabelMustBeUnique(chapters, req.Label),
+			// Leader must exists
+			constraints.PersonMustExists(persons, req.LeaderId, &person),
 		); err != nil {
 			res.Error = &systemv1.Error{
 				Code:    http.StatusPreconditionFailed,
@@ -45,6 +49,9 @@ var CreateHandler = func(chapters repositories.Chapter) reactor.HandlerFunc {
 
 		// Prepare Chapter creation
 		entity := models.NewChapter(req.Label)
+
+		// Assign leader
+		entity.SetLeader(&person)
 
 		// Create use in database
 		if err := chapters.Create(ctx, entity); err != nil {
