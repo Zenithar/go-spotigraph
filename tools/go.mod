@@ -14,7 +14,7 @@ require (
 	github.com/golang/mock v1.3.1
 	github.com/golangci/golangci-lint v1.17.1
 	github.com/google/wire v0.3.0
-	github.com/hexdigest/gowrap v1.1.4
+	github.com/hexdigest/gowrap v1.1.7
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
 	github.com/magefile/mage v1.8.0
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
