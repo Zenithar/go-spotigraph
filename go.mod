@@ -32,7 +32,7 @@ require (
 	github.com/magefile/mage v1.8.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.7.0 // indirect
+	github.com/onsi/ginkgo v1.10.1 // indirect
 	github.com/onsi/gomega v1.6.0
 	github.com/pkg/errors v0.8.1
 	github.com/rubenv/sql-migrate v0.0.0-20190717103323-87ce952f7079
