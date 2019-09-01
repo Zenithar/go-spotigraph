@@ -16,7 +16,7 @@ require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gobuffalo/packr v1.30.1
-	github.com/gogo/protobuf v1.2.1
+	github.com/gogo/protobuf v1.3.0
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.2
 	github.com/golang/snappy v0.0.1 // indirect

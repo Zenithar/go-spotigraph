@@ -10,7 +10,7 @@ require (
 	github.com/fatih/color v1.7.0
 	github.com/frapposelli/wwhrd v0.2.3
 	github.com/gobuffalo/packr v1.30.1
-	github.com/gogo/protobuf v1.2.1
+	github.com/gogo/protobuf v1.3.0
 	github.com/golang/mock v1.3.1
 	github.com/golangci/golangci-lint v1.17.1
 	github.com/google/wire v0.3.0
