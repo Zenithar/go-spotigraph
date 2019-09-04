@@ -40,7 +40,7 @@ require (
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
 	github.com/ziutek/mymysql v1.5.4 // indirect
-	go.opencensus.io v0.22.0
+	go.opencensus.io v0.22.1
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.6
 	go.zenithar.org/pkg/db v0.0.3
