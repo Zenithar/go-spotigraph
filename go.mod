@@ -4,7 +4,7 @@ go 1.12
 
 replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2
 
-replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.0.1-0.20190812160042-74cffef35f2e
+replace go.mongodb.org/mongo-driver => go.mongodb.org/mongo-driver v1.1.1
 
 require (
 	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
