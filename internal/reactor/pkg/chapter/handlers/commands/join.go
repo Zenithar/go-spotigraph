@@ -1,3 +1,17 @@
+// Copyright 2019 Thibault NORMAND
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package commands
 
 import (
@@ -7,8 +21,8 @@ import (
 	"go.zenithar.org/pkg/errors"
 	"go.zenithar.org/pkg/reactor"
 	"go.zenithar.org/spotigraph/internal/models"
-	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/reactor/internal/constraints"
+	"go.zenithar.org/spotigraph/internal/repositories"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 	systemv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"

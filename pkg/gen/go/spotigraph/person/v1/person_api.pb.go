@@ -6,13 +6,17 @@ package personv1
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
 	v1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"
 	grpc "google.golang.org/grpc"
-	io "io"
-	math "math"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +28,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type CreateRequest struct {
 	Principal            string   `protobuf:"bytes,1,opt,name=principal,proto3" json:"principal,omitempty"`
@@ -39,27 +43,32 @@ func (*CreateRequest) ProtoMessage()    {}
 func (*CreateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{0}
 }
+
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *CreateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_CreateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *CreateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateRequest.Merge(m, src)
 }
+
 func (m *CreateRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *CreateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateRequest.DiscardUnknown(m)
 }
@@ -86,27 +95,32 @@ func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{1}
 }
+
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *GetRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetRequest.Merge(m, src)
 }
+
 func (m *GetRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *GetRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetRequest.DiscardUnknown(m)
 }
@@ -135,27 +149,32 @@ func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{2}
 }
+
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *UpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UpdateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *UpdateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateRequest.Merge(m, src)
 }
+
 func (m *UpdateRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *UpdateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateRequest.DiscardUnknown(m)
 }
@@ -196,27 +215,32 @@ func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{3}
 }
+
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *DeleteRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteRequest.Merge(m, src)
 }
+
 func (m *DeleteRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *DeleteRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteRequest.DiscardUnknown(m)
 }
@@ -248,27 +272,32 @@ func (*SearchRequest) ProtoMessage()    {}
 func (*SearchRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{4}
 }
+
 func (m *SearchRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *SearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SearchRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *SearchRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchRequest.Merge(m, src)
 }
+
 func (m *SearchRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *SearchRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchRequest.DiscardUnknown(m)
 }
@@ -331,27 +360,32 @@ func (*CreateResponse) ProtoMessage()    {}
 func (*CreateResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{5}
 }
+
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *CreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_CreateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *CreateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateResponse.Merge(m, src)
 }
+
 func (m *CreateResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *CreateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateResponse.DiscardUnknown(m)
 }
@@ -386,27 +420,32 @@ func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{6}
 }
+
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *GetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GetResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *GetResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetResponse.Merge(m, src)
 }
+
 func (m *GetResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *GetResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetResponse.DiscardUnknown(m)
 }
@@ -441,27 +480,32 @@ func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{7}
 }
+
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *UpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UpdateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *UpdateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateResponse.Merge(m, src)
 }
+
 func (m *UpdateResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *UpdateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateResponse.DiscardUnknown(m)
 }
@@ -495,27 +539,32 @@ func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{8}
 }
+
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *DeleteResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteResponse.Merge(m, src)
 }
+
 func (m *DeleteResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *DeleteResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteResponse.DiscardUnknown(m)
 }
@@ -548,27 +597,32 @@ func (*SearchResponse) ProtoMessage()    {}
 func (*SearchResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3cd1ef20e07f3284, []int{9}
 }
+
 func (m *SearchResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *SearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SearchResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *SearchResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchResponse.Merge(m, src)
 }
+
 func (m *SearchResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *SearchResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchResponse.DiscardUnknown(m)
 }
@@ -784,6 +838,30 @@ type PersonAPIServer interface {
 	Search(context.Context, *SearchRequest) (*SearchResponse, error)
 }
 
+// UnimplementedPersonAPIServer can be embedded to have forward compatible implementations.
+type UnimplementedPersonAPIServer struct {
+}
+
+func (*UnimplementedPersonAPIServer) Create(ctx context.Context, req *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+
+func (*UnimplementedPersonAPIServer) Get(ctx context.Context, req *GetRequest) (*GetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+
+func (*UnimplementedPersonAPIServer) Update(ctx context.Context, req *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+
+func (*UnimplementedPersonAPIServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+
+func (*UnimplementedPersonAPIServer) Search(ctx context.Context, req *SearchRequest) (*SearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
+}
+
 func RegisterPersonAPIServer(s *grpc.Server, srv PersonAPIServer) {
 	s.RegisterService(&_PersonAPI_serviceDesc, srv)
 }
@@ -910,7 +988,7 @@ var _PersonAPI_serviceDesc = grpc.ServiceDesc{
 func (m *CreateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -918,26 +996,33 @@ func (m *CreateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CreateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Principal) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Principal)))
-		i += copy(dAtA[i:], m.Principal)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Principal) > 0 {
+		i -= len(m.Principal)
+		copy(dAtA[i:], m.Principal)
+		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Principal)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -945,26 +1030,33 @@ func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *UpdateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -972,46 +1064,57 @@ func (m *UpdateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if m.FirstName != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.FirstName.Size()))
-		n1, err := m.FirstName.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.LastName != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.LastName.Size()))
-		n2, err := m.LastName.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.LastName.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
-		i += n2
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.FirstName != nil {
+		{
+			size, err := m.FirstName.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1019,26 +1122,33 @@ func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SearchRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1046,75 +1156,81 @@ func (m *SearchRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SearchRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SearchRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Page != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Page))
-	}
-	if m.PerPage != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.PerPage))
-	}
-	if len(m.Sorts) > 0 {
-		for _, s := range m.Sorts {
-			dAtA[i] = 0x1a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
-	}
-	if m.Cursor != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Cursor.Size()))
-		n3, err := m.Cursor.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
-	}
-	if m.PersonId != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.PersonId.Size()))
-		n4, err := m.PersonId.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Principal != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Principal.Size()))
-		n5, err := m.Principal.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Principal.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
-		i += n5
+		i--
+		dAtA[i] = 0x32
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.PersonId != nil {
+		{
+			size, err := m.PersonId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
 	}
-	return i, nil
+	if m.Cursor != nil {
+		{
+			size, err := m.Cursor.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Sorts) > 0 {
+		for iNdEx := len(m.Sorts) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Sorts[iNdEx])
+			copy(dAtA[i:], m.Sorts[iNdEx])
+			i = encodeVarintPersonApi(dAtA, i, uint64(len(m.Sorts[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.PerPage != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.PerPage))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Page != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.Page))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CreateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1122,40 +1238,50 @@ func (m *CreateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CreateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Error.Size()))
-		n6, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Entity.Size()))
-		n7, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1163,40 +1289,50 @@ func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Error.Size()))
-		n8, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Entity.Size()))
-		n9, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
-		i += n9
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *UpdateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1204,40 +1340,50 @@ func (m *UpdateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Error.Size()))
-		n10, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n10
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Entity.Size()))
-		n11, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
-		i += n11
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1245,30 +1391,38 @@ func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Error.Size()))
-		n12, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n12
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SearchResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1276,77 +1430,92 @@ func (m *SearchResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SearchResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SearchResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Error.Size()))
-		n13, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n13
-	}
-	if m.Total != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Total))
-	}
-	if m.PerPage != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.PerPage))
-	}
-	if m.Count != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.Count))
-	}
-	if m.CurrentPage != 0 {
-		dAtA[i] = 0x28
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.CurrentPage))
-	}
-	if m.NextCursor != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintPersonApi(dAtA, i, uint64(m.NextCursor.Size()))
-		n14, err := m.NextCursor.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n14
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintPersonApi(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x3a
-			i++
-			i = encodeVarintPersonApi(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.NextCursor != nil {
+		{
+			size, err := m.NextCursor.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0x32
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CurrentPage != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.CurrentPage))
+		i--
+		dAtA[i] = 0x28
 	}
-	return i, nil
+	if m.Count != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.PerPage != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.PerPage))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Total != 0 {
+		i = encodeVarintPersonApi(dAtA, i, uint64(m.Total))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPersonApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintPersonApi(dAtA []byte, offset int, v uint64) int {
+	offset -= sovPersonApi(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
+
 func (m *CreateRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1570,18 +1739,13 @@ func (m *SearchResponse) Size() (n int) {
 }
 
 func sovPersonApi(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
+
 func sozPersonApi(x uint64) (n int) {
 	return sovPersonApi(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1668,6 +1832,7 @@ func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *GetRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1754,6 +1919,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1912,6 +2078,7 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1998,6 +2165,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *SearchRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2230,6 +2398,7 @@ func (m *SearchRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2356,6 +2525,7 @@ func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *GetResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2482,6 +2652,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2608,6 +2779,7 @@ func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2698,6 +2870,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *SearchResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2934,6 +3107,7 @@ func (m *SearchResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipPersonApi(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

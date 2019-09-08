@@ -19,17 +19,6 @@ import (
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
-	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
-	"go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql"
-	"go.zenithar.org/spotigraph/internal/services"
-	"go.zenithar.org/spotigraph/internal/services/pkg/chapter"
-	"go.zenithar.org/spotigraph/internal/services/pkg/guild"
-	"go.zenithar.org/spotigraph/internal/services/pkg/person"
-	"go.zenithar.org/spotigraph/internal/services/pkg/squad"
-	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
-	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/guild/v1"
-	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
-	"go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
@@ -40,21 +29,7 @@ import (
 // Injectors from wire.go:
 
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-	configuration := core.PosgreSQLConfig(cfg)
-	db, err := postgresql.AutoMigrate(ctx, configuration)
-	if err != nil {
-		return nil, err
-	}
-	repositoriesChapter := postgresql.NewChapterRepository(configuration, db)
-	repositoriesPerson := postgresql.NewPersonRepository(configuration, db)
-	membership := postgresql.NewMembershipRepository(configuration, db)
-	servicesChapter := chapter.New(repositoriesChapter, repositoriesPerson, membership)
-	repositoriesSquad := postgresql.NewSquadRepository(configuration, db)
-	servicesSquad := squad.New(repositoriesSquad, repositoriesPerson, membership)
-	repositoriesGuild := postgresql.NewGuildRepository(configuration, db)
-	servicesGuild := guild.New(repositoriesGuild, repositoriesPerson, membership)
-	servicesPerson := person.New(repositoriesPerson)
-	server, err := grpcServer(ctx, cfg, servicesChapter, servicesSquad, servicesGuild, servicesPerson)
+	server, err := grpcServer(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +38,7 @@ func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, squads services.Squad, guilds services.Guild, persons services.Person) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
@@ -97,10 +72,6 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(server, healthServer)
-	chapterv1.RegisterChapterAPIServer(server, chapters)
-	squadv1.RegisterSquadAPIServer(server, squads)
-	guildv1.RegisterGuildAPIServer(server, guilds)
-	personv1.RegisterPersonAPIServer(server, persons)
 	reflection.Register(server)
 
 	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)

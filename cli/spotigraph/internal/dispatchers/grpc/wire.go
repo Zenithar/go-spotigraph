@@ -1,3 +1,17 @@
+// Copyright 2019 Thibault NORMAND
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 //+build wireinject
 
 package grpc
@@ -7,12 +21,6 @@ import (
 	"crypto/tls"
 
 	"go.zenithar.org/spotigraph/cli/spotigraph/internal/config"
-	"go.zenithar.org/spotigraph/cli/spotigraph/internal/core"
-	"go.zenithar.org/spotigraph/internal/services"
-	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
-	guildv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/guild/v1"
-	personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
-	squadv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
 
 	"github.com/google/wire"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -31,7 +39,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, chapters services.Chapter, squads services.Squad, guilds services.Guild, persons services.Person) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -87,10 +95,6 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 	healthpb.RegisterHealthServer(server, healthServer)
 
 	// Register services
-	chapterv1.RegisterChapterAPIServer(server, chapters)
-	squadv1.RegisterSquadAPIServer(server, squads)
-	guildv1.RegisterGuildAPIServer(server, guilds)
-	personv1.RegisterPersonAPIServer(server, persons)
 
 	// Reflection
 	reflection.Register(server)
@@ -122,7 +126,7 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, chapters service
 
 func setupLocalPostgreSQL(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 	wire.Build(
-		core.PostgreSQLSet,
+		// core.PostgreSQLSet,
 		grpcServer,
 	)
 	return &grpc.Server{}, nil

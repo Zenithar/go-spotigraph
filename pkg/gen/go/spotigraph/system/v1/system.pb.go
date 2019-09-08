@@ -5,9 +5,11 @@ package systemv1
 
 import (
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
+	math_bits "math/bits"
+
+	proto "github.com/gogo/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -19,7 +21,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Error is a public error description.
 type Error struct {
@@ -36,27 +38,32 @@ func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6d0ddd778b91fb10, []int{0}
 }
+
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *Error) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Error.Merge(m, src)
 }
+
 func (m *Error) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *Error) XXX_DiscardUnknown() {
 	xxx_messageInfo_Error.DiscardUnknown(m)
 }
@@ -102,7 +109,7 @@ var fileDescriptor_6d0ddd778b91fb10 = []byte{
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -110,36 +117,46 @@ func (m *Error) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Error) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Code != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintSystem(dAtA, i, uint64(m.Code))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Message) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
 		i = encodeVarintSystem(dAtA, i, uint64(len(m.Message)))
-		i += copy(dAtA[i:], m.Message)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Code != 0 {
+		i = encodeVarintSystem(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintSystem(dAtA []byte, offset int, v uint64) int {
+	offset -= sovSystem(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
+
 func (m *Error) Size() (n int) {
 	if m == nil {
 		return 0
@@ -160,18 +177,13 @@ func (m *Error) Size() (n int) {
 }
 
 func sovSystem(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
+
 func sozSystem(x uint64) (n int) {
 	return sovSystem(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (m *Error) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -277,6 +289,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipSystem(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

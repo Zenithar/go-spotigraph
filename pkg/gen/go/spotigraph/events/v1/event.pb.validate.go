@@ -55,7 +55,6 @@ func (m *Event) Validate() error {
 		tmp := m.GetMeta()
 
 		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
 			if err := v.Validate(); err != nil {
 				return EventValidationError{
 					field:  "Meta",
@@ -74,7 +73,6 @@ func (m *Event) Validate() error {
 			tmp := m.GetChapterCreated()
 
 			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
 				if err := v.Validate(); err != nil {
 					return EventValidationError{
 						field:  "ChapterCreated",
@@ -91,7 +89,6 @@ func (m *Event) Validate() error {
 			tmp := m.GetChapterDeleted()
 
 			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
 				if err := v.Validate(); err != nil {
 					return EventValidationError{
 						field:  "ChapterDeleted",
@@ -108,7 +105,6 @@ func (m *Event) Validate() error {
 			tmp := m.GetChapterLabelUpdated()
 
 			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
 				if err := v.Validate(); err != nil {
 					return EventValidationError{
 						field:  "ChapterLabelUpdated",
@@ -125,7 +121,6 @@ func (m *Event) Validate() error {
 			tmp := m.GetChapterLeaderUpdated()
 
 			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
 				if err := v.Validate(); err != nil {
 					return EventValidationError{
 						field:  "ChapterLeaderUpdated",

@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+// 	http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,17 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package publisher
+package zmage
 
 import (
-	"context"
-
-	eventsv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/events/v1"
+	"github.com/magefile/mage/mg"
+	"github.com/magefile/mage/sh"
 )
 
-//go:generate mockgen -destination mock/publisher.gen.go -package mock go.zenithar.org/spotigraph/internal/reactor/internal/publisher Publisher
+type Ci mg.Namespace
 
-// Publisher decribes event publisher contract.
-type Publisher interface {
-	Publish(ctx context.Context, event *eventsv1.Event) error
+// Validate circleci configuration file (circleci/config.yml).
+func (Ci) Validate() error {
+	return sh.RunV("circleci-cli", "config", "validate")
+}
+
+// execute circleci job build on local.
+func (ci Ci) Build() error {
+	return ci.localExecute("build")
+}
+
+func (ci Ci) localExecute(job string) error {
+	return sh.RunV("circleci-cli", "local", "execute", "--job", job)
 }

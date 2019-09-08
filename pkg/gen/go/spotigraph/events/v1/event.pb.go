@@ -5,10 +5,12 @@ package eventsv1
 
 import (
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	types "github.com/gogo/protobuf/types"
 	io "io"
 	math "math"
+	math_bits "math/bits"
+
+	proto "github.com/gogo/protobuf/proto"
+	types "github.com/gogo/protobuf/types"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -20,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // EventType enumerates all event type values.
 type EventType int32
@@ -86,27 +88,32 @@ func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ae32168c2ebb17ec, []int{0}
 }
+
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Event.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *Event) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Event.Merge(m, src)
 }
+
 func (m *Event) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *Event) XXX_DiscardUnknown() {
 	xxx_messageInfo_Event.DiscardUnknown(m)
 }
@@ -122,12 +129,15 @@ type isEvent_Payload interface {
 type Event_ChapterCreated struct {
 	ChapterCreated *ChapterCreated `protobuf:"bytes,10,opt,name=chapter_created,json=chapterCreated,proto3,oneof"`
 }
+
 type Event_ChapterDeleted struct {
 	ChapterDeleted *ChapterDeleted `protobuf:"bytes,11,opt,name=chapter_deleted,json=chapterDeleted,proto3,oneof"`
 }
+
 type Event_ChapterLabelUpdated struct {
 	ChapterLabelUpdated *ChapterLabelUpdated `protobuf:"bytes,12,opt,name=chapter_label_updated,json=chapterLabelUpdated,proto3,oneof"`
 }
+
 type Event_ChapterLeaderUpdated struct {
 	ChapterLeaderUpdated *ChapterLeaderUpdated `protobuf:"bytes,13,opt,name=chapter_leader_updated,json=chapterLeaderUpdated,proto3,oneof"`
 }
@@ -207,116 +217,14 @@ func (m *Event) GetChapterLeaderUpdated() *ChapterLeaderUpdated {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Event) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Event_OneofMarshaler, _Event_OneofUnmarshaler, _Event_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Event) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Event_ChapterCreated)(nil),
 		(*Event_ChapterDeleted)(nil),
 		(*Event_ChapterLabelUpdated)(nil),
 		(*Event_ChapterLeaderUpdated)(nil),
 	}
-}
-
-func _Event_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Event)
-	// payload
-	switch x := m.Payload.(type) {
-	case *Event_ChapterCreated:
-		_ = b.EncodeVarint(10<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ChapterCreated); err != nil {
-			return err
-		}
-	case *Event_ChapterDeleted:
-		_ = b.EncodeVarint(11<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ChapterDeleted); err != nil {
-			return err
-		}
-	case *Event_ChapterLabelUpdated:
-		_ = b.EncodeVarint(12<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ChapterLabelUpdated); err != nil {
-			return err
-		}
-	case *Event_ChapterLeaderUpdated:
-		_ = b.EncodeVarint(13<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ChapterLeaderUpdated); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Event.Payload has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Event_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Event)
-	switch tag {
-	case 10: // payload.chapter_created
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ChapterCreated)
-		err := b.DecodeMessage(msg)
-		m.Payload = &Event_ChapterCreated{msg}
-		return true, err
-	case 11: // payload.chapter_deleted
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ChapterDeleted)
-		err := b.DecodeMessage(msg)
-		m.Payload = &Event_ChapterDeleted{msg}
-		return true, err
-	case 12: // payload.chapter_label_updated
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ChapterLabelUpdated)
-		err := b.DecodeMessage(msg)
-		m.Payload = &Event_ChapterLabelUpdated{msg}
-		return true, err
-	case 13: // payload.chapter_leader_updated
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ChapterLeaderUpdated)
-		err := b.DecodeMessage(msg)
-		m.Payload = &Event_ChapterLeaderUpdated{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Event_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Event)
-	// payload
-	switch x := m.Payload.(type) {
-	case *Event_ChapterCreated:
-		s := proto.Size(x.ChapterCreated)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_ChapterDeleted:
-		s := proto.Size(x.ChapterDeleted)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_ChapterLabelUpdated:
-		s := proto.Size(x.ChapterLabelUpdated)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Event_ChapterLeaderUpdated:
-		s := proto.Size(x.ChapterLeaderUpdated)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // ChapterCreated is raised on chapter entity creation.
@@ -335,27 +243,32 @@ func (*ChapterCreated) ProtoMessage()    {}
 func (*ChapterCreated) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ae32168c2ebb17ec, []int{1}
 }
+
 func (m *ChapterCreated) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *ChapterCreated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterCreated.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *ChapterCreated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterCreated.Merge(m, src)
 }
+
 func (m *ChapterCreated) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *ChapterCreated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterCreated.DiscardUnknown(m)
 }
@@ -397,27 +310,32 @@ func (*ChapterDeleted) ProtoMessage()    {}
 func (*ChapterDeleted) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ae32168c2ebb17ec, []int{2}
 }
+
 func (m *ChapterDeleted) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *ChapterDeleted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterDeleted.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *ChapterDeleted) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterDeleted.Merge(m, src)
 }
+
 func (m *ChapterDeleted) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *ChapterDeleted) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterDeleted.DiscardUnknown(m)
 }
@@ -447,27 +365,32 @@ func (*ChapterLabelUpdated) ProtoMessage()    {}
 func (*ChapterLabelUpdated) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ae32168c2ebb17ec, []int{3}
 }
+
 func (m *ChapterLabelUpdated) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *ChapterLabelUpdated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterLabelUpdated.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *ChapterLabelUpdated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterLabelUpdated.Merge(m, src)
 }
+
 func (m *ChapterLabelUpdated) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *ChapterLabelUpdated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterLabelUpdated.DiscardUnknown(m)
 }
@@ -511,27 +434,32 @@ func (*ChapterLeaderUpdated) ProtoMessage()    {}
 func (*ChapterLeaderUpdated) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ae32168c2ebb17ec, []int{4}
 }
+
 func (m *ChapterLeaderUpdated) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *ChapterLeaderUpdated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_ChapterLeaderUpdated.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *ChapterLeaderUpdated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterLeaderUpdated.Merge(m, src)
 }
+
 func (m *ChapterLeaderUpdated) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *ChapterLeaderUpdated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterLeaderUpdated.DiscardUnknown(m)
 }
@@ -614,7 +542,7 @@ var fileDescriptor_ae32168c2ebb17ec = []byte{
 func (m *Event) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -622,116 +550,157 @@ func (m *Event) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Event) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Event) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.EventType != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.EventType))
-	}
-	if len(m.EventId) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.EventId)))
-		i += copy(dAtA[i:], m.EventId)
-	}
-	if len(m.AggregateType) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.AggregateType)))
-		i += copy(dAtA[i:], m.AggregateType)
-	}
-	if len(m.AggregateId) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.AggregateId)))
-		i += copy(dAtA[i:], m.AggregateId)
-	}
-	if m.Meta != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.Meta.Size()))
-		n1, err := m.Meta.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Payload != nil {
-		nn2, err := m.Payload.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size := m.Payload.Size()
+			i -= size
+			if _, err := m.Payload.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
 		}
-		i += nn2
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Meta != nil {
+		{
+			size, err := m.Meta.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintEvent(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
 	}
-	return i, nil
+	if len(m.AggregateId) > 0 {
+		i -= len(m.AggregateId)
+		copy(dAtA[i:], m.AggregateId)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.AggregateId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.AggregateType) > 0 {
+		i -= len(m.AggregateType)
+		copy(dAtA[i:], m.AggregateType)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.AggregateType)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.EventId) > 0 {
+		i -= len(m.EventId)
+		copy(dAtA[i:], m.EventId)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.EventId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.EventType != 0 {
+		i = encodeVarintEvent(dAtA, i, uint64(m.EventType))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Event_ChapterCreated) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Event_ChapterCreated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ChapterCreated != nil {
+		{
+			size, err := m.ChapterCreated.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintEvent(dAtA, i, uint64(size))
+		}
+		i--
 		dAtA[i] = 0x52
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.ChapterCreated.Size()))
-		n3, err := m.ChapterCreated.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
+
 func (m *Event_ChapterDeleted) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Event_ChapterDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ChapterDeleted != nil {
+		{
+			size, err := m.ChapterDeleted.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintEvent(dAtA, i, uint64(size))
+		}
+		i--
 		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.ChapterDeleted.Size()))
-		n4, err := m.ChapterDeleted.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
+
 func (m *Event_ChapterLabelUpdated) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Event_ChapterLabelUpdated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.ChapterLabelUpdated != nil {
+		{
+			size, err := m.ChapterLabelUpdated.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintEvent(dAtA, i, uint64(size))
+		}
+		i--
 		dAtA[i] = 0x62
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.ChapterLabelUpdated.Size()))
-		n5, err := m.ChapterLabelUpdated.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n5
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
+
 func (m *Event_ChapterLeaderUpdated) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.ChapterLeaderUpdated != nil {
-		dAtA[i] = 0x6a
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(m.ChapterLeaderUpdated.Size()))
-		n6, err := m.ChapterLeaderUpdated.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
-	}
-	return i, nil
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
 }
+
+func (m *Event_ChapterLeaderUpdated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.ChapterLeaderUpdated != nil {
+		{
+			size, err := m.ChapterLeaderUpdated.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintEvent(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x6a
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *ChapterCreated) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -739,38 +708,47 @@ func (m *ChapterCreated) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ChapterCreated) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChapterCreated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Urn) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
-		i += copy(dAtA[i:], m.Urn)
-	}
-	if len(m.Label) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Label)))
-		i += copy(dAtA[i:], m.Label)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.LeaderId) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.LeaderId)
+		copy(dAtA[i:], m.LeaderId)
 		i = encodeVarintEvent(dAtA, i, uint64(len(m.LeaderId)))
-		i += copy(dAtA[i:], m.LeaderId)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Label) > 0 {
+		i -= len(m.Label)
+		copy(dAtA[i:], m.Label)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Label)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Urn) > 0 {
+		i -= len(m.Urn)
+		copy(dAtA[i:], m.Urn)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ChapterDeleted) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -778,26 +756,33 @@ func (m *ChapterDeleted) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ChapterDeleted) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChapterDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Urn) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
-		i += copy(dAtA[i:], m.Urn)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Urn) > 0 {
+		i -= len(m.Urn)
+		copy(dAtA[i:], m.Urn)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ChapterLabelUpdated) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -805,38 +790,47 @@ func (m *ChapterLabelUpdated) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ChapterLabelUpdated) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChapterLabelUpdated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Urn) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
-		i += copy(dAtA[i:], m.Urn)
-	}
-	if len(m.Old) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Old)))
-		i += copy(dAtA[i:], m.Old)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.New) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.New)
+		copy(dAtA[i:], m.New)
 		i = encodeVarintEvent(dAtA, i, uint64(len(m.New)))
-		i += copy(dAtA[i:], m.New)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Old) > 0 {
+		i -= len(m.Old)
+		copy(dAtA[i:], m.Old)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Old)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Urn) > 0 {
+		i -= len(m.Urn)
+		copy(dAtA[i:], m.Urn)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ChapterLeaderUpdated) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -844,43 +838,55 @@ func (m *ChapterLeaderUpdated) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ChapterLeaderUpdated) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChapterLeaderUpdated) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Urn) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
-		i += copy(dAtA[i:], m.Urn)
-	}
-	if len(m.Old) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintEvent(dAtA, i, uint64(len(m.Old)))
-		i += copy(dAtA[i:], m.Old)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.New) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.New)
+		copy(dAtA[i:], m.New)
 		i = encodeVarintEvent(dAtA, i, uint64(len(m.New)))
-		i += copy(dAtA[i:], m.New)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Old) > 0 {
+		i -= len(m.Old)
+		copy(dAtA[i:], m.Old)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Old)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Urn) > 0 {
+		i -= len(m.Urn)
+		copy(dAtA[i:], m.Urn)
+		i = encodeVarintEvent(dAtA, i, uint64(len(m.Urn)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintEvent(dAtA []byte, offset int, v uint64) int {
+	offset -= sovEvent(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
+
 func (m *Event) Size() (n int) {
 	if m == nil {
 		return 0
@@ -927,6 +933,7 @@ func (m *Event_ChapterCreated) Size() (n int) {
 	}
 	return n
 }
+
 func (m *Event_ChapterDeleted) Size() (n int) {
 	if m == nil {
 		return 0
@@ -939,6 +946,7 @@ func (m *Event_ChapterDeleted) Size() (n int) {
 	}
 	return n
 }
+
 func (m *Event_ChapterLabelUpdated) Size() (n int) {
 	if m == nil {
 		return 0
@@ -951,6 +959,7 @@ func (m *Event_ChapterLabelUpdated) Size() (n int) {
 	}
 	return n
 }
+
 func (m *Event_ChapterLeaderUpdated) Size() (n int) {
 	if m == nil {
 		return 0
@@ -963,6 +972,7 @@ func (m *Event_ChapterLeaderUpdated) Size() (n int) {
 	}
 	return n
 }
+
 func (m *ChapterCreated) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1052,18 +1062,13 @@ func (m *ChapterLeaderUpdated) Size() (n int) {
 }
 
 func sovEvent(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
+
 func sozEvent(x uint64) (n int) {
 	return sovEvent(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (m *Event) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1409,6 +1414,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *ChapterCreated) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1559,6 +1565,7 @@ func (m *ChapterCreated) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *ChapterDeleted) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1645,6 +1652,7 @@ func (m *ChapterDeleted) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *ChapterLabelUpdated) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1795,6 +1803,7 @@ func (m *ChapterLabelUpdated) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *ChapterLeaderUpdated) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1945,6 +1954,7 @@ func (m *ChapterLeaderUpdated) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipEvent(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

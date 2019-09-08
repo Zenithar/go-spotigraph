@@ -6,13 +6,17 @@ package chapterv1
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
 	v1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"
 	grpc "google.golang.org/grpc"
-	io "io"
-	math "math"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,7 +28,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type CreateRequest struct {
 	Label                string   `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
@@ -40,27 +44,32 @@ func (*CreateRequest) ProtoMessage()    {}
 func (*CreateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{0}
 }
+
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *CreateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_CreateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *CreateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateRequest.Merge(m, src)
 }
+
 func (m *CreateRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *CreateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateRequest.DiscardUnknown(m)
 }
@@ -95,27 +104,32 @@ func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{1}
 }
+
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *GetRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetRequest.Merge(m, src)
 }
+
 func (m *GetRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *GetRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetRequest.DiscardUnknown(m)
 }
@@ -151,27 +165,32 @@ func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{2}
 }
+
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *UpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UpdateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *UpdateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateRequest.Merge(m, src)
 }
+
 func (m *UpdateRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *UpdateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateRequest.DiscardUnknown(m)
 }
@@ -212,27 +231,32 @@ func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{3}
 }
+
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *DeleteRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteRequest.Merge(m, src)
 }
+
 func (m *DeleteRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *DeleteRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteRequest.DiscardUnknown(m)
 }
@@ -265,27 +289,32 @@ func (*SearchRequest) ProtoMessage()    {}
 func (*SearchRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{4}
 }
+
 func (m *SearchRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *SearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SearchRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *SearchRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchRequest.Merge(m, src)
 }
+
 func (m *SearchRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *SearchRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchRequest.DiscardUnknown(m)
 }
@@ -355,27 +384,32 @@ func (*CreateResponse) ProtoMessage()    {}
 func (*CreateResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{5}
 }
+
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *CreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_CreateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *CreateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateResponse.Merge(m, src)
 }
+
 func (m *CreateResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *CreateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateResponse.DiscardUnknown(m)
 }
@@ -410,27 +444,32 @@ func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{6}
 }
+
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *GetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_GetResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *GetResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetResponse.Merge(m, src)
 }
+
 func (m *GetResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *GetResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetResponse.DiscardUnknown(m)
 }
@@ -465,27 +504,32 @@ func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{7}
 }
+
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *UpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_UpdateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *UpdateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateResponse.Merge(m, src)
 }
+
 func (m *UpdateResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *UpdateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateResponse.DiscardUnknown(m)
 }
@@ -519,27 +563,32 @@ func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{8}
 }
+
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *DeleteResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteResponse.Merge(m, src)
 }
+
 func (m *DeleteResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *DeleteResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteResponse.DiscardUnknown(m)
 }
@@ -572,27 +621,32 @@ func (*SearchResponse) ProtoMessage()    {}
 func (*SearchResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{9}
 }
+
 func (m *SearchResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *SearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_SearchResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *SearchResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchResponse.Merge(m, src)
 }
+
 func (m *SearchResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *SearchResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchResponse.DiscardUnknown(m)
 }
@@ -662,27 +716,32 @@ func (*JoinRequest) ProtoMessage()    {}
 func (*JoinRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{10}
 }
+
 func (m *JoinRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *JoinRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_JoinRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *JoinRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JoinRequest.Merge(m, src)
 }
+
 func (m *JoinRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *JoinRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_JoinRequest.DiscardUnknown(m)
 }
@@ -716,27 +775,32 @@ func (*JoinResponse) ProtoMessage()    {}
 func (*JoinResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{11}
 }
+
 func (m *JoinResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *JoinResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_JoinResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *JoinResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JoinResponse.Merge(m, src)
 }
+
 func (m *JoinResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *JoinResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_JoinResponse.DiscardUnknown(m)
 }
@@ -764,27 +828,32 @@ func (*LeaveRequest) ProtoMessage()    {}
 func (*LeaveRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{12}
 }
+
 func (m *LeaveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *LeaveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_LeaveRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *LeaveRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_LeaveRequest.Merge(m, src)
 }
+
 func (m *LeaveRequest) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *LeaveRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_LeaveRequest.DiscardUnknown(m)
 }
@@ -818,27 +887,32 @@ func (*LeaveResponse) ProtoMessage()    {}
 func (*LeaveResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_abb19bb3b46a1265, []int{13}
 }
+
 func (m *LeaveResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
+
 func (m *LeaveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_LeaveResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
+
 func (m *LeaveResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_LeaveResponse.Merge(m, src)
 }
+
 func (m *LeaveResponse) XXX_Size() int {
 	return m.Size()
 }
+
 func (m *LeaveResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_LeaveResponse.DiscardUnknown(m)
 }
@@ -1051,6 +1125,38 @@ type ChapterAPIServer interface {
 	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
 }
 
+// UnimplementedChapterAPIServer can be embedded to have forward compatible implementations.
+type UnimplementedChapterAPIServer struct {
+}
+
+func (*UnimplementedChapterAPIServer) Create(ctx context.Context, req *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Get(ctx context.Context, req *GetRequest) (*GetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Update(ctx context.Context, req *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Search(ctx context.Context, req *SearchRequest) (*SearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Join(ctx context.Context, req *JoinRequest) (*JoinResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
+}
+
+func (*UnimplementedChapterAPIServer) Leave(ctx context.Context, req *LeaveRequest) (*LeaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
+}
+
 func RegisterChapterAPIServer(s *grpc.Server, srv ChapterAPIServer) {
 	s.RegisterService(&_ChapterAPI_serviceDesc, srv)
 }
@@ -1221,7 +1327,7 @@ var _ChapterAPI_serviceDesc = grpc.ServiceDesc{
 func (m *CreateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1229,32 +1335,40 @@ func (m *CreateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CreateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Label) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Label)))
-		i += copy(dAtA[i:], m.Label)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.LeaderId) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.LeaderId)
+		copy(dAtA[i:], m.LeaderId)
 		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.LeaderId)))
-		i += copy(dAtA[i:], m.LeaderId)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Label) > 0 {
+		i -= len(m.Label)
+		copy(dAtA[i:], m.Label)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Label)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1262,36 +1376,45 @@ func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Fields != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Fields.Size()))
-		n1, err := m.Fields.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Fields.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n1
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *UpdateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1299,46 +1422,57 @@ func (m *UpdateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
-	if m.Label != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Label.Size()))
-		n2, err := m.Label.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.LeaderId != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.LeaderId.Size()))
-		n3, err := m.LeaderId.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.LeaderId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n3
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Label != nil {
+		{
+			size, err := m.Label.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1346,26 +1480,33 @@ func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SearchRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1373,85 +1514,93 @@ func (m *SearchRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SearchRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SearchRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Page != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Page))
-	}
-	if m.PerPage != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.PerPage))
-	}
-	if len(m.Sorts) > 0 {
-		for _, s := range m.Sorts {
-			dAtA[i] = 0x1a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
-	}
-	if m.Cursor != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Cursor.Size()))
-		n4, err := m.Cursor.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
-	}
-	if m.ChapterId != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.ChapterId.Size()))
-		n5, err := m.ChapterId.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n5
-	}
-	if m.Label != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Label.Size()))
-		n6, err := m.Label.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Fields != nil {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Fields.Size()))
-		n7, err := m.Fields.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Fields.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x3a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Label != nil {
+		{
+			size, err := m.Label.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
 	}
-	return i, nil
+	if m.ChapterId != nil {
+		{
+			size, err := m.ChapterId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.Cursor != nil {
+		{
+			size, err := m.Cursor.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Sorts) > 0 {
+		for iNdEx := len(m.Sorts) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Sorts[iNdEx])
+			copy(dAtA[i:], m.Sorts[iNdEx])
+			i = encodeVarintChapterApi(dAtA, i, uint64(len(m.Sorts[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.PerPage != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.PerPage))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Page != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.Page))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CreateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1459,40 +1608,50 @@ func (m *CreateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CreateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n8, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Entity.Size()))
-		n9, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n9
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1500,40 +1659,50 @@ func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n10, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n10
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Entity.Size()))
-		n11, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n11
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *UpdateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1541,40 +1710,50 @@ func (m *UpdateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n12, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n12
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Entity != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Entity.Size()))
-		n13, err := m.Entity.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Entity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
-		i += n13
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1582,30 +1761,38 @@ func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n14, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n14
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SearchResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1613,72 +1800,84 @@ func (m *SearchResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SearchResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SearchResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n15, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n15
-	}
-	if m.Total != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Total))
-	}
-	if m.PerPage != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.PerPage))
-	}
-	if m.Count != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Count))
-	}
-	if m.CurrentPage != 0 {
-		dAtA[i] = 0x28
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.CurrentPage))
-	}
-	if m.NextCursor != nil {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.NextCursor.Size()))
-		n16, err := m.NextCursor.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n16
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Members) > 0 {
-		for _, msg := range m.Members {
+		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Members[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintChapterApi(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x3a
-			i++
-			i = encodeVarintChapterApi(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if m.NextCursor != nil {
+		{
+			size, err := m.NextCursor.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0x32
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CurrentPage != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.CurrentPage))
+		i--
+		dAtA[i] = 0x28
 	}
-	return i, nil
+	if m.Count != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.PerPage != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.PerPage))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Total != 0 {
+		i = encodeVarintChapterApi(dAtA, i, uint64(m.Total))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *JoinRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1686,32 +1885,40 @@ func (m *JoinRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *JoinRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *JoinRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.PersonId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.PersonId)))
-		i += copy(dAtA[i:], m.PersonId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.ChapterId) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.ChapterId)
+		copy(dAtA[i:], m.ChapterId)
 		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.ChapterId)))
-		i += copy(dAtA[i:], m.ChapterId)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PersonId) > 0 {
+		i -= len(m.PersonId)
+		copy(dAtA[i:], m.PersonId)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.PersonId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *JoinResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1719,30 +1926,38 @@ func (m *JoinResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *JoinResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *JoinResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n17, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n17
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaveRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1750,32 +1965,40 @@ func (m *LeaveRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaveRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaveRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.PersonId) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.PersonId)))
-		i += copy(dAtA[i:], m.PersonId)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.ChapterId) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.ChapterId)
+		copy(dAtA[i:], m.ChapterId)
 		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.ChapterId)))
-		i += copy(dAtA[i:], m.ChapterId)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PersonId) > 0 {
+		i -= len(m.PersonId)
+		copy(dAtA[i:], m.PersonId)
+		i = encodeVarintChapterApi(dAtA, i, uint64(len(m.PersonId)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *LeaveResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1783,35 +2006,46 @@ func (m *LeaveResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LeaveResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintChapterApi(dAtA, i, uint64(m.Error.Size()))
-		n18, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n18
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintChapterApi(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintChapterApi(dAtA []byte, offset int, v uint64) int {
+	offset -= sovChapterApi(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
+
 func (m *CreateRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2119,18 +2353,13 @@ func (m *LeaveResponse) Size() (n int) {
 }
 
 func sovChapterApi(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
+
 func sozChapterApi(x uint64) (n int) {
 	return sovChapterApi(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2249,6 +2478,7 @@ func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *GetRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2371,6 +2601,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2529,6 +2760,7 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2615,6 +2847,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *SearchRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2883,6 +3116,7 @@ func (m *SearchRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3009,6 +3243,7 @@ func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *GetResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3135,6 +3370,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3261,6 +3497,7 @@ func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3351,6 +3588,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *SearchResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3587,6 +3825,7 @@ func (m *SearchResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *JoinRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3705,6 +3944,7 @@ func (m *JoinRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *JoinResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3795,6 +4035,7 @@ func (m *JoinResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *LeaveRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3913,6 +4154,7 @@ func (m *LeaveRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *LeaveResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4003,6 +4245,7 @@ func (m *LeaveResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipChapterApi(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

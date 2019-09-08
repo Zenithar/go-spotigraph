@@ -7,9 +7,9 @@ import (
 	"go.zenithar.org/pkg/db"
 	"go.zenithar.org/pkg/errors"
 	"go.zenithar.org/pkg/reactor"
-	"go.zenithar.org/spotigraph/internal/repositories"
 	"go.zenithar.org/spotigraph/internal/reactor/internal/constraints"
 	"go.zenithar.org/spotigraph/internal/reactor/pkg/chapter/mapper"
+	"go.zenithar.org/spotigraph/internal/repositories"
 
 	chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
 	systemv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"
