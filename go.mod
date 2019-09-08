@@ -23,7 +23,7 @@ require (
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
-	github.com/envoyproxy/protoc-gen-validate v0.0.0-00010101000000-000000000000
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.7.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/gobuffalo/packr v1.30.1
