@@ -19,31 +19,25 @@ replace (
 )
 
 require (
-	github.com/99designs/gqlgen v0.9.3 // indirect
 	github.com/Masterminds/squirrel v1.1.1-0.20190801214710-0f6e36219a8f
 	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 	github.com/envoyproxy/protoc-gen-validate v0.0.0-00010101000000-000000000000
 	github.com/fatih/color v1.7.0
-	github.com/frapposelli/wwhrd v0.2.4 // indirect
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/gobuffalo/packr v1.30.1
 	github.com/gogo/protobuf v1.3.0
-	github.com/gojuno/minimock/v3 v3.0.4 // indirect
 	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.3.2
-	github.com/golangci/golangci-lint v1.17.1 // indirect
 	github.com/google/go-cmp v0.3.1
 	github.com/google/wire v0.3.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20190818114111-108c894c2c0e
-	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
 	github.com/jackc/pgx v3.5.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.2.0
-	github.com/lyft/protoc-gen-star v0.4.11 // indirect
 	github.com/magefile/mage v1.8.0
 	github.com/oklog/run v1.0.0
 	github.com/onsi/gomega v1.7.0
@@ -51,10 +45,6 @@ require (
 	github.com/rubenv/sql-migrate v0.0.0-20190902133344-8926f37f0bc1
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
-	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518 // indirect
-	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1 // indirect
-	github.com/uber/prototool v1.8.1 // indirect
-	github.com/ziutek/mymysql v1.5.4 // indirect
 	go.opencensus.io v0.22.1
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.6
@@ -68,11 +58,8 @@ require (
 	go.zenithar.org/pkg/testing v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/types v0.0.1
-	go.zenithar.org/protoc-gen-cobra v0.0.3 // indirect
 	golang.org/x/crypto v0.0.0-20190907121410-71b5226ff739
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	google.golang.org/grpc v1.23.0
 	gopkg.in/gorp.v1 v1.7.2 // indirect
-	gotest.tools/gotestsum v0.3.5 // indirect
-	mvdan.cc/gofumpt v0.0.0-20190729090447-96300e3d49fb // indirect
 )
