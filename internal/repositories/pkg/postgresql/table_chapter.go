@@ -80,8 +80,6 @@ func (dto *sqlChapter) ToEntity() (*models.Chapter, error) {
 		LeaderID: dto.LeaderID,
 	}
 
-	// Decode JSON columns
-
 	// Metadata
 	err := json.Unmarshal([]byte(dto.Meta), &entity.Meta)
 	if err != nil {

@@ -53,18 +53,11 @@ RUN set -eux; \
     go run mage.go -d tools 
 
 # Copy project go module
-COPY --chown=golang:golang magefile.go go.mod ./
-
-# Install dependencies
-RUN set -eux; \
-    go run mage.go go:deps
-
-# Copy all sources
 COPY --chown=golang:golang . .
 
 # Build final target
 RUN set -eux; \
-    go run mage.go
+    go run mage.go build
 
 # Compress binaries
 RUN set -eux; \
