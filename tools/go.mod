@@ -24,7 +24,7 @@ require (
 	github.com/gobuffalo/packr v1.30.1
 	github.com/gogo/protobuf v1.3.0
 	github.com/golang/mock v1.3.1
-	github.com/golangci/golangci-lint v1.17.1
+	github.com/golangci/golangci-lint v1.18.0
 	github.com/google/wire v0.3.0
 	github.com/hexdigest/gowrap v1.1.7
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
@@ -34,7 +34,8 @@ require (
 	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1
 	github.com/uber/prototool v1.8.1
 	go.zenithar.org/protoc-gen-cobra v0.0.3
-	golang.org/x/tools v0.0.0-20190907020128-2ca718005c18
+	golang.org/x/tools v0.0.0-20190909030654-5b82db07426d
+	google.golang.org/appengine v1.4.0 // indirect
 	gotest.tools/gotestsum v0.3.5
 	mvdan.cc/gofumpt v0.0.0-20190729090447-96300e3d49fb
 )
