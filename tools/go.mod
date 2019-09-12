@@ -34,7 +34,7 @@ require (
 	github.com/srikrsna/protoc-gen-mock v0.0.0-20190420084455-3bcb9cec43b1
 	github.com/uber/prototool v1.8.1
 	go.zenithar.org/protoc-gen-cobra v0.0.3
-	golang.org/x/tools v0.0.0-20190907020128-2ca718005c18
+	golang.org/x/tools v0.0.0-20190912215617-3720d1ec3678
 	gotest.tools/gotestsum v0.3.5
 	mvdan.cc/gofumpt v0.0.0-20190729090447-96300e3d49fb
 )
