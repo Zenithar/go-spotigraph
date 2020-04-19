@@ -26,11 +26,11 @@ import (
 	"testing"
 	"time"
 
-	"go.zenithar.org/pkg/testing/containers/database"
+	"go.zenithar.org/spotigraph/build/version"
 
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/version"
+	"go.zenithar.org/pkg/testing/containers/database"
 )
 
 var databases = flag.String("databases", "postgresql", "Repositories backend to use, splitted with a coma ','. Example: postgresql,mongodb,rethinkdb")
