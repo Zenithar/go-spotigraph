@@ -1,12 +1,12 @@
 import (
     "go.opencensus.io/trace"
 
-    chapterv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/chapter/v1"
-    personv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/person/v1"
-    guildv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/guild/v1"
-    squadv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/squad/v1"
-    tribev1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/tribe/v1"
-    systemv1 "go.zenithar.org/spotigraph/pkg/gen/go/spotigraph/system/v1"
+    chapterv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/chapter/v1"
+    personv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/person/v1"
+    guildv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/guild/v1"
+    squadv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/squad/v1"
+    tribev1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/tribe/v1"
+    systemv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/system/v1"
 )
 
 {{ $decorator := (or .Vars.DecoratorName (printf "%sWithOpenCensus" .Interface.Name)) }}

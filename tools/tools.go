@@ -1,11 +1,11 @@
 // Copyright 2019 Thibault NORMAND
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,16 +23,16 @@ import (
 	_ "github.com/99designs/gqlgen"
 	_ "github.com/envoyproxy/protoc-gen-validate"
 	_ "github.com/frapposelli/wwhrd"
-	_ "github.com/gobuffalo/packr/packr"
-	_ "github.com/gogo/protobuf/protoc-gen-gogofast"
 	_ "github.com/golang/mock/mockgen"
+	_ "github.com/golang/protobuf/protoc-gen-go"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/google/wire/cmd/wire"
 	_ "github.com/hexdigest/gowrap/cmd/gowrap"
+	_ "github.com/izumin5210/gex/cmd/gex"
 	_ "github.com/sqs/goreturns"
 	_ "github.com/srikrsna/protoc-gen-mock"
+	_ "github.com/tetratelabs/protoc-gen-cobra"
 	_ "github.com/uber/prototool/cmd/prototool"
-	_ "go.zenithar.org/protoc-gen-cobra"
 	_ "golang.org/x/tools/cmd/goimports"
 	_ "gotest.tools/gotestsum"
 	_ "mvdan.cc/gofumpt"
