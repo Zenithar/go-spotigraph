@@ -31,6 +31,17 @@ require (
 	github.com/spf13/cobra v1.0.0
 	go.opencensus.io v0.22.3
 	go.uber.org/zap v1.14.1
+	go.zenithar.org/pkg/config v0.1.0
+	go.zenithar.org/pkg/db v0.1.0
+	go.zenithar.org/pkg/db/adapter/postgresql v0.1.0
+	go.zenithar.org/pkg/errors v0.1.0
+	go.zenithar.org/pkg/flags v0.0.2
+	go.zenithar.org/pkg/log v0.3.0
+	go.zenithar.org/pkg/platform v0.2.0
+	go.zenithar.org/pkg/reactor v0.1.0
+	go.zenithar.org/pkg/testing v0.1.0
+	go.zenithar.org/pkg/tlsconfig v0.0.1
+	go.zenithar.org/pkg/types v0.1.0
 	go.zenithar.org/spotigraph v0.0.0-00010101000000-000000000000
 	golang.org/x/crypto v0.0.0-20200414173820-0848c9571904
 	google.golang.org/grpc v1.28.1
