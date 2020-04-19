@@ -1,7 +1,12 @@
 run:
-  deadline: 10m
+  # default concurrency is a available CPU number
+  concurrency: 4
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  deadline: 20m
+  # exit code when at least one issue was found, default is 1
   issues-exit-code: 1
-  tests: true
+  # include test files or not, default is true
+  tests: false
 
   skip-files:
     - ".*\\.pb\\.go$"
@@ -12,6 +17,10 @@ run:
 linters:
   enable-all: true
   disable:
+    - gomnd
+    - wsl
+    - bodyclose
+    - unparam
     - lll
     - gochecknoglobals
     - gochecknoinits
@@ -33,16 +42,7 @@ linters-settings:
     check-blank: false
   govet:
     # report about shadowed variables
-    #TODO# check-shadowing: true
-
-    # Obtain type information from installed (to $GOPATH/pkg) package files:
-    # golangci-lint will execute `go install -i` and `go test -i` for analyzed packages
-    # before analyzing them.
-    # Enable this option only if all conditions are met:
-    #  1. you use only "fast" linters (--fast e.g.): no program loading occurs
-    #  2. you use go >= 1.10
-    #  3. you do repeated runs (false for CI) or cache $GOPATH/pkg or `go env GOCACHE` dir in CI.
-    use-installed-packages: false
+    check-shadowing: true
   goimports:
     local: "go.zenithar.org"
   golint:
@@ -50,7 +50,7 @@ linters-settings:
   gofmt:
     simplify: true
   gocyclo:
-    min-complexity: 12
+    min-complexity: 15
   maligned:
     suggest-new: true
   dupl:
@@ -90,16 +90,23 @@ linters-settings:
     for-loops: false # Report preallocation suggestions on for loops, false by default
   gocritic:
     enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
       - performance
       - style
-      - experimental
     disabled-checks:
+      - unnamedResult
       - wrapperFunc
-      - rangeValCopy
-      - hugeParam
+      - dupImport # https://github.com/go-critic/go-critic/issues/845
+      - ifElseChain
+      - octalLiteral
+  funlen:
+    lines: 100
+    statements: 50
 
 issues:
   max-per-linter: 0
   max-same: 0
   new: false
-  exclude-use-default: false
+  exclude-use-default: true
