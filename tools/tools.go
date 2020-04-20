@@ -23,6 +23,7 @@ import (
 	_ "github.com/99designs/gqlgen"
 	_ "github.com/envoyproxy/protoc-gen-validate"
 	_ "github.com/frapposelli/wwhrd"
+	_ "github.com/gobuffalo/packr/v2/packr2"
 	_ "github.com/golang/mock/mockgen"
 	_ "github.com/golang/protobuf/protoc-gen-go"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"

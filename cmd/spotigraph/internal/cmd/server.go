@@ -18,14 +18,15 @@ import "github.com/spf13/cobra"
 
 // -----------------------------------------------------------------------------
 
-var serverCmd = &cobra.Command{
-	Use:     "server",
-	Aliases: []string{"s"},
-	Short:   "Starts a service dispatcher",
-}
+var serverCmd = func() *cobra.Command {
+	c := &cobra.Command{
+		Use:     "server",
+		Aliases: []string{"s"},
+		Short:   "Starts a service dispatcher",
+	}
 
-// -----------------------------------------------------------------------------
+	// Add subcommands
+	c.AddCommand(serverGRPCCmd())
 
-func init() {
-	// serverCmd.AddCommand(grpcCmd)
+	return c
 }

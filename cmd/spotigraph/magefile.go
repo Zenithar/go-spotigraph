@@ -48,6 +48,19 @@ func Build() {
 // Generate code
 func Generate() {
 	color.Cyan("## Generate code")
+
+	color.Blue("### Mocks")
+	golang.Generate("Repositories", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/repositories")()
+	golang.Generate("Publisher", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/reactor/internal/publisher")()
+
+	color.Blue("### Database migrations")
+	golang.Generate("PostgreSQL", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/repositories/pkg/postgresql")()
+
+	color.Blue("### Decorators")
+	golang.Generate("Repositories", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/repositories/pkg/...")()
+
+	color.Blue("### Wiring dispatchers")
+	golang.Generate("gRPC", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc")()
 }
 
 // Test application

@@ -1,9 +1,0 @@
-schema: schema.graphql
-
-# Let gqlgen know where to put the generated server
-exec:
-  filename: schema.gen.go
-
-# Let gqlgen know where to put the generated models (if any)
-model:
-  filename: models.gen.go

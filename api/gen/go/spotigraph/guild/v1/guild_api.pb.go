@@ -6,20 +6,25 @@ package guildv1
 import (
 	context "context"
 	fmt "fmt"
+
+	math "math"
+
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/golang/protobuf/proto"
 	wrappers "github.com/golang/protobuf/ptypes/wrappers"
-	v1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/system/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	math "math"
+
+	v1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/system/v1"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ = proto.Marshal
-var _ = fmt.Errorf
-var _ = math.Inf
+var (
+	_ = proto.Marshal
+	_ = fmt.Errorf
+	_ = math.Inf
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -44,15 +49,19 @@ func (*CreateRequest) Descriptor() ([]byte, []int) {
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRequest.Unmarshal(m, b)
 }
+
 func (m *CreateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRequest.Marshal(b, m, deterministic)
 }
+
 func (m *CreateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateRequest.Merge(m, src)
 }
+
 func (m *CreateRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateRequest.Size(m)
 }
+
 func (m *CreateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateRequest.DiscardUnknown(m)
 }
@@ -83,15 +92,19 @@ func (*GetRequest) Descriptor() ([]byte, []int) {
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRequest.Unmarshal(m, b)
 }
+
 func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
 }
+
 func (m *GetRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetRequest.Merge(m, src)
 }
+
 func (m *GetRequest) XXX_Size() int {
 	return xxx_messageInfo_GetRequest.Size(m)
 }
+
 func (m *GetRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetRequest.DiscardUnknown(m)
 }
@@ -123,15 +136,19 @@ func (*UpdateRequest) Descriptor() ([]byte, []int) {
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateRequest.Unmarshal(m, b)
 }
+
 func (m *UpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateRequest.Marshal(b, m, deterministic)
 }
+
 func (m *UpdateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateRequest.Merge(m, src)
 }
+
 func (m *UpdateRequest) XXX_Size() int {
 	return xxx_messageInfo_UpdateRequest.Size(m)
 }
+
 func (m *UpdateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateRequest.DiscardUnknown(m)
 }
@@ -169,15 +186,19 @@ func (*DeleteRequest) Descriptor() ([]byte, []int) {
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteRequest.Unmarshal(m, b)
 }
+
 func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
 }
+
 func (m *DeleteRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteRequest.Merge(m, src)
 }
+
 func (m *DeleteRequest) XXX_Size() int {
 	return xxx_messageInfo_DeleteRequest.Size(m)
 }
+
 func (m *DeleteRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteRequest.DiscardUnknown(m)
 }
@@ -213,15 +234,19 @@ func (*SearchRequest) Descriptor() ([]byte, []int) {
 func (m *SearchRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SearchRequest.Unmarshal(m, b)
 }
+
 func (m *SearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SearchRequest.Marshal(b, m, deterministic)
 }
+
 func (m *SearchRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchRequest.Merge(m, src)
 }
+
 func (m *SearchRequest) XXX_Size() int {
 	return xxx_messageInfo_SearchRequest.Size(m)
 }
+
 func (m *SearchRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchRequest.DiscardUnknown(m)
 }
@@ -288,15 +313,19 @@ func (*CreateResponse) Descriptor() ([]byte, []int) {
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateResponse.Unmarshal(m, b)
 }
+
 func (m *CreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateResponse.Marshal(b, m, deterministic)
 }
+
 func (m *CreateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateResponse.Merge(m, src)
 }
+
 func (m *CreateResponse) XXX_Size() int {
 	return xxx_messageInfo_CreateResponse.Size(m)
 }
+
 func (m *CreateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateResponse.DiscardUnknown(m)
 }
@@ -335,15 +364,19 @@ func (*GetResponse) Descriptor() ([]byte, []int) {
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetResponse.Unmarshal(m, b)
 }
+
 func (m *GetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GetResponse.Marshal(b, m, deterministic)
 }
+
 func (m *GetResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_GetResponse.Merge(m, src)
 }
+
 func (m *GetResponse) XXX_Size() int {
 	return xxx_messageInfo_GetResponse.Size(m)
 }
+
 func (m *GetResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_GetResponse.DiscardUnknown(m)
 }
@@ -382,15 +415,19 @@ func (*UpdateResponse) Descriptor() ([]byte, []int) {
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateResponse.Unmarshal(m, b)
 }
+
 func (m *UpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateResponse.Marshal(b, m, deterministic)
 }
+
 func (m *UpdateResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateResponse.Merge(m, src)
 }
+
 func (m *UpdateResponse) XXX_Size() int {
 	return xxx_messageInfo_UpdateResponse.Size(m)
 }
+
 func (m *UpdateResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateResponse.DiscardUnknown(m)
 }
@@ -428,15 +465,19 @@ func (*DeleteResponse) Descriptor() ([]byte, []int) {
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteResponse.Unmarshal(m, b)
 }
+
 func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
 }
+
 func (m *DeleteResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_DeleteResponse.Merge(m, src)
 }
+
 func (m *DeleteResponse) XXX_Size() int {
 	return xxx_messageInfo_DeleteResponse.Size(m)
 }
+
 func (m *DeleteResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_DeleteResponse.DiscardUnknown(m)
 }
@@ -473,15 +514,19 @@ func (*SearchResponse) Descriptor() ([]byte, []int) {
 func (m *SearchResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SearchResponse.Unmarshal(m, b)
 }
+
 func (m *SearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SearchResponse.Marshal(b, m, deterministic)
 }
+
 func (m *SearchResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_SearchResponse.Merge(m, src)
 }
+
 func (m *SearchResponse) XXX_Size() int {
 	return xxx_messageInfo_SearchResponse.Size(m)
 }
+
 func (m *SearchResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_SearchResponse.DiscardUnknown(m)
 }
@@ -555,15 +600,19 @@ func (*JoinRequest) Descriptor() ([]byte, []int) {
 func (m *JoinRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_JoinRequest.Unmarshal(m, b)
 }
+
 func (m *JoinRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_JoinRequest.Marshal(b, m, deterministic)
 }
+
 func (m *JoinRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JoinRequest.Merge(m, src)
 }
+
 func (m *JoinRequest) XXX_Size() int {
 	return xxx_messageInfo_JoinRequest.Size(m)
 }
+
 func (m *JoinRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_JoinRequest.DiscardUnknown(m)
 }
@@ -601,15 +650,19 @@ func (*JoinResponse) Descriptor() ([]byte, []int) {
 func (m *JoinResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_JoinResponse.Unmarshal(m, b)
 }
+
 func (m *JoinResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_JoinResponse.Marshal(b, m, deterministic)
 }
+
 func (m *JoinResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JoinResponse.Merge(m, src)
 }
+
 func (m *JoinResponse) XXX_Size() int {
 	return xxx_messageInfo_JoinResponse.Size(m)
 }
+
 func (m *JoinResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_JoinResponse.DiscardUnknown(m)
 }
@@ -641,15 +694,19 @@ func (*LeaveRequest) Descriptor() ([]byte, []int) {
 func (m *LeaveRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LeaveRequest.Unmarshal(m, b)
 }
+
 func (m *LeaveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LeaveRequest.Marshal(b, m, deterministic)
 }
+
 func (m *LeaveRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_LeaveRequest.Merge(m, src)
 }
+
 func (m *LeaveRequest) XXX_Size() int {
 	return xxx_messageInfo_LeaveRequest.Size(m)
 }
+
 func (m *LeaveRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_LeaveRequest.DiscardUnknown(m)
 }
@@ -687,15 +744,19 @@ func (*LeaveResponse) Descriptor() ([]byte, []int) {
 func (m *LeaveResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LeaveResponse.Unmarshal(m, b)
 }
+
 func (m *LeaveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LeaveResponse.Marshal(b, m, deterministic)
 }
+
 func (m *LeaveResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_LeaveResponse.Merge(m, src)
 }
+
 func (m *LeaveResponse) XXX_Size() int {
 	return xxx_messageInfo_LeaveResponse.Size(m)
 }
+
 func (m *LeaveResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_LeaveResponse.DiscardUnknown(m)
 }
@@ -786,8 +847,10 @@ var fileDescriptor_4379a0d23097e9ba = []byte{
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConn
+var (
+	_ context.Context
+	_ grpc.ClientConn
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
@@ -909,21 +972,27 @@ type UnimplementedGuildAPIServer struct {
 func (*UnimplementedGuildAPIServer) Create(ctx context.Context, req *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Get(ctx context.Context, req *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Update(ctx context.Context, req *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Search(ctx context.Context, req *SearchRequest) (*SearchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Join(ctx context.Context, req *JoinRequest) (*JoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
 }
+
 func (*UnimplementedGuildAPIServer) Leave(ctx context.Context, req *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
 }

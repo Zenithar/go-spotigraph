@@ -17,21 +17,15 @@ package postgresql
 import (
 	"context"
 
-	"github.com/gobuffalo/packr"
+	db "go.zenithar.org/pkg/db/adapter/postgresql"
+	"go.zenithar.org/pkg/log"
+
+	"github.com/gobuffalo/packr/v2"
 	"github.com/google/wire"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"go.uber.org/zap"
-
-	// Load postgresql drivers
-	_ "github.com/jackc/pgx"
-	_ "github.com/jackc/pgx/pgtype"
-	_ "github.com/jackc/pgx/stdlib"
-	_ "github.com/lib/pq"
-
 	migrate "github.com/rubenv/sql-migrate"
-	db "go.zenithar.org/pkg/db/adapter/postgresql"
-	"go.zenithar.org/pkg/log"
+	"go.uber.org/zap"
 )
 
 // ----------------------------------------------------------
@@ -66,7 +60,7 @@ var RepositorySet = wire.NewSet(
 
 // ----------------------------------------------------------
 
-//go:generate packr
+//go:generate packr2 --legacy
 
 // migrations contains all schema migrations
 var migrations = &migrate.PackrMigrationSource{

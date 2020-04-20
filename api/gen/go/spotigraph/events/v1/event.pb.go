@@ -5,15 +5,19 @@ package eventsv1
 
 import (
 	fmt "fmt"
+
+	math "math"
+
 	proto "github.com/golang/protobuf/proto"
 	any "github.com/golang/protobuf/ptypes/any"
-	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ = proto.Marshal
-var _ = fmt.Errorf
-var _ = math.Inf
+var (
+	_ = proto.Marshal
+	_ = fmt.Errorf
+	_ = math.Inf
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -89,15 +93,19 @@ func (*Event) Descriptor() ([]byte, []int) {
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Event.Unmarshal(m, b)
 }
+
 func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Event.Marshal(b, m, deterministic)
 }
+
 func (m *Event) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Event.Merge(m, src)
 }
+
 func (m *Event) XXX_Size() int {
 	return xxx_messageInfo_Event.Size(m)
 }
+
 func (m *Event) XXX_DiscardUnknown() {
 	xxx_messageInfo_Event.DiscardUnknown(m)
 }
@@ -232,15 +240,19 @@ func (*ChapterCreated) Descriptor() ([]byte, []int) {
 func (m *ChapterCreated) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChapterCreated.Unmarshal(m, b)
 }
+
 func (m *ChapterCreated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChapterCreated.Marshal(b, m, deterministic)
 }
+
 func (m *ChapterCreated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterCreated.Merge(m, src)
 }
+
 func (m *ChapterCreated) XXX_Size() int {
 	return xxx_messageInfo_ChapterCreated.Size(m)
 }
+
 func (m *ChapterCreated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterCreated.DiscardUnknown(m)
 }
@@ -286,15 +298,19 @@ func (*ChapterDeleted) Descriptor() ([]byte, []int) {
 func (m *ChapterDeleted) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChapterDeleted.Unmarshal(m, b)
 }
+
 func (m *ChapterDeleted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChapterDeleted.Marshal(b, m, deterministic)
 }
+
 func (m *ChapterDeleted) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterDeleted.Merge(m, src)
 }
+
 func (m *ChapterDeleted) XXX_Size() int {
 	return xxx_messageInfo_ChapterDeleted.Size(m)
 }
+
 func (m *ChapterDeleted) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterDeleted.DiscardUnknown(m)
 }
@@ -328,15 +344,19 @@ func (*ChapterLabelUpdated) Descriptor() ([]byte, []int) {
 func (m *ChapterLabelUpdated) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChapterLabelUpdated.Unmarshal(m, b)
 }
+
 func (m *ChapterLabelUpdated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChapterLabelUpdated.Marshal(b, m, deterministic)
 }
+
 func (m *ChapterLabelUpdated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterLabelUpdated.Merge(m, src)
 }
+
 func (m *ChapterLabelUpdated) XXX_Size() int {
 	return xxx_messageInfo_ChapterLabelUpdated.Size(m)
 }
+
 func (m *ChapterLabelUpdated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterLabelUpdated.DiscardUnknown(m)
 }
@@ -384,15 +404,19 @@ func (*ChapterLeaderUpdated) Descriptor() ([]byte, []int) {
 func (m *ChapterLeaderUpdated) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChapterLeaderUpdated.Unmarshal(m, b)
 }
+
 func (m *ChapterLeaderUpdated) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChapterLeaderUpdated.Marshal(b, m, deterministic)
 }
+
 func (m *ChapterLeaderUpdated) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ChapterLeaderUpdated.Merge(m, src)
 }
+
 func (m *ChapterLeaderUpdated) XXX_Size() int {
 	return xxx_messageInfo_ChapterLeaderUpdated.Size(m)
 }
+
 func (m *ChapterLeaderUpdated) XXX_DiscardUnknown() {
 	xxx_messageInfo_ChapterLeaderUpdated.DiscardUnknown(m)
 }

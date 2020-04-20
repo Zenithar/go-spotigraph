@@ -11,6 +11,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fatih/color v1.9.0
 	github.com/frapposelli/wwhrd v0.3.0
+	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.3.2

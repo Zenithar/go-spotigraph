@@ -5,14 +5,18 @@ package systemv1
 
 import (
 	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
+
 	math "math"
+
+	proto "github.com/golang/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ = proto.Marshal
-var _ = fmt.Errorf
-var _ = math.Inf
+var (
+	_ = proto.Marshal
+	_ = fmt.Errorf
+	_ = math.Inf
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -39,15 +43,19 @@ func (*Error) Descriptor() ([]byte, []int) {
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Error.Unmarshal(m, b)
 }
+
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 }
+
 func (m *Error) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Error.Merge(m, src)
 }
+
 func (m *Error) XXX_Size() int {
 	return xxx_messageInfo_Error.Size(m)
 }
+
 func (m *Error) XXX_DiscardUnknown() {
 	xxx_messageInfo_Error.DiscardUnknown(m)
 }

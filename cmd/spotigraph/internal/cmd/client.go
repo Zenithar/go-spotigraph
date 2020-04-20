@@ -25,17 +25,20 @@ import (
 
 // -----------------------------------------------------------------------------
 
-var clientCmd = &cobra.Command{
-	Use:     "client",
-	Aliases: []string{"c", "cli"},
-	Short:   "Query the gRPC server",
-}
+func clientCmd() *cobra.Command {
+	c := &cobra.Command{
+		Use:     "client",
+		Aliases: []string{"c", "cli"},
+		Short:   "Query the gRPC server",
+	}
 
-func init() {
-	clientCmd.AddCommand(
-		chapterv1.ChapterAPIClientCommand,
-		personv1.PersonAPIClientCommand,
-		squadv1.SquadAPIClientCommand,
-		guildv1.GuildAPIClientCommand,
+	// Add subcommands
+	c.AddCommand(
+		chapterv1.ChapterAPIClientCommand(),
+		personv1.PersonAPIClientCommand(),
+		squadv1.SquadAPIClientCommand(),
+		guildv1.GuildAPIClientCommand(),
 	)
+
+	return c
 }

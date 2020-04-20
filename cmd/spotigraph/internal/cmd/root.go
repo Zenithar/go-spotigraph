@@ -20,13 +20,14 @@ import (
 
 	"go.zenithar.org/pkg/config"
 	configcmd "go.zenithar.org/pkg/config/cmd"
-	"go.zenithar.org/pkg/flags/feature"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/spotigraph/build/version"
 	iconfig "go.zenithar.org/spotigraph/cmd/spotigraph/internal/config"
 )
 
 // -----------------------------------------------------------------------------
+
+const envPrefix = "SPFG"
 
 var (
 	cfgFile string
@@ -45,23 +46,22 @@ func init() {
 	mainCmd.Flags().StringVar(&cfgFile, "config", "", "config file")
 
 	mainCmd.AddCommand(version.Command())
-	mainCmd.AddCommand(configcmd.NewConfigCommand(conf, "SPFG"))
-	mainCmd.AddCommand(serverCmd)
-	mainCmd.AddCommand(clientCmd)
+	mainCmd.AddCommand(configcmd.NewConfigCommand(conf, envPrefix))
+	mainCmd.AddCommand(serverCmd())
+	mainCmd.AddCommand(clientCmd())
 }
 
 // -----------------------------------------------------------------------------
 
 // Execute main command
 func Execute() error {
-	feature.DefaultMutableGate.AddFlag(mainCmd.Flags())
 	return mainCmd.Execute()
 }
 
 // -----------------------------------------------------------------------------
 
 func initConfig() {
-	if err := config.Load(conf, "SPFG", cfgFile); err != nil {
+	if err := config.Load(conf, envPrefix, cfgFile); err != nil {
 		log.Bg().Fatal("Unable to load settings", zap.Error(err))
 	}
 }

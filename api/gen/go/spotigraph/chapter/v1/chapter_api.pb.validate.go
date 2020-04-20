@@ -63,7 +63,6 @@ func (m *CreateRequest) Validate() error {
 			field:  "LeaderId",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_CreateRequest_LeaderId_Pattern.MatchString(m.GetLeaderId()) {
@@ -146,7 +145,6 @@ func (m *GetRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_GetRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -238,7 +236,6 @@ func (m *UpdateRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_UpdateRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -265,7 +262,6 @@ func (m *UpdateRequest) Validate() error {
 				field:  "LeaderId",
 				reason: "value length must be 32 runes",
 			}
-
 		}
 
 		if !_UpdateRequest_LeaderId_Pattern.MatchString(wrapper.GetValue()) {
@@ -351,7 +347,6 @@ func (m *DeleteRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_DeleteRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -449,7 +444,6 @@ func (m *SearchRequest) Validate() error {
 				field:  "ChapterId",
 				reason: "value length must be 32 runes",
 			}
-
 		}
 
 		if !_SearchRequest_ChapterId_Pattern.MatchString(wrapper.GetValue()) {
@@ -991,7 +985,6 @@ func (m *JoinRequest) Validate() error {
 			field:  "PersonId",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_JoinRequest_PersonId_Pattern.MatchString(m.GetPersonId()) {
@@ -1006,7 +999,6 @@ func (m *JoinRequest) Validate() error {
 			field:  "ChapterId",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_JoinRequest_ChapterId_Pattern.MatchString(m.GetChapterId()) {
@@ -1165,7 +1157,6 @@ func (m *LeaveRequest) Validate() error {
 			field:  "PersonId",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_LeaveRequest_PersonId_Pattern.MatchString(m.GetPersonId()) {
@@ -1180,7 +1171,6 @@ func (m *LeaveRequest) Validate() error {
 			field:  "ChapterId",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_LeaveRequest_ChapterId_Pattern.MatchString(m.GetChapterId()) {
