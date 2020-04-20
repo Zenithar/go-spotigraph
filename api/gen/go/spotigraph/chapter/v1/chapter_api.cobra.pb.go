@@ -5,27 +5,26 @@
 package chapterv1
 
 import (
-	proto "github.com/golang/protobuf/proto"
-	cobra "github.com/spf13/cobra"
-	context "golang.org/x/net/context"
-	credentials "google.golang.org/grpc/credentials"
-	filepath "path/filepath"
-	fmt1 "fmt"
-	grpc "google.golang.org/grpc"
-	io "io"
-	iocodec "github.com/tetratelabs/protoc-gen-cobra/iocodec"
-	ioutil "io/ioutil"
-	json "encoding/json"
-	log "log"
-	net "net"
-	oauth "google.golang.org/grpc/credentials/oauth"
-	oauth2 "golang.org/x/oauth2"
-	os "os"
-	pflag "github.com/spf13/pflag"
-	template "text/template"
-	time "time"
 	tls "crypto/tls"
 	x509 "crypto/x509"
+	fmt "fmt"
+
+	ioutil "io/ioutil"
+	log "log"
+	net "net"
+	os "os"
+	filepath "path/filepath"
+	time "time"
+
+	proto "github.com/golang/protobuf/proto"
+	cobra "github.com/spf13/cobra"
+	pflag "github.com/spf13/pflag"
+	iocodec "github.com/tetratelabs/protoc-gen-cobra/iocodec"
+	context "golang.org/x/net/context"
+	oauth2 "golang.org/x/oauth2"
+	grpc "google.golang.org/grpc"
+	credentials "google.golang.org/grpc/credentials"
+	oauth "google.golang.org/grpc/credentials/oauth"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -130,7 +129,7 @@ func _DialChapterAPI() (*grpc.ClientConn, ChapterAPIClient, error) {
 			addr, _, _ := net.SplitHostPort(cfg.ServerAddr)
 			tlsConfig.ServerName = addr
 		}
-		//tlsConfig.BuildNameToCertificate()
+		// tlsConfig.BuildNameToCertificate()
 		cred := credentials.NewTLS(tlsConfig)
 		opts = append(opts, grpc.WithTransportCredentials(cred))
 	} else {
@@ -221,7 +220,6 @@ func _ChapterAPICreateClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v CreateRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -229,13 +227,11 @@ func _ChapterAPICreateClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Create(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -259,7 +255,6 @@ func _ChapterAPIGetClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v GetRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -267,13 +262,11 @@ func _ChapterAPIGetClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Get(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -296,7 +289,6 @@ func _ChapterAPIUpdateClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v UpdateRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -304,13 +296,11 @@ func _ChapterAPIUpdateClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Update(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -333,7 +323,6 @@ func _ChapterAPIDeleteClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v DeleteRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -341,13 +330,11 @@ func _ChapterAPIDeleteClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Delete(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -370,7 +357,6 @@ func _ChapterAPISearchClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v SearchRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -378,13 +364,11 @@ func _ChapterAPISearchClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Search(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -409,7 +393,6 @@ func _ChapterAPIJoinClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v JoinRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -417,13 +400,11 @@ func _ChapterAPIJoinClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Join(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)
@@ -447,7 +428,6 @@ func _ChapterAPILeaveClientCommand() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			var v LeaveRequest
 			err := _ChapterAPIRoundTrip(v, func(cli ChapterAPIClient, in iocodec.Decoder, out iocodec.Encoder) error {
-
 				err := in.Decode(&v)
 				if err != nil {
 					return err
@@ -455,13 +435,11 @@ func _ChapterAPILeaveClientCommand() *cobra.Command {
 
 				proto.Merge(&v, reqArgs)
 				resp, err := cli.Leave(context.Background(), &v)
-
 				if err != nil {
 					return err
 				}
 
 				return out.Encode(resp)
-
 			})
 			if err != nil {
 				log.Fatal(err)

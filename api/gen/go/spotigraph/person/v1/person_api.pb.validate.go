@@ -120,7 +120,6 @@ func (m *GetRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_GetRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -202,7 +201,6 @@ func (m *UpdateRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_UpdateRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -213,25 +211,21 @@ func (m *UpdateRequest) Validate() error {
 	}
 
 	if wrapper := m.GetFirstName(); wrapper != nil {
-
 		if l := len(wrapper.GetValue()); l < 3 || l > 256 {
 			return UpdateRequestValidationError{
 				field:  "FirstName",
 				reason: "value length must be between 3 and 256 bytes, inclusive",
 			}
 		}
-
 	}
 
 	if wrapper := m.GetLastName(); wrapper != nil {
-
 		if l := len(wrapper.GetValue()); l < 3 || l > 256 {
 			return UpdateRequestValidationError{
 				field:  "LastName",
 				reason: "value length must be between 3 and 256 bytes, inclusive",
 			}
 		}
-
 	}
 
 	return nil
@@ -306,7 +300,6 @@ func (m *DeleteRequest) Validate() error {
 			field:  "Id",
 			reason: "value length must be 32 runes",
 		}
-
 	}
 
 	if !_DeleteRequest_Id_Pattern.MatchString(m.GetId()) {
@@ -404,7 +397,6 @@ func (m *SearchRequest) Validate() error {
 				field:  "PersonId",
 				reason: "value length must be 32 runes",
 			}
-
 		}
 
 		if !_SearchRequest_PersonId_Pattern.MatchString(wrapper.GetValue()) {
@@ -417,14 +409,12 @@ func (m *SearchRequest) Validate() error {
 	}
 
 	if wrapper := m.GetPrincipal(); wrapper != nil {
-
 		if l := len(wrapper.GetValue()); l < 3 || l > 256 {
 			return SearchRequestValidationError{
 				field:  "Principal",
 				reason: "value length must be between 3 and 256 bytes, inclusive",
 			}
 		}
-
 	}
 
 	return nil

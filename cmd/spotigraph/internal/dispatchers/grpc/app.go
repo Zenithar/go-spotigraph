@@ -47,7 +47,7 @@ func New(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
 		app = &application{}
 
 		// Apply configuration
-		if err := app.ApplyConfiguration(cfg); err != nil {
+		if err = app.ApplyConfiguration(cfg); err != nil {
 			log.For(ctx).Fatal("Unable to initialize server settings", zap.Error(err))
 		}
 

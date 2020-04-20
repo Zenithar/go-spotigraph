@@ -23,13 +23,13 @@ import (
 	"go.uber.org/zap"
 
 	"go.zenithar.org/pkg/log"
-	"go.zenithar.org/pkg/testing/containers/database"
+	pg "go.zenithar.org/pkg/testing/containers/database/postgresql"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/repositories/pkg/postgresql"
 )
 
 func postgreSQLConnection(ctx context.Context) (func(), error) {
 	// Initialize connection and/or container
-	conn, _, err := database.ConnectToPostgreSQL(ctx)
+	conn, _, err := pg.Connect(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to initialize database server")
 	}

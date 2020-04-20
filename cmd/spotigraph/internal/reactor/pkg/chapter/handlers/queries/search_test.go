@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/golang/protobuf/ptypes/wrappers"
 	. "github.com/onsi/gomega"
 
 	"go.zenithar.org/pkg/db"
@@ -36,7 +37,7 @@ func TestChapter_Search(t *testing.T) {
 		{
 			name: "Invalid request",
 			req: &chapterv1.SearchRequest{
-				ChapterId: &types.StringValue{Value: "azerty"},
+				ChapterId: &wrappers.StringValue{Value: "azerty"},
 			},
 			wantErr: true,
 		},
@@ -61,7 +62,7 @@ func TestChapter_Search(t *testing.T) {
 		{
 			name: "Filter by name",
 			req: &chapterv1.SearchRequest{
-				Label: &types.StringValue{Value: "Foo"},
+				Label: &wrappers.StringValue{Value: "Foo"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {
@@ -71,7 +72,7 @@ func TestChapter_Search(t *testing.T) {
 		{
 			name: "Filter by ChapterID",
 			req: &chapterv1.SearchRequest{
-				ChapterId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
+				ChapterId: &wrappers.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			wantErr: false,
 			prepare: func(ctx context.Context, chapters *mock.MockChapter) {

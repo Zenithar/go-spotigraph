@@ -17,8 +17,8 @@ package mapper
 import (
 	"fmt"
 
-	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/models"
 	chapterv1 "go.zenithar.org/spotigraph/api/gen/go/spotigraph/chapter/v1"
+	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/models"
 )
 
 // FromEntity converts entity object to service object

@@ -15,6 +15,8 @@ It has these top-level commands:
 
 package chapterv1
 
+import proto "github.com/golang/protobuf/proto"
+
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the

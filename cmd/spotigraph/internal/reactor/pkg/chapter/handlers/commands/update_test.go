@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/golang/protobuf/ptypes/wrappers"
 	. "github.com/onsi/gomega"
 
 	"go.zenithar.org/pkg/db"
@@ -91,7 +92,7 @@ func TestChapter_Update(t *testing.T) {
 			name: "Existent entity with label update",
 			req: &chapterv1.UpdateRequest{
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				Label: &types.StringValue{Value: "Fuu"},
+				Label: &wrappers.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, broker *bmock.MockPublisher) {
 				u1 := models.NewChapter("toto@foo.org")
@@ -105,7 +106,7 @@ func TestChapter_Update(t *testing.T) {
 			name: "Existent entity with conflict label",
 			req: &chapterv1.UpdateRequest{
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				Label: &types.StringValue{Value: "Fuu"},
+				Label: &wrappers.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, broker *bmock.MockPublisher) {
 				u1 := models.NewChapter("Foo")
@@ -117,7 +118,7 @@ func TestChapter_Update(t *testing.T) {
 			name: "Existent entity with leader update",
 			req: &chapterv1.UpdateRequest{
 				Id:       "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				LeaderId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
+				LeaderId: &wrappers.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, broker *bmock.MockPublisher) {
 				c1 := models.NewChapter("Foo")
@@ -132,7 +133,7 @@ func TestChapter_Update(t *testing.T) {
 			name: "Existent entity with leader not found",
 			req: &chapterv1.UpdateRequest{
 				Id:       "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				LeaderId: &types.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
+				LeaderId: &wrappers.StringValue{Value: "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, broker *bmock.MockPublisher) {
 				c1 := models.NewChapter("Foo")
@@ -144,7 +145,7 @@ func TestChapter_Update(t *testing.T) {
 			name: "Existent entity with error during update",
 			req: &chapterv1.UpdateRequest{
 				Id:    "0NeNLNeGwxRtS4YPzM2QV4suGMs6Q55e",
-				Label: &types.StringValue{Value: "Fuu"},
+				Label: &wrappers.StringValue{Value: "Fuu"},
 			},
 			prepare: func(ctx context.Context, chapters *mock.MockChapter, persons *mock.MockPerson, broker *bmock.MockPublisher) {
 				u1 := models.NewChapter("Foo")

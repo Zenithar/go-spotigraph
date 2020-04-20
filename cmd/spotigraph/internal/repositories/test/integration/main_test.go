@@ -30,7 +30,6 @@ import (
 
 	"go.uber.org/zap"
 	"go.zenithar.org/pkg/log"
-	"go.zenithar.org/pkg/testing/containers/database"
 )
 
 var databases = flag.String("databases", "postgresql", "Repositories backend to use, splitted with a coma ','. Example: postgresql,mongodb,rethinkdb")
@@ -83,10 +82,6 @@ func testMainWrapper(m *testing.M) int {
 			log.Bg().Fatal("Unsupported backend", zap.String("backend", back))
 		}
 	}
-
-	defer func() {
-		database.KillAll(ctx)
-	}()
 
 	return m.Run()
 }

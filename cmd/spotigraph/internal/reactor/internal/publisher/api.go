@@ -22,7 +22,7 @@ import (
 
 //go:generate mockgen -destination mock/publisher.gen.go -package mock go.zenithar.org/spotigraph/cmd/spotigraph/internal/reactor/internal/publisher Publisher
 
-// Publisher decribes event publisher contract.
+// Publisher describes event publisher contract.
 type Publisher interface {
 	Publish(ctx context.Context, event *eventsv1.Event) error
 }

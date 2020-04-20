@@ -4,6 +4,7 @@ blacklist:
 
 whitelist:
   - Apache-2.0
+  - 0BSD
   - BSD
   - FreeBSD
   - CC
@@ -11,9 +12,17 @@ whitelist:
   - MIT
   - MPL-2.0
   - NewBSD
+  - MPL-2.0-no-copyleft-exception
+  - BSD-Protection
+  - BSD-1-Clause
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - BSD-4-Clause
 
 exceptions:
   - github.com/davecgh/go-spew/spew/...
   - github.com/dchest/uniuri
   - github.com/opencontainers/go-digest
   - github.com/certifi/gocertifi
+  - github.com/tetratelabs/protoc-gen-cobra/...
+  - github.com/prometheus/common/...

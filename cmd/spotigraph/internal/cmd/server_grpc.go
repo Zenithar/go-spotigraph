@@ -24,40 +24,50 @@ import (
 
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/platform"
+	"go.zenithar.org/pkg/platform/actors"
+	"go.zenithar.org/spotigraph/build/version"
 	"go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/grpc"
 )
 
 // -----------------------------------------------------------------------------
 
-var grpcCmd = &cobra.Command{
-	Use:   "grpc",
-	Short: "Starts the spotigraph gRPC server",
-	Run: func(cmd *cobra.Command, args []string) {
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
+func serverGRPCCmd() *cobra.Command {
+	c := &cobra.Command{
+		Use:   "grpc",
+		Short: "Starts the spotigraph gRPC server",
+		Run:   runServerGRPC,
+	}
 
-		// Initialize config
-		initConfig()
+	return c
+}
 
-		// Starting banner
-		log.For(ctx).Info("Starting spotigraph gRPC server ...")
+func runServerGRPC(cmd *cobra.Command, args []string) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-		// Start goroutine group
-		err := platform.Serve(ctx, &platform.Server{
-			Debug:           conf.Debug.Enable,
-			Name:            "spotigraph-grpc",
-			Version:         version.Version,
-			Revision:        version.Revision,
-			Instrumentation: conf.Instrumentation,
-			Builder: func(ln net.Listener, group run.Group) {
-				server, err := grpc.New(ctx, conf)
-				if err != nil {
-					log.For(ctx).Fatal("Unable to start GRPC server", zap.Error(err))
-				}
+	// Initialize config
+	initConfig()
 
-				actors.GRPC(ctx, ln, server)
-			},
-		})
-		log.CheckErrCtx(ctx, "Unable to run application", err)
-	},
+	// Starting banner
+	log.For(ctx).Info("Starting spotigraph gRPC server ...")
+
+	// Start goroutine group
+	err := platform.Serve(ctx, platform.Server{
+		Debug:           conf.Debug.Enable,
+		Name:            "spotigraph-grpc",
+		Version:         version.Version,
+		Revision:        version.Revision,
+		Instrumentation: conf.Instrumentation,
+		Builder: func(ln net.Listener, group run.Group) {
+			// Initialize gRPC server
+			server, err := grpc.New(ctx, conf)
+			if err != nil {
+				log.For(ctx).Fatal("Unable to start GRPC server", zap.Error(err))
+			}
+
+			// Register gRPC actor
+			actors.GRPC(server, ln)(ctx, &group)
+		},
+	})
+	log.CheckErrCtx(ctx, "Unable to run application", err)
 }
