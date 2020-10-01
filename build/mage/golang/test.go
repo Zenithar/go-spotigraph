@@ -22,7 +22,7 @@ import (
 	"github.com/magefile/mage/sh"
 )
 
-// UnitTest run go test
+// UnitTest run go test.
 func UnitTest(packageName string) func() error {
 	return func() error {
 		color.Yellow("> Unit testing [%s]", packageName)
@@ -34,7 +34,7 @@ func UnitTest(packageName string) func() error {
 	}
 }
 
-// IntegrationTest run go test
+// IntegrationTest run go test.
 func IntegrationTest(packageName string) func() error {
 	return func() error {
 		color.Yellow("> Integration testing [%s]", packageName)

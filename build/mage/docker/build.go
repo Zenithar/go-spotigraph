@@ -23,10 +23,10 @@ import (
 	"text/template"
 	"time"
 
-	"go.zenithar.org/spotigraph/build/mage/git"
-
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
+
+	"go.zenithar.org/spotigraph/build/mage/git"
 )
 
 var dockerTemplate = strings.TrimSpace(`

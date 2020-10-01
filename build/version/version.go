@@ -41,12 +41,12 @@ var Map = map[string]string{
 	"goVersion": GoVersion,
 }
 
-// Full returns full composed version string
+// Full returns full composed version string.
 func Full() string {
 	return fmt.Sprintf("%s [%s] (Go: %s, User: %s, Date: %s)", Version, Branch, GoVersion, BuildUser, BuildDate)
 }
 
-// JSON returns json representation of build info
+// JSON returns json representation of build info.
 func JSON() string {
 	payload, err := json.Marshal(Map)
 	if err != nil {
@@ -56,7 +56,7 @@ func JSON() string {
 	return string(payload)
 }
 
-// ID returns an instance id
+// ID returns an instance id.
 func ID() string {
 	return uniuri.NewLen(64)
 }
