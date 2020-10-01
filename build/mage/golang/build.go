@@ -21,10 +21,10 @@ import (
 	"strings"
 	"time"
 
-	"go.zenithar.org/spotigraph/build/mage/git"
-
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
+
+	"go.zenithar.org/spotigraph/build/mage/git"
 )
 
 type buildOpts struct {
@@ -40,21 +40,21 @@ type BuildOption func(*buildOpts)
 
 // -----------------------------------------------------------------------------
 
-// WithCGO enbales CGO compilation
+// WithCGO enbales CGO compilation.
 func WithCGO() BuildOption {
 	return func(opts *buildOpts) {
 		opts.cgoEnabled = true
 	}
 }
 
-// GOOS sets the GOOS value during build
+// GOOS sets the GOOS value during build.
 func GOOS(value string) BuildOption {
 	return func(opts *buildOpts) {
 		opts.goOS = value
 	}
 }
 
-// GOARCH sets the GOARCH value during build
+// GOARCH sets the GOARCH value during build.
 func GOARCH(value string) BuildOption {
 	return func(opts *buildOpts) {
 		opts.goArch = value
