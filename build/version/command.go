@@ -24,7 +24,7 @@ import (
 
 var displayAsJSON bool
 
-// Command exports Cobra command builder
+// Command exports Cobra command builder.
 func Command() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "version",

@@ -21,7 +21,7 @@ import (
 	"path/filepath"
 )
 
-// Env sets the environment for tools
+// Env sets the environment for tools.
 func Env() error {
 	// Get current working directory
 	name, err := os.Getwd()

@@ -19,13 +19,13 @@ import (
 )
 
 var (
-	// Revision contains git commit hash
+	// Revision contains git commit hash.
 	Revision string
 
-	// Tag contains git tag description
+	// Tag contains git tag description.
 	Tag string
 
-	// Branch used to build
+	// Branch used to build.
 	Branch string
 )
 
@@ -68,7 +68,7 @@ func hash() (string, error) {
 	return sh.Output("git", "rev-parse", "--short", "HEAD")
 }
 
-// branch returns the git branch for current repo
+// branch returns the git branch for current repo.
 func branch() (string, error) {
 	return sh.Output("git", "rev-parse", "--abbrev-ref", "HEAD")
 }

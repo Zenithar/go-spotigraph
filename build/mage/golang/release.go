@@ -96,13 +96,13 @@ func Release(name, packageName string, opts ...BuildOption) func() error {
 	}
 }
 
-// Pack the given artifact using upx
+// Pack the given artifact using upx.
 func pack(name string) error {
 	color.Blue(" + Packing artifact")
 	return sh.Run("upx", "-9", fmt.Sprintf("../../bin/%s", name))
 }
 
-// Archive as XZ archive
+// Archive as XZ archive.
 func archive(name, version string) error {
 	color.Blue(" + Archive artifact")
 	return sh.Run("tar", "Jcvf", fmt.Sprintf("../../dist/%s-%s.tar.xz", name, version), fmt.Sprintf("../../bin/%s", name))
