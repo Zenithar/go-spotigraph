@@ -4,25 +4,56 @@ blacklist:
 
 whitelist:
   - Apache-2.0
-  - 0BSD
-  - BSD
-  - FreeBSD
-  - CC
-  - ISC
+  - CC0-1.0
   - MIT
-  - MPL-2.0
-  - NewBSD
-  - MPL-2.0-no-copyleft-exception
-  - BSD-Protection
   - BSD-1-Clause
   - BSD-2-Clause
   - BSD-3-Clause
-  - BSD-4-Clause
 
 exceptions:
-  - github.com/davecgh/go-spew/spew/...
-  - github.com/dchest/uniuri
-  - github.com/opencontainers/go-digest
-  - github.com/certifi/gocertifi
-  - github.com/tetratelabs/protoc-gen-cobra/...
-  - github.com/prometheus/common/...
+  # MIT - https://github.com/kubernetes-sigs/yaml/blob/master/LICENSE
+  - sigs.k8s.io/yaml
+  # MIT - https://github.com/apparentlymart/go-textseg/blob/master/LICENSE
+  - github.com/apparentlymart/go-textseg/...
+  # MPL-2.0 - https://github.com/hashicorp/hcl/blob/master/LICENSE
+  - github.com/hashicorp/hcl/...
+  # MPL-2.0 - https://github.com/hashicorp/go-multierror/blob/master/LICENSE
+  - github.com/hashicorp/go-multierror/...
+  # MPL-2.0 - https://github.com/hashicorp/errwrap/blob/master/LICENSE
+  - github.com/hashicorp/errwrap/...
+  # MPL-2.0 - https://github.com/gosimple/slug/blob/master/LICENSE
+  - github.com/gosimple/slug
+  # MPL-2.0-no-copyleft-exception - https://github.com/hashicorp/go-retryablehttp/blob/master/LICENSE
+  - github.com/hashicorp/go-retryablehttp
+  # MPL-2.0-no-copyleft-exception - https://github.com/hashicorp/go-sockaddr/blob/master/LICENSE
+  - github.com/hashicorp/go-sockaddr
+  # MPL-2.0-no-copyleft-exception - https://github.com/hashicorp/go-cleanhttp/blob/master/LICENSE
+  - github.com/hashicorp/go-cleanhttp
+  # MPL-2.0-no-copyleft-exception - https://github.com/hashicorp/go-rootcerts/blob/master/LICENSE
+  - github.com/hashicorp/go-rootcerts
+  # MPL-2.0-no-copyleft-exception - https://github.com/hashicorp/vault/blob/master/LICENSE
+  - github.com/hashicorp/vault/...
+  # BSD-2 - https://github.com/magiconair/properties/blob/master/LICENSE.md
+  - github.com/magiconair/properties
+  # MPL-2.0 - https://github.com/hashicorp/go-plugin/blob/master/LICENSE
+  - github.com/hashicorp/go-plugin/...
+  # MPL-2.0 - https://github.com/hashicorp/go-secure-stdlib/blob/main/LICENSE
+  - github.com/hashicorp/go-secure-stdlib/...
+  # MPL-2.0 - https://github.com/hashicorp/golang-lru/blob/master/LICENSE
+  - github.com/hashicorp/golang-lru/...
+  # MPL-2.0 - https://github.com/hashicorp/yamux/blob/master/LICENSE
+  - github.com/hashicorp/yamux
+  # MPL-2.0 - https://github.com/hashicorp/go-version/blob/master/LICENSE
+  - github.com/hashicorp/go-version
+  # MPL-2.0 - https://github.com/hashicorp/go-immutable-radix/blob/master/LICENSE
+  - github.com/hashicorp/go-immutable-radix
+  # MPL-2.0 - https://github.com/hashicorp/go-uuid/blob/master/LICENSE
+  - github.com/hashicorp/go-uuid
+  # MPL-2.0 - https://github.com/hashicorp/serf/blob/master/LICENSE
+  - github.com/hashicorp/serf/coordinate
+  # MPL-2.0 - https://github.com/hashicorp/consul/blob/main/LICENSE
+  - github.com/hashicorp/consul/api
+  # BSD-2.0 - https://github.com/Nvveen/Gotty/blob/master/LICENSE
+  - github.com/Nvveen/Gotty
+  # BSD-2.0 - https://github.com/rcrowley/go-metrics/blob/master/LICENSE
+  - github.com/rcrowley/go-metrics

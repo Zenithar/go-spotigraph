@@ -1,0 +1,15 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+*.go text eol=lf
+
+# Collapse vendored and generated files on GitHub
+vendor/* linguist-vendored
+*/vendor/* linguist-vendored
+*.gen.* linguist-generated
+*.pb.go linguist-generated
+
+# Reduce conflicts on markdown files
+*.md merge=union
+
+# Jupyter notebooks
+*.ipynb filter=strip-notebook-output
