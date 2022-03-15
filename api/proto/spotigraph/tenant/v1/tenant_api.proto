@@ -17,20 +17,34 @@
 
 syntax = "proto3";
 
-package spotigraph.system.v1;
+package spotigraph.tenant.v1;
 
-option csharp_namespace = "Spotigraph.System.V1";
-option go_package = "zntr.io/spotigraph/api/gen/go/spotigraph/system/v1;systemv1";
+option csharp_namespace = "Spotigraph.Tenant.V1";
+option go_package = "zntr.io/spotigraph/api/gen/go/spotigraph/tenant/v1;tenantv1";
 option java_multiple_files = true;
-option java_outer_classname = "SystemProto";
-option java_package = "io.zntr.spotigraph.system.v1";
-option objc_class_prefix = "SSX";
-option php_namespace = "Spotigraph\\System\\V1";
+option java_outer_classname = "TenantProto";
+option java_package = "io.zntr.spotigraph.tenant.v1";
+option objc_class_prefix = "STX";
+option php_namespace = "Spotigraph\\Tenant\\V1";
 
-// Error is a public error description.
-message Error {
-  int32 status_code = 1;
-  string error_code = 2;
-  string error_description = 3;
-  repeated string fields = 4;
+import "spotigraph/system/v1/system.proto";
+import "spotigraph/tenant/v1/tenant.proto";
+
+// -----------------------------------------------------------------------------
+
+// TenantAPI manage tenant objects.
+service TenantAPI {
+}
+
+// -----------------------------------------------------------------------------
+
+message CreateRequest {
+  string label = 1;
+  optional string slug = 2;
+  bool validate_only = 99;
+}
+
+message CreateResponse {
+  .spotigraph.system.v1.Error error = 1;
+  Tenant tenant = 2;
 }

@@ -14,21 +14,23 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+package tenant
 
-package types
+import (
+	"github.com/rs/xid"
+	systemv1 "zntr.io/spotigraph/api/gen/go/spotigraph/system/v1"
+)
 
-func StringRef(v string) *string {
-	return &v
-}
-
-func UInt64Ref(v uint64) *uint64 {
-	return &v
-}
-
-func BoolRef(v bool) *bool {
-	return &v
-}
-
-func AsRef[T any](v T) *T {
-	return &v
+func EventCreated(id ID, label, slug string) *systemv1.Event {
+	return &systemv1.Event{
+		EventType: systemv1.EventType_EVENT_TYPE_TENANT_CREATED,
+		EventId:   xid.New().String(),
+		Payload: &systemv1.Event_TenantCreated{
+			TenantCreated: &systemv1.TenantCreated{
+				Id:    string(id),
+				Label: label,
+				Slug:  slug,
+			},
+		},
+	}
 }

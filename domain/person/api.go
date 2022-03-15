@@ -21,6 +21,7 @@ import (
 	"context"
 	"errors"
 
+	"zntr.io/spotigraph/domain/tenant"
 	"zntr.io/spotigraph/pkg/cursor"
 )
 
@@ -28,6 +29,8 @@ type ID string
 
 // Person describes the Person domain object contract.
 type Person interface {
+	// GetTenantID returns the tenant identifier.
+	GetTenantID() tenant.ID
 	// GetID returns the domain object identifier created by the repository.
 	GetID() ID
 	// GetPrincipal returns the person identity.
@@ -45,6 +48,7 @@ var (
 type SearchFilter struct {
 	Limit     *uint64
 	Cursor    *string
+	TenantID  *string
 	ObjectIDs []string
 	Principal *string
 }
@@ -52,8 +56,8 @@ type SearchFilter struct {
 // ReaderRepository is the person contract definition for read-only operation.
 type ReaderRepository interface {
 	List(ctx context.Context, filter SearchFilter) ([]Person, *cursor.PageInfo, error)
-	GetByID(ctx context.Context, id ID) (Person, error)
-	GetByPrincipal(ctx context.Context, principal string) (Person, error)
+	GetByID(ctx context.Context, tenantID tenant.ID, id ID) (Person, error)
+	GetByPrincipal(ctx context.Context, tenantID tenant.ID, principal string) (Person, error)
 }
 
 // WriterRepository describes person repository contract for alteration operation.

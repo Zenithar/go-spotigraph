@@ -15,20 +15,11 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package person
-
-import "zntr.io/spotigraph/domain/tenant"
+package tenant
 
 // DomainOption defines property alteration function applicable to the domain
 // object factory.
 type DomainOption func(*defaultDomain)
-
-// WithID is used to set the domain object identifier.
-func WithTenantID(value tenant.ID) DomainOption {
-	return func(dd *defaultDomain) {
-		dd.tenantId = value
-	}
-}
 
 // WithID is used to set the domain object identifier.
 func WithID(value ID) DomainOption {
@@ -37,15 +28,29 @@ func WithID(value ID) DomainOption {
 	}
 }
 
-// WithPrincipal is used to set the principal domain object property.
-func WithPrincipal(value string) DomainOption {
+// WithLabel is used to set the label domain object property.
+func WithLabel(value string) DomainOption {
 	return func(dd *defaultDomain) {
-		dd.principal = value
+		dd.label = value
+	}
+}
+
+// WithSlug is used to set the slug domain object property.
+func WithSlug(value string) DomainOption {
+	return func(dd *defaultDomain) {
+		dd.slug = value
+	}
+}
+
+// WithLocked is used to set the locked domain object property.
+func WithLocked(value bool) DomainOption {
+	return func(dd *defaultDomain) {
+		dd.locked = value
 	}
 }
 
 // New instanciates a domain object.
-func New(opts ...DomainOption) Person {
+func New(opts ...DomainOption) Tenant {
 	dd := &defaultDomain{}
 
 	// Apply builder options
@@ -58,16 +63,16 @@ func New(opts ...DomainOption) Person {
 
 // -----------------------------------------------------------------------------
 
-var _ Person = (*defaultDomain)(nil)
+var _ Tenant = (*defaultDomain)(nil)
 
 type defaultDomain struct {
-	tenantId  tenant.ID
-	id        ID
-	principal string
-	locked    bool
+	id     ID
+	label  string
+	slug   string
+	locked bool
 }
 
-func (dd *defaultDomain) GetTenantID() tenant.ID { return dd.tenantId }
-func (dd *defaultDomain) GetID() ID              { return dd.id }
-func (dd *defaultDomain) GetPrincipal() string   { return dd.principal }
-func (dd *defaultDomain) IsLocked() bool         { return dd.locked }
+func (dd *defaultDomain) GetID() ID        { return dd.id }
+func (dd *defaultDomain) GetLabel() string { return dd.label }
+func (dd *defaultDomain) GetSlug() string  { return dd.slug }
+func (dd *defaultDomain) IsLocked() bool   { return dd.locked }

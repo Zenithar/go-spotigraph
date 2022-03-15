@@ -15,20 +15,21 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package types
+package serr
 
-func StringRef(v string) *string {
-	return &v
+import systemv1 "zntr.io/spotigraph/api/gen/go/spotigraph/system/v1"
+
+// ErrorBuilder describes error builder contract.
+type Builder interface {
+	State(value string) Builder
+	Description(value string) Builder
+	Descriptionf(format string, args ...interface{}) Builder
+	Fields(values ...string) Builder
+	InternalErr(err error) Builder
+	Build() *systemv1.Error
 }
 
-func UInt64Ref(v uint64) *uint64 {
-	return &v
-}
-
-func BoolRef(v bool) *bool {
-	return &v
-}
-
-func AsRef[T any](v T) *T {
-	return &v
+// ServiceError defines service error accessor contract.
+type ServiceError interface {
+	GetError() *systemv1.Error
 }

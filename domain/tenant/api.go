@@ -16,3 +16,62 @@
 // under the License.
 
 package tenant
+
+import (
+	"context"
+	"errors"
+
+	"zntr.io/spotigraph/pkg/cursor"
+)
+
+type ID string
+
+// Tenant describes the Tenant domain object contract.
+type Tenant interface {
+	// GetID returns the domain object identifier created by the repository.
+	GetID() ID
+	// GetLabel returns the tenant label.
+	GetLabel() string
+	// GetSlug returns the slugified label for url usages.
+	GetSlug() string
+	// IsLocked returns the tenant lockage status.
+	IsLocked() bool
+}
+
+var (
+	ErrTenantNotSaved   = errors.New("unable to save the given tenant in the repository")
+	ErrTenantNotDeleted = errors.New("unable to delete the given tenant from the repository")
+)
+
+// SearchFilter represents tenant entity collection search criteria
+type SearchFilter struct {
+	Limit     *uint64
+	Cursor    *string
+	ObjectIDs []string
+	Label     *string
+	Slug      *string
+}
+
+// ReaderRepository is the tenant contract definition for read-only operation.
+type ReaderRepository interface {
+	List(ctx context.Context, filter SearchFilter) ([]Tenant, *cursor.PageInfo, error)
+	GetByID(ctx context.Context, id ID) (Tenant, error)
+	GetByLabel(ctx context.Context, label string) (Tenant, error)
+	GetBySlug(ctx context.Context, slug string) (Tenant, error)
+}
+
+// WriterRepository describes tenant repository contract for alteration operation.
+type WriterRepository interface {
+	Save(ctx context.Context, model Tenant) error
+	Remove(ctx context.Context, model Tenant) error
+}
+
+type IDGenerator interface {
+	NextID(ctx context.Context) (ID, error)
+}
+
+type Repository interface {
+	IDGenerator
+	ReaderRepository
+	WriterRepository
+}

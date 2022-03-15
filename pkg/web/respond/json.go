@@ -14,21 +14,28 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+package respond
 
-package types
+import (
+	"encoding/json"
+	"net/http"
+)
 
-func StringRef(v string) *string {
-	return &v
-}
+// JSON serialize the data with matching requested encoding
+func WithJSON(w http.ResponseWriter, code int, data interface{}) {
+	// Marshal response as json
+	body, _ := json.Marshal(data)
 
-func UInt64Ref(v uint64) *uint64 {
-	return &v
-}
+	// Set content type header
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-func BoolRef(v bool) *bool {
-	return &v
-}
+	// Write status
+	w.WriteHeader(code)
 
-func AsRef[T any](v T) *T {
-	return &v
+	// Write response
+	_, err := w.Write(body)
+	if err != nil {
+		http.Error(w, "unable to write request body", http.StatusInternalServerError)
+		return
+	}
 }

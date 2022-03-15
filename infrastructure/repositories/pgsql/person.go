@@ -32,6 +32,7 @@ import (
 	"github.com/rs/zerolog"
 
 	"zntr.io/spotigraph/domain/person"
+	"zntr.io/spotigraph/domain/tenant"
 	"zntr.io/spotigraph/pkg/cursor"
 	"zntr.io/spotigraph/pkg/types"
 )
@@ -46,6 +47,7 @@ func Persons(conn DBConn, log *zerolog.Logger) person.Repository {
 // -----------------------------------------------------------------------------
 
 type sqlPerson struct {
+	TenantID  string
 	ID        string
 	Principal string
 	Locked    bool
@@ -54,9 +56,10 @@ type sqlPerson struct {
 
 var _ person.Person = (*sqlPerson)(nil)
 
-func (s *sqlPerson) GetID() person.ID     { return person.ID(s.ID) }
-func (s *sqlPerson) GetPrincipal() string { return s.Principal }
-func (s *sqlPerson) IsLocked() bool       { return s.Locked }
+func (s *sqlPerson) GetTenantID() tenant.ID { return tenant.ID(s.TenantID) }
+func (s *sqlPerson) GetID() person.ID       { return person.ID(s.ID) }
+func (s *sqlPerson) GetPrincipal() string   { return s.Principal }
+func (s *sqlPerson) IsLocked() bool         { return s.Locked }
 
 // persionListCursor -----------------------------------------------------------
 
@@ -98,12 +101,17 @@ func (r *pgPersonRepository) List(ctx context.Context, filter person.SearchFilte
 		// Prepare query
 		psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 		q := psql.Select(
-			"person_id",
+			"tenant_id", "person_id",
 			"principal",
 			"locked", "created_at",
 		).From("persons").Limit(pageSize)
 
 		// Filters -------------------------------------------------------------
+
+		// Filter by principal
+		if filter.TenantID != nil {
+			q = q.Where(sq.Eq{"tenant_id": *filter.TenantID})
+		}
 
 		// Filter by objectIDs
 		if len(filter.ObjectIDs) > 0 {
@@ -171,8 +179,11 @@ func (r *pgPersonRepository) List(ctx context.Context, filter person.SearchFilte
 	return cursorPaginate(ctx, r.conn, r.log, collection, pageSize, queryFunc, rowUnpacker, cursorBuilder)
 }
 
-func (r *pgPersonRepository) GetByID(ctx context.Context, id person.ID) (person.Person, error) {
+func (r *pgPersonRepository) GetByID(ctx context.Context, tenantId tenant.ID, id person.ID) (person.Person, error) {
 	// Check arguments
+	if err := validation.Validate(tenantId, validation.Required, is.PrintableASCII); err != nil {
+		return nil, fmt.Errorf("invalid tenantID value: %w", err)
+	}
 	if err := validation.Validate(id, validation.Required, is.PrintableASCII); err != nil {
 		return nil, fmt.Errorf("invalid personID value: %w", err)
 	}
@@ -181,8 +192,8 @@ func (r *pgPersonRepository) GetByID(ctx context.Context, id person.ID) (person.
 	return findOne(ctx, r.conn, r.log, func(tx DBConn) (person.Person, error) {
 		var entity sqlPerson
 
-		if errRow := tx.QueryRow(ctx, dbPersonGetByID, id).Scan(
-			&entity.ID,
+		if errRow := tx.QueryRow(ctx, dbPersonGetByID, tenantId, id).Scan(
+			&entity.TenantID, &entity.ID,
 			&entity.Principal,
 			&entity.Locked, &entity.CreatedAt,
 		); errRow != nil {
@@ -194,8 +205,11 @@ func (r *pgPersonRepository) GetByID(ctx context.Context, id person.ID) (person.
 	})
 }
 
-func (r *pgPersonRepository) GetByPrincipal(ctx context.Context, principal string) (person.Person, error) {
+func (r *pgPersonRepository) GetByPrincipal(ctx context.Context, tenantId tenant.ID, principal string) (person.Person, error) {
 	// Check arguments
+	if err := validation.Validate(tenantId, validation.Required, is.PrintableASCII); err != nil {
+		return nil, fmt.Errorf("invalid tenantID value: %w", err)
+	}
 	if err := validation.Validate(principal, validation.Required, is.PrintableASCII); err != nil {
 		return nil, fmt.Errorf("invalid principal value: %w", err)
 	}
@@ -204,8 +218,8 @@ func (r *pgPersonRepository) GetByPrincipal(ctx context.Context, principal strin
 	return findOne(ctx, r.conn, r.log, func(tx DBConn) (person.Person, error) {
 		var entity sqlPerson
 
-		if errRow := tx.QueryRow(ctx, dbPersonGetByPrincipal, principal).Scan(
-			&entity.ID,
+		if errRow := tx.QueryRow(ctx, dbPersonGetByPrincipal, tenantId, principal).Scan(
+			&entity.TenantID, &entity.ID,
 			&entity.Principal,
 			&entity.Locked, &entity.CreatedAt,
 		); errRow != nil {
@@ -227,6 +241,7 @@ func (r *pgPersonRepository) Save(ctx context.Context, do person.Person) error {
 
 	// Convert models to entity
 	persistable := &sqlPerson{
+		TenantID:  string(do.GetTenantID()),
 		ID:        string(do.GetID()),
 		Principal: do.GetPrincipal(),
 		Locked:    false,
@@ -249,11 +264,12 @@ func (r *pgPersonRepository) Remove(ctx context.Context, do person.Person) error
 
 	// Convert models to entity
 	persistable := &sqlPerson{
-		ID: string(do.GetID()),
+		TenantID: string(do.GetTenantID()),
+		ID:       string(do.GetID()),
 	}
 
 	// Delegate to executor
 	return queryExec(ctx, r.conn, r.log, persistable, func(tx DBConn) (pgconn.CommandTag, error) {
-		return tx.Exec(ctx, dbPersonDelete, persistable.ID)
+		return tx.Exec(ctx, dbPersonDelete, persistable.TenantID, persistable.ID)
 	})
 }

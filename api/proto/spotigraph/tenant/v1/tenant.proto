@@ -15,20 +15,23 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package types
+syntax = "proto3";
 
-func StringRef(v string) *string {
-	return &v
-}
+package spotigraph.tenant.v1;
 
-func UInt64Ref(v uint64) *uint64 {
-	return &v
-}
+option csharp_namespace = "Spotigraph.Tenant.V1";
+option go_package = "zntr.io/spotigraph/api/gen/go/spotigraph/tenant/v1;tenantv1";
+option java_multiple_files = true;
+option java_outer_classname = "TenantProto";
+option java_package = "io.zntr.spotigraph.tenant.v1";
+option objc_class_prefix = "STX";
+option php_namespace = "Spotigraph\\Tenant\\V1";
 
-func BoolRef(v bool) *bool {
-	return &v
-}
+// -----------------------------------------------------------------------------
 
-func AsRef[T any](v T) *T {
-	return &v
+// Tenant represents an tenant identity.
+message Tenant {
+  string id = 1;
+  string label = 2;
+  string slug = 3;
 }

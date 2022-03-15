@@ -35,10 +35,12 @@ enum EventType {
   EVENT_TYPE_INVALID = 0;
   // Explicitly Unknown object value.
   EVENT_TYPE_UNKNOWN = 1;
-  EVENT_TYPE_CHAPTER_CREATED = 2;
-  EVENT_TYPE_CHAPTER_DELETED = 3;
-  EVENT_TYPE_CHAPTER_LABEL_UPDATED = 4;
-  EVENT_TYPE_CHAPTER_LEADER_UPDATED = 5;
+  // Tenant events
+  EVENT_TYPE_TENANT_CREATED = 2;
+  EVENT_TYPE_TENANT_DELETED = 3;
+  EVENT_TYPE_TENANT_LABEL_UPDATED = 4;
+  EVENT_TYPE_TENANT_LOCKED = 5;
+  EVENT_TYPE_TENANT_UNLOCKED = 6;
 }
 
 // Event describes event contract.
@@ -49,35 +51,14 @@ message Event {
   string aggregate_id = 4;
   google.protobuf.Any meta = 5;
   oneof payload {
-    ChapterCreated chapter_created = 10;
-    ChapterDeleted chapter_deleted = 11;
-    ChapterLabelUpdated chapter_label_updated = 12;
-    ChapterLeaderUpdated chapter_leader_updated = 13;
+    TenantCreated tenant_created = 10;
   }
 }
 
-// ChapterCreated is raised on chapter entity creation.
-message ChapterCreated {
-  string urn = 1;
+// TenantCreated is raised on tenant entity creation.
+message TenantCreated {
+  string id = 1;
   string label = 2;
-  string leader_id = 3;
+  string slug = 3;
 }
 
-// ChapterDeleted is raised on chapter entity deletion.
-message ChapterDeleted {
-  string urn = 1;
-}
-
-// ChapterLabelUpdated is raised on chapter entity label updates.
-message ChapterLabelUpdated {
-  string urn = 1;
-  string old = 2;
-  string new = 3;
-}
-
-// ChapterLeaderUpdated is raised on chapter entity leader updates.
-message ChapterLeaderUpdated {
-  string urn = 1;
-  string old = 2;
-  string new = 3;
-}

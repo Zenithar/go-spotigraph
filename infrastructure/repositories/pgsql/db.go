@@ -47,7 +47,6 @@ const (
 
 	// Person
 	dbPersonGetByID        = "dbPersonGetByID"
-	dbPersonGetByObjectID  = "dbPersonGetByObjectID"
 	dbPersonGetByPrincipal = "dbPersonGetByPrincipal"
 	dbPersonCreate         = "dbPersonCreate"
 	dbPersonUpdate         = "dbPersonUpdate"
@@ -108,12 +107,11 @@ func prepareQueries(ctx context.Context, conn *pgx.Conn) error {
 	// Query collection
 	queries := map[string]string{
 		// Person --------------------------------------------------------------
-		dbPersonGetByID:        "SELECT person_id, person_oid, principal, locked, created_at FROM persons WHERE person_id = $1;",
-		dbPersonGetByObjectID:  "SELECT person_id, person_oid, principal, locked, created_at FROM persons WHERE person_oid = $1;",
-		dbPersonGetByPrincipal: "SELECT person_id, person_oid, principal, locked, created_at FROM persons WHERE principal = $1;",
-		dbPersonCreate:         "INSERT INTO persons (person_oid, principal) VALUES ($1, $2);",
-		dbPersonUpdate:         "SELECT principal FROM persons WHERE person_id = $1 FOR UPDATE; UPDATE persons SET principal = $2 WHERE person_id = $1;",
-		dbPersonDelete:         "DELETE FROM persons WHERE person_id = $1;",
+		dbPersonGetByID:        "SELECT tenant_id, person_id, person_oid, principal, locked, created_at FROM persons WHERE tenant_id = $1 AND person_id = $2;",
+		dbPersonGetByPrincipal: "SELECT tenant_id, person_id, person_oid, principal, locked, created_at FROM persons WHERE tenant_id = $1 AND principal = $2;",
+		dbPersonCreate:         "INSERT INTO persons (tenant_id, person_oid, principal) VALUES ($1, $2, $3);",
+		dbPersonUpdate:         "SELECT locked FROM persons WHERE tenant_id = $1 AND person_id = $2 FOR UPDATE; UPDATE persons SET locked = $3 WHERE tenant_id = $1 AND person_id = $2;",
+		dbPersonDelete:         "DELETE FROM persons WHERE tenant_id = $1 AND person_id = $2;",
 	}
 
 	// Prepare all queries
